@@ -11,6 +11,7 @@ public class SAS_Service_Application {
       CARE_Claim__c.SObjectType => CAREClaimsSelector.class,
       Case.SObjectType => CasesSelector.class,
       CaseToBooking__c.SObjectType => CaseToBookingsSelector.class,
+      Claim_Expense__c.SObjectType => ClaimExpensesSelector.class,
       ContentVersion.SObjectType => ContentVersionsSelector.class,
       Customer__c.SObjectType => CustomersSelector.class,
       EmailMessage.SObjectType => EmailMessagesSelector.class,

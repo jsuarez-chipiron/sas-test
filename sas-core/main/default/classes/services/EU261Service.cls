@@ -13,19 +13,54 @@ public without sharing class EU261Service {
   private static final String AUTOMATION_REPLY_TO_ADDRESS = 'customercare@sas.se';
 
   private static final String COMPENSATION_WITHOUT_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a total amount of {0} {1}.';
-  private static final String COMPENSATION_WITH_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a total amount of {0} {1}. Where {2} {1} is the flat rate compensation and {3} {1} Is the reimbursement for the expenses you experienced during the delay.';
+  private static final String COMPENSATION_WITH_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a flat rate compensation of {0} {1} and with a reimbursement of {2} {3} for the expenses you experienced during the delay.';
 
-  @TestVisible
-  private Decimal percentageRequiringManualApproval;
-
-  @TestVisible
-  private Boolean enabledSettlements;
-
-  @TestVisible
-  private Boolean enabledRejections;
+  public Config config;
 
   private Map<Id, Case> parentCasesById = new Map<Id, Case>();
   private Map<Id, Settlement__c> existingSettlementsByClaimId = new Map<Id, Settlement__c>();
+
+  public class Config {
+    public Decimal percentageRequiringManualApproval;
+
+    public Boolean enabledSettlements;
+    public Boolean enabledRejections;
+
+    public Money expenseLimitAccommodation;
+    public Money expenseLimitFood;
+    public Money expenseLimitPhoneCalls;
+    public Money expenseLimitTransportation;
+    public Money expenseLimitTotal;
+
+    public Config(EU261_Automation_Configuration__mdt config) {
+      this.enabledRejections = U.getOr(false, config.Automatic_Rejection__c);
+      this.enabledSettlements = U.getOr(false, config.Automatic_Settlement__c);
+      this.expenseLimitAccommodation = new Money(
+        U.getOr(0, config.Expense_Limit_Accommodation__c),
+        Money.CurrencyCode.SEK
+      );
+      this.expenseLimitFood = new Money(
+        U.getOr(0, config.Expense_Limit_Food__c),
+        Money.CurrencyCode.SEK
+      );
+      this.expenseLimitPhoneCalls = new Money(
+        U.getOr(0, config.Expense_Limit_Phone_Calls__c),
+        Money.CurrencyCode.SEK
+      );
+      this.expenseLimitTransportation = new Money(
+        U.getOr(0, config.Expense_Limit_Transportation__c),
+        Money.CurrencyCode.SEK
+      );
+      this.expenseLimitTotal = new Money(
+        U.getOr(0, config.Claim_Expense_Max_Amount__c),
+        Money.CurrencyCode.SEK
+      );
+      this.percentageRequiringManualApproval = U.getOr(
+        0,
+        config.Percentage_Sent_to_Control__c
+      );
+    }
+  }
 
   public static EU261Service newInstance() {
     return (EU261Service) SAS_Service_Application.Service.newInstance(
@@ -39,33 +74,29 @@ public without sharing class EU261Service {
         Automatic_Rejection__c,
         Automatic_Settlement__c,
         Claim_Expense_Max_Amount__c,
+        Expense_Limit_Accommodation__c,
+        Expense_Limit_Food__c,
+        Expense_Limit_Phone_Calls__c,
+        Expense_Limit_Transportation__c,
         Percentage_Sent_to_Control__c
       FROM EU261_Automation_Configuration__mdt
       WHERE Label = 'Default'
     ];
 
-    if (automationConfig == null || automationConfig.size() == 0) {
-      this.enabledRejections = false;
-      this.enabledSettlements = false;
-    } else {
-      EU261_Automation_Configuration__mdt config = automationConfig[0];
-      this.enabledRejections = config.Automatic_Rejection__c == null
-        ? false
-        : config.Automatic_Rejection__c;
-      this.enabledSettlements = config.Automatic_Settlement__c == null
-        ? false
-        : config.Automatic_Settlement__c;
-      this.percentageRequiringManualApproval = config.Percentage_Sent_to_Control__c ==
-        null
-        ? 0
-        : config.Percentage_Sent_to_Control__c;
+    if (automationConfig == null || automationConfig.size() != 1) {
+      throw new AutomationException(
+        'Missing EU261_Automation_Configuration__mdt.'
+      );
     }
+
+    this.config = new Config(automationConfig[0]);
   }
 
   public class AutomationException extends Exception {
   }
 
   public void processEU261Claims(Set<Id> claimIds) {
+    U.verifyNotNull(claimIds);
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     this.automateEU261Claims(claimIds, uow);
     uow.commitWork();
@@ -199,7 +230,7 @@ public without sharing class EU261Service {
     List<Settlement__c> allSettlementsForClaims = SettlementsSelector.newInstance()
       .selectByClaimId(claimIds);
     if (
-      enabledSettlements &&
+      this.config.enabledSettlements &&
       allSettlementsForClaims != null &&
       allSettlementsForClaims.size() > 0
     ) {
@@ -355,7 +386,8 @@ public without sharing class EU261Service {
       EU261Claim fullClaim = new EU261Claim(
         c,
         booking.objects,
-        hasPotentiallyDuplicateClaims
+        hasPotentiallyDuplicateClaims,
+        this.config
       );
 
       toReturn.add(fullClaim);
@@ -379,18 +411,18 @@ public without sharing class EU261Service {
       ) {
         c.eu261HandlingNote =
           'Compensation: ' +
-          ac.decision.compensationPerCustomer.values() +
+          ac.decision.compensationPerCustomerInEUR.values() +
           ' | Reimbursement: ' +
-          ac.decision.reimbursementAmount;
+          ac.decision.reimbursementAmountInSEK;
       } else if (
         ac.decision.verdict ==
         Claim.EU261HandlingStatus.PossiblyEligibleForCompensation
       ) {
         c.eu261HandlingNote =
           'Compensation: ' +
-          ac.decision.compensationPerCustomer.values() +
+          ac.decision.compensationPerCustomerInEUR.values() +
           ' | Reimbursement: ' +
-          ac.decision.reimbursementAmount +
+          ac.decision.reimbursementAmountInSEK +
           ' (' +
           ac.decision.reasoning +
           ')';
@@ -428,8 +460,8 @@ public without sharing class EU261Service {
       }
     }
 
-    if (enabledSettlements) {
-      Map<Id, Settlement__c> settlementsByClaimId = createSettlementsForClaims(
+    if (this.config.enabledSettlements) {
+      Map<Id, List<Settlement__c>> settlementsByClaimId = createSettlementsForClaims(
         claimsToPayOut
       );
 
@@ -468,7 +500,7 @@ public without sharing class EU261Service {
       }
     }
 
-    if (enabledRejections && claimsToRejectIds.size() > 0) {
+    if (this.config.enabledRejections && claimsToRejectIds.size() > 0) {
       claimService.rejectClaims(
         uow,
         claimsToRejectIds,
@@ -480,125 +512,242 @@ public without sharing class EU261Service {
   }
 
   private Boolean shouldApproveAutomatically(EU261Claim cl) {
-    return Math.random() * 100 >= percentageRequiringManualApproval;
+    return Math.random() * 100 >= this.config.percentageRequiringManualApproval;
   }
 
   /**
+   * Creates settlements with settlement items for the given claims and inserts
+   * them to the DB.
+   *
+   * Creates one or two settlements for each claim. If a claim
+   * has only reimbursement or compensation this creates one settlement. If the
+   * claim has both reimbursement and compensation, it creates two. We could
+   * combine these into one settlement when the preferred compensation and
+   * reimbursement methods are the same, but separating them out makes later
+   * processing simpler.
+   *
    * Does two DB inserts.
    *
-   * @return A map from claim id to settlement for that claim.
+   * @param claimsToPayOut A list of claims to be paid out. Must not include claims which shouldn't be settled.
+   * @return A map from claim id to settlements for that claim. There can be one or two settlements per claim.
    */
-  private Map<Id, Settlement__c> createSettlementsForClaims(
+  private Map<Id, List<Settlement__c>> createSettlementsForClaims(
     List<EU261Claim> claimsToPayOut
   ) {
-    Map<Id, List<SettlementItem>> settlementsItemsBySettlementId = new Map<Id, List<SettlementItem>>();
-    Map<String, Exchange_Rate__c> exchangeRatesByToCurrency = new Map<String, Exchange_Rate__c>();
-
-    List<LIA_Claim__c> payableClaimSObjects = new List<LIA_Claim__c>();
-
-    for (EU261Claim c : claimsToPayOut) {
-      payableClaimSObjects.add(c.claimObj.underlyingSObject);
-    }
+    Map<Id, List<Settlement__c>> allSettlementsByClaimId = new Map<Id, List<Settlement__c>>();
+    Map<Money.CurrencyCode, ExchangeRate> exchangeRatesFromEURByToCurrency = new Map<Money.CurrencyCode, ExchangeRate>();
+    Map<Money.CurrencyCode, ExchangeRate> exchangeRatesFromSEKByToCurrency = new Map<Money.CurrencyCode, ExchangeRate>();
 
     for (
-      Exchange_Rate__c er : ExchangeRatesSelector.newInstance()
-        .selectByFromCurrency('EUR')
+      ExchangeRate er : ExchangeRatesSelector.newInstance()
+        .selectByFromCurrency(Money.CurrencyCode.EUR)
     ) {
-      exchangeRatesByToCurrency.put(er.To_Currency__c, er);
+      exchangeRatesFromEURByToCurrency.put(er.toCurrency, er);
+    }
+    for (
+      ExchangeRate er : ExchangeRatesSelector.newInstance()
+        .selectByFromCurrency(Money.CurrencyCode.SEK)
+    ) {
+      exchangeRatesFromSEKByToCurrency.put(er.toCurrency, er);
+    }
+
+    List<LIA_Claim__c> allPayableClaimSObjects = new List<LIA_Claim__c>();
+    List<LIA_Claim__c> claimsRequiringTwoSettlements = new List<LIA_Claim__c>();
+
+    for (EU261Claim c : claimsToPayOut) {
+      allPayableClaimSObjects.add(c.claimObj.underlyingSObject);
+      if (c.decision.reimbursementAmountInSEK.amount > 0) {
+        claimsRequiringTwoSettlements.add(c.claimObj.underlyingSObject);
+      }
     }
 
     fflib_ISObjectUnitOfWork uow1 = SAS_Service_Application.UnitOfWork.newInstance();
-    Settlements s = Settlements.createFromClaim(
-      payableClaimSObjects,
+    Settlements compensationSettlements = Settlements.createFromClaim(
+      allPayableClaimSObjects,
       null,
+      false,
+      uow1
+    );
+    Settlements reimbursementSettlements = Settlements.createFromClaim(
+      claimsRequiringTwoSettlements,
+      null,
+      true,
       uow1
     );
     uow1.commitWork();
 
+    Map<Id, List<SettlementItem>> compensationSettlementItemsBySettlementId = new Map<Id, List<SettlementItem>>();
+    Map<Id, List<SettlementItem>> reimbursementSettlementItemsBySettlementId = new Map<Id, List<SettlementItem>>();
+
     for (EU261Claim c : claimsToPayOut) {
-      List<SettlementItem> settlementsItemsForClaim = new List<SettlementItem>();
-      Settlement__c settlementForClaim;
-      for (Settlement__c ss : s.instanceRecords) {
+      Settlement__c compensationSettlementForClaim;
+      Settlement__c reimbursementSettlementForClaim;
+      Boolean claimRequiresTwoSettlements = false;
+      for (Settlement__c ss : compensationSettlements.instanceRecords) {
         if (ss.Claim__c == c.claimObj.id) {
-          settlementForClaim = ss;
+          compensationSettlementForClaim = ss;
+
+          compensationSettlementItemsBySettlementId.put(
+            ss.Id,
+            new List<SettlementItem>()
+          );
+
+          allSettlementsByClaimId.put(
+            ss.Claim__c,
+            new List<Settlement__c>{ ss }
+          );
+          break;
+        }
+      }
+      for (Settlement__c ss : reimbursementSettlements.instanceRecords) {
+        if (ss.Claim__c == c.claimObj.id) {
+          reimbursementSettlementForClaim = ss;
+
+          reimbursementSettlementItemsBySettlementId.put(
+            ss.Id,
+            new List<SettlementItem>()
+          );
+
+          claimRequiresTwoSettlements = true;
+
+          allSettlementsByClaimId.get(ss.Claim__c).add(ss);
           break;
         }
       }
 
       for (
-        ClaimCustomer customer : c.decision.compensationPerCustomer.keySet()
+        ClaimCustomer customer : c.decision.compensationPerCustomerInEUR.keySet()
       ) {
         SettlementItem si = new SettlementItem();
         si.customerName = customer.fullName;
         si.costAccount = COMPENSATION_COST_ACCOUNT;
         si.comments = 'Automatic EU261 compensation';
         si.recordType = SettlementItem.RecordType.DefaultRecordType;
-        settlementsItemsForClaim.add(si);
+        compensationSettlementItemsBySettlementId.get(
+            compensationSettlementForClaim.Id
+          )
+          .add(si);
+
+        Money value = c.decision.compensationPerCustomerInEUR.get(customer);
 
         switch on c.claimObj.preferredCompensationMethod {
           when EBPoints {
-            si.amount =
-              c.decision.compensationPerCustomer.get(customer) *
-              Settlements.CONVERSION_RATE_EUR_TO_EB_POINTS;
+            si.amount = value.inEuroBonusPoints();
           }
           when Voucher {
-            si.amount =
-              c.decision.compensationPerCustomer.get(customer) *
-              Settlements.CONVERSION_RATE_EUR_TO_VOUCHER_EUR;
+            si.setValue(
+              value.multiplyBy(Settlements.CONVERSION_RATE_EUR_TO_VOUCHER_EUR)
+                .setScale(0)
+            );
           }
           when else {
             // Default to monetary
-            Decimal rate = 1.0; // EUR-EUR
-            if (settlementForClaim.Currency__c != 'EUR') {
-              Exchange_Rate__c exchangeRateObj = exchangeRatesByToCurrency.get(
-                settlementForClaim.Currency__c
+            Money.CurrencyCode settlementCurrency = Money.CURRENCY_PICKLIST_VALUE_TO_ENUM.get(
+              compensationSettlementForClaim.Currency__c
+            );
+
+            if (settlementCurrency != Money.CurrencyCode.EUR) {
+              ExchangeRate exchangeRate = exchangeRatesFromEURByToCurrency.get(
+                settlementCurrency
               );
-              if (exchangeRateObj == null) {
+              if (exchangeRate == null) {
                 throw new AutomationException('Cannot find exchange rate.');
               } else {
-                rate = exchangeRateObj.Rate__c;
+                value = value.convertTo(settlementCurrency, exchangeRate);
               }
             }
 
-            Decimal amount =
-              c.decision.compensationPerCustomer.get(customer) * rate;
-            si.amount = amount.setScale(0);
+            si.setValue(value.setScale(0));
           }
         }
       }
-      /*if (
-        c.decision.reimbursementAmount != null &&
-        c.decision.reimbursementAmount > 0
-      ) { // TODO: This needs to support creating a separate settlement in case we need to make a reimbusement
+
+      Money reimbursement = c.decision.reimbursementAmountInSEK;
+      if (reimbursement != null && reimbursement.amount > 0) {
+        // TODO: This needs to support creating a separate settlement in case we need to make a reimbusement
+        // Cant have different methods in one settlement!
         SettlementItem si = new SettlementItem();
         si.customerName = c.claimObj.contactFullName;
         si.costAccount = REIMBURSEMENT_COST_ACCOUNT;
-        si.amount = c.decision.reimbursementAmount; // TODO: Currency conversion!
         si.comments = 'Automatic EU261 reimbursement';
-        settlementsItemsForClaim.add(si);
-      }*/
-      settlementsItemsBySettlementId.put(
-        settlementForClaim.Id,
-        settlementsItemsForClaim
-      );
+        si.recordType = SettlementItem.RecordType.DefaultRecordType;
+
+        reimbursementSettlementItemsBySettlementId.get(
+            reimbursementSettlementForClaim.Id
+          )
+          .add(si);
+
+        switch on c.claimObj.preferredReimbursementMethod {
+          when EBPoints {
+            ExchangeRate sekToEur = exchangeRatesFromSEKByToCurrency.get(
+              Money.CurrencyCode.EUR
+            );
+            si.amount = reimbursement.convertTo(
+                Money.CurrencyCode.EUR,
+                sekToEur
+              )
+              .inEuroBonusPoints();
+          }
+          when Voucher {
+            ExchangeRate sekToEur = exchangeRatesFromSEKByToCurrency.get(
+              Money.CurrencyCode.EUR
+            );
+
+            si.setValue(
+              reimbursement.convertTo(Money.CurrencyCode.EUR, sekToEur)
+                .multiplyBy(Settlements.CONVERSION_RATE_EUR_TO_VOUCHER_EUR)
+                .setScale(0)
+            );
+          }
+          when else {
+            // Default to monetary
+            Money.CurrencyCode settlementCurrency = Money.CURRENCY_PICKLIST_VALUE_TO_ENUM.get(
+              reimbursementSettlementForClaim.Currency__c
+            );
+
+            if (settlementCurrency != Money.CurrencyCode.SEK) {
+              ExchangeRate exchangeRate = exchangeRatesFromSEKByToCurrency.get(
+                settlementCurrency
+              );
+              if (exchangeRate == null) {
+                throw new AutomationException('Cannot find exchange rate.');
+              } else {
+                reimbursement = reimbursement.convertTo(
+                  settlementCurrency,
+                  exchangeRate
+                );
+              }
+            }
+
+            si.setValue(reimbursement.setScale(0));
+          }
+        }
+      }
     }
 
     fflib_ISObjectUnitOfWork uow2 = SAS_Service_Application.UnitOfWork.newInstance();
-    s.updateSettlementItems(settlementsItemsBySettlementId, uow2);
+    compensationSettlements.updateSettlementItems(
+      compensationSettlementItemsBySettlementId,
+      uow2
+    );
+    reimbursementSettlements.updateSettlementItems(
+      reimbursementSettlementItemsBySettlementId,
+      uow2
+    );
     uow2.commitWork();
 
-    Map<Id, Settlement__c> settlementsByClaimId = new Map<Id, Settlement__c>();
-
-    for (Settlement__c ss : s.instanceRecords) {
-      settlementsByClaimId.put(ss.Claim__c, ss);
-    }
-
-    return settlementsByClaimId;
+    return allSettlementsByClaimId;
   }
 
+  /**
+   * Creates emails for valid claims which will go through approval process.
+   *
+   * These will be sent only after approvers have approved the claim, following
+   * the normal claim process.
+   */
   private List<EmailMessage> createDraftApprovedEmails(
     List<EU261Claim> claimsToApproval,
-    Map<Id, Settlement__c> settlementsByClaimId
+    Map<Id, List<Settlement__c>> settlementsByClaimId
   ) {
     List<EmailMessage> toReturn = new List<EmailMessage>();
 
@@ -637,6 +786,9 @@ public without sharing class EU261Service {
     return toReturn;
   }
 
+  /**
+   * Creates emails for rejected claims which will be closed automatically.
+   */
   private Map<Id, Messaging.SingleEmailMessage> createRejectionEmails(
     List<EU261Claim> claimsToReject
   ) {
@@ -661,9 +813,12 @@ public without sharing class EU261Service {
     return emailsByClaimId;
   }
 
+  /**
+   * Creates emails for valid claims which will be approved automatically.
+   */
   private Map<Id, Messaging.SingleEmailMessage> createApprovedEmails(
     List<EU261Claim> claimsToSettle,
-    Map<Id, Settlement__c> settlementsByClaimId
+    Map<Id, List<Settlement__c>> settlementsByClaimId
   ) {
     Map<Id, Messaging.SingleEmailMessage> emailsByClaimId = new Map<Id, Messaging.SingleEmailMessage>();
 
@@ -701,31 +856,77 @@ public without sharing class EU261Service {
     return emailsByClaimId;
   }
 
-  private String createCompesationText(Settlement__c settlementForClaim) {
-    Decimal compensationAmount = settlementForClaim.Amount__c;
-    // Decimal reimbursementAmount = 0;
-    String settlementCurrency = settlementForClaim.Currency__c;
+  /**
+   * Returns the compensation text added to the email sent to the customer.
+   *
+   * @param settlementsByClaimId Values are lists of settlements where there should be one or two settlements.
+   */
+  private String createCompesationText(
+    List<Settlement__c> settlementsForClaim
+  ) {
+    if (
+      settlementsForClaim == null ||
+      settlementsForClaim.isEmpty() ||
+      settlementsForClaim.size() > 2
+    ) {
+      throw new U.InvalidArgumentException(
+        'Invalid number of settlements: ' + settlementsForClaim
+      );
+    }
+
     String compensationText;
-    // if (reimbursementAmount == 0) {
-    List<Object> parameters = new List<Object>{
-      compensationAmount,
-      settlementCurrency
-    };
-    compensationText = String.format(
-      COMPENSATION_WITHOUT_REIMBURSEMENT_TEXT_TEMPLATE,
-      parameters
-    );
-    /*} else {
+
+    Settlement__c compensationSettlement = settlementsForClaim[0];
+
+    if (settlementsForClaim.size() == 1) {
+      // There's only compensation
       List<Object> parameters = new List<Object>{
-        compensationAmount,
-        reimbursementAmount,
-        settlementCurrency
+        getSettlementAmount(compensationSettlement),
+        getSettlementCurrency(compensationSettlement)
+      };
+      compensationText = String.format(
+        COMPENSATION_WITHOUT_REIMBURSEMENT_TEXT_TEMPLATE,
+        parameters
+      );
+    } else {
+      // There is both compensation and reimbursement
+      Settlement__c reimbursementSettlement = settlementsForClaim[1];
+      List<Object> parameters = new List<Object>{
+        getSettlementAmount(compensationSettlement),
+        getSettlementCurrency(compensationSettlement),
+        getSettlementAmount(reimbursementSettlement),
+        getSettlementCurrency(reimbursementSettlement)
       };
       compensationText = String.format(
         COMPENSATION_WITH_REIMBURSEMENT_TEXT_TEMPLATE,
         parameters
       );
-    }*/
+    }
+
     return compensationText;
+  }
+
+  private static String getSettlementCurrency(Settlement__c s) {
+    Id euroBonusRtId = Settlements.getRecordTypeId(
+      Settlements.RecordType.EBPoints
+    );
+
+    if (s.RecordTypeId == euroBonusRtId) {
+      return 'points';
+    } else {
+      return s.Currency__c;
+    }
+  }
+
+  private static String getSettlementAmount(Settlement__c s) {
+    Id euroBonusRtId = Settlements.getRecordTypeId(
+      Settlements.RecordType.EBPoints
+    );
+
+    if (s.RecordTypeId == euroBonusRtId) {
+      return String.valueOf(s.EuroBonus_Points__c);
+    } else {
+      return String.valueOf(s.Amount__c);
+    }
   }
 }

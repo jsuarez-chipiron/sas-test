@@ -9,7 +9,7 @@ public without sharing class SettlementItem extends AbstractSObjectWrapper {
   public String comments;
   public CostAccount costAccount;
   public CostCenter costCenter;
-  public String itemCurrency;
+  public Money.CurrencyCode itemCurrency;
   public String customerName;
   public Date dateOfExchangeCalculation;
   public Decimal deductibleInsuranceAmount;
@@ -70,7 +70,9 @@ public without sharing class SettlementItem extends AbstractSObjectWrapper {
     this.underlyingSObject.Cost_Center__c = COST_CENTER_ENUM_TO_PICKLIST_VALUE.get(
       this.costCenter
     );
-    this.underlyingSObject.Currency__c = this.itemCurrency;
+    this.underlyingSObject.Currency__c = Money.CURRENCY_ENUM_TO_PICKLIST_VALUE.get(
+      this.itemCurrency
+    );
     this.underlyingSObject.Customer_Name__c = this.customerName;
     this.underlyingSObject.Date_of_Exchange_Calculation__c = this.dateOfExchangeCalculation;
     this.underlyingSObject.Deductible_Insurance_Amount__c = this.deductibleInsuranceAmount;
@@ -100,7 +102,9 @@ public without sharing class SettlementItem extends AbstractSObjectWrapper {
       si.Cost_Account__c
     );
     this.costCenter = COST_CENTER_PICKLIST_VALUE_TO_ENUM.get(si.Cost_Center__c);
-    this.itemCurrency = si.Currency__c;
+    this.itemCurrency = Money.CURRENCY_PICKLIST_VALUE_TO_ENUM.get(
+      si.Currency__c
+    );
     this.customerName = si.Customer_Name__c;
     this.dateOfExchangeCalculation = si.Date_of_Exchange_Calculation__c;
     this.deductibleInsuranceAmount = si.Deductible_Insurance_Amount__c;
@@ -110,6 +114,14 @@ public without sharing class SettlementItem extends AbstractSObjectWrapper {
     this.parentSettlementId = si.Settlement__c;
     this.status = STATUS_PICKLIST_VALUE_TO_ENUM.get(si.Status__c);
     this.recordType = getRecordTypeEnumById(si.RecordTypeId);
+  }
+
+  /**
+   * Sets the currency and amount of this item based on the given money instance.
+   */
+  public void setValue(Money value) {
+    this.itemCurrency = value.CurrencyCode;
+    this.amount = value.amount;
   }
 
   private static final Map<String, CostAccount> COST_ACCOUNT_PICKLIST_VALUE_TO_ENUM = new Map<String, CostAccount>{

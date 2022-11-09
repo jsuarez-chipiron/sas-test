@@ -26,6 +26,7 @@ private class EU261Service_Test {
   private static String cancellationBookingUnsupportedReference = 'CANCE3';
   private static String cancellationBookingTwoCancellationsReference = 'CANCE4';
   private static String cancellationWithRebookingBookingReference = 'CANCE5';
+  private static String validBookingReference = 'CANCE6';
   private static String missingClaimedFlightBookingReference = 'MISSIN';
   private static String claimExpensesBookingReference = 'EXPENS';
   private static String notOperatedBySASBookingReference = 'NOTOPE';
@@ -81,6 +82,14 @@ private class EU261Service_Test {
       From_Currency__c = 'EUR',
       To_Currency__c = 'SEK',
       Rate__c = 10,
+      Date__c = Date.valueOf('2022-10-31'),
+      Name = 'EUR-SEK'
+    );
+
+    Exchange_Rate__c sekEurRate = new Exchange_Rate__c(
+      From_Currency__c = 'SEK',
+      To_Currency__c = 'EUR',
+      Rate__c = 0.1,
       Date__c = Date.valueOf('2022-10-31'),
       Name = 'EUR-SEK'
     );
@@ -458,9 +467,15 @@ private class EU261Service_Test {
       TEDS_Identifier__c = 'uniqueBooking34',
       Type__c = 'OneWay'
     );
+    Booking__c validBooking = new Booking__c(
+      Booking_Reference__c = validBookingReference,
+      TEDS_Identifier__c = 'uniqueBooking35',
+      Type__c = 'OneWay'
+    );
 
     insert new List<SObject>{
       eurSekRate,
+      sekEurRate,
       airportHEL,
       airportARN,
       airportCPH,
@@ -516,7 +531,8 @@ private class EU261Service_Test {
       claimFirmBooking,
       careDuplicateBooking,
       twoFlightsCancelledInTimeBooking,
-      twoFlightsCancelledNotInTimeBooking
+      twoFlightsCancelledNotInTimeBooking,
+      validBooking
     };
     Segment__c oneWaySegment = new Segment__c(
       Booking__c = oneWayBooking.Id,
@@ -836,6 +852,12 @@ private class EU261Service_Test {
       Seat__c = '1A',
       Trip_Type__c = 'Outbound'
     );
+    Segment__c validSegment = new Segment__c(
+      Booking__c = validBooking.Id,
+      Flight__c = flight1.Id,
+      Seat__c = '1A',
+      Trip_Type__c = 'Outbound'
+    );
     Passenger__c dayReturnPassenger = new Passenger__c(
       Booking__c = dayReturnBooking.Id,
       Identifier__c = 'P1',
@@ -1064,6 +1086,12 @@ private class EU261Service_Test {
       First_Name__c = 'Sven',
       Last_Name__c = 'Svensson'
     );
+    Passenger__c validPassenger = new Passenger__c(
+      Booking__c = validBooking.Id,
+      Identifier__c = 'P1',
+      First_Name__c = 'Sven',
+      Last_Name__c = 'Svensson'
+    );
 
     FlightIrregularities__c flight1Delay = new FlightIrregularities__c(
       Flight__c = flight1.Id,
@@ -1196,6 +1224,7 @@ private class EU261Service_Test {
       missingTravelersSegment,
       claimFirmSegment,
       careDuplicateClaimSegment,
+      validSegment,
       oneWayPassenger,
       dayReturnPassenger,
       roundTripPassenger,
@@ -1233,6 +1262,7 @@ private class EU261Service_Test {
       missingTravelersPassenger,
       claimFirmPassenger,
       careDuplicatePassenger,
+      validPassenger,
       flight1Delay,
       flight3Delay,
       nonEUFlightDelay,
@@ -1439,6 +1469,13 @@ private class EU261Service_Test {
         LIA_Claim__c.Customer_Claim_Type__c => 'Flight Cancellation'
       }
     );
+    TestDataFactories.CasesClaims validClaim = createDefaultTestClaim(
+      validBookingReference,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Flight_Number__c => 'SK0001',
+        LIA_Claim__c.Preferred_Reimbursement_Method__c => 'EuroBonus Points'
+      }
+    );
 
     createCaseToBookings(
       new List<TestDataFactories.CasesClaims>{
@@ -1472,7 +1509,8 @@ private class EU261Service_Test {
         unknownClaim,
         careDuplicateClaim,
         twoFlightsCancelledNotInTimeClaim,
-        twoFlightsCancelledInTimeClaim
+        twoFlightsCancelledInTimeClaim,
+        validClaim
       }
     );
 
@@ -1522,6 +1560,12 @@ private class EU261Service_Test {
         Currency__c = 'SEK',
         Type__c = 'Food',
         Claim__c = expenseClaim.claims[0].Id
+      ),
+      new Claim_Expense__c(
+        Amount__c = 10,
+        Currency__c = 'SEK',
+        Type__c = 'Food',
+        Claim__c = validClaim.claims[0].Id
       )
     };
 
@@ -1574,6 +1618,7 @@ private class EU261Service_Test {
       LIA_Claim__c.Currency__c => 'SEK',
       LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
       LIA_Claim__c.Customer_Claim_Type__c => 'Flight delay',
+      LIA_Claim__c.EuroBonus_Number__c => '123456789',
       LIA_Claim__c.Flight_Number__c => 'SK0009',
       LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
       LIA_Claim__c.Liability_PNR__c => bookingReference,
@@ -1777,9 +1822,9 @@ private class EU261Service_Test {
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     EU261Service es = EU261Service.newInstance();
-    es.enabledSettlements = true;
-    es.enabledRejections = true;
-    es.percentageRequiringManualApproval = 0;
+    es.config.enabledSettlements = true;
+    es.config.enabledRejections = true;
+    es.config.percentageRequiringManualApproval = 0;
     List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
       claimIds,
       uow
@@ -1801,8 +1846,8 @@ private class EU261Service_Test {
           'It should be possible to evaluate a claim with a single passenger.'
         );
         System.assertEquals(
-          250,
-          c.decision.compensationPerCustomer.get(c.claimObj.customers[0]),
+          new Money(250, Money.CurrencyCode.EUR),
+          c.decision.compensationPerCustomerInEUR.get(c.claimObj.customers[0]),
           'Compensation amount should be 250 €'
         );
         Settlement__c settlementForClaim;
@@ -1825,13 +1870,13 @@ private class EU261Service_Test {
           'It should be possible to evaluate a claim with two passengers.'
         );
         System.assertEquals(
-          250,
-          c.decision.compensationPerCustomer.get(c.claimObj.customers[0]),
+          new Money(250, Money.CurrencyCode.EUR),
+          c.decision.compensationPerCustomerInEUR.get(c.claimObj.customers[0]),
           'Compensation should be 250€ for first customer'
         );
         System.assertEquals(
-          250,
-          c.decision.compensationPerCustomer.get(c.claimObj.customers[1]),
+          new Money(250, Money.CurrencyCode.EUR),
+          c.decision.compensationPerCustomerInEUR.get(c.claimObj.customers[1]),
           'Compensation should be 250€ for second customer'
         );
 
@@ -1948,7 +1993,7 @@ private class EU261Service_Test {
       'It should not be possible to automatically evaluate claims with expenses.'
     );
     System.assertEquals(
-      'caveats: has claim expenses',
+      'caveats: has high claim expenses',
       claimsWithEvaluationDetails[0].decision.reasoning,
       'Rejection reason should include caveat about expenses'
     );
@@ -2038,8 +2083,6 @@ private class EU261Service_Test {
       .automateEU261Claims(claimIds, uow);
     uow.commitWork();
     Test.stopTest();
-
-    System.debug(claimsWithEvaluationDetails[0].decision.reasoning);
 
     System.assertEquals(
       Claim.EU261HandlingStatus.EligibleForCompensation,
@@ -2201,17 +2244,17 @@ private class EU261Service_Test {
       'Handling status should be "Eligible for compensation"'
     );
     System.assertEquals(
-      250,
+      new Money(250, Money.CurrencyCode.EUR),
       claimsWithEvaluationDetails[0]
-        .decision.compensationPerCustomer.get(
+        .decision.compensationPerCustomerInEUR.get(
           claimsWithEvaluationDetails[0].claimObj.customers[0]
         ),
       'Compensation should be 250 euros.'
     );
     System.assertEquals(
-      0,
-      claimsWithEvaluationDetails[0].decision.reimbursementAmount,
-      'Reimbursement should be 250 euros.'
+      new Money(0, Money.CurrencyCode.SEK),
+      claimsWithEvaluationDetails[0].decision.reimbursementAmountInSEK,
+      'Reimbursement should be 0 SEK.'
     );
   }
 
@@ -2352,9 +2395,9 @@ private class EU261Service_Test {
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     EU261Service es = EU261Service.newInstance();
-    es.enabledSettlements = true;
-    es.enabledRejections = true;
-    es.percentageRequiringManualApproval = 0;
+    es.config.enabledSettlements = true;
+    es.config.enabledRejections = true;
+    es.config.percentageRequiringManualApproval = 0;
     List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
       claimIds,
       uow
@@ -2368,9 +2411,9 @@ private class EU261Service_Test {
       'The minimal cancellation claim should be automated.'
     );
     System.assertEquals(
-      250,
+      new Money(250, Money.CurrencyCode.EUR),
       claimsWithEvaluationDetails[0]
-        .decision.compensationPerCustomer.get(
+        .decision.compensationPerCustomerInEUR.get(
           claimsWithEvaluationDetails[0].claimObj.customers[0]
         ),
       'We should pay out €250 for the minimal cancellation claim'
@@ -2393,6 +2436,99 @@ private class EU261Service_Test {
       FROM Case
       WHERE
         Initially_Provided_PNR__c = :cancellationWithRebookingBookingReference
+    ][0];
+
+    System.assertEquals(
+      'Closed',
+      caseForClaim.Status,
+      'Parent case should be closed after handling.'
+    );
+  }
+
+  @IsTest
+  static void claimWithAllowedExpensesShouldBeAutomatedCorrectly() {
+    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
+        [
+          SELECT Id
+          FROM LIA_Claim__c
+          WHERE Liability_PNR__c = :validBookingReference
+        ]
+      ))
+      .keySet();
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    EU261Service es = EU261Service.newInstance();
+    es.config.enabledSettlements = true;
+    es.config.enabledRejections = true;
+    es.config.percentageRequiringManualApproval = 0;
+    es.config.expenseLimitFood = new Money(100, Money.CurrencyCode.SEK);
+    es.config.expenseLimitTotal = new Money(1000, Money.CurrencyCode.SEK);
+    List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
+      claimIds,
+      uow
+    );
+    uow.commitWork();
+    Test.stopTest();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      claimsWithEvaluationDetails[0].decision.verdict,
+      'The minimal cancellation claim should be automated.'
+    );
+    System.assertEquals(
+      new Money(250, Money.CurrencyCode.EUR),
+      claimsWithEvaluationDetails[0]
+        .decision.compensationPerCustomerInEUR.get(
+          claimsWithEvaluationDetails[0].claimObj.customers[0]
+        ),
+      'We should pay out €250 for the minimal cancellation claim'
+    );
+    System.assertEquals(
+      new Money(10, Money.CurrencyCode.SEK),
+      claimsWithEvaluationDetails[0].decision.reimbursementAmountInSEK,
+      'We should pay out 10 SEK for reimbursement'
+    );
+
+    List<Settlement__c> settlementsForClaim = [
+      SELECT Id, Amount__c, EuroBonus_Points__c, RecordTypeId
+      FROM Settlement__c
+      WHERE Claim__c = :claimsWithEvaluationDetails[0].claimObj.id
+    ];
+
+    System.assertEquals(
+      2,
+      settlementsForClaim.size(),
+      'Separate compensation and reimbursement settlements should have been created'
+    );
+
+    System.assertEquals(
+      2500.0,
+      settlementsForClaim[0].Amount__c,
+      'Settlement amount should be multiplied by the exchange rate.'
+    );
+
+    System.assertEquals(
+      Settlements.getRecordTypeId(Settlements.RecordType.EBPoints),
+      settlementsForClaim[1].RecordTypeId,
+      'Reimbursement settlement should be in eb points'
+    );
+    System.assertEquals(
+      null,
+      settlementsForClaim[1].Amount__c,
+      'Points settlement for reimbursement should have amount as null'
+    );
+    System.assertEquals(
+      100,
+      settlementsForClaim[1].EuroBonus_Points__c,
+      'Points settlement for reimbursement should have 10 SEK worth of points'
+    );
+
+    Case caseForClaim = [
+      SELECT Id, Status
+      FROM Case
+      WHERE Initially_Provided_PNR__c = :validBookingReference
     ][0];
 
     System.assertEquals(
@@ -2427,8 +2563,8 @@ private class EU261Service_Test {
       'If a cancelled flight leads to a missed connection and a delay of +3 hours the customer should be eligble for compensation (two flights).'
     );
     System.assertEquals(
-      250,
-      twoFlightsClaim.decision.compensationPerCustomer.values()[0],
+      new Money(250, Money.CurrencyCode.EUR),
+      twoFlightsClaim.decision.compensationPerCustomerInEUR.values()[0],
       'The customer should be awarded 250 eur (two flights)'
     );
   }
