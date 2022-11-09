@@ -3,9 +3,9 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
 
   public Id segmentId;
 
-  public String newStatus;
+  public StatusCode newStatus;
   public String officeCode;
-  public String operationType;
+  public OperationType operationType;
   public String previousStatus;
   public Datetime updateDate;
   public Decimal updateNumber;
@@ -30,21 +30,21 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
   };
 
   private static final Map<OperationType, String> OPERATION_ENUM_TO_PICKLIST_VALUE = new Map<OperationType, String>{
-    'XD' => OperationType.C_XD,
-    'A' => OperationType.C_A,
-    'X' => OperationType.C_X,
-    'CD' => OperationType.C_CD,
-    'C' => OperationType.C_C,
-    'AD' => OperationType.C_AD
+    OperationType.C_XD => 'XD',
+    OperationType.C_A => 'A',
+    OperationType.C_X => 'X',
+    OperationType.C_CD => 'CD',
+    OperationType.C_C => 'C',
+    OperationType.C_AD => 'AD'
   };
 
   private static final Map<OperationType, String> opeartionTypeToDescription = new Map<OperationType, String>{
     OperationType.C_A => 'Added X',
     OperationType.C_C => 'Changed X',
     OperationType.C_X => 'Cancelled X',
-    OperationType.C_AD => '-',
-    OperationType.C_CD => '-',
-    OperationType.C_XD => '-'
+    OperationType.C_AD => 'Added ?',
+    OperationType.C_CD => 'Changed ?',
+    OperationType.C_XD => 'Cancelled ?'
   };
 
   private static final Map<String, StatusCode> STATUS_PICKLIST_VALUE_TO_ENUM = new Map<String, StatusCode>{
@@ -402,9 +402,11 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     this.underlyingSObject = se;
 
     this.segmentId = se.Segment__c;
-    this.newStatus = se.New_Status__c;
+    this.newStatus = STATUS_PICKLIST_VALUE_TO_ENUM.get(se.New_Status__c);
     this.officeCode = se.Office_Code__c;
-    this.operationType = se.Operation_Type__c;
+    this.operationType = OPERATION_TYPE_PICKLIST_VALUE_TO_ENUM.get(
+      se.Operation_Type__c
+    );
     this.previousStatus = se.Previous_Status__c;
     this.updateDate = se.Update_Date__c;
     this.updateNumber = se.Update_Number__c;
@@ -412,9 +414,13 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
 
   public override void updateSObjectFields() {
     this.underlyingSObject.Segment__c = this.segmentId;
-    this.underlyingSObject.New_Status__c = this.newStatus;
+    this.underlyingSObject.New_Status__c = STATUS_ENUM_TO_PICKLIST_VALUE.get(
+      this.newStatus
+    );
     this.underlyingSObject.Office_Code__c = this.officeCode;
-    this.underlyingSObject.Operation_Type__c = this.operationType;
+    this.underlyingSObject.Operation_Type__c = OPERATION_ENUM_TO_PICKLIST_VALUE.get(
+      this.operationType
+    );
     this.underlyingSObject.Previous_Status__c = this.previousStatus;
     this.underlyingSObject.Update_Date__c = this.updateDate;
     this.underlyingSObject.Update_Number__c = this.updateNumber;
