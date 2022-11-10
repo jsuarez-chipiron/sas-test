@@ -128,6 +128,17 @@ public without sharing class Claims extends ApplicationDomain {
     return this;
   }
 
+  public Claims setHandlingInstructions(
+    fflib_ISObjectUnitOfWork uow,
+    Map<Id, String> claimIdToHandlingInstructions
+  ) {
+    for (Claim c : objects) {
+      c.eu261HandlingInstructions = claimIdToHandlingInstructions.get(c.id);
+    }
+
+    return this;
+  }
+
   public Claims createFromCompensationCardForm(CaseFormJSON2Apex formData) {
     List<LIA_Claim__c> claimsToCreate = new List<LIA_Claim__c>();
 
