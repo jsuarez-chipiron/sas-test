@@ -34,4 +34,16 @@ public without sharing class ClaimCustomer extends AbstractSObjectWrapper {
     this.lastName = c.Last_Name__c;
     this.parentClaimId = c.Claim__c;
   }
+
+  public Integer hashCode() {
+    if (this.underlyingSObject != null && this.underlyingSObject.Id != null) {
+      return String.valueOf(this.underlyingSObject.Id).hashCode();
+    } else {
+      return this.fullName.hashCode();
+    }
+  }
+
+  public override String toString() {
+    return this.fullName;
+  }
 }
