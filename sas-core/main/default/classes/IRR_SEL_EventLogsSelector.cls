@@ -42,7 +42,7 @@ public class IRR_SEL_EventLogsSelector extends fflib_SObjectSelector
     public Database.QueryLocator getQueuedIcouponQueryLocator(String flightId) {
         String eventType ='ICOUPON';
         fflib_QueryFactory queryFactory = newQueryFactory()
-            .setCondition('IRR_Event_Type__c =:eventType AND Is_Communication_Send__c = false AND IRR_FlightId__c =:flightId');
+            .setCondition('IRR_Event_Type__c =:eventType AND IRR_FlightId__c =:flightId');
         return Database.getQueryLocator(queryFactory.toSOQL());
 
     }
