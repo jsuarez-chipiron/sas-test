@@ -33,9 +33,10 @@ public class IRR_SEL_EventLogsSelector extends fflib_SObjectSelector
     }
 
     public Database.QueryLocator getQueuedManualQueryLocator() {
+        String eventType ='ICOUPON';
         Datetime currentTime = System.Now();
         fflib_QueryFactory queryFactory = newQueryFactory()
-            .setCondition('IRR_ScheduleTime__c <= :currentTime');
+            .setCondition('IRR_ScheduleTime__c <= :currentTime AND IRR_Event_Type__c !=:eventType');
         return Database.getQueryLocator(queryFactory.toSOQL());
 
     }
