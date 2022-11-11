@@ -32,6 +32,7 @@ public class SAS_Service_Application {
       Redeemed_Compensation_Card__c.SObjectType => RedeemedCompensationCardsSelector.class,
       Refund_Request__c.SObjectType => Refund_RequestsSelector.class,
       Segment__c.SObjectType => SegmentsSelector.class,
+      Segment_Event__c.SObjectType => SegmentEventsSelector.class,
       Settlement__c.SObjectType => SettlementsSelector.class,
       Settlement_Item__c.SObjectType => SettlementItemsSelector.class,
       SocialPost.SObjectType => SocialPostsSelector.class,
@@ -62,6 +63,7 @@ public class SAS_Service_Application {
       Redeemed_Compensation_Card__c.SObjectType => RedeemedCompensationCards.Constructor.class,
       Refund_Request__c.SObjectType => Refund_Requests.Constructor.class,
       Segment__c.SObjectType => Segments.Constructor.class,
+      Segment_Event__c.SObjectType => SegmentEvents.Constructor.class,
       Settlement__c.SObjectType => Settlements.Constructor.class,
       Settlement_Item__c.SObjectType => SettlementItems.Constructor.class,
       SocialPost.SObjectType => SocialPosts.Constructor.class
@@ -100,6 +102,7 @@ public class SAS_Service_Application {
       Claim_Expense__c.SObjectType,
       Passenger__c.SObjectType,
       Segment__c.SObjectType,
+      Segment_Event__c.SObjectType,
       Case.SobjectType,
       Refund_Request__c.SobjectType,
       Group_Travel_Request__c.SobjectType,
