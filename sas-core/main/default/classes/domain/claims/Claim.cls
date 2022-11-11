@@ -1,5 +1,4 @@
 public without sharing class Claim extends AbstractSObjectWrapper {
-  public Datetime createdDate;
   public RecordType recordType;
   public LIA_Claim__c underlyingSObject { get; private set; }
 
@@ -55,6 +54,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
 
   public String comment;
 
+  @TestVisible
   public Money submittedClaimExpenses { get; private set; } // Roll-up field
 
   public Boolean containsDetailObjectData { get; private set; }

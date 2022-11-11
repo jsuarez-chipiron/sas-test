@@ -28,10 +28,9 @@ public with sharing class TestIrregularityFactory {
     fi.id = fflib_IDGenerator.generate(
       FlightIrregularities__c.getSObjectType()
     ); 
-    fi.cancellationTime = DateTime.newInstance(2020, 1, 1, 1, 1, 1);
     fi.code = 'FA';
     fi.description = null;
-    fi.durationMinutes = 60;
+    fi.durationMinutes = 240;
     fi.eligibleForEU261 = FlightIrregularity.EU261Eligibility.Yes;
     fi.flightId = f.id;
     fi.reason = 'Special request caused issues';

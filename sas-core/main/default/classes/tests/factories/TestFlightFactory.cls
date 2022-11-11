@@ -6,8 +6,8 @@ public with sharing class TestFlightFactory {
     String departure,
     String arrival
   ) {
-    Airport departureAirport = TestAirportFixture.get(departure);
-    Airport arrivalAirport = TestAirportFixture.get(arrival);
+    Airport departureAirport = TestAirportFixture.codeToAirport.get(departure);
+    Airport arrivalAirport = TestAirportFixture.codeToAirport.get(arrival);
 
     String tedsIdentifier =
       flightNumber +

@@ -25,7 +25,7 @@ public with sharing class TestClaimFactory {
     c.contactFirstName = 'Test';
     c.contactLastName = 'Testsson';
     c.contactCountry = 'Sweden';
-    c.preferredCurrency = Currencies.Code.EUR;
+    c.preferredCurrency = Money.CurrencyCode.EUR;
     c.category = null;
     c.type = null;
     c.euroBonusNumber = '000000000';

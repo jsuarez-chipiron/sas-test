@@ -308,4 +308,18 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     Matcher matcher = validFlightNumberFormat.matcher(toCheck);
     return matcher.matches();
   }
+
+  public Boolean equals(Object obj) {
+    if (obj instanceof Flight) {
+      Flight that = (Flight) obj;
+
+      return this.tedsIdentifier == that.tedsIdentifier;
+    } else {
+      return false;
+    }
+  }
+
+  public Integer hashCode() {
+    return 31 * this.tedsIdentifier.hashCode();
+  }
 }
