@@ -16,6 +16,8 @@ public without sharing class ClaimCustomer extends AbstractSObjectWrapper {
     this.underlyingSObject.Last_Name__c = this.lastName;
     this.underlyingSObject.Claim__c = this.parentClaimId;
   }
+
+  @TestVisible
   private ClaimCustomer() {
     this.underlyingSObject = new Customer__c();
   }

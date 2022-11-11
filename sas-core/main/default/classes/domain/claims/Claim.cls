@@ -54,6 +54,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
 
   public String comment;
 
+  @TestVisible
   public Money submittedClaimExpenses { get; private set; } // Roll-up field
 
   public Boolean containsDetailObjectData { get; private set; }
@@ -133,6 +134,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
 
   public Claim(LIA_Claim__c c) {
     super(c);
+    this.createdDate = c.CreatedDate;
+
     this.underlyingSObject = c;
     this.containsDetailObjectData = false;
 

@@ -11,6 +11,7 @@ public without sharing class Passenger extends AbstractSObjectWrapper {
   public String lastName;
   public String phone;
 
+  @TestVisible
   private Passenger() {
     this.underlyingSObject = new Passenger__c();
   }

@@ -150,13 +150,6 @@ public class EU261Claim {
 
     if (b != null && b.size() != 0) {
       this.claimedBooking = b[0];
-
-      for (Flight f : this.claimedBooking.flights) {
-        for (FlightIrregularity fi : f.irregularities) {
-          System.debug(fi);
-        }
-      }
-
       this.foundMultipleMatchingBookings = b.size() > 1;
 
       try {

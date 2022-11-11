@@ -11,12 +11,12 @@ public without sharing class Booking extends AbstractSObjectWrapper {
   public List<Segment> segments;
   public List<Passenger> passengers;
 
-  public List<Flight> flights {
+  public Set<Flight> flights {
     get {
       if (this.segments == null) {
         return null;
       }
-      List<Flight> toReturn = new List<Flight>();
+      Set<Flight> toReturn = new Set<Flight>();
 
       for (Segment s : this.segments) {
         if (s.flight != null) {
@@ -39,6 +39,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     Unknown
   }
 
+  @TestVisible
   private Booking() {
     this.underlyingSObject = new Booking__c();
   }
