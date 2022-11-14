@@ -1,6 +1,205 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <description>The variable holds the teams that require sending a survey to the customer once the case is closed</description>
+        <name>Assign_the_teams_for_sending_surveys</name>
+        <label>Assign the teams for sending surveys</label>
+        <locationX>484</locationX>
+        <locationY>1247</locationY>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Gold DK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Gold NO</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Gold SE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Diamond DK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Diamond NO</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Diamond SE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Pandion DK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Pandion NO</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Pandion SE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Support Scandinavia</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>ACE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>AT</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Benelux</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>CH</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>ES</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>FI</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>FR</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>IE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>IS</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>IT</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>PL</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>RU</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>UK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>US</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>NO</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>DK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>teamsForSurveys</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>SE</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Should_a_survey_invitation_be_created</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Close_the_Case_directly</name>
         <label>Close the Case directly</label>
@@ -91,7 +290,7 @@
         <name>Should_a_survey_invitation_be_created</name>
         <label>Should a survey invitation be created?</label>
         <locationX>484</locationX>
-        <locationY>1247</locationY>
+        <locationY>1367</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>SendChatSurveyOutcome</name>
@@ -138,7 +337,7 @@
         </rules>
         <rules>
             <name>Yes_Survey_for_Closed_Cases</name>
-            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND (7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15 OR 16 OR 17 OR 18 OR 19 OR 20 OR 21 OR 22 OR 23 OR 24 OR 25 OR 26 OR 27)</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status</leftValueReference>
                 <operator>EqualTo</operator>
@@ -158,6 +357,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>teamsForSurveys</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>caseTeamName</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -182,150 +388,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>StartsWith</operator>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>Gold</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>Diamond</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>Pandion</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Support Scandinavia</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ACE</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>AT</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Benelux</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>CH</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ES</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>FI</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>FR</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>IE</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>IS</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>IT</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>PL</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>RU</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>UK</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>US</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>NO</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>DK</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Team__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>SE</stringValue>
+                    <stringValue>kundeserviceavdeling@sas.no</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -341,7 +407,7 @@
         <locationX>484</locationX>
         <locationY>791</locationY>
         <defaultConnector>
-            <targetReference>Should_a_survey_invitation_be_created</targetReference>
+            <targetReference>Assign_the_teams_for_sending_surveys</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -406,6 +472,11 @@
     <description>Flow to replace old Case Process Builder</description>
     <environments>Default</environments>
     <formulas>
+        <name>caseTeamName</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!$Record.Team__c})</expression>
+    </formulas>
+    <formulas>
         <name>newReopenedCount</name>
         <dataType>Number</dataType>
         <expression>{!$Record.FCS_ReopenedCount__c} + 1</expression>
@@ -436,7 +507,7 @@
         <name>Close_the_Case</name>
         <label>Close the Case</label>
         <locationX>176</locationX>
-        <locationY>1799</locationY>
+        <locationY>1919</locationY>
         <inputAssignments>
             <field>Status</field>
             <value>
@@ -451,7 +522,7 @@
         <locationX>220</locationX>
         <locationY>911</locationY>
         <connector>
-            <targetReference>Should_a_survey_invitation_be_created</targetReference>
+            <targetReference>Assign_the_teams_for_sending_surveys</targetReference>
         </connector>
         <inputAssignments>
             <field>FCS_FirstClosingDate__c</field>
@@ -489,7 +560,7 @@
         <name>Create_Survey_Invitation_for_chat</name>
         <label>Create Survey Invitation for chat</label>
         <locationX>220</locationX>
-        <locationY>1367</locationY>
+        <locationY>1487</locationY>
         <flowName>CASE_Generate_Survey_Invitation</flowName>
         <inputAssignments>
             <name>caseRecord</name>
@@ -502,7 +573,7 @@
         <name>Create_Survey_Invitation_for_email_sending</name>
         <label>Create Survey Invitation for email sending</label>
         <locationX>484</locationX>
-        <locationY>1367</locationY>
+        <locationY>1487</locationY>
         <flowName>CASE_Generate_Survey_Invitation</flowName>
         <inputAssignments>
             <name>caseRecord</name>
@@ -561,4 +632,11 @@
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>New Response {!$Record.CaseNumber}</text>
     </textTemplates>
+    <variables>
+        <name>teamsForSurveys</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
