@@ -27,6 +27,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Bank_Account_Info__c.Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Bank_Account_Info__c.BIC_Swift__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -278,6 +283,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Claim_Firm__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Claim_Firm__c.Reviewer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1122,7 +1132,15 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
+        <tab>Bank_Account_Info__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>CARE_Cases</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Claim_Firm__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
