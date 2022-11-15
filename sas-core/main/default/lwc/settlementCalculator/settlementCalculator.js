@@ -430,7 +430,8 @@ export default class SettlementCalculator extends LightningElement {
 
     this.showSpinner = true;
     const settlementItems = this.rows.map((row) => ({
-      Amount__c: row.amount,
+      // Rounding up the amount because it creates issue for some of the currencies to pay when it has decimals in amount.
+      Amount__c: Math.ceil(row.amount),
       Cost_Account__c: row.costAccount,
       Customer_Name__c: row.customer,
       Comments__c: row.comments,

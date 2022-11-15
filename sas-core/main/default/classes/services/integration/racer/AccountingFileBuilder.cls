@@ -46,7 +46,7 @@ public class AccountingFileBuilder {
       );
     }
 
-    String fileContents = '';
+    List<String> fileContents = new List<String>();
     Integer sumOfDebitEntries = 0;
 
     // Create one debit line per accounting entry.
@@ -56,16 +56,17 @@ public class AccountingFileBuilder {
           // A special case. Padded with to left zeroes and added up to a total line.
           String amountAsText = entry.data.get(field);
 
-          fileContents += amountAsText.leftPad(
-            AccountingEntry.FIELD_LENGTHS.get(field),
-            '0'
+          fileContents.add(
+            amountAsText.leftPad(AccountingEntry.FIELD_LENGTHS.get(field), '0')
           );
           if (entry.type == AccountingEntry.EntryType.DEBIT) {
             sumOfDebitEntries += entry.amount;
           }
         } else if (field == 'VerificationNumber') {
-          fileContents += String.valueOf(verificationNumber)
-            .rightPad(AccountingEntry.FIELD_LENGTHS.get(field));
+          fileContents.add(
+            String.valueOf(verificationNumber)
+              .rightPad(AccountingEntry.FIELD_LENGTHS.get(field))
+          );
         } else {
           // Check if this is a constant field.
           String fieldContents = AccountingEntry.CONSTANT_FIELDS.get(field);
@@ -77,15 +78,15 @@ public class AccountingFileBuilder {
             : fieldContents;
 
           // Pad text to full field length as the file format is column based.
-          fileContents += textToAdd.rightPad(
-            AccountingEntry.FIELD_LENGTHS.get(field)
+          fileContents.add(
+            textToAdd.rightPad(AccountingEntry.FIELD_LENGTHS.get(field))
           );
         }
       }
-      fileContents += '\n';
+      fileContents.add('\n');
     }
 
-    fileContents += createTotalLine(sumOfDebitEntries, verificationNumber);
+    fileContents.add(createTotalLine(sumOfDebitEntries, verificationNumber));
 
     String dayOfYear = String.valueOf(Date.today().dayOfYear()).leftPad(3, '0');
 
@@ -103,7 +104,7 @@ public class AccountingFileBuilder {
       ContentLocation = 'S',
       PathOnClient = fileName + '.txt',
       Title = fileName,
-      VersionData = Blob.valueOf(fileContents)
+      VersionData = Blob.valueOf(String.join(fileContents, ''))
     );
 
     insert accountingFile;
@@ -132,19 +133,30 @@ public class AccountingFileBuilder {
     Integer sumOfDebitEntries,
     Decimal verificationNumber
   ) {
-    String totalLine = 'RAT01';
-    totalLine += String.valueOf(verificationNumber).rightPad(60);
-    totalLine += String.valueOf(sumOfDebitEntries).leftPad(17, '0');
-    totalLine += ''.rightPad(AccountingEntry.FIELD_LENGTHS.get('Description'));
-    totalLine += AccountingEntry.CONSTANT_FIELDS.get('CompanyCode')
-      .rightPad(AccountingEntry.FIELD_LENGTHS.get('CompanyCode'));
-    totalLine += AccountingEntry.CONSTANT_FIELDS.get('Period')
-      .rightPad(AccountingEntry.FIELD_LENGTHS.get('Period'));
-    totalLine += AccountingEntry.CONSTANT_FIELDS.get('FeederName')
-      .rightPad(AccountingEntry.FIELD_LENGTHS.get('FeederName'));
-    totalLine += AccountingEntry.CONSTANT_FIELDS.get('DeliveryNumber')
-      .rightPad(AccountingEntry.FIELD_LENGTHS.get('DeliveryNumber'));
+    List<String> totalLine = new List<String>();
+    totalLine.add('RAT01');
+    totalLine.add(String.valueOf(verificationNumber).rightPad(60));
+    totalLine.add(String.valueOf(sumOfDebitEntries).leftPad(17, '0'));
+    totalLine.add(
+      ''.rightPad(AccountingEntry.FIELD_LENGTHS.get('Description'))
+    );
+    totalLine.add(
+      AccountingEntry.CONSTANT_FIELDS.get('CompanyCode')
+        .rightPad(AccountingEntry.FIELD_LENGTHS.get('CompanyCode'))
+    );
+    totalLine.add(
+      AccountingEntry.CONSTANT_FIELDS.get('Period')
+        .rightPad(AccountingEntry.FIELD_LENGTHS.get('Period'))
+    );
+    totalLine.add(
+      AccountingEntry.CONSTANT_FIELDS.get('FeederName')
+        .rightPad(AccountingEntry.FIELD_LENGTHS.get('FeederName'))
+    );
+    totalLine.add(
+      AccountingEntry.CONSTANT_FIELDS.get('DeliveryNumber')
+        .rightPad(AccountingEntry.FIELD_LENGTHS.get('DeliveryNumber'))
+    );
 
-    return totalLine;
+    return String.join(totalLine, '');
   }
 }

@@ -32,7 +32,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public String bankName;
   public String bankBicSwift;
   public String referenceNumber;
-  public Currencies.Code preferredCurrency;
+  public Money.CurrencyCode preferredCurrency;
   public String euroBonusNumber;
 
   public Boolean personWithReducedMobility = false;
@@ -54,11 +54,13 @@ public without sharing class Claim extends AbstractSObjectWrapper {
 
   public String comment;
 
-  public Decimal submittedClaimExpenses { get; private set; } // Roll-up field
+  @TestVisible
+  public Money submittedClaimExpenses { get; private set; } // Roll-up field
 
   public Boolean containsDetailObjectData { get; private set; }
 
   public List<ClaimCustomer> customers;
+  public List<ClaimExpense> expenses;
 
   public override void updateSObjectFields() {
     this.underlyingSObject.Address_line_1__c = this.contactAddressLine1;
@@ -80,7 +82,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.underlyingSObject.Contact_First_Name__c = this.contactFirstName;
     this.underlyingSObject.Contact_Last_Name__c = this.contactLastName;
     this.underlyingSObject.Country__c = this.contactCountry;
-    this.underlyingSObject.Currency__c = Currencies.CODE_ENUM_TO_PICKLIST_VALUE.get(
+    this.underlyingSObject.Currency__c = Money.CURRENCY_ENUM_TO_PICKLIST_VALUE.get(
       this.preferredCurrency
     );
     this.underlyingSObject.Customer_Claim_Category__c = CATEGORY_ENUM_TO_PICKLIST_VALUE.get(
@@ -132,6 +134,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
 
   public Claim(LIA_Claim__c c) {
     super(c);
+    this.createdDate = c.CreatedDate;
+
     this.underlyingSObject = c;
     this.containsDetailObjectData = false;
 
@@ -155,7 +159,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.contactFullName = c.Contact_Full_Name__c;
     this.contactLastName = c.Contact_Last_Name__c;
     this.contactCountry = c.Country__c;
-    this.preferredCurrency = Currencies.CODE_PICKLIST_VALUE_TO_ENUM.get(
+    this.preferredCurrency = Money.CURRENCY_PICKLIST_VALUE_TO_ENUM.get(
       c.Currency__c
     );
     this.category = CATEGORY_PICKLIST_VALUE_TO_ENUM.get(
@@ -186,7 +190,12 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.baggagePurchasePrice = c.Purchase_Price__c;
     this.baggagePurchaseYear = c.Purchase_Year__c;
     this.recordType = getRecordTypeEnumById(c.RecordTypeId);
-    this.submittedClaimExpenses = c.Submitted_Claim_Expenses_in_SEK__c;
+    if (c.Submitted_Claim_Expenses_in_SEK__c != null) {
+      this.submittedClaimExpenses = new Money(
+        c.Submitted_Claim_Expenses_in_SEK__c,
+        Money.CurrencyCode.SEK
+      );
+    }
     this.travelAgentBookingReference = c.Travel_Agent_Booking_Reference__c;
     this.ticketNumber = c.Ticket_Number__c;
     this.delayToDestination = DELAY_LENGTH_PICKLIST_VALUE_TO_ENUM.get(
@@ -195,6 +204,14 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.contactType = CUSTOMER_TYPE_PICKLIST_VALUE_TO_ENUM.get(
       c.Type_of_Customer__c
     );
+
+    if (c.Claim_Expenses__r != null) {
+      List<ClaimExpense> expensesToAdd = new List<ClaimExpense>();
+      for (Claim_Expense__c ce : c.Claim_Expenses__r) {
+        expensesToAdd.add(new ClaimExpense(ce));
+      }
+      expenses = expensesToAdd;
+    }
 
     if (c.Customers__r != null) {
       List<ClaimCustomer> customersToAdd = new List<ClaimCustomer>();

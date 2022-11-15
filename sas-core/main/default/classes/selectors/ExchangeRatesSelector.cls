@@ -3,6 +3,8 @@ public inherited sharing class ExchangeRatesSelector extends fflib_SObjectSelect
     return new List<Schema.SObjectField>{
       Exchange_Rate__c.Id,
       Exchange_Rate__c.Name,
+      Exchange_Rate__c.CreatedDate,
+      Exchange_Rate__c.LastModifiedDate,
       Exchange_Rate__c.From_Currency__c,
       Exchange_Rate__c.To_Currency__c,
       Exchange_Rate__c.Rate__c,
@@ -36,22 +38,45 @@ public inherited sharing class ExchangeRatesSelector extends fflib_SObjectSelect
     );
   }
 
+  public List<ExchangeRate> selectByFromCurrency(
+    Money.CurrencyCode fromCurrency
+  ) {
+    String fromCurrencyString = fromCurrency.name();
+    List<Exchange_Rate__c> sObjects = (List<Exchange_Rate__c>) Database.query(
+      newQueryFactory()
+        .setCondition('From_Currency__c = :fromCurrencyString')
+        .toSOQL()
+    );
+
+    List<ExchangeRate> toReturn = new List<ExchangeRate>();
+
+    if (sObjects == null) {
+      return toReturn;
+    }
+
+    for (Exchange_Rate__c er : sObjects) {
+      toReturn.add(new ExchangeRate(er));
+    }
+
+    return toReturn;
+  }
+
   public List<Exchange_Rate__c> selectByCurrencies(
     String fromCurrency,
     String toCurrency
   ) {
     return (List<Exchange_Rate__c>) Database.query(
       newQueryFactory()
-        .setCondition('From_Currency__c = :fromCurrency AND To_Currency__c = :toCurrency')
+        .setCondition(
+          'From_Currency__c = :fromCurrency AND To_Currency__c = :toCurrency'
+        )
         .toSOQL()
     );
   }
 
   public List<Exchange_Rate__c> selectByToCurrency(String toCurrency) {
     return (List<Exchange_Rate__c>) Database.query(
-      newQueryFactory()
-        .setCondition('To_Currency__c = :toCurrency')
-        .toSOQL()
+      newQueryFactory().setCondition('To_Currency__c = :toCurrency').toSOQL()
     );
   }
 

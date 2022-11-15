@@ -8,6 +8,7 @@
 public without sharing abstract class AbstractSObjectWrapper {
   public String name;
   public Id id;
+  @TestVisible
   public Datetime createdDate { get; protected set; } // cannot be modified manually
   public Datetime lastModifiedDate { get; protected set; } // cannot be modified manually
 

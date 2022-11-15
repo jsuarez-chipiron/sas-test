@@ -22,6 +22,8 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
 
   public Flight flight;
 
+  public List<SegmentEvent> events; // Todo: handle initialization
+
   private Segment() {
     this.underlyingSObject = new Segment__c();
   }

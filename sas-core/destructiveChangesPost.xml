@@ -16,6 +16,7 @@
         <name>ApexTrigger</name>
     </types>
     <types>
+        <members>Currencies</members>
         <members>FetchCAREDataEvents</members>
         <name>ApexClass</name>
     </types>
