@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Retrieve_Flow_Variables</name>
         <label>Retrieve Flow Variables</label>
-        <locationX>583</locationX>
+        <locationX>1192</locationX>
         <locationY>202</locationY>
         <actionName>IRR_ACT_StaticInput</actionName>
         <actionType>apex</actionType>
@@ -24,8 +24,8 @@
     <assignments>
         <name>Assignment</name>
         <label>Assignment</label>
-        <locationX>1101</locationX>
-        <locationY>1780</locationY>
+        <locationX>6</locationX>
+        <locationY>1033</locationY>
         <assignmentItems>
             <assignToReference>sendIcouponSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -58,8 +58,8 @@
     <assignments>
         <name>Only_for_AMS</name>
         <label>Only for AMS</label>
-        <locationX>1329</locationX>
-        <locationY>1825</locationY>
+        <locationX>269</locationX>
+        <locationY>1029</locationY>
         <assignmentItems>
             <assignToReference>sendIcouponSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -92,8 +92,8 @@
     <assignments>
         <name>Send_SMS_and_Email</name>
         <label>Send SMS and Email</label>
-        <locationX>916</locationX>
-        <locationY>1166</locationY>
+        <locationX>1002</locationX>
+        <locationY>1631</locationY>
         <assignmentItems>
             <assignToReference>sendSMSMessage</assignToReference>
             <operator>Assign</operator>
@@ -122,15 +122,12 @@
                 <stringValue>irr_delay_email_01</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Coupon</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>US_Assignment</name>
         <label>US Assignment</label>
-        <locationX>591</locationX>
-        <locationY>1583</locationY>
+        <locationX>646</locationX>
+        <locationY>1630</locationY>
         <assignmentItems>
             <assignToReference>sendEmailMessage</assignToReference>
             <operator>Assign</operator>
@@ -159,15 +156,12 @@
                 <stringValue>irr_delay_sms_01_US</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Coupon</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>USAirport_Assignment</name>
         <label>USAirport Assignment</label>
-        <locationX>576</locationX>
-        <locationY>1253</locationY>
+        <locationX>821</locationX>
+        <locationY>1212</locationY>
         <assignmentItems>
             <assignToReference>USAirport</assignToReference>
             <operator>Add</operator>
@@ -224,8 +218,8 @@
     <decisions>
         <name>Check_US_Station</name>
         <label>Check US Station</label>
-        <locationX>695</locationX>
-        <locationY>1240</locationY>
+        <locationX>816</locationX>
+        <locationY>1413</locationY>
         <defaultConnector>
             <targetReference>Send_SMS_and_Email</targetReference>
         </defaultConnector>
@@ -270,8 +264,8 @@
     <decisions>
         <name>Delay_Difference</name>
         <label>Delay Difference</label>
-        <locationX>589</locationX>
-        <locationY>311</locationY>
+        <locationX>1070</locationX>
+        <locationY>629</locationY>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_10_minutes</name>
@@ -318,8 +312,8 @@
     <decisions>
         <name>Delay_Difference_0</name>
         <label>Delay Difference</label>
-        <locationX>1633</locationX>
-        <locationY>565</locationY>
+        <locationX>2316</locationX>
+        <locationY>648</locationY>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_30_minutes</name>
@@ -359,8 +353,8 @@
     <decisions>
         <name>Delay_Difference_0_0</name>
         <label>Delay Difference</label>
-        <locationX>1193</locationX>
-        <locationY>566</locationY>
+        <locationX>1440</locationX>
+        <locationY>793</locationY>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Less_than_1_hour</name>
@@ -400,8 +394,8 @@
     <decisions>
         <name>Delay_Sequence</name>
         <label>Delay Sequence</label>
-        <locationX>1413</locationX>
-        <locationY>446</locationY>
+        <locationX>2113</locationX>
+        <locationY>531</locationY>
         <defaultConnector>
             <targetReference>Delay_Difference_0</targetReference>
         </defaultConnector>
@@ -425,8 +419,8 @@
     <decisions>
         <name>Has_Coupon</name>
         <label>Has Coupon</label>
-        <locationX>1308</locationX>
-        <locationY>1362</locationY>
+        <locationX>127</locationX>
+        <locationY>528</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Coupon_Id</name>
@@ -439,10 +433,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>delayInfo.firstDelay</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>delayInfo.stationArrival</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>YYZ</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>delayInfo.stationDeparture</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>YYZ</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -454,8 +455,8 @@
     <decisions>
         <name>hasAirportAMS</name>
         <label>hasAirportAMS</label>
-        <locationX>1239</locationX>
-        <locationY>1559</locationY>
+        <locationX>131</locationX>
+        <locationY>833</locationY>
         <defaultConnector>
             <targetReference>Assignment</targetReference>
         </defaultConnector>
@@ -479,8 +480,8 @@
     <decisions>
         <name>Stop_Canada_Messages</name>
         <label>Stop Canada Messages</label>
-        <locationX>678</locationX>
-        <locationY>983</locationY>
+        <locationX>817</locationX>
+        <locationY>1012</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>No_Canada_Messages</name>
@@ -508,8 +509,8 @@
     <decisions>
         <name>Time_to_departure</name>
         <label>Time to departure</label>
-        <locationX>934</locationX>
-        <locationY>502</locationY>
+        <locationX>1435</locationX>
+        <locationY>422</locationY>
         <defaultConnector>
             <targetReference>Delay_Sequence</targetReference>
         </defaultConnector>
@@ -522,6 +523,13 @@
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
                     <numberValue>600.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>delayInfo.hasCouponBatchId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -539,9 +547,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Has_Coupon</targetReference>
+            </connector>
             <label>Icoupon</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>IRR_EVT_DelayFlow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IRR EVT DelayFlow</label>
     <processMetadataValues>
@@ -564,7 +576,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>869</locationX>
+        <locationX>1478</locationX>
         <locationY>48</locationY>
         <connector>
             <targetReference>Retrieve_Flow_Variables</targetReference>

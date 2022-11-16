@@ -19,7 +19,6 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
     private IRR_MOD_DelayInfo delayInfo;
     @TestVisible
     private IRR_MOD_ICouponInfo ICouponInfo;
-
     public String getEventName(){
         return 'Delay';
     }
@@ -58,11 +57,17 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
      */
     public void initiateEvent() {
         //Retrieve previous delay and calculate difference
+        if( System.Isbatch()==false){
         Map<String, Integer> delayMinutesByFlightIds = IRR_SEL_DelayLogsSelector.newInstance()
                 .getLatestDelayByFlightIds(new Set<String>{delayInfo.flightId});
         delayInfo.previousDelayedMinutes = delayMinutesByFlightIds.containsKey(delayInfo.flightId) ?
                 delayMinutesByFlightIds.get(delayInfo.flightId) : 0;
-        delayInfo.firstDelay = delayInfo.previousDelayedMinutes == 0;
+            
+                
+       
+         delayInfo.firstDelay = delayInfo.previousDelayedMinutes == 0;
+            
+        
         delayInfo.delayDifference =Math.abs(delayInfo.delayedMinutes - delayInfo.previousDelayedMinutes);
 
 
@@ -83,70 +88,73 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         //Calculate time difference of scheduled time of departure and estimated time of departure in minutes
         Long millisecondsToScheduledTime = delayInfo.scheduledTimeOfDepartureUTC.getTime() - Datetime.now().getTime();
         delayInfo.minutesToScheduledTime = (Integer) millisecondsToScheduledTime / 60000;
-
+    }
         //Retrieve passengers for flight
         this.passengerInfos = IRR_SVC_TedsService.getPassengerInfosForFlight(delayInfo.flightId);
-
+       
         Map<String,List<String>> segmentIdToBoarding = new Map<String,List<String>>();
 
-       // binding segment id with boarding sequence number 
-        for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
-
-            if( passenger.hasThisSegment ==true && 
-                passenger.thisSegment.serviceClass !=null&& 
-                passenger.thisSegment.boardingSequenceNumber !=null
-              ){
-                    if(!segmentIdToBoarding.containsKey(passenger.thisSegment.serviceClass)){
-                        segmentIdToBoarding.put(passenger.thisSegment.serviceClass,new List<String> { });
-
-                    }
-                  segmentIdToBoarding.get(passenger.thisSegment.serviceClass).add(String.valueOf(passenger.thisSegment.boardingSequenceNumber));
-
-            }
-        }
-        
-        
-        Map<String,String> serviceClassToSegId = new Map<String,String>();
-         
-   
-         if(delayInfo.delayedMinutes >= 120 && delayInfo.firstDelay ==true){
-          List<IRR_MOD_ICouponInfo> iCouponInfo = IRR_SVC_ICouponService.createFlightIrregularity(delayInfo,segmentIdToBoarding);
-             if(iCouponInfo !=null && iCouponInfo.size()>0){
-                  delayInfo.hasCouponBatchId = true;
+        // binding segment id with boarding sequence number 
+         for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
+ 
+             if( passenger.hasThisSegment ==true && 
+                 passenger.thisSegment.serviceClass !=null&& 
+                 passenger.thisSegment.boardingSequenceNumber !=null
+               ){
+                     if(!segmentIdToBoarding.containsKey(passenger.thisSegment.serviceClass)){
+                         segmentIdToBoarding.put(passenger.thisSegment.serviceClass,new List<String> { });
+ 
+                     }
+                   segmentIdToBoarding.get(passenger.thisSegment.serviceClass).add(String.valueOf(passenger.thisSegment.boardingSequenceNumber));
+ 
              }
-            
-             System.debug('ICOUPONINFO-->'+iCouponInfo);
-             Map<String,IRR_MOD_ICouponInfo> classToAmount = new  Map<String,IRR_MOD_ICouponInfo>();
-             for(IRR_MOD_ICouponInfo icouponMod : iCouponInfo){
-                 classToAmount.put(icouponMod.serviceClassCode,icouponMod);
-             }
-
-            for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
-
-            if( passenger.hasThisSegment ==true && 
-                passenger.thisSegment.serviceClass !=null &&
-                passenger.thisSegment.boardingSequenceNumber !=null
-
-              ){
-                  if(classToAmount.containsKey(passenger.thisSegment.serviceClass)){
-
-                  IRR_MOD_ICouponInfo icoupon =classToAmount.get(passenger.thisSegment.serviceClass);
-
-                      String str    = 'The voucher amount is ' ;
-                               str +=icoupon.voucherAmount;
-                               str +=' ' +icoupon.currencyCode;
-                              str +='.';
-
-                      passenger.thisSegment.emailBackBody = str;
-                      passenger.thisSegment.couponBatchId  = classToAmount.get(passenger.thisSegment.serviceClass).couponBatchId;
-                  }
-
-              }
-                else{
-                    passenger.thisSegment.emailBackBody ='';
-                }
-            }
          }
+         
+         
+         Map<String,String> serviceClassToSegId = new Map<String,String>();
+          
+    
+          if(System.Isbatch()==true){
+           List<IRR_MOD_ICouponInfo> iCouponInfo = IRR_SVC_ICouponService.createFlightIrregularity(delayInfo,segmentIdToBoarding);
+              if(iCouponInfo !=null && iCouponInfo.size()>0){
+                   delayInfo.hasCouponBatchId = true;
+              }
+             
+              System.debug('ICOUPONINFO-->'+iCouponInfo);
+              Map<String,IRR_MOD_ICouponInfo> classToAmount = new  Map<String,IRR_MOD_ICouponInfo>();
+              for(IRR_MOD_ICouponInfo icouponMod : iCouponInfo){
+                  classToAmount.put(icouponMod.serviceClassCode,icouponMod);
+              }
+ 
+             for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
+ 
+             if( passenger.hasThisSegment ==true && 
+                 passenger.thisSegment.serviceClass !=null &&
+                 passenger.thisSegment.boardingSequenceNumber !=null
+ 
+               ){
+                   if(classToAmount.containsKey(passenger.thisSegment.serviceClass)){
+ 
+                   IRR_MOD_ICouponInfo icoupon =classToAmount.get(passenger.thisSegment.serviceClass);
+ 
+                       String str    = 'The voucher amount is ' ;
+                                str +=icoupon.voucherAmount;
+                                str +=' ' +icoupon.currencyCode;
+                               str +='.';
+ 
+                       passenger.thisSegment.emailBackBody = str;
+                       passenger.thisSegment.couponBatchId  = classToAmount.get(passenger.thisSegment.serviceClass).couponBatchId;
+                   }
+ 
+               }
+                 else{
+                     passenger.thisSegment.emailBackBody ='';
+                 }
+             }
+          }
+         
+       
+         
     }
    
     
@@ -174,7 +182,6 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         //Initiate variable container object for Flow
         IRR_MOD_FlowVariables flowVariables = new IRR_MOD_FlowVariables();
         flowVariables.delayInfo = delayInfo;
-
         //Process passengers
         for (IRR_MOD_PassengerInfo passengerInfo : passengerInfos) {
             //Only process passengers confirmed for this segment
@@ -196,11 +203,25 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
      * @param uow Unit of Work
      */
     public override void finalizeEvent(fflib_ISObjectUnitOfWork uow) {
+        
         super.finalizeEvent(uow);
-        if (messages != null && !messages.isEmpty()) {
+       
+        if (messages != null && !messages.isEmpty() && System.Isbatch() ==false) {
             insertDelayLog(uow);
+            
         }
+        if (
+            (delayInfo !=null && delayInfo.firstDelay ==true  && System.Isbatch() ==false && delayInfo.delayedMinutes >= 120)
+            ||
+            (delayInfo !=null && delayInfo.firstDelay ==false  && System.Isbatch() ==false)
+            )
+        {
+            insertEventLog(uow);
+        }
+        
+       
     }
+
 
     /**
      * @author Niklas Lundkvist, Deloitte
@@ -215,6 +236,48 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         delayLog.IRR_FlightId__c = delayInfo.flightId;
         delayLog.IRR_DelayMinutes__c = delayInfo.delayedMinutes;
         uow.registerNew(delayLog);
+    }
+
+      /**
+     * @author Gaurav , Coforge
+     * @date 2022
+     *
+     * @description Creates a Event Log based on event object information and registers it in the Unit of Work.
+     *
+     * @param uow Unit of Work
+     */
+    private void insertEventLog(fflib_ISObjectUnitOfWork uow) {
+             boolean isEventFound = false;
+             // Get a query locator
+            Database.QueryLocator sObjectList=   IRR_SEL_EventLogsSelector.newInstance()
+              .getQueuedIcouponQueryLocator(delayInfo.flightId);
+            
+              Database.QueryLocatorIterator it =  sObjectList.iterator();
+              // Iterate over the records
+                while (it.hasNext())
+                {
+                    IRR_EventLog__c eventLog = (IRR_EventLog__c)it.next();
+                    eventLog.IRR_ScheduleTime__c = delayInfo.estimatedTimeOfDepartureUTC;
+                    eventLog.IRR_FlightId__c =delayInfo.flightId ;
+                    eventLog.IRR_Event_Type__c = 'ICOUPON';
+                    eventLog.IRR_Delayed_Minutes__c = delayInfo.delayedMinutes;
+                    eventLog.IRR_Station_Departure__c = delayInfo.stationDeparture;
+                    eventLog.IRR_Flight_Ref__c = delayInfo.flightRef;
+                    uow.registerUpsert(eventLog);
+                    isEventFound = true ;
+                }
+            
+               if(isEventFound == false){
+                IRR_EventLog__c eventLog = new IRR_EventLog__c();
+                eventLog.IRR_ScheduleTime__c = delayInfo.estimatedTimeOfDepartureUTC;
+                eventLog.IRR_FlightId__c =delayInfo.flightId ;
+                eventLog.IRR_Event_Type__c = 'ICOUPON';
+                eventLog.IRR_Delayed_Minutes__c = delayInfo.delayedMinutes;
+                eventLog.IRR_Station_Departure__c = delayInfo.stationDeparture;
+                eventLog.IRR_Flight_Ref__c = delayInfo.flightRef;
+                uow.registerNew(eventLog);
+               }
+        
     }
 
 
