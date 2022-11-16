@@ -168,12 +168,7 @@ public class EU261Claim {
         String flightId = Flight.TEDSIdToSimpleFlightIds(f.tedsIdentifier)[0];
         if (flightId == flightNumberDate) {
           this.claimFlight = f;
-          List<FlightIrregularity> cancellations = f.getCancellations();
-          if (cancellations.size() > 0) {
-            this.hasCancellation = true;
-          } else {
-            this.hasCancellation = false;
-          }
+          this.hasCancellation = f.getCancellations().size() > 0;
           break;
         }
       }
@@ -238,144 +233,33 @@ public class EU261Claim {
     Trip.BookingTypeNotSupportedException.class,
     Segment.UnsupportedException.class,
     Trip.RouteException.class,
-    CreateException.class,
-    InvalidTripException.class
+    Booking.InvalidTripException.class,
+    AbstractSObjectWrapper.MissingDataException.class,
+    Booking.UnsupportedException.class
   };
 
   /**
    * Calculates and sets the trip objects tripWithClaimFlight and tripWithClaimFlightReplacement
    *
-   * @throws CreateException if there is a general error (todo, fix)
-   * @throws InvalidTripException if the trips calculated are invalid.
+   * @throws Booking.InvalidTripException if the trips calculated are invalid.
    * @throws Trip.BookingTypeNotSupportedException if the booking type is not yet supported.
    * @throws Segment.UnsupportedException if there are unsupported segment event statuses
    * @throws Trip.RouteException if there is an error when checking the trip validity (infinite loop)
+   * @throws AbstractSObjectWrapper.MissingDataException if there is no cancellation time
+   * @throws Booking.UnsupportedException if there is more than one cancellation
    */
   private void calculateAndSetTrips() {
     if (this.hasCancellation) {
-      List<FlightIrregularity> cancellations = claimFlight.getCancellations();
-
-      if (cancellations.size() > 1) {
-        throw new CreateException(
-          'Bookings with flights which have more than one cancellation are not supported'
-        );
-      }
-
-      List<List<Trip>> tripsBeforeAndAfter = getTripsBeforeAndAfterCancellation(
-        cancellations[0]
+      Booking.BeforeAndAfter beforeAndAfterCancellation = claimedBooking.getTripsBeforeAndAfterCancellation(
+        claimFlight
       );
 
-      List<Trip> tripsBeforeIrregularity = tripsBeforeAndAfter[0];
-      List<Trip> tripsAfterIrregularity = tripsBeforeAndAfter[1];
-
-      // Identify and set trip with claim flight and the replacement trip
-      for (Integer i = 0; i < tripsBeforeIrregularity.size(); i++) {
-        Trip tripBeforeIrregularity = tripsBeforeIrregularity[i];
-        if (tripBeforeIrregularity.containsFlight(this.claimFlight)) {
-          this.tripWithClaimFlight = tripBeforeIrregularity;
-          this.tripWithClaimFlightReplacement = tripsAfterIrregularity[i];
-          break;
-        }
-      }
+      this.tripWithClaimFlight = beforeAndAfterCancellation.before;
+      this.tripWithClaimFlightReplacement = beforeAndAfterCancellation.after;
+      this.segmentRemovedBeforeCancellation = beforeAndAfterCancellation.segmentRemovedBeforeCancellation;
     } else {
-      List<Trip> trips = claimedBooking.getTrips(); // Delay / No irregularity
-
-      // Identify and set trip with claim flight
-      for (Trip t : trips) {
-        if (t.containsFlight(this.claimFlight)) {
-          this.tripWithClaimFlight = t;
-          this.couldInitializeTrips = tripWithClaimFlight.isValid();
-          break;
-        }
-      }
+      this.tripWithClaimFlight = claimedBooking.getTripWithFlight(claimFlight);
     }
-
-    if (!tripWithClaimFlight.isValid()) {
-      throw new InvalidTripException('Trip with claim flight is not valid');
-    } else if (
-      tripWithClaimFlightReplacement != null &&
-      !tripWithClaimFlightReplacement.isValid()
-    ) {
-      throw new InvalidTripException(
-        'Replacement for trip with claim flight is not valid'
-      );
-    }
-  }
-
-  private List<List<Trip>> getTripsBeforeAndAfterCancellation(
-    FlightIrregularity cancellation
-  ) {
-    if (cancellation.cancellationTime == null) {
-      throw new CreateException(
-        'Cancellation does not have a cancellation time'
-      );
-    }
-
-    Datetime segmentCancellationTime;
-    for (Segment s : getClaimSegments()) {
-      // Segments affected by the irregularity
-      Datetime currentSegmentCancellationTime;
-      try {
-        currentSegmentCancellationTime = s.getTimeCancelled();
-      } catch (Segment.CancelledFromConfirmedException e) {
-        currentSegmentCancellationTime = s.getTimeRemoved();
-        if (
-          currentSegmentCancellationTime != null &&
-          currentSegmentCancellationTime < cancellation.cancellationTime
-        ) {
-          this.segmentRemovedBeforeCancellation = true;
-        }
-      }
-
-      if (
-        currentSegmentCancellationTime != segmentCancellationTime &&
-        segmentCancellationTime != null
-      ) {
-        throw new CreateException(
-          'Segments with the same flight were cancelled at different times'
-        );
-      }
-      segmentCancellationTime = currentSegmentCancellationTime;
-    }
-
-    if (segmentCancellationTime == null) {
-      throw new CreateException(
-        'Was not able to get segment cancellation time'
-      );
-    } else if (
-      segmentCancellationTime.date() != cancellation.cancellationTime.date()
-    ) {
-      throw new CreateException(
-        'The cancellation of the flight and the cancellation of the segment did not happen on the same date'
-      );
-    }
-
-    Datetime before = segmentCancellationTime.addSeconds(-1 * 5 * 60); // 5 minutes (Arbitrary)
-    List<Trip> tripsBeforeIrregularity = claimedBooking.getTripsAtTime(before);
-    List<Trip> tripsAfterIrregularity = claimedBooking.getTripsAtTime(
-      segmentCancellationTime
-    );
-
-    if (tripsBeforeIrregularity.size() != tripsAfterIrregularity.size()) {
-      throw new CreateException(
-        'Interpretation of booking changed after cancellation'
-      );
-    }
-
-    return new List<List<Trip>>{
-      tripsBeforeIrregularity,
-      tripsAfterIrregularity
-    };
-  }
-
-  private List<Segment> getClaimSegments() {
-    List<Segment> claimSegments = new List<Segment>();
-    for (Segment s : claimedBooking.segments) {
-      if (s.flight == claimFlight) {
-        claimSegments.add(s);
-      }
-    }
-    return claimSegments;
   }
 
   private Boolean canGetSegmentStatuses() {
@@ -728,6 +612,7 @@ public class EU261Claim {
     } else if (this.hasCancellation) {
       // If the claim flight was cancelled the customer should receive compensation according to the cancellation logic
       if (!this.cancellationCodeIsWithinSASControl()) {
+        // We should evaluate this early
         return new Decision(
           Claim.EU261HandlingStatus.IneligibleForCompensation,
           'cancellation code not within SAS control'
@@ -999,8 +884,6 @@ public class EU261Claim {
 
   // TODO: Get rid of this.
   public class AutomationException extends Exception {
-  }
-  public class InvalidTripException extends Exception {
   }
 
   /**

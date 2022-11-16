@@ -83,12 +83,13 @@ public with sharing class TestSegmentFactory {
     for (SegmentsInfo si : segmentsInfos) {
       for (Passenger p : b.passengers) {
         Segment s = createFromBookingFlightPassenger(b, si.f, p);
-        s.events = createEvents(
+        List<SegmentEvent> events = createEvents(
           s,
           si.timeAddedToBooking,
           si.timeRemovedFromBooking,
           si.history
         );
+        s.setEvents(events);
         segments.add(s);
       }
     }

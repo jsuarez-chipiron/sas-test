@@ -3,6 +3,7 @@ public without sharing class Trip {
   public Airport destinationAirport;
   public List<Leg> sortedLegs;
   public Boolean SASIsOnlyOperatingCarrier;
+  public Boolean cancelledSegmentRemovedBeforeCancellation;
 
   /**
    * Returns an ordered list of all trips in a booking.
@@ -153,11 +154,7 @@ public without sharing class Trip {
     return true;
   }
 
-  /**
-   * Goes through all legs in the trips and checks
-   * that you can travel from origin to destination
-   */
-  public Boolean isValid() {
+  public Boolean hasRouteFromOriginToDestination() {
     FlightHistory fh = new FlightHistory(this.sortedLegs);
     return fh.canFlyFromOriginToDestination();
   }

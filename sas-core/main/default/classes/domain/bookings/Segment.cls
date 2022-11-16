@@ -22,7 +22,7 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
 
   public Flight flight;
 
-  public List<SegmentEvent> events; // Todo: handle initialization
+  private List<SegmentEvent> events;
 
   public enum Status {
     Unknown,
@@ -35,9 +35,12 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
     Waitlisted
   }
 
-  public class UnsupportedException extends Exception {
+  public void setEvents(List<SegmentEvent> events) {
+    events.sort();
+    this.events = events;
   }
-  public class MissingDataException extends Exception {
+
+  public class UnsupportedException extends Exception {
   }
   public class CancelledFromConfirmedException extends Exception {
   }
@@ -131,7 +134,6 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
       throw new MissingDataException('Missing segment events.');
     }
 
-    events.sort();
     for (SegmentEvent se : events) {
       if (se.updateDate > theTime) {
         break;
@@ -183,7 +185,6 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
       throw new MissingDataException('Missing segment events.');
     }
 
-    events.sort();
     Datetime timeCancelled;
     Boolean isConfirmed;
     for (SegmentEvent se : events) {

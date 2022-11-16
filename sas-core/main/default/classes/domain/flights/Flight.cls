@@ -50,9 +50,6 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     Unknown
   }
 
-  public class MissingDataException extends Exception {
-  }
-
   public class FlightException extends Exception {
   }
 
