@@ -134,6 +134,7 @@ public class EU261Claim {
   private Boolean foundMultipleMatchingBookings = false;
   private Boolean hasCancellation;
   private Boolean couldInitializeTrips;
+  private Boolean segmentRemovedBeforeCancellation = false;
   private Flight claimFlight;
 
   private EU261Service.Config config;
@@ -167,6 +168,12 @@ public class EU261Claim {
         String flightId = Flight.TEDSIdToSimpleFlightIds(f.tedsIdentifier)[0];
         if (flightId == flightNumberDate) {
           this.claimFlight = f;
+          List<FlightIrregularity> cancellations = f.getCancellations();
+          if (cancellations.size() > 0) {
+            this.hasCancellation = true;
+          } else {
+            this.hasCancellation = false;
+          }
           break;
         }
       }
@@ -227,67 +234,159 @@ public class EU261Claim {
     return true;
   }
 
+  private static Set<Type> tripSetExceptions = new Set<Type>{
+    Trip.BookingTypeNotSupportedException.class,
+    Segment.UnsupportedException.class,
+    Trip.RouteException.class,
+    CreateException.class,
+    InvalidTripException.class
+  };
+
+  /**
+   * Calculates and sets the trip objects tripWithClaimFlight and tripWithClaimFlightReplacement
+   *
+   * @throws CreateException if there is a general error (todo, fix)
+   * @throws InvalidTripException if the trips calculated are invalid.
+   * @throws Trip.BookingTypeNotSupportedException if the booking type is not yet supported.
+   * @throws Segment.UnsupportedException if there are unsupported segment event statuses
+   * @throws Trip.RouteException if there is an error when checking the trip validity (infinite loop)
+   */
   private void calculateAndSetTrips() {
-    FlightIrregularity cancellation = claimFlight.getCancellation();
-    if (cancellation != null) {
-      this.hasCancellation = true;
-    } else {
-      this.hasCancellation = false;
-    }
-
-    List<Trip> tripsBeforeIrregularity;
-    List<Trip> tripsAfterIrregularity;
-    try {
-      if (this.hasCancellation) {
-        if (cancellation.cancellationTime == null) {
-          throw new CreateException(
-            'Cancellation does not have a cancellation time.'
-          );
-        }
-        tripsBeforeIrregularity = claimedBooking.getTripsAtTime(
-          cancellation.cancellationTime.addSeconds(-1)
-        ); // Relatively arbitrary, could be improved
-        tripsAfterIrregularity = claimedBooking.getTripsAtTime(
-          cancellation.cancellationTime
-        );
-
-        if (tripsBeforeIrregularity.size() != tripsAfterIrregularity.size()) {
-          throw new CreateException(
-            'Interpretation of booking changed after cancellation'
-          );
-        }
-      } else {
-        // If the claim flight is not cancelled, calculate the trips based
-        // on the final state of the booking.
-        tripsAfterIrregularity = claimedBooking.getTrips();
-      }
-      this.couldInitializeTrips = true;
-    } catch (Trip.BookingTypeNotSupportedException e) {
-      // If not supported, we'll leave trips empty. We'll ignore these when
-      // processing cases later on.
-      this.couldInitializeTrips = false;
-      return;
-    } catch (CreateException e) {
-      this.couldInitializeTrips = false;
-      return;
-    }
-
     if (this.hasCancellation) {
+      List<FlightIrregularity> cancellations = claimFlight.getCancellations();
+
+      if (cancellations.size() > 1) {
+        throw new CreateException(
+          'Bookings with flights which have more than one cancellation are not supported'
+        );
+      }
+
+      List<List<Trip>> tripsBeforeAndAfter = getTripsBeforeAndAfterCancellation(
+        cancellations[0]
+      );
+
+      List<Trip> tripsBeforeIrregularity = tripsBeforeAndAfter[0];
+      List<Trip> tripsAfterIrregularity = tripsBeforeAndAfter[1];
+
+      // Identify and set trip with claim flight and the replacement trip
       for (Integer i = 0; i < tripsBeforeIrregularity.size(); i++) {
         Trip tripBeforeIrregularity = tripsBeforeIrregularity[i];
         if (tripBeforeIrregularity.containsFlight(this.claimFlight)) {
           this.tripWithClaimFlight = tripBeforeIrregularity;
           this.tripWithClaimFlightReplacement = tripsAfterIrregularity[i];
+          break;
         }
       }
     } else {
-      // Delay or otherwise
-      for (Trip t : tripsAfterIrregularity) {
+      List<Trip> trips = claimedBooking.getTrips(); // Delay / No irregularity
+
+      // Identify and set trip with claim flight
+      for (Trip t : trips) {
         if (t.containsFlight(this.claimFlight)) {
           this.tripWithClaimFlight = t;
+          this.couldInitializeTrips = tripWithClaimFlight.isValid();
+          break;
         }
       }
     }
+
+    if (!tripWithClaimFlight.isValid()) {
+      throw new InvalidTripException('Trip with claim flight is not valid');
+    } else if (
+      tripWithClaimFlightReplacement != null &&
+      !tripWithClaimFlightReplacement.isValid()
+    ) {
+      throw new InvalidTripException(
+        'Replacement for trip with claim flight is not valid'
+      );
+    }
+  }
+
+  private List<List<Trip>> getTripsBeforeAndAfterCancellation(
+    FlightIrregularity cancellation
+  ) {
+    if (cancellation.cancellationTime == null) {
+      throw new CreateException(
+        'Cancellation does not have a cancellation time'
+      );
+    }
+
+    Datetime segmentCancellationTime;
+    for (Segment s : getClaimSegments()) {
+      // Segments affected by the irregularity
+      Datetime currentSegmentCancellationTime;
+      try {
+        currentSegmentCancellationTime = s.getTimeCancelled();
+      } catch (Segment.CancelledFromConfirmedException e) {
+        currentSegmentCancellationTime = s.getTimeRemoved();
+        if (
+          currentSegmentCancellationTime != null &&
+          currentSegmentCancellationTime < cancellation.cancellationTime
+        ) {
+          this.segmentRemovedBeforeCancellation = true;
+        }
+      }
+
+      if (
+        currentSegmentCancellationTime != segmentCancellationTime &&
+        segmentCancellationTime != null
+      ) {
+        throw new CreateException(
+          'Segments with the same flight were cancelled at different times'
+        );
+      }
+      segmentCancellationTime = currentSegmentCancellationTime;
+    }
+
+    if (segmentCancellationTime == null) {
+      throw new CreateException(
+        'Was not able to get segment cancellation time'
+      );
+    } else if (
+      segmentCancellationTime.date() != cancellation.cancellationTime.date()
+    ) {
+      throw new CreateException(
+        'The cancellation of the flight and the cancellation of the segment did not happen on the same date'
+      );
+    }
+
+    Datetime before = segmentCancellationTime.addSeconds(-1 * 5 * 60); // 5 minutes (Arbitrary)
+    List<Trip> tripsBeforeIrregularity = claimedBooking.getTripsAtTime(before);
+    List<Trip> tripsAfterIrregularity = claimedBooking.getTripsAtTime(
+      segmentCancellationTime
+    );
+
+    if (tripsBeforeIrregularity.size() != tripsAfterIrregularity.size()) {
+      throw new CreateException(
+        'Interpretation of booking changed after cancellation'
+      );
+    }
+
+    return new List<List<Trip>>{
+      tripsBeforeIrregularity,
+      tripsAfterIrregularity
+    };
+  }
+
+  private List<Segment> getClaimSegments() {
+    List<Segment> claimSegments = new List<Segment>();
+    for (Segment s : claimedBooking.segments) {
+      if (s.flight == claimFlight) {
+        claimSegments.add(s);
+      }
+    }
+    return claimSegments;
+  }
+
+  private Boolean canGetSegmentStatuses() {
+    try {
+      for (Segment s : this.claimedBooking.segments) {
+        s.getStatus(Datetime.now());
+      }
+    } catch (Segment.UnsupportedException e) {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -401,20 +500,51 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle claims with a restricted fare basis.'
       );
+    } else if (this.claimFlight == null) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'cannot find claimed flight from booking'
+      );
+    } else if (
+      c.type == Claim.Type.FlightCancellation && !this.hasCancellation
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'the claim flight is not cancelled'
+      );
+    } else if (!canGetSegmentStatuses()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'a segment has an unsupported status'
+      );
     }
 
     // To continue the evaluation we have to construct the trip(s)
-    this.calculateAndSetTrips();
+    this.couldInitializeTrips = false;
+    Exception tripCalculationError;
+    try {
+      this.calculateAndSetTrips();
+      this.couldInitializeTrips = true;
+    } catch (Exception e) {
+      Type error = Type.forName(e.getTypeName());
+      if (tripSetExceptions.contains(error)) {
+        tripCalculationError = e;
+      } else {
+        throw e;
+      }
+    }
 
     if (!this.couldInitializeTrips) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'was not able to divide the booking into trips'
+        'was not able to divide the booking into trips (' +
+        tripCalculationError.getMessage() +
+        ')'
       );
     } else if (this.tripWithClaimFlight == null) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot find claimed flight from booking'
+        'could not set trip with claim flight'
       );
     } else if (
       !this.tripWithClaimFlight.originAirport.isEU261Applicable ||
@@ -429,17 +559,13 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle flights with irregularities caused by rotations'
       );
-    } else if (!this.tripWithClaimFlight.SASIsOnlyOperatingCarrier) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot handle claims where SAS is not the only operating carrier'
-      );
     } else if (
-      c.type == Claim.Type.FlightCancellation && !this.hasCancellation
+      !this.tripWithClaimFlight.SASIsOnlyOperatingCarrier ||
+      !this.tripWithClaimFlightReplacement.SASIsOnlyOperatingCarrier
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'the claim flight is not cancelled'
+        'cannot handle claims where SAS is not the only operating carrier'
       );
     } else if (hasMoreThanOneCancellation()) {
       return new Decision(
@@ -874,6 +1000,8 @@ public class EU261Claim {
   // TODO: Get rid of this.
   public class AutomationException extends Exception {
   }
+  public class InvalidTripException extends Exception {
+  }
 
   /**
    *
@@ -1131,6 +1259,12 @@ public class EU261Claim {
 
     if (this.requiresPowerOfAttorney()) {
       caveats.add('requires a power of attorney');
+    }
+
+    if (this.segmentRemovedBeforeCancellation) {
+      caveats.add(
+        'it is uncertain if SAS or the customer cancelled the flight'
+      );
     }
 
     return String.join(caveats, ', ');

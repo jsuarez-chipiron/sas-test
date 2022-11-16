@@ -212,7 +212,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
       this.departureStatus == Status.Cancelled);
   }
 
-  public FlightIrregularity getCancellation() {
+  public List<FlightIrregularity> getCancellations() {
     if (this.irregularities == null) {
       throw new MissingDataException('Irregularities have not been set');
     }
@@ -223,15 +223,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
       }
     }
 
-    if (cancellations.size() == 0) {
-      return null;
-    } else if (cancellations.size() == 1) {
-      return cancellations[0];
-    } else {
-      throw new MissingDataException(
-        'There are more than one cancelaltion irregularities associated with this claim'
-      );
-    }
+    return cancellations;
   }
 
   /**

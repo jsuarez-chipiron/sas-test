@@ -60,7 +60,7 @@ public without sharing class Trip {
   ) {
     List<Segment> activeSegments = new List<Segment>();
     for (Segment s : segments) {
-      if (s.isActive(theTime)) {
+      if (s.getStatus(theTime) == Segment.Status.Confirmed) {
         activeSegments.add(s);
       }
     }
@@ -76,7 +76,7 @@ public without sharing class Trip {
   public class BookingTypeNotSupportedException extends Exception {
   }
 
-  public class NoRouteException extends Exception {
+  public class RouteException extends Exception {
   }
 
   private Trip(List<Leg> legsInOrder) {
@@ -151,6 +151,83 @@ public without sharing class Trip {
     }
 
     return true;
+  }
+
+  /**
+   * Goes through all legs in the trips and checks
+   * that you can travel from origin to destination
+   */
+  public Boolean isValid() {
+    FlightHistory fh = new FlightHistory(this.sortedLegs);
+    return fh.canFlyFromOriginToDestination();
+  }
+
+  public class FakeAirport {
+    String IATACode;
+    List<Leg> availableRoutesFromAirport = new List<Leg>{};
+
+    public FakeAirport(String IATACode) {
+      this.IATACode = IATACode;
+    }
+  }
+
+  public class FlightHistory {
+    Map<String, FakeAirport> codeToAirport = new Map<String, FakeAirport>{};
+    FakeAirport originAirport;
+    FakeAirport destinationAirport;
+
+    public FlightHistory(List<Leg> tripLegs) {
+      List<String> addedAirports = new List<String>{};
+      for (Leg l : tripLegs) {
+        if (!addedAirports.contains(l.flight.departureAirport)) {
+          FakeAirport newAirport = new FakeAirport(l.flight.departureAirport);
+          codeToAirport.put(l.flight.departureAirport, newAirport);
+          addedAirports.add(l.flight.departureAirport);
+        }
+        if (!addedAirports.contains(l.flight.arrivalAirport)) {
+          FakeAirport newAirport = new FakeAirport(l.flight.arrivalAirport);
+          codeToAirport.put(l.flight.arrivalAirport, newAirport);
+          addedAirports.add(l.flight.arrivalAirport);
+        }
+
+        FakeAirport departureAirport = codeToAirport.get(
+          l.flight.departureAirport
+        );
+        departureAirport.availableRoutesFromAirport.add(l);
+      }
+
+      this.originAirport = codeToAirport.get(
+        tripLegs[0].flight.departureAirport
+      );
+      this.destinationAirport = codeToAirport.get(
+        tripLegs[tripLegs.size() - 1].flight.arrivalAirport
+      );
+    }
+
+    public Boolean canFlyFromOriginToDestination() {
+      FakeAirport currentAirport = originAirport;
+      FakeAirport nextAirport;
+      List<Leg> routes = currentAirport.availableRoutesFromAirport;
+      Integer noIterations = 0;
+      while (routes.size() != 0) {
+        Leg currentLeg;
+        if (routes.size() == 1) {
+          currentLeg = routes[0];
+        } else {
+          // There should not be more than one active route from one airport to another.
+          return false;
+        }
+        nextAirport = this.codeToAirport.get(currentLeg.flight.arrivalAirport);
+        routes = nextAirport.availableRoutesFromAirport;
+        currentAirport = nextAirport;
+        noIterations += 1;
+        if (noIterations == 200) {
+          throw new RouteException('Likely infinite loop');
+        }
+      }
+
+      return currentAirport.IATACode == destinationAirport.IATACode;
+    }
   }
 
   // DELAY LOGIC
@@ -233,6 +310,9 @@ public without sharing class Trip {
   private static List<Trip> divideActiveSegmentsIntoTrips(
     List<Segment> activeSegments
   ) {
+    if (activeSegments.size() == 0) {
+      return new List<Trip>();
+    }
     List<Leg> sortedLegs = createLegsFromSegments(activeSegments);
 
     List<Trip> tripsToReturn = new List<Trip>{};

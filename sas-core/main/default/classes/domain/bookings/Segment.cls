@@ -24,6 +24,24 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
 
   public List<SegmentEvent> events; // Todo: handle initialization
 
+  public enum Status {
+    Unknown,
+    CallToConfirm,
+    Cancelled,
+    Confirmed,
+    SpaceAvailable,
+    Suspended,
+    Unconfirmed,
+    Waitlisted
+  }
+
+  public class UnsupportedException extends Exception {
+  }
+  public class MissingDataException extends Exception {
+  }
+  public class CancelledFromConfirmedException extends Exception {
+  }
+
   private Segment() {
     this.underlyingSObject = new Segment__c();
   }
@@ -103,22 +121,121 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
     }
   }
 
-  public Boolean isActive(Datetime theTime) {
+  /**
+   * Gets the segment status at a specific time.
+   * Currently only supports Confirmed, Cancelled and Unknown
+   */
+  public Status getStatus(Datetime theTime) {
+    Status currentStatus = Status.Unknown;
+    if (events == null) {
+      throw new MissingDataException('Missing segment events.');
+    }
+
     events.sort();
-    Boolean confirmed = false;
     for (SegmentEvent se : events) {
       if (se.updateDate > theTime) {
         break;
       }
-      if (se.newStatus == SegmentEvent.StatusCode.C_HK) {
-        // Holds confirmed
-        confirmed = true;
-      }
-      if (se.newStatus == SegmentEvent.StatusCode.C_UN) {
-        // Unable - no flight
-        return false;
+
+      switch on se.newStatus {
+        when C_HK, C_TK {
+          // Holds confirmed
+          // Schedule Change. Advise passenger of new scheduled times.
+          currentStatus = Status.Confirmed;
+        }
+        when C_UN {
+          // Unable - no flight
+          currentStatus = Status.Unconfirmed;
+        }
+        when C_XX {
+          // Cancel segment
+          currentStatus = Status.Cancelled;
+        }
+        when C_UC, C_US, C_UU {
+          // Unable to confirm or waitlist
+          // Unable to sell
+          // Unable to confirm. Waitlist requested'
+          throw new UnsupportedException(
+            'Segment has unsupported "Unable"-status'
+          );
+        }
+        when C_GK {
+          // Guaranteed/Merged. Also used in 1V as Passive - Group confirmed
+          throw new UnsupportedException('Group segments are not supported');
+        }
+        when C_HX, C_XK {
+          // Cancel confirm hold
+          // Cancel seg with change
+          throw new UnsupportedException('Segment has an unsupported status');
+        }
       }
     }
-    return confirmed;
+
+    return currentStatus;
+  }
+
+  /**
+   * Gets the segment status at a specific time.
+   * Currently only supports Confirmed, Cancelled and Unknown
+   */
+  public Datetime getTimeCancelled() {
+    if (events == null) {
+      throw new MissingDataException('Missing segment events.');
+    }
+
+    events.sort();
+    Datetime timeCancelled;
+    Boolean isConfirmed;
+    for (SegmentEvent se : events) {
+      switch on se.newStatus {
+        when C_HK {
+          // Holds confirmed
+          isConfirmed = true;
+        }
+        when C_UN {
+          // Unable - no flight
+          if (isConfirmed) {
+            isConfirmed = false;
+            if (timeCancelled != null) {
+              throw new UnsupportedException(
+                'More than one cancellation time.'
+              );
+            }
+            timeCancelled = se.updateDate;
+          }
+        }
+        when C_XX {
+          // Cancel segment
+          if (isConfirmed) {
+            throw new CancelledFromConfirmedException(
+              'Segment was cancelled without being unconfirmed'
+            );
+          }
+        }
+        when C_UC, C_US, C_UU {
+          // Unable to confirm or waitlist
+          // Unable to sell
+          // Unable to confirm. Waitlist requested'
+          throw new UnsupportedException(
+            'Segment has unsupported "Unable"-status'
+          );
+        }
+      }
+    }
+
+    return timeCancelled;
+  }
+
+  public Datetime getTimeRemoved() {
+    Datetime timeRemoved;
+    for (SegmentEvent se : events) {
+      if (se.newStatus == SegmentEvent.StatusCode.C_XX) {
+        if (timeRemoved != null) {
+          throw new UnsupportedException('More than one removal time.');
+        }
+        timeRemoved = se.updateDate;
+      }
+    }
+    return timeRemoved;
   }
 }
