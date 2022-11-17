@@ -210,16 +210,10 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
             insertDelayLog(uow);
             
         }
-        if (
-            (delayInfo !=null && delayInfo.firstDelay ==true  && System.Isbatch() ==false && delayInfo.delayedMinutes >= 120)
-            ||
-            (delayInfo !=null && delayInfo.firstDelay ==false  && System.Isbatch() ==false)
-            )
-        {
+        if  (delayInfo !=null && System.Isbatch() ==false && delayInfo.delayedMinutes >=120) {
             insertEventLog(uow);
         }
-        
-       
+
     }
 
 
