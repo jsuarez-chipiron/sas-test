@@ -285,7 +285,17 @@ public class EU261Claim {
    */
   private Decision canWeEvaluate() {
     Claim c = this.claimObj;
-    if (c.category != Claim.Category.FlightDisruptions) {
+    if (c.personWithReducedMobility) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'cannot handle claims with person with reduced mobility'
+      );
+    } else if (c.unaccompaniedMinor) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'cannot handle claims with unaccompanied minors'
+      );
+    } else if (c.category != Claim.Category.FlightDisruptions) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only claims in category "Flight disruptions"'
