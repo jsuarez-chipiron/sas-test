@@ -869,6 +869,7 @@ public without sharing class Cases extends ApplicationDomain {
           emailToSend.setHtmlBody(existingDraftEmail.HtmlBody);
           emailToSend.setPlainTextBody(existingDraftEmail.TextBody);
           emailToSend.setSaveAsActivity(true);
+          emailToSend.setUseSignature(false);
           emailToSend.setWhatId(c.Id);
           uowTry.registerEmail(emailToSend);
           uowTry.registerDeleted(existingDraftEmail);
