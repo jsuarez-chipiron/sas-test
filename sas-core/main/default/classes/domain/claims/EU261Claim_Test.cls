@@ -521,7 +521,13 @@ private class EU261Claim_Test {
   @IsTest
   static void onlyClaimsWithoutExpensesCanBeEvaluated() {
     BookingClaim bc = getDefaultCancellationBookingClaim();
-    bc.c.submittedClaimExpenses = new Money(1, Money.CurrencyCode.SEK);
+
+    bc.c.submittedClaimExpenses = new Money(20, Money.CurrencyCode.SEK);
+    ClaimExpense ce = new ClaimExpense();
+    ce.amount = 20;
+    ce.amountInSEK = 20;
+    ce.currencyOfAmount = Money.CurrencyCode.SEK;
+    bc.c.expenses = new List<ClaimExpense>{ ce };
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,

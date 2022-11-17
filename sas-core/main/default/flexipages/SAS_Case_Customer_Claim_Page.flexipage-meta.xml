@@ -459,6 +459,18 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>handlingInstructions</componentName>
+                <identifier>c_handlingInstructions</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.EU261_Handling_Instructions__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
                     <value>Case.ParentId</value>

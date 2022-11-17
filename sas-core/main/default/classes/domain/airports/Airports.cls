@@ -24,6 +24,14 @@ public without sharing class Airports extends ApplicationDomain {
     return (Airports) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
+  public override void onBeforeInsert() {
+    for (Airport__c a : instanceRecords) {
+      a.Is_EU261_Applicable__c = CountryUtils.isInEUOrNorwaySwitzerlandIceland(
+        a.Country_Code__c
+      );
+    }
+  }
+
   public Airports upsertToDB() {
     for (Airport obj : this.objects) {
       obj.updateSObjectFields();

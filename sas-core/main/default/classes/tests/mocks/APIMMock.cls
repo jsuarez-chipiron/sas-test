@@ -70,8 +70,7 @@ global class APIMMock implements HttpCalloutMock {
       String euroBonusNumber = getQueryParam('euroBonusNumber');
       if (
         reference == INVALID_BOOKING_REFERENCE ||
-        euroBonusNumber == EB_NUMBER_WITHOUT_BOOKINGS ||
-        EU261Service_Test.allTestPnrs.contains(reference)
+        euroBonusNumber == EB_NUMBER_WITHOUT_BOOKINGS
       ) {
         res.setHeader('Content-Type', 'application/json');
         res.setBody('[]');

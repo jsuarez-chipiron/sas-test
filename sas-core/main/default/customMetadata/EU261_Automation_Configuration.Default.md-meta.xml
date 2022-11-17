@@ -34,4 +34,8 @@
         <field>Percentage_Sent_to_Control__c</field>
         <value xsi:type="xsd:double">20.0</value>
     </values>
+    <values>
+        <field>Semi_Automation_Enabled__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
 </CustomMetadata>

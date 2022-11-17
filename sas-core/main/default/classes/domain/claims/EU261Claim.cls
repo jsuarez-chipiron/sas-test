@@ -119,6 +119,10 @@ public class EU261Claim {
       this.compensationPerCustomerInEUR = compensationByCustomer;
       this.reimbursementAmountInSEK = reimbursementAmountInSEK;
     }
+
+    public String getHandlingInstructions() {
+      return reasoning;
+    }
   }
 
   public Claim claimObj { public get; private set; }
@@ -175,6 +179,18 @@ public class EU261Claim {
         }
       }
     }
+  }
+
+  public static List<LIA_Claim__c> getClaimSObjectsFor(
+    List<EU261Claim> eu261Claims
+  ) {
+    List<LIA_Claim__c> toReturn = new List<LIA_Claim__c>();
+
+    for (EU261Claim cl : eu261Claims) {
+      toReturn.add(cl.claimObj.underlyingSObject);
+    }
+
+    return toReturn;
   }
 
   private Boolean hasTripWithClaimFlight() {
@@ -1015,6 +1031,51 @@ public class EU261Claim {
     return false;
   }
 
+  public Boolean hasHighClaimedExpenses() {
+    if (
+      this.claimObj.submittedClaimExpenses == null ||
+      this.claimObj.submittedClaimExpenses.equals(
+        new Money(0, Money.CurrencyCode.SEK)
+      )
+    ) {
+      return false;
+    }
+
+    Boolean anySingleExpenseOverLimit = false;
+
+    for (ClaimExpense ce : this.claimObj.expenses) {
+      Money expenseLimit = new Money(0, Money.CurrencyCode.SEK);
+
+      switch on ce.type {
+        when Accommodation {
+          expenseLimit = this.config.expenseLimitAccommodation;
+        }
+        when Food {
+          expenseLimit = this.config.expenseLimitFood;
+        }
+        when PhoneCalls {
+          expenseLimit = this.config.expenseLimitPhoneCalls;
+        }
+        when Transportation {
+          expenseLimit = this.config.expenseLimitTransportation;
+        }
+      }
+
+      if (
+        (new Money(ce.amountInSEK, Money.CurrencyCode.SEK))
+          .greaterThan(expenseLimit)
+      ) {
+        anySingleExpenseOverLimit = true;
+        break;
+      }
+    }
+
+    return anySingleExpenseOverLimit ||
+      this.claimObj.submittedClaimExpenses.greaterThan(
+        config.expenseLimitTotal
+      );
+  }
+
   public String getCaveats() {
     // TODO: Pass duplicate claims as a param
     List<String> caveats = new List<String>();
@@ -1023,41 +1084,7 @@ public class EU261Claim {
       caveats.add('has potential duplicates');
     }
 
-    Boolean anySingleExpenseOverLimit = false;
-
-    if (this.claimObj.expenses != null) {
-      for (ClaimExpense ce : this.claimObj.expenses) {
-        Money expenseLimit = new Money(0, Money.CurrencyCode.SEK);
-
-        switch on ce.type {
-          when Accommodation {
-            expenseLimit = this.config.expenseLimitAccommodation;
-          }
-          when Food {
-            expenseLimit = this.config.expenseLimitFood;
-          }
-          when PhoneCalls {
-            expenseLimit = this.config.expenseLimitPhoneCalls;
-          }
-          when Transportation {
-            expenseLimit = this.config.expenseLimitTransportation;
-          }
-        }
-
-        if (
-          (new Money(ce.amountInSEK, Money.CurrencyCode.SEK))
-            .greaterThan(expenseLimit)
-        ) {
-          anySingleExpenseOverLimit = true;
-          break;
-        }
-      }
-    }
-
-    if (
-      anySingleExpenseOverLimit ||
-      this.claimObj.submittedClaimExpenses.greaterThan(config.expenseLimitTotal)
-    ) {
+    if (this.hasHighClaimedExpenses()) {
       caveats.add('has high claim expenses');
     }
 
