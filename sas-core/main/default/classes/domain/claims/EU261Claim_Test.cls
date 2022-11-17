@@ -400,10 +400,11 @@ private class EU261Claim_Test {
       groupResult.verdict,
       'It should not be possible to automatically evaluate a claim with more than four travelers.'
     );
+    System.assertEquals(1, groupResult.caveats.size(), 'There should be one caveat');
     System.assertEquals(
-      'caveats: requires a power of attorney',
-      groupResult.reasoning,
-      'Reasoning should include caveat on power of attorney'
+      EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
+      groupResult.caveats[0],
+      'Caveat should be power of attorney.'
     );
 
     System.assertEquals(
@@ -411,10 +412,11 @@ private class EU261Claim_Test {
       differentLastNameResult.verdict,
       'It should not be possible to automatically evaluate a claim with different last names.'
     );
+    System.assertEquals(1, differentLastNameResult.caveats.size(), 'There should be one caveat');
     System.assertEquals(
-      'caveats: requires a power of attorney',
-      differentLastNameResult.reasoning,
-      'Reasoning should include caveat on power of attorney'
+      EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
+      differentLastNameResult.caveats[0],
+      'Caveat should be power of attorney.'
     );
 
     System.assertEquals(
@@ -422,10 +424,11 @@ private class EU261Claim_Test {
       missingTravelersResult.verdict,
       'It should not be possible to automatically evaluate a claim when claimed travelers are not included in the booking.'
     );
+    System.assertEquals(1, missingTravelersResult.caveats.size(), 'There should be one caveat');
     System.assertEquals(
-      'caveats: requires a power of attorney',
-      missingTravelersResult.reasoning,
-      'Reasoning should include caveat on power of attorney'
+      EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
+      missingTravelersResult.caveats[0],
+      'Caveat should be power of attorney.'
     );
 
     System.assertEquals(
@@ -433,10 +436,11 @@ private class EU261Claim_Test {
       claimFirmResult.verdict,
       'It should not be possible to evaluate a claim submitted by a claim firm.'
     );
+    System.assertEquals(1, claimFirmResult.caveats.size(), 'There should be one caveat');
     System.assertEquals(
-      'caveats: requires a power of attorney',
-      claimFirmResult.reasoning,
-      'Reasoning should include caveat on power of attorney'
+      EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
+      claimFirmResult.caveats[0],
+      'Caveat should be power of attorney.'
     );
   }
 
@@ -543,10 +547,11 @@ private class EU261Claim_Test {
       result.verdict,
       'It should not be possible to automatically evaluate claims with expenses.'
     );
+    System.assertEquals(1, result.caveats.size(), 'There should be one caveat');
     System.assertEquals(
-      'caveats: has high claim expenses',
-      result.reasoning,
-      'Rejection reason should include caveat about expenses'
+      EU261Claim.SemiAutomationReason.HasHighClaimExpenses,
+      result.caveats[0],
+      'Caveat should be high expenses.'
     );
   }
 
@@ -652,10 +657,11 @@ private class EU261Claim_Test {
       result.verdict,
       'It should not be possible to automatically evaluate claims with possible duplicates.'
     );
+    System.assertEquals(1, result.caveats.size(), 'There should be one caveat');
     System.assertEquals(
-      'caveats: has potential duplicates',
-      result.reasoning,
-      'Caveat should be be "caveats: has potential duplicates"'
+      EU261Claim.SemiAutomationReason.HasPotentialDuplicates,
+      result.caveats[0],
+      'Caveat should be duplicates.'
     );
   }
 

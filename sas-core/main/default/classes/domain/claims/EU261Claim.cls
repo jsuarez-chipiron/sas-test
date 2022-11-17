@@ -17,6 +17,13 @@ public class EU261Claim {
     'default' => 6 * 12
   };
 
+  public enum SemiAutomationReason {
+    RequiresPowerOfAttorney,
+    HasPotentialDuplicates,
+    HasHighClaimExpenses,
+    InvalidSettlementDetails
+  }
+
   /**
    * Evaluates the claim according to the EU261 rules and returns the decision
    * made on whether the claim should be paid out.
@@ -35,10 +42,10 @@ public class EU261Claim {
     if (
       this.decision.verdict ==
       Claim.EU261HandlingStatus.EligibleForCompensation &&
-      this.getCaveats().length() != 0
+      this.getSemiAutomationReasons().size() != 0
     ) {
       this.decision.verdict = Claim.EU261HandlingStatus.PossiblyEligibleForCompensation;
-      this.decision.reasoning = 'caveats: ' + this.getCaveats();
+      this.decision.caveats = this.getSemiAutomationReasons();
     }
 
     return this.decision;
@@ -90,6 +97,12 @@ public class EU261Claim {
      */
     public String reasoning { get; private set; }
 
+    /**
+     * Any caveats to the decision. Must be populated if verdict is PossiblyEligibleForCompensation.
+     * Otherwise null.
+     */
+    public List<SemiAutomationReason> caveats { get; private set; }
+
     Decision(Claim.EU261HandlingStatus verdict, String reasoning) {
       if (verdict == Claim.EU261HandlingStatus.EligibleForCompensation) {
         throw new CreateException(
@@ -118,10 +131,6 @@ public class EU261Claim {
       this.reasoning = reasoning;
       this.compensationPerCustomerInEUR = compensationByCustomer;
       this.reimbursementAmountInSEK = reimbursementAmountInSEK;
-    }
-
-    public String getHandlingInstructions() {
-      return reasoning;
     }
   }
 
@@ -1086,22 +1095,22 @@ public class EU261Claim {
       );
   }
 
-  public String getCaveats() {
-    // TODO: Pass duplicate claims as a param
-    List<String> caveats = new List<String>();
+  private List<SemiAutomationReason> getSemiAutomationReasons() {
+    List<SemiAutomationReason> toReturn = new List<SemiAutomationReason>();
 
     if (this.hasPotentiallyDuplicateClaims) {
-      caveats.add('has potential duplicates');
+      toReturn.add(SemiAutomationReason.HasPotentialDuplicates);
     }
 
     if (this.hasHighClaimedExpenses()) {
-      caveats.add('has high claim expenses');
+      toReturn.add(SemiAutomationReason.HasHighClaimExpenses);
     }
 
     if (this.requiresPowerOfAttorney()) {
-      caveats.add('requires a power of attorney');
+      toReturn.add(SemiAutomationReason.RequiresPowerOfAttorney);
     }
 
-    return String.join(caveats, ', ');
+    return toReturn;
   }
+
 }
