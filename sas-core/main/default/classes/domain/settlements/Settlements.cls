@@ -524,18 +524,20 @@ public without sharing class Settlements extends ApplicationDomain {
    * Creates settlements without settlement items for the given claims.
    *
    * @param claims List of claims for which to create settlements.
-   * @param recordTypeToCreate Which type of settlements should be created. If
+   * @param recordTypeForSettlements Which type of settlements should be created. If
    * null, the claims' preferred compensation methods will be used.
    */
   public static Settlements createFromClaim(
     List<LIA_Claim__c> claims,
-    RecordType recordTypeToCreate,
+    RecordType recordTypeForSettlements,
     Boolean createReimbursementSettlement,
     fflib_ISObjectUnitOfWork uow
   ) {
     List<Settlement__c> settlementsToCreate = new List<Settlement__c>();
 
     for (LIA_Claim__c claim : claims) {
+      RecordType recordTypeToCreate = recordTypeForSettlements;
+
       if (recordTypeToCreate == null) {
         String method = createReimbursementSettlement
           ? claim.Preferred_Reimbursement_Method__c
@@ -954,7 +956,7 @@ public without sharing class Settlements extends ApplicationDomain {
    */
   public Settlements validate() {
     List<String> errorsForAllSettlements = new List<String>();
-    LIA_Claim__c c = ClaimsSelector.newInstance()
+    LIA_Claim__c c = ClaimsSelector.newInstance() // TODO: It would be good to get rid of this.
       .selectById(new Set<Id>{ instanceRecords[0].Claim__c })[0]; // Get the corresponding claim
     Boolean anySettlementsHasErrors = false;
 

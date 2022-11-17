@@ -21,7 +21,6 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public String companyCode;
   public String companyName;
 
-  public String eu261HandlingInstructions;
   public String eu261HandlingNote;
   public EU261HandlingStatus eu261HandlingStatus;
 
@@ -96,7 +95,6 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.underlyingSObject.Delay_Length__c = BAGGAGE_DELAY_LENGTH_ENUM_TO_PICKLIST_VALUE.get(
       this.baggageDelayLength
     );
-    this.underlyingSObject.EU261_Handling_Instructions__c = this.eu261HandlingInstructions;
     this.underlyingSObject.EU261_Handling_Note__c = this.eu261HandlingNote;
     this.underlyingSObject.EU261_Handling_Status__c = EU261_STATUS_ENUM_TO_PICKLIST_VALUE.get(
       this.eu261HandlingStatus
@@ -172,7 +170,6 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.baggageDelayLength = BAGGAGE_DELAY_LENGTH_PICKLIST_VALUE_TO_ENUM.get(
       c.Delay_Length__c
     );
-    this.eu261HandlingInstructions = c.EU261_Handling_Instructions__c;
     this.eu261HandlingNote = c.EU261_Handling_Note__c;
     this.eu261HandlingStatus = EU261_STATUS_PICKLIST_VALUE_TO_ENUM.get(
       c.EU261_Handling_Status__c

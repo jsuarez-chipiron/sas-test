@@ -1198,6 +1198,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.EU261_Handling_Instructions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Initially_Provided_PNR__c</field>
         <readable>true</readable>
     </fieldPermissions>

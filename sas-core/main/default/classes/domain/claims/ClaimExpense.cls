@@ -18,6 +18,7 @@ public without sharing class ClaimExpense extends AbstractSObjectWrapper {
     this.underlyingSObject.Type__c = TYPE_ENUM_TO_PICKLIST_VALUE.get(this.type);
     this.underlyingSObject.Date_of_Exchange_Calculation__c = this.dateOfExchangeCalculation; // TODO: Fixme. Should this be set automatically?
   }
+  @TestVisible
   private ClaimExpense() {
     this.underlyingSObject = new Claim_Expense__c();
   }

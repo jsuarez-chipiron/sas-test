@@ -15,6 +15,8 @@ public without sharing class EU261Service {
   private static final String COMPENSATION_WITHOUT_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a total amount of {0} {1}.';
   private static final String COMPENSATION_WITH_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a flat rate compensation of {0} {1} and with a reimbursement of {2} {3} for the expenses you experienced during the delay.';
 
+  private static final String MANUAL_HANDLING_QUEUE = 'Customer_Claim';
+
   public Config config;
 
   private Map<Id, Case> parentCasesById = new Map<Id, Case>();
@@ -25,6 +27,7 @@ public without sharing class EU261Service {
 
     public Boolean enabledSettlements;
     public Boolean enabledRejections;
+    public Boolean enabledSemiAutomation;
 
     public Money expenseLimitAccommodation;
     public Money expenseLimitFood;
@@ -32,9 +35,27 @@ public without sharing class EU261Service {
     public Money expenseLimitTransportation;
     public Money expenseLimitTotal;
 
+    public Config() {
+      percentageRequiringManualApproval = 0;
+
+      enabledSettlements = false;
+      enabledRejections = false;
+      enabledSemiAutomation = false;
+
+      expenseLimitAccommodation = new Money(0, Money.CurrencyCode.SEK);
+      expenseLimitFood = new Money(0, Money.CurrencyCode.SEK);
+      expenseLimitPhoneCalls = new Money(0, Money.CurrencyCode.SEK);
+      expenseLimitTransportation = new Money(0, Money.CurrencyCode.SEK);
+      expenseLimitTotal = new Money(0, Money.CurrencyCode.SEK);
+    }
+
     public Config(EU261_Automation_Configuration__mdt config) {
       this.enabledRejections = U.getOr(false, config.Automatic_Rejection__c);
       this.enabledSettlements = U.getOr(false, config.Automatic_Settlement__c);
+      this.enabledSemiAutomation = U.getOr(
+        false,
+        config.Automatic_Settlement__c
+      ); // TODO: FIX to correct field.
       this.expenseLimitAccommodation = new Money(
         U.getOr(0, config.Expense_Limit_Accommodation__c),
         Money.CurrencyCode.SEK
@@ -97,9 +118,9 @@ public without sharing class EU261Service {
 
   public void processEU261Claims(Set<Id> claimIds) {
     U.verifyNotNull(claimIds);
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    this.automateEU261Claims(claimIds, uow);
-    uow.commitWork();
+    //fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+    this.automateEU261Claims(claimIds);
+    //uow.commitWork();
   }
 
   public void batchProcessEU261Claims(Set<Id> claimIds) {
@@ -144,19 +165,20 @@ public without sharing class EU261Service {
    * @return A list of EU261Claims which contain the decision of how the automation handled them.
    */
   @TestVisible
-  private List<EU261Claim> automateEU261Claims(
-    Set<Id> claimIds,
-    fflib_ISObjectUnitOfWork uow
-  ) {
+  private List<EU261Claim> automateEU261Claims(Set<Id> claimIds) {
     List<EU261Claim> claimsToAutomate = gatherAllNecessaryInformation(claimIds);
 
     for (EU261Claim c : claimsToAutomate) {
       c.evaluate();
     }
 
-    storeClaimDecision(uow, claimsToAutomate);
+    fflib_ISObjectUnitOfWork uow1 = SAS_Service_Application.UnitOfWork.newInstance();
+    storeClaimDecision(uow1, claimsToAutomate);
+    uow1.commitWork();
 
-    settleAndRejectClaims(uow, claimsToAutomate);
+    fflib_ISObjectUnitOfWork uow2 = SAS_Service_Application.UnitOfWork.newInstance();
+    settleAndRejectClaims(uow2, claimsToAutomate);
+    uow2.commitWork();
 
     // debugResult(claimsToAutomate);
 
@@ -455,79 +477,154 @@ public without sharing class EU261Service {
     Claims.newInstance(toUpsert).upsertToDB(uow);
   }
 
-  private List<EU261Claim> settleAndRejectClaims(
+  /**
+   * Processes all of the claims which we can settle, reject or automate
+   * partially. Creates settlements, emails and prepares them and the claim and
+   * case to updated in the DB.
+   *
+   * Splits claims into several groups based on w
+   *
+   * At this stage claims can be split into four different categories based on
+   * what we want to do with them:
+   * 1. Ones we want to pay out automatically
+   * 2. Ones where customer appears to be eligible for payment but there are some caveats
+   * 3. Ones we can reject automatically
+   * 4. Ones where we cannot determine eligibility at all
+   *
+   * Claims in the first category we pay out directly, but some of these fall
+   * to the approval queue for spot checcks. Claims in the second category we
+   * can send to a specific manual handling queue with instructions for the
+   * agents on what they need to check before rejecting or sending the claim to
+   * approval. Claims in the third category we can just close and email the
+   * customer the result and claims in the fourth category we do nothing with
+   * as they need to go to manual handling.
+   */
+  private void settleAndRejectClaims(
     fflib_ISObjectUnitOfWork uow,
     List<EU261Claim> claimsToAutomate
   ) {
     ClaimService claimService = ClaimService.newInstance();
 
-    List<EU261Claim> claimsToPayOut = new List<EU261Claim>();
+    List<EU261Claim> claimsToApproveAutomatically = new List<EU261Claim>();
+    List<EU261Claim> claimsToManualApproval = new List<EU261Claim>();
     List<EU261Claim> claimsToReject = new List<EU261Claim>();
-    Set<Id> claimsToRejectIds = new Set<Id>();
+    List<EU261Claim> claimsToSemiAutomate = new List<EU261Claim>();
+
+    List<Case> parentCasesForAutomaticApproval = new List<Case>();
+    List<Case> parentCasesForManualApproval = new List<Case>();
+    List<Case> parentCasesForSemiAutomation = new List<Case>();
+    List<Case> parentCasesForRejection = new List<Case>();
 
     for (EU261Claim c : claimsToAutomate) {
-      if (
-        c.decision.verdict == Claim.EU261HandlingStatus.EligibleForCompensation
-      ) {
-        claimsToPayOut.add(c);
-      } else if (
-        c.decision.verdict ==
-        Claim.EU261HandlingStatus.IneligibleForCompensation
-      ) {
-        claimsToRejectIds.add(c.claimObj.id);
-        claimsToReject.add(c);
+      switch on c.decision.verdict {
+        when EligibleForCompensation {
+          if (shouldApproveAutomatically(c)) {
+            claimsToApproveAutomatically.add(c);
+            parentCasesForAutomaticApproval.add(
+              parentCasesById.get(c.claimObj.parentCaseId)
+            );
+          } else {
+            claimsToManualApproval.add(c);
+            parentCasesForManualApproval.add(
+              parentCasesById.get(c.claimObj.parentCaseId)
+            );
+          }
+        }
+        when PossiblyEligibleForCompensation {
+          claimsToSemiAutomate.add(c);
+          parentCasesForSemiAutomation.add(
+            parentCasesById.get(c.claimObj.parentCaseId)
+          );
+        }
+        when IneligibleForCompensation {
+          claimsToReject.add(c);
+          parentCasesForRejection.add(
+            parentCasesById.get(c.claimObj.parentCaseId)
+          );
+        }
       }
     }
 
     if (this.config.enabledSettlements) {
+      List<EU261Claim> claimsWhichNeedSettlements = new List<EU261Claim>(
+        claimsToApproveAutomatically
+      );
+      claimsWhichNeedSettlements.addAll(claimsToManualApproval);
+
+      if (this.config.enabledSemiAutomation) {
+        claimsWhichNeedSettlements.addAll(claimsToSemiAutomate);
+      }
+
       Map<Id, List<Settlement__c>> settlementsByClaimId = createSettlementsForClaims(
-        claimsToPayOut
+        claimsWhichNeedSettlements
       );
 
-      List<EU261Claim> automaticallyApprovedClaims = new List<EU261Claim>();
-      List<EU261Claim> manualApprovalClaims = new List<EU261Claim>();
-      Set<Id> manualApprovalClaimIds = new Set<Id>();
-      Set<Id> automaticallyApprovedClaimIds = new Set<Id>();
-
-      for (EU261Claim cl : claimsToPayOut) {
-        if (shouldApproveAutomatically(cl)) {
-          automaticallyApprovedClaims.add(cl);
-          automaticallyApprovedClaimIds.add(cl.claimObj.id);
-        } else {
-          manualApprovalClaims.add(cl);
-          manualApprovalClaimIds.add(cl.claimObj.id);
+      if (claimsToManualApproval.size() > 0) {
+        List<Settlement__c> settlementsForManualApproval = new List<Settlement__c>();
+        for (EU261Claim cl : claimsToManualApproval) {
+          settlementsForManualApproval.addAll(
+            settlementsByClaimId.get(cl.claimObj.id)
+          );
         }
-      }
 
-      if (manualApprovalClaimIds.size() > 0) {
-        claimService.submitClaimsToApproval(
-          uow,
-          manualApprovalClaimIds,
-          createDraftApprovedEmails(manualApprovalClaims, settlementsByClaimId)
-        );
-      }
-
-      if (automaticallyApprovedClaimIds.size() > 0) {
-        claimService.settleClaims(
-          uow,
-          automaticallyApprovedClaimIds,
-          createApprovedEmails(
-            automaticallyApprovedClaims,
+        uow.registerNew(
+          createDraftApprovedEmails(
+            claimsToManualApproval,
             settlementsByClaimId
           )
         );
+
+        Settlements.newInstance(settlementsForManualApproval)
+          .validate()
+          .submitToApproval(uow)
+          .lock();
+
+        Cases.newInstance(parentCasesForManualApproval).submitToApproval(uow);
+      }
+
+      if (claimsToApproveAutomatically.size() > 0) {
+        Cases.newInstance(parentCasesForAutomaticApproval)
+          .emailContactPeople(
+            createApprovedEmails(
+              claimsToApproveAutomatically,
+              settlementsByClaimId
+            ),
+            uow
+          )
+          .close(uow);
+
+        // TODO: Catch validation issues for the settlements and send to semi-automation.
+        Claims.newInstance(
+            EU261Claim.getClaimSObjectsFor(claimsToApproveAutomatically)
+          )
+          .settle(uow);
+      }
+
+      if (
+        this.config.enabledSemiAutomation && claimsToSemiAutomate.size() > 0
+      ) {
+        Map<Id, String> handlingInstructionsByCaseId = new Map<Id, String>();
+        for (EU261Claim cl : claimsToSemiAutomate) {
+          handlingInstructionsByCaseId.put(
+            cl.claimObj.parentCaseId,
+            cl.decision.getHandlingInstructions()
+          );
+        }
+
+        Claims.newInstance(EU261Claim.getClaimSObjectsFor(claimsToSemiAutomate))
+          .upsertToDB(uow);
+
+        Cases.newInstance(parentCasesForSemiAutomation)
+          .setHandlingInstructions(uow, handlingInstructionsByCaseId)
+          .routeToQueue(MANUAL_HANDLING_QUEUE, uow);
       }
     }
 
-    if (this.config.enabledRejections && claimsToRejectIds.size() > 0) {
-      claimService.rejectClaims(
-        uow,
-        claimsToRejectIds,
-        createRejectionEmails(claimsToReject)
-      );
+    if (this.config.enabledRejections && claimsToReject.size() > 0) {
+      Cases.newInstance(parentCasesForRejection)
+        .emailContactPeople(createRejectionEmails(claimsToReject), uow)
+        .close(uow);
     }
-
-    return claimsToAutomate;
   }
 
   private Boolean shouldApproveAutomatically(EU261Claim cl) {
@@ -575,7 +672,10 @@ public without sharing class EU261Service {
 
     for (EU261Claim c : claimsToPayOut) {
       allPayableClaimSObjects.add(c.claimObj.underlyingSObject);
-      if (c.decision.reimbursementAmountInSEK.amount > 0) {
+      if (
+        c.decision.reimbursementAmountInSEK.amount > 0 &&
+        !c.hasHighClaimedExpenses()
+      ) {
         claimsRequiringTwoSettlements.add(c.claimObj.underlyingSObject);
       }
     }
@@ -587,7 +687,7 @@ public without sharing class EU261Service {
       false,
       uow1
     );
-    Settlements reimbursementSettlements = Settlements.createFromClaim(
+    Settlements reimbursementSettlements = Settlements.createFromClaim( // TODO: We shouldn't even create these if the amounts are too high.
       claimsRequiringTwoSettlements,
       null,
       true,
@@ -682,7 +782,11 @@ public without sharing class EU261Service {
       }
 
       Money reimbursement = c.decision.reimbursementAmountInSEK;
-      if (reimbursement != null && reimbursement.amount > 0) {
+      if (
+        reimbursement != null &&
+        reimbursement.amount > 0 &&
+        !c.hasHighClaimedExpenses()
+      ) {
         // TODO: This needs to support creating a separate settlement in case we need to make a reimbusement
         // Cant have different methods in one settlement!
         SettlementItem si = new SettlementItem();
@@ -826,7 +930,7 @@ public without sharing class EU261Service {
         ' has been processed'
       );
 
-      emailsByClaimId.put(c.claimObj.id, emailToSend);
+      emailsByClaimId.put(c.claimObj.parentCaseId, emailToSend);
     }
 
     return emailsByClaimId;
@@ -869,7 +973,7 @@ public without sharing class EU261Service {
         ' has been processed'
       );
 
-      emailsByClaimId.put(c.claimObj.id, emailToSend);
+      emailsByClaimId.put(c.claimObj.parentCaseId, emailToSend);
     }
 
     return emailsByClaimId;
