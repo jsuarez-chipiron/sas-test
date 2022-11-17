@@ -304,6 +304,8 @@ public without sharing class CaseService {
     }
 
     Set<String> groupNames = new Set<String>{
+      'Claims - EU261',
+      'Claims - Care Expenses',
       'Claims - High Priority',
       'Claims - High Care Costs',
       'Claims - Flight Disruptions',
