@@ -48,6 +48,20 @@ public without sharing class Settlements extends ApplicationDomain {
     return rtId;
   }
 
+  public static RecordType getRecordType(Id rtId) {
+    if (rtId == getRecordTypeId(RecordType.Cheque)) {
+      return RecordType.Cheque;
+    } else if (rtId == getRecordTypeId(RecordType.EBPoints)) {
+      return RecordType.EBPoints;
+    } else if (rtId == getRecordTypeId(RecordType.Monetary)) {
+      return RecordType.Monetary;
+    } else if (rtId == getRecordTypeId(RecordType.Voucher)) {
+      return RecordType.Voucher;
+    } else {
+      return null;
+    }
+  }
+
   private static final Map<String, String> voucherTypeToCostAccount = new Map<String, String>{
     '6721 - Denied boarding involuntary voucher' => '6721',
     '6721 - Denied boarding voluntary voucher' => '6721',
@@ -938,7 +952,6 @@ public without sharing class Settlements extends ApplicationDomain {
    * Logic:
    * Monetary:
    * Check that Bank_Account_Number, BIC_Swift, Payee_Name, Currency, Bank_Country, and Amount are not null
-   * (Address_Line_1, City, Postal_Code and Country are not null and Type_Of_Customer = "Private Customer") or that Type_of_Customer != "Private Customer"
    * Check that Amount is larger than 0
    * Check that Bank_Account_Number and BIC_Swift are valid
    *
@@ -956,19 +969,13 @@ public without sharing class Settlements extends ApplicationDomain {
    */
   public Settlements validate() {
     List<String> errorsForAllSettlements = new List<String>();
-    LIA_Claim__c c = ClaimsSelector.newInstance() // TODO: It would be good to get rid of this.
-      .selectById(new Set<Id>{ instanceRecords[0].Claim__c })[0]; // Get the corresponding claim
-    Boolean anySettlementsHasErrors = false;
 
     for (Settlement__c s : instanceRecords) {
       List<String> errorMessages = new List<String>();
 
-      for (
-        Schema.SObjectField field : getRequiredFieldsForSettlement(
-          s.RecordTypeId,
-          c.Type_of_Customer__c
-        )
-      ) {
+      RecordType rt = getRecordType(s.RecordTypeId);
+
+      for (Schema.SObjectField field : getRequiredFieldsForSettlement(rt)) {
         if (s.get(field) == null) {
           errorMessages.add(
             field.getDescribe().getLabel() + ' cannot be empty.'
@@ -976,67 +983,66 @@ public without sharing class Settlements extends ApplicationDomain {
         }
       }
 
-      if (s.RecordTypeId == getRecordTypeId(Settlements.RecordType.EBPoints)) {
-        if (!(s.EuroBonus_Points__c > 0)) {
-          errorMessages.add('EuroBonus Points has to be greater than 0.');
-        }
+      switch on rt {
+        when EBPoints {
+          if (!(s.EuroBonus_Points__c > 0)) {
+            errorMessages.add('EuroBonus Points has to be greater than 0.');
+          }
 
-        try {
-          Accounts.parseIntoEuroBonusNumber(s.EuroBonus_Number__c);
-        } catch (Accounts.IncorrectEBNumberException e) {
-          errorMessages.add(
-            'EuroBonus number is not in correct format (9 digits).'
-          );
-        }
-      } else if (
-        s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Cheque)
-      ) {
-        if (!(s.Amount__c > 0)) {
-          errorMessages.add('Amount has to be greater than 0.');
-        }
-      } else if (
-        s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Voucher)
-      ) {
-        if (!(s.Amount__c > 0)) {
-          errorMessages.add('Amount has to be greater than 0.');
-        }
-      } else if (
-        s.RecordTypeId == getRecordTypeId(Settlements.RecordType.Monetary)
-      ) {
-        if (!(s.Amount__c > 0)) {
-          errorMessages.add('Amount has to be greater than 0.');
-        }
-        if (errorMessages.size() == 0) {
-          Boolean bankAccountNumberIsValid = true;
           try {
-            bankAccountNumberIsValid = BankAccountUtils.validateIBAN(
-              s.Bank_Account_Number__c,
-              s.Bank_Country__c,
-              s.BIC_Swift__c
-            );
-          } catch (Exception e) {
+            Accounts.parseIntoEuroBonusNumber(s.EuroBonus_Number__c);
+          } catch (Accounts.IncorrectEBNumberException e) {
             errorMessages.add(
-              'Bank Account Number and the bank country do not match. ' +
-              e.getMessage()
+              'EuroBonus number is not in correct format (9 digits).'
             );
           }
-          if (!bankAccountNumberIsValid) {
-            errorMessages.add('Bank Account Number is invalid.');
+        }
+        when Cheque {
+          if (!(s.Amount__c > 0)) {
+            errorMessages.add('Amount has to be greater than 0.');
           }
-          if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
-            errorMessages.add(
-              'BIC number should be formatted as: XXXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
-            );
+        }
+        when Voucher {
+          if (!(s.Amount__c > 0)) {
+            errorMessages.add('Amount has to be greater than 0.');
           }
-          if (
-            !BankAccountUtils.validateAddress(
-              s.Address_line_1__c,
-              s.Address_line_2__c
-            )
-          ) {
-            errorMessages.add(
-              'Address should not contain special character like (´,´,!,€,+,?)).'
-            );
+        }
+        when Monetary {
+          if (!(s.Amount__c > 0)) {
+            errorMessages.add('Amount has to be greater than 0.');
+          }
+          if (errorMessages.size() == 0) {
+            Boolean bankAccountNumberIsValid = true;
+            try {
+              bankAccountNumberIsValid = BankAccountUtils.validateIBAN(
+                s.Bank_Account_Number__c,
+                s.Bank_Country__c,
+                s.BIC_Swift__c
+              );
+            } catch (Exception e) {
+              errorMessages.add(
+                'Bank Account Number and the bank country do not match. ' +
+                e.getMessage()
+              );
+            }
+            if (!bankAccountNumberIsValid) {
+              errorMessages.add('Bank Account Number is invalid.');
+            }
+            if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
+              errorMessages.add(
+                'BIC number should be formatted as: XXXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
+              );
+            }
+            if (
+              !BankAccountUtils.validateAddress(
+                s.Address_line_1__c,
+                s.Address_line_2__c
+              )
+            ) {
+              errorMessages.add(
+                'Address should not contain special character like (´,´,!,€,+,?)).'
+              );
+            }
           }
         }
       }
@@ -1217,11 +1223,10 @@ public without sharing class Settlements extends ApplicationDomain {
   }
 
   private List<Schema.SObjectField> getRequiredFieldsForSettlement(
-    Id settlementRecordTypeId,
-    String claimTypeOfCustomer
+    RecordType settlementRecordType
   ) {
-    Map<Id, List<Schema.SObjectField>> recordTypeIdToRequiredFields = new Map<Id, List<Schema.SObjectField>>{
-      getRecordTypeId(RecordType.Cheque) => new List<Schema.SObjectField>{
+    Map<RecordType, List<Schema.SObjectField>> recordTypeIdToRequiredFields = new Map<RecordType, List<Schema.SObjectField>>{
+      RecordType.Cheque => new List<Schema.SObjectField>{
         Settlement__c.Payee_Name__c,
         Settlement__c.Currency__c,
         Settlement__c.Bank_Country__c,
@@ -1230,41 +1235,23 @@ public without sharing class Settlements extends ApplicationDomain {
         Settlement__c.Postal_Code__c,
         Settlement__c.Country__c
       },
-      getRecordTypeId(RecordType.EBPoints) => new List<Schema.SObjectField>{
+      RecordType.EBPoints => new List<Schema.SObjectField>{
         Settlement__c.EuroBonus_Number__c
       },
-      getRecordTypeId(RecordType.Monetary) => new List<Schema.SObjectField>{
+      RecordType.Monetary => new List<Schema.SObjectField>{
         Settlement__c.Bank_Account_Number__c,
         Settlement__c.BIC_Swift__c,
         Settlement__c.Payee_Name__c,
         Settlement__c.Currency__c,
-        Settlement__c.Bank_Country__c,
-        Settlement__c.Address_line_1__c,
-        Settlement__c.City__c,
-        Settlement__c.Postal_Code__c,
-        Settlement__c.Country__c
+        Settlement__c.Bank_Country__c
       },
-      getRecordTypeId(RecordType.Voucher) => new List<Schema.SObjectField>{
+      RecordType.Voucher => new List<Schema.SObjectField>{
         Settlement__c.Voucher_Email__c,
         Settlement__c.Currency__c,
         Settlement__c.Payee_First_Name__c,
         Settlement__c.Payee_Last_Name__c
       }
     };
-
-    if (
-      settlementRecordTypeId == getRecordTypeId(RecordType.Monetary) &&
-      claimTypeOfCustomer != 'Private Customer'
-    ) {
-      return new List<Schema.SObjectField>{
-        Settlement__c.Bank_Account_Number__c,
-        Settlement__c.BIC_Swift__c,
-        Settlement__c.Payee_Name__c,
-        Settlement__c.Currency__c,
-        Settlement__c.Bank_Country__c
-      };
-    } else {
-      return recordTypeIdToRequiredFields.get(settlementRecordTypeId);
-    }
+    return recordTypeIdToRequiredFields.get(settlementRecordType);
   }
 }
