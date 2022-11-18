@@ -7,7 +7,8 @@ public with sharing class TestSegmentFactory {
     REMOVEDNOTCANCELLED,
     DOUBLEUNCONFIRMED,
     UNABLETOCONFIRM,
-    GROUPBOOKING
+    GROUPBOOKING,
+    FULLHISTORY
   } // TODO Rename
 
   public class SegmentsInfo {

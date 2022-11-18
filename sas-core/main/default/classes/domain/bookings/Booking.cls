@@ -98,8 +98,6 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     this.underlyingSObject.Type__c = TYPE_ENUM_TO_PICKLIST_VALUE.get(this.type);
   }
 
-  public class InvalidTripException extends Exception {
-  }
   public class UnsupportedException extends Exception {
   }
 
@@ -236,31 +234,18 @@ public without sharing class Booking extends AbstractSObjectWrapper {
   }
 
   private class CancellationTime {
-    Datetime cancellationTime;
-    Boolean segmentRemovedBeforeCancellation;
+    Datetime affectedByIrregularity;
+    Datetime unconfirmed;
+    Datetime removed;
 
     public CancellationTime(
-      Datetime cancellationTime,
-      Boolean segmentRemovedBeforeCancellation
+      Datetime affectedByIrregularity,
+      Datetime unconfirmed,
+      Datetime removed
     ) {
-      this.cancellationTime = cancellationTime;
-      this.segmentRemovedBeforeCancellation = segmentRemovedBeforeCancellation;
-    }
-  }
-
-  public class BeforeAndAfter {
-    public Trip before;
-    public Trip after;
-    public Boolean segmentRemovedBeforeCancellation;
-
-    public BeforeAndAfter(
-      Trip before,
-      Trip after,
-      Boolean segmentRemovedBeforeCancellation
-    ) {
-      this.before = before;
-      this.after = after;
-      this.segmentRemovedBeforeCancellation = segmentRemovedBeforeCancellation;
+      this.affectedByIrregularity = affectedByIrregularity;
+      this.unconfirmed = unconfirmed;
+      this.removed = removed;
     }
   }
 
@@ -280,120 +265,108 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       );
     }
 
-    // Trip.segmentForFlightRemovedBeforeCancellation(claimFlight);
-    Datetime segmentCancellationTime;
-    Boolean segmentRemovedBeforeCancellation = false;
+    // Make sure all segments for the flight have the same history
+    Datetime segmentUnconfirmed;
+    Datetime segmentRemoved;
     for (Segment s : getSegmentsForFlight(f)) {
-      // Segments affected by the irregularity
-      Datetime currentSegmentCancellationTime;
-      try {
-        currentSegmentCancellationTime = s.getTimeCancelled();
-      } catch (Segment.CancelledFromConfirmedException e) {
-        currentSegmentCancellationTime = s.getTimeRemoved();
-        if (
-          currentSegmentCancellationTime != null &&
-          currentSegmentCancellationTime < cancellation.cancellationTime
-        ) {
-          segmentRemovedBeforeCancellation = true;
-        }
-      }
+      Datetime currentSegmentUnconfirmed = s.getTimeUnconfirmed();
+      Datetime currentSegmentRemoved = s.getTimeRemoved();
 
       if (
-        currentSegmentCancellationTime != segmentCancellationTime &&
-        segmentCancellationTime != null
+        currentSegmentUnconfirmed != segmentUnconfirmed &&
+        segmentUnconfirmed != null
       ) {
-        throw new InvalidTripException(
-          'Segments with the same flight were cancelled at different times'
+        throw new Trip.InvalidException(
+          'Segments with the same flight were unconfirmed at different times'
         );
       }
-      segmentCancellationTime = currentSegmentCancellationTime;
+      segmentUnconfirmed = currentSegmentUnconfirmed;
+
+      if (currentSegmentRemoved != segmentRemoved && segmentRemoved != null) {
+        throw new Trip.InvalidException(
+          'Segments with the same flight were removed at different times'
+        );
+      }
+      segmentRemoved = currentSegmentRemoved;
     }
 
-    if (segmentCancellationTime == null) {
-      throw new InvalidTripException(
+    if (segmentUnconfirmed == null && segmentRemoved == null) {
+      throw new Trip.InvalidException(
         'Was not able to get segment cancellation time'
-      );
-    } else if (
-      segmentCancellationTime.date() != cancellation.cancellationTime.date()
-    ) {
-      throw new InvalidTripException(
-        'The cancellation of the flight and the cancellation of the segment did not happen on the same date'
       );
     }
 
     return new CancellationTime(
-      segmentCancellationTime,
-      segmentRemovedBeforeCancellation
+      cancellation.cancellationTime,
+      segmentUnconfirmed,
+      segmentRemoved
     );
   }
 
   /**
    * Calculates the trip with the cancelled flight before the cancellation and the replacement trip
    *
-   * @throws Booking.InvalidTripException if the trips calculated are invalid.
+   * @throws Trip.InvalidException if the trips calculated are invalid.
    * @throws Trip.BookingTypeNotSupportedException if the booking type is not yet supported.
    * @throws Segment.UnsupportedException if there are unsupported segment event statuses
    * @throws Trip.RouteException if there is an error when checking the trip validity (infinite loop)
    * @throws AbstractSObjectWrapper.MissingDataException if there is no cancellation time
    * @throws Booking.UnsupportedException if there is more than one cancellation
    */
-  public BeforeAndAfter getTripsBeforeAndAfterCancellation(
-    Flight cancelledFlight
-  ) {
-    Trip tripWithCancelledFlight;
-    Trip tripWithCancelledFlightReplacement;
-
+  public List<Trip> getTripsBeforeAndAfterCancellation(Flight cancelledFlight) {
     CancellationTime cancellationTimeInfo = getCancellationTime(
       cancelledFlight
     );
-    Datetime cancellationTime = cancellationTimeInfo.cancellationTime;
-    Boolean removedBeforeCancellation = cancellationTimeInfo.segmentRemovedBeforeCancellation;
+    Datetime unconfirmed = cancellationTimeInfo.unconfirmed;
+    Datetime removed = cancellationTimeInfo.removed;
 
-    List<Trip> tripsBeforeIrregularity = getTripsAtTime(
-      cancellationTime.addMinutes(-5)
-    ); // Arbitrary
-    List<Trip> tripsAfterIrregularity = getTripsAtTime(cancellationTime);
+    List<Trip> tripsBeforeIrregularity;
+    if (unconfirmed != null) {
+      tripsBeforeIrregularity = getTripsAtTime(unconfirmed.addMinutes(-5)); // Arbitrary
+    } else {
+      tripsBeforeIrregularity = getTripsAtTime(removed.addMinutes(-5));
+    }
+
+    List<Trip> tripsAfterIrregularity;
+    if (removed != null) {
+      // TODO: ! This might be problematic (talk to Markus)
+      tripsAfterIrregularity = getTripsAtTime(removed);
+    } else {
+      tripsAfterIrregularity = getTripsAtTime(unconfirmed);
+    }
 
     if (tripsBeforeIrregularity.size() != tripsAfterIrregularity.size()) {
-      throw new InvalidTripException(
+      throw new Trip.InvalidException(
         'Interpretation of booking changed after cancellation'
       );
     }
 
     // Identify and set trip with flight and the replacement trip
+    Boolean removedBeforeIrregularity =
+      removed != null &&
+      removed < cancellationTimeInfo.affectedByIrregularity;
+
+    Trip tripWithCancelledFlight;
+    Trip tripWithCancelledFlightReplacement;
     for (Integer i = 0; i < tripsBeforeIrregularity.size(); i++) {
       Trip tripBeforeIrregularity = tripsBeforeIrregularity[i];
       if (tripBeforeIrregularity.containsFlight(cancelledFlight)) {
         tripWithCancelledFlight = tripBeforeIrregularity;
-        tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeCancellation;
+        tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeIrregularity;
         tripWithCancelledFlightReplacement = tripsAfterIrregularity[i];
         break;
       }
     }
 
-    if (
-      !tripWithCancelledFlight.hasRouteFromOriginToDestination() ||
-      !tripWithCancelledFlightReplacement.hasRouteFromOriginToDestination()
-    ) {
-      throw new InvalidTripException(
-        'Replacement for trip with flight does not have a route from origin to destination'
-      );
-    } else if (
-      tripWithCancelledFlight.originAirport !=
-      tripWithCancelledFlightReplacement.originAirport ||
-      tripWithCancelledFlight.destinationAirport !=
-      tripWithCancelledFlightReplacement.destinationAirport
-    ) {
-      throw new InvalidTripException(
-        'Replacement for trip with flight has a different origin or destination'
-      );
-    }
-
-    return new BeforeAndAfter(
+    Trip.checkIfValidReplacement(
       tripWithCancelledFlight,
-      tripWithCancelledFlightReplacement,
-      cancellationTimeInfo.segmentRemovedBeforeCancellation
+      tripWithCancelledFlightReplacement
     );
+
+    return new List<Trip>{
+      tripWithCancelledFlight,
+      tripWithCancelledFlightReplacement
+    };
   }
 
   public Trip getTripWithFlight(Flight f) {
@@ -408,13 +381,25 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     }
 
     if (!withFlight.hasRouteFromOriginToDestination()) {
-      throw new InvalidTripException(
+      throw new Trip.InvalidException(
         'Trip with flight does not have a route from origin to destination'
       );
     }
 
     return withFlight;
   }
+
+  public Boolean hasReinstated(Flight f){
+    List<Segment> segments = this.getSegmentsForFlight(f);
+
+    for (Segment s : segments){
+      if (s.hasBeenReinstated()){
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   /**
    * Returns true if the given string is a valid booking reference.
@@ -439,7 +424,8 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     for (Booking__c b : bookings) {
       toReturn.add(new Booking(b));
     }
-
+    
     return toReturn;
   }
+  
 }

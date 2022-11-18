@@ -33,4 +33,14 @@ public without sharing class StringUtils {
 
     return s.replaceAll('[\\s\u00A0\u200B-\u200D\uFEFF]+', '');
   }
+
+  /**
+   * Returns a date with the form XXXXYYZZ
+   */
+  public static String dateToTEDSString(Date d) {
+    String year = String.valueOf(d.year());
+    String month = String.valueOf(d.month()).leftPad(2, '0');
+    String day = String.valueOf(d.day()).leftPad(2, '0');
+    return year + month + day;
+  }
 }

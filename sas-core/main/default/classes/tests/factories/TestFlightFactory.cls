@@ -12,9 +12,7 @@ public with sharing class TestFlightFactory {
     String tedsIdentifier =
       flightNumber +
       '-' +
-      flightDateTime.year() +
-      flightDateTime.month() +
-      flightDateTime.day() +
+      StringUtils.dateToTEDSString(flightDateTime.date()) +
       '-' +
       departure +
       '-' +

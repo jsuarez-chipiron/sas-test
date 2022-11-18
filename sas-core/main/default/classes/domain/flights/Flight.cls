@@ -276,7 +276,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
   ) {
     return normalizeFlightNumber(flightNumber) +
       '-' +
-      String.valueOf(flightDate).remove('-');
+      StringUtils.dateToTEDSString(flightDate);
   }
 
   /**

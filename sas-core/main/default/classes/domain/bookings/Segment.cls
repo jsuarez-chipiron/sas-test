@@ -129,11 +129,9 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
    * Currently only supports Confirmed, Cancelled and Unknown
    */
   public Status getStatus(Datetime theTime) {
-    Status currentStatus = Status.Unknown;
-    if (events == null) {
-      throw new MissingDataException('Missing segment events.');
-    }
+    U.verifyNotNull(this.events);
 
+    Status currentStatus = Status.Unknown;
     for (SegmentEvent se : events) {
       if (se.updateDate > theTime) {
         break;
@@ -161,13 +159,14 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
             'Segment has unsupported "Unable"-status'
           );
         }
-        when C_GK {
+        when C_GF, C_GK, C_GL, C_GN, C_GO {
           // Guaranteed/Merged. Also used in 1V as Passive - Group confirmed
           throw new UnsupportedException('Group segments are not supported');
         }
         when C_HX, C_XK {
           // Cancel confirm hold
           // Cancel seg with change
+          // Group statuses
           throw new UnsupportedException('Segment has an unsupported status');
         }
       }
@@ -177,60 +176,37 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
   }
 
   /**
-   * Gets the segment status at a specific time.
-   * Currently only supports Confirmed, Cancelled and Unknown
+   * (Unconfirmed = unable)
    */
-  public Datetime getTimeCancelled() {
-    if (events == null) {
-      throw new MissingDataException('Missing segment events.');
-    }
+  public Datetime getTimeUnconfirmed() {
+    U.verifyNotNull(this.events);
 
-    Datetime timeCancelled;
-    Boolean isConfirmed;
+    Datetime timeUnable;
     for (SegmentEvent se : events) {
-      switch on se.newStatus {
-        when C_HK {
-          // Holds confirmed
-          isConfirmed = true;
+      if (se.newStatus == SegmentEvent.StatusCode.C_UN) {
+        if (
+          timeUnable != null &&
+          se.previousStatus != SegmentEvent.StatusCode.C_UN
+        ) {
+          throw new UnsupportedException('More than one unconfirmed time.');
         }
-        when C_UN {
-          // Unable - no flight
-          if (isConfirmed) {
-            isConfirmed = false;
-            if (timeCancelled != null) {
-              throw new UnsupportedException(
-                'More than one cancellation time.'
-              );
-            }
-            timeCancelled = se.updateDate;
-          }
-        }
-        when C_XX {
-          // Cancel segment
-          if (isConfirmed) {
-            throw new CancelledFromConfirmedException(
-              'Segment was cancelled without being unconfirmed'
-            );
-          }
-        }
-        when C_UC, C_US, C_UU {
-          // Unable to confirm or waitlist
-          // Unable to sell
-          // Unable to confirm. Waitlist requested'
-          throw new UnsupportedException(
-            'Segment has unsupported "Unable"-status'
-          );
+
+        // Store the first time when the segment was "unable"
+        if (timeUnable == null) {
+          timeUnable = se.updateDate;
         }
       }
     }
 
-    return timeCancelled;
+    return timeUnable;
   }
 
   public Datetime getTimeRemoved() {
+    U.verifyNotNull(this.events);
+
     Datetime timeRemoved;
     for (SegmentEvent se : events) {
-      if (se.newStatus == SegmentEvent.StatusCode.C_XX) {
+      if (se.operationType == SegmentEvent.OperationType.C_X) {
         if (timeRemoved != null) {
           throw new UnsupportedException('More than one removal time.');
         }
@@ -238,5 +214,26 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
       }
     }
     return timeRemoved;
+  }
+
+  public Boolean hasBeenReinstated() {
+    U.verifyNotNull(this.events);
+
+    Status currentStatus = Status.Unknown;
+    for (SegmentEvent se : events) {
+      switch on se.newStatus {
+        when C_HK, C_TK {
+          if (currentStatus == Status.Unconfirmed) {
+            return true;
+          }
+        }
+        when C_UN {
+          // Unable - no flight
+          currentStatus = Status.Unconfirmed;
+        }
+      }
+    }
+
+    return false;
   }
 }

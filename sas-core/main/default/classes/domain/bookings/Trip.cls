@@ -3,7 +3,7 @@ public without sharing class Trip {
   public Airport destinationAirport;
   public List<Leg> sortedLegs;
   public Boolean SASIsOnlyOperatingCarrier;
-  public Boolean cancelledSegmentRemovedBeforeCancellation;
+  public Boolean cancelledSegmentRemovedBeforeCancellation = false;
 
   /**
    * Returns an ordered list of all trips in a booking.
@@ -72,6 +72,9 @@ public without sharing class Trip {
   }
 
   public class TripException extends Exception {
+  }
+
+  public class InvalidException extends Exception {
   }
 
   public class BookingTypeNotSupportedException extends Exception {
@@ -356,5 +359,27 @@ public without sharing class Trip {
     }
 
     return tripsToReturn;
+  }
+
+  public static void checkIfValidReplacement(Trip t, Trip replacement) {
+    if (t == null || replacement == null) {
+      throw new InvalidException('The trip and/or its replacement is null');
+    }
+
+    if (
+      !t.hasRouteFromOriginToDestination() ||
+      !replacement.hasRouteFromOriginToDestination()
+    ) {
+      throw new InvalidException(
+        'The trip and/or its replacement do not have a route from origin to destination'
+      );
+    } else if (
+      t.originAirport != replacement.originAirport ||
+      t.destinationAirport != replacement.destinationAirport
+    ) {
+      throw new InvalidException(
+        'The replacement has a different origin or destination'
+      );
+    }
   }
 }
