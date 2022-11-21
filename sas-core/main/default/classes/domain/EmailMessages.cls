@@ -59,6 +59,26 @@ public without sharing class EmailMessages extends ApplicationDomain {
     }
   }
 
+  public static String attachLetterheadToHtmlBody(
+    String htmlBody,
+    Id letterheadId
+  ) {
+    List<EnhancedLetterhead> letterheads = EnhancedLetterheadsSelector.newInstance()
+      .selectById(new Set<Id>{ letterheadId });
+
+    if (letterheads.size() != 1) {
+      return null;
+    }
+    return String.format(
+      '{0}{1}{2}',
+      new List<Object>{
+        letterheads[0].LetterheadHeader,
+        htmlBody,
+        letterheads[0].LetterheadFooter
+      }
+    );
+  }
+
   public static Messaging.EmailFileAttachment createEmailAttachmentFromBlob(
     Blob content,
     String fileName,
@@ -123,13 +143,21 @@ public without sharing class EmailMessages extends ApplicationDomain {
       throw new EmailTemplateNameException(templateName);
     }
 
+    EmailTemplate emailTemplate = templates[0];
     emailToSend.setSubject(
-      templates[0].Subject +
+      emailTemplate.Subject +
       ' ' +
       Cases.getThreadId(parentCaseId)
     );
-    emailToSend.setHtmlBody(templates[0].HtmlValue);
-    emailToSend.setPlainTextBody(templates[0].Body);
+    String htmlBody = emailTemplate.EnhancedLetterheadId == null
+      ? emailTemplate.HtmlValue
+      : attachLetterheadToHtmlBody(
+          emailTemplate.HtmlValue,
+          emailTemplate.EnhancedLetterheadId
+        );
+    emailToSend.setHtmlBody(htmlBody);
+    emailToSend.setPlainTextBody(emailTemplate.Body);
+    emailToSend.setTreatBodiesAsTemplate(true);
     return emailToSend;
   }
 

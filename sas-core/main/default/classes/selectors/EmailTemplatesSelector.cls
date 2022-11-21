@@ -3,6 +3,7 @@ public inherited sharing class EmailTemplatesSelector extends fflib_SObjectSelec
     return new List<Schema.SObjectField>{
       EmailTemplate.Id,
       EmailTemplate.Body,
+      EmailTemplate.EnhancedLetterheadId,
       EmailTemplate.HtmlValue,
       EmailTemplate.Name,
       EmailTemplate.Subject
