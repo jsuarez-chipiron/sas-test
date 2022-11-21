@@ -1241,6 +1241,14 @@ private class EU261Service_Test {
       res.cases[0].EU261_Handling_Instructions__c != null,
       'There should be eu261 handling instructions in the case.'
     );
+    System.assertEquals(
+      'Action needed: ' +
+      EU261Service.SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS.get(
+        EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney
+      ),
+      res.cases[0].EU261_Handling_Instructions__c,
+      'EU261 handling instructions should include comment no PoA'
+    );
 
     System.assertEquals(
       1,

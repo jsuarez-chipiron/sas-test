@@ -17,6 +17,14 @@ public without sharing class EU261Service {
 
   private static final String MANUAL_HANDLING_QUEUE = 'Customer_Claim';
 
+  @TestVisible
+  private static final Map<EU261Claim.SemiAutomationReason, String> SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS = new Map<EU261Claim.SemiAutomationReason, String>{
+    EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney => 'Requires power of attorney',
+    EU261Claim.SemiAutomationReason.HasPotentialDuplicates => 'Check and close duplicate case. Check the settlement and submit to approval.',
+    EU261Claim.SemiAutomationReason.HasHighClaimExpenses => '...',
+    EU261Claim.SemiAutomationReason.InvalidSettlementDetails => '...'
+  };
+
   public Config config;
 
   private Map<Id, Case> parentCasesById = new Map<Id, Case>();
@@ -605,9 +613,20 @@ public without sharing class EU261Service {
       ) {
         Map<Id, String> handlingInstructionsByCaseId = new Map<Id, String>();
         for (EU261Claim cl : claimsToSemiAutomate) {
+          List<EU261Claim.SemiAutomationReason> semiAutomationReasonsForClaim = cl.decision.caveats;
+
+          List<String> handlingInstructions = new List<String>();
+          for (
+            EU261Claim.SemiAutomationReason reason : semiAutomationReasonsForClaim
+          ) {
+            handlingInstructions.add(
+              SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS.get(reason)
+            );
+          }
+
           handlingInstructionsByCaseId.put(
             cl.claimObj.parentCaseId,
-            cl.decision.getHandlingInstructions()
+            'Action needed: ' + String.join(handlingInstructions, ' | ')
           );
         }
 
