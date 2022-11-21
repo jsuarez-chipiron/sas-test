@@ -1431,7 +1431,6 @@ private class EU261Claim_Test {
       'We should pay out €250 for the minimal cancellation claim'
     );
   }
-
   @IsTest
   static void claimWithFullHistoryShouldBeAutomated() {
     BookingClaim bc = getCancellationFullBookingHistory();

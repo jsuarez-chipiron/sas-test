@@ -1,6 +1,10 @@
 public inherited sharing class SegmentEventsSelector extends fflib_SObjectSelector {
   public List<Schema.SObjectField> getSObjectFieldList() {
     return new List<Schema.SObjectField>{
+      Segment__c.Id,
+      Segment__c.Name,
+      Segment__c.CreatedDate,
+      Segment__c.LastModifiedDate,
       Segment_Event__c.Segment__c,
       Segment_Event__c.New_Status__c,
       Segment_Event__c.Office_Code__c,
