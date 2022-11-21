@@ -814,9 +814,9 @@ private class EU261Claim_Test {
       'No rebooking cannot be automated.'
     );
     System.assertEquals(
-      'was not able to divide the booking into trips (Interpretation of booking changed after cancellation)',
+      'rebooking was likely not offered',
       result.reasoning,
-      'This trip type should not be supported.'
+      'Rejection reason should be "rebooking was likely not offered"'
     );
   }
 

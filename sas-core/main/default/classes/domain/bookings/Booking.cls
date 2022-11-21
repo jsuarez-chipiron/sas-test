@@ -328,24 +328,27 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     }
 
     // First try to calculate this based on the UN time, then the removed time
-    List<Trip> tripsAfterIrregularity;
     List<Trip> tripBeforeAndAfter;
     try {
-      tripsAfterIrregularity = getTripsAtTime(unconfirmed);
+      List<Trip> tripsAfterUnconfirmed = getTripsAtTime(unconfirmed);
       tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
         tripsBeforeIrregularity,
-        tripsAfterIrregularity,
+        tripsAfterUnconfirmed,
         cancelledFlight
       );
+
+      if (tripBeforeAndAfter[1] == null){
+        throw new Trip.InvalidException('No replacement');
+      }
     } catch (Trip.InvalidException e) {
       // Typically happens when an agent has manually rebooked the passengers
-      tripsAfterIrregularity = getTripsAtTime(removed);
-      tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
-        tripsBeforeIrregularity,
-        tripsAfterIrregularity,
-        cancelledFlight
-      );
-    }
+      List<Trip> tripsAfterRemoved = getTripsAtTime(removed);
+        tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
+          tripsBeforeIrregularity,
+          tripsAfterRemoved,
+          cancelledFlight
+        );
+      }
 
     Trip tripWithCancelledFlight = tripBeforeAndAfter[0];
     Trip tripWithCancelledFlightReplacement = tripBeforeAndAfter[1];

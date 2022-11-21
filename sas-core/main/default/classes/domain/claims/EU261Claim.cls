@@ -448,6 +448,11 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'could not set trip with claim flight'
       );
+    } else if (this.tripWithClaimFlightReplacement == null) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'rebooking was likely not offered'
+      );
     } else if (
       !this.tripWithClaimFlight.originAirport.isEU261Applicable ||
       !this.tripWithClaimFlight.destinationAirport.isEU261Applicable

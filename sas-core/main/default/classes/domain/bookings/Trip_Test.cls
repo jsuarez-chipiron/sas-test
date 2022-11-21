@@ -224,7 +224,7 @@ private class Trip_Test {
       .selectByBookingReference(oneWayBookingReference)[0];
     Booking b = new Booking(bc);
     b.setAirports(getAirports());
-    List<Trip> trips = Trip.createFromBooking(b, System.now());
+    List<Trip> trips = Trip.divideActiveSegmentsIntoTrips(b.segments);
 
     System.assertEquals(
       1,
@@ -251,7 +251,7 @@ private class Trip_Test {
       .selectByBookingReference(roundTripBookingReference)[0];
     Booking b = new Booking(bc);
     b.setAirports(getAirports());
-    List<Trip> trips = Trip.createFromBooking(b, System.now());
+    List<Trip> trips = Trip.divideActiveSegmentsIntoTrips(b.segments);
 
     System.assertEquals(
       2,
@@ -293,7 +293,7 @@ private class Trip_Test {
 
     Boolean isSupported = true;
     try {
-      List<Trip> trips = Trip.createFromBooking(b, System.now());
+      List<Trip> trips = Trip.divideActiveSegmentsIntoTrips(b.segments);
     } catch (Trip.BookingTypeNotSupportedException e) {
       isSupported = false;
     }
@@ -308,7 +308,7 @@ private class Trip_Test {
     Booking b = new Booking(bc);
     b.setAirports(getAirports());
 
-    List<Trip> trips = Trip.createFromBooking(b, System.now());
+    List<Trip> trips = Trip.divideActiveSegmentsIntoTrips(b.segments);
 
     System.assertEquals(
       2,

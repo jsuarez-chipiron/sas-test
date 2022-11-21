@@ -307,6 +307,7 @@ public without sharing class Trip {
    *
    * @return a List<Trip> of the trips sorted in order.
    */
+  @TestVisible
   private static List<Trip> divideActiveSegmentsIntoTrips(
     List<Segment> activeSegments
   ) {
@@ -366,28 +367,33 @@ public without sharing class Trip {
     List<Trip> tripsAfter,
     Flight cancelledFlight
   ) {
-    if (tripsBefore.size() != tripsAfter.size()) {
-      throw new InvalidException(
-        'Interpretation of booking changed after cancellation'
-      );
-    }
-
     // Identify and set trip with flight and the replacement trip
+    Integer tripIndex;
     Trip tripWithCancelledFlight;
-    Trip tripWithCancelledFlightReplacement;
     for (Integer i = 0; i < tripsBefore.size(); i++) {
       Trip tripBeforeIrregularity = tripsBefore[i];
       if (tripBeforeIrregularity.containsFlight(cancelledFlight)) {
         tripWithCancelledFlight = tripBeforeIrregularity;
-        tripWithCancelledFlightReplacement = tripsAfter[i];
+        tripIndex = i;
         break;
       }
     }
 
-    checkIfValidReplacement(
-      tripWithCancelledFlight,
-      tripWithCancelledFlightReplacement
-    );
+    Trip tripWithCancelledFlightReplacement;
+    if (tripsAfter.size() > 0 && tripIndex != null) {
+      if (tripsBefore.size() != tripsAfter.size()) {
+        throw new InvalidException(
+          'Interpretation of booking changed after cancellation'
+        );
+      }
+
+      tripWithCancelledFlightReplacement = tripsAfter[tripIndex];
+
+      checkIfValidReplacement(
+        tripWithCancelledFlight,
+        tripWithCancelledFlightReplacement
+      );
+    }
 
     return new List<Trip>{
       tripWithCancelledFlight,
