@@ -15,9 +15,12 @@ public without sharing class U {
   }
 
   /**
-   * Throws InvalidArgumentException if any of the given arguments is null.
+   * Throws InvalidArgumentException if any of the given arguments or the list of arguments is null.
    */
   public static void verifyNotNull(List<Object> args) {
+    if (args == null) {
+      throw new InvalidArgumentException('Required argument is null');
+    }
     for (Object arg : args) {
       verifyNotNull(arg);
     }

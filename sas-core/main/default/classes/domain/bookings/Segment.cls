@@ -36,11 +36,14 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
   }
 
   public void setEvents(List<SegmentEvent> events) {
-    if (events == null) {
-      return;
+    if (events != null) {
+      events.sort();
     }
-    events.sort();
     this.events = events;
+  }
+
+  public List<SegmentEvent> getEvents() {
+    return this.events;
   }
 
   public class UnsupportedException extends Exception {

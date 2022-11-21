@@ -267,6 +267,8 @@ public class EU261Claim {
       }
     } catch (Segment.UnsupportedException e) {
       return false;
+    } catch (U.InvalidArgumentException e) {
+      return false;
     }
     return true;
   }
@@ -417,7 +419,7 @@ public class EU261Claim {
     } else if (!canGetSegmentStatuses()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'a segment has an unsupported status'
+        'cannot get segment statuses'
       );
     }
 

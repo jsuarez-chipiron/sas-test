@@ -85,6 +85,121 @@ private class EU261Claim_Test {
     return new BookingClaim(b, c);
   }
 
+  /**
+    Based on:
+    THVPPA  2022-02-15 19:44:00 LPA   OSL   1 A   0 HK         2022-07-01 2022-07-01
+    THVPPA  2022-02-15 19:46:00 LPA   OSL   1 C   2 HK HK      2022-07-01 2022-07-01
+    THVPPA  2022-03-10 20:51:00 LPA   OSL   1 C  10 UN HK      2022-07-01 2022-07-01
+    THVPPA  2022-03-10 21:00:00 LPA   OSL   1 X  18 UN UN      2022-07-01 2022-07-01
+
+    THVPPA  2022-03-10 20:51:00 LPA   OSL   2 A  10 TK         2022-06-29 2022-06-29
+    THVPPA  2022-03-10 21:00:00 LPA   OSL   2 C  18 HK TK      2022-06-29 2022-06-29
+    THVPPA  2022-03-11 08:54:00 LPA   OSL   2 X  23 XX HK      2022-06-29 2022-06-29
+
+    THVPPA  2022-03-11 08:54:00 LPA   OSL   3 A  23 HK    CREW 2022-07-02 2022-07-02
+    THVPPA  2022-03-11 08:54:00 LPA   OSL   3 C  24 HK HK CREW 2022-07-02 2022-07-02
+    THVPPA  2022-07-01 17:25:00 LPA   OSL   3 C  46 UN HK CREW 2022-07-02 2022-07-02
+    THVPPA  2022-07-01 17:59:00 LPA   OSL   3 X  51 UN UN CREW 2022-07-02 2022-07-02
+
+    THVPPA  2022-07-01 17:59:00 LPA   BRU   4 A  51 HK    NaN 2022-07-03 2022-07-03
+    THVPPA  2022-07-02 11:24:00 LPA   BRU   4 C  55 HK HK NaN 2022-07-03 2022-07-03
+    THVPPA  2022-07-02 11:24:00 LPA   BRU   4 C  56 HK HK NaN 2022-07-03 2022-07-03
+
+    THVPPA  2022-07-01 17:59:00 BRU   OSL   5 A  51 HK         2022-07-03 2022-07-03
+    THVPPA  2022-07-02 11:24:00 BRU   OSL   5 C  55 HK HK      2022-07-03 2022-07-03
+    THVPPA  2022-07-02 11:24:00 BRU   OSL   5 C  56 HK HK      2022-07-03 2022-07-03
+   */
+  private static BookingClaim getCancellationFullBookingHistory() {
+    Datetime newDeparture1 = departure.addHours(4);
+    Datetime newDeparture2 = departure.addDays(-2);
+    Datetime newDeparture3 = departure.addDays(1);
+    Datetime newDeparture4 = departure.addDays(1).addHours(5);
+    Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
+    Flight f2 = TestFlightFactory.create('SK0002', newDeparture1, 'ARN', 'HEL');
+    Flight f3 = TestFlightFactory.create('SK0003', newDeparture2, 'ARN', 'HEL');
+    Flight f4 = TestFlightFactory.create('SK0004', newDeparture3, 'ARN', 'CPH');
+    Flight f5 = TestFlightFactory.create('SK0005', newDeparture4, 'CPH', 'HEL');
+    List<Flight> flights = new List<Flight>{ f1, f2, f3, f4, f5 };
+
+    List<FlightIrregularity> fis = new List<FlightIrregularity>{
+      TestIrregularityFactory.createCancellation(f3)
+    };
+
+    Datetime cancellationTime = departure.addDays(-1);
+    fis[0].cancellationTime = cancellationTime;
+    f3.irregularities = fis;
+
+    ClaimCustomer cc = new ClaimCustomer();
+    cc.firstname = 'Test';
+    cc.lastName = 'Testsson';
+
+    Claim c = TestClaimFactory.create();
+    c.recordType = Claim.RecordType.CustomerClaim;
+    c.category = Claim.Category.FlightDisruptions;
+    c.type = Claim.Type.FlightCancellation;
+    c.departureDate = newDeparture2.date();
+    c.customers = new List<ClaimCustomer>{ cc };
+    c.flightNumber = 'SK0003'; // SK001 null reference
+    c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
+
+    Booking b = TestBookingFactory.createValidForClaim(c);
+    b.type = Booking.Type.OneWay;
+
+    Datetime timeBooked = departure.addDays(-60);
+    Datetime unconfirmedWithoutCancellation = departure.addDays(-45);
+    Datetime cancelledWithoutCancellation = unconfirmedWithoutCancellation.addHours(
+      2
+    ); // 2 h default
+    Datetime removed = cancelledWithoutCancellation.addDays(1);
+
+    TestSegmentFactory.SegmentsInfo sInfo1 = new TestSegmentFactory.SegmentsInfo(
+      f1,
+      timeBooked,
+      unconfirmedWithoutCancellation,
+      TestSegmentFactory.History.DOUBLEUNCONFIRMED
+    );
+
+    TestSegmentFactory.SegmentsInfo sInfo2 = new TestSegmentFactory.SegmentsInfo(
+      f2,
+      cancelledWithoutCancellation,
+      removed,
+      TestSegmentFactory.History.REMOVEDNOTCANCELLED
+    );
+
+    TestSegmentFactory.SegmentsInfo sInfo3 = new TestSegmentFactory.SegmentsInfo(
+      f3,
+      removed,
+      cancellationTime,
+      TestSegmentFactory.History.DEFAULTCANCELLATION
+    );
+
+    TestSegmentFactory.SegmentsInfo sInfo4 = new TestSegmentFactory.SegmentsInfo(
+      f4,
+      cancellationTime,
+      null,
+      TestSegmentFactory.History.DEFAULTREPLACEMENT
+    );
+
+    TestSegmentFactory.SegmentsInfo sInfo5 = new TestSegmentFactory.SegmentsInfo(
+      f5,
+      cancellationTime,
+      null,
+      TestSegmentFactory.History.DEFAULTREPLACEMENT
+    );
+
+    List<TestSegmentFactory.SegmentsInfo> segmentInfos = new List<TestSegmentFactory.SegmentsInfo>{
+      sInfo1,
+      sInfo2,
+      sInfo3,
+      sInfo4,
+      sInfo5
+    };
+
+    b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
+
+    return new BookingClaim(b, c);
+  }
+
   @IsTest
   static void onlyOneWayAndRoundTripTicketsCanBeEvaluated() {
     ClaimCustomer cc = new ClaimCustomer();
@@ -1330,9 +1445,9 @@ private class EU261Claim_Test {
       'A claim with segments which have unsupported segment events should not be handled.'
     );
     System.assertEquals(
-      'a segment has an unsupported status',
+      'cannot get segment statuses',
       result.reasoning,
-      'Unhandled reason should be "a segment has an unsupported status"'
+      'Unhandled reason should be "cannot get segment statuses"'
     );
   }
 
@@ -1373,9 +1488,9 @@ private class EU261Claim_Test {
       'A claim with segments which have group segment events should not be handled.'
     );
     System.assertEquals(
-      'a segment has an unsupported status',
+      'cannot get segment statuses',
       result.reasoning,
-      'Unhandled reason should be "a segment has an unsupported status"'
+      'Unhandled reason should be "cannot get segment statuses"'
     );
   }
 
@@ -1456,118 +1571,29 @@ private class EU261Claim_Test {
     );
   }
 
-  /**
-    Based on:
-    THVPPA  2022-02-15 19:44:00 LPA   OSL   1 A   0 HK         2022-07-01 2022-07-01
-    THVPPA  2022-02-15 19:46:00 LPA   OSL   1 C   2 HK HK      2022-07-01 2022-07-01
-    THVPPA  2022-03-10 20:51:00 LPA   OSL   1 C  10 UN HK      2022-07-01 2022-07-01
-    THVPPA  2022-03-10 21:00:00 LPA   OSL   1 X  18 UN UN      2022-07-01 2022-07-01
+  @IsTest
+  static void claimWithoutSegmentEventsShouldNotCrashEvaluation() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0].setEvents(null);
 
-    THVPPA  2022-03-10 20:51:00 LPA   OSL   2 A  10 TK         2022-06-29 2022-06-29
-    THVPPA  2022-03-10 21:00:00 LPA   OSL   2 C  18 HK TK      2022-06-29 2022-06-29
-    THVPPA  2022-03-11 08:54:00 LPA   OSL   2 X  23 XX HK      2022-06-29 2022-06-29
-
-    THVPPA  2022-03-11 08:54:00 LPA   OSL   3 A  23 HK    CREW 2022-07-02 2022-07-02
-    THVPPA  2022-03-11 08:54:00 LPA   OSL   3 C  24 HK HK CREW 2022-07-02 2022-07-02
-    THVPPA  2022-07-01 17:25:00 LPA   OSL   3 C  46 UN HK CREW 2022-07-02 2022-07-02
-    THVPPA  2022-07-01 17:59:00 LPA   OSL   3 X  51 UN UN CREW 2022-07-02 2022-07-02
-
-    THVPPA  2022-07-01 17:59:00 LPA   BRU   4 A  51 HK    NaN 2022-07-03 2022-07-03
-    THVPPA  2022-07-02 11:24:00 LPA   BRU   4 C  55 HK HK NaN 2022-07-03 2022-07-03
-    THVPPA  2022-07-02 11:24:00 LPA   BRU   4 C  56 HK HK NaN 2022-07-03 2022-07-03
-
-    THVPPA  2022-07-01 17:59:00 BRU   OSL   5 A  51 HK         2022-07-03 2022-07-03
-    THVPPA  2022-07-02 11:24:00 BRU   OSL   5 C  55 HK HK      2022-07-03 2022-07-03
-    THVPPA  2022-07-02 11:24:00 BRU   OSL   5 C  56 HK HK      2022-07-03 2022-07-03
-   */
-  private static BookingClaim getCancellationFullBookingHistory() {
-    Datetime newDeparture1 = departure.addHours(4);
-    Datetime newDeparture2 = departure.addDays(-2);
-    Datetime newDeparture3 = departure.addDays(1);
-    Datetime newDeparture4 = departure.addDays(1).addHours(5);
-    Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
-    Flight f2 = TestFlightFactory.create('SK0002', newDeparture1, 'ARN', 'HEL');
-    Flight f3 = TestFlightFactory.create('SK0003', newDeparture2, 'ARN', 'HEL');
-    Flight f4 = TestFlightFactory.create('SK0004', newDeparture3, 'ARN', 'CPH');
-    Flight f5 = TestFlightFactory.create('SK0005', newDeparture4, 'CPH', 'HEL');
-    List<Flight> flights = new List<Flight>{ f1, f2, f3, f4, f5 };
-
-    List<FlightIrregularity> fis = new List<FlightIrregularity>{
-      TestIrregularityFactory.createCancellation(f3)
-    };
-
-    Datetime cancellationTime = departure.addDays(-1);
-    fis[0].cancellationTime = cancellationTime;
-    f3.irregularities = fis;
-
-    ClaimCustomer cc = new ClaimCustomer();
-    cc.firstname = 'Test';
-    cc.lastName = 'Testsson';
-
-    Claim c = TestClaimFactory.create();
-    c.recordType = Claim.RecordType.CustomerClaim;
-    c.category = Claim.Category.FlightDisruptions;
-    c.type = Claim.Type.FlightCancellation;
-    c.departureDate = newDeparture2.date();
-    c.customers = new List<ClaimCustomer>{ cc };
-    c.flightNumber = 'SK0003'; // SK001 null reference
-    c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
-
-    Booking b = TestBookingFactory.createValidForClaim(c);
-    b.type = Booking.Type.OneWay;
-
-    Datetime timeBooked = departure.addDays(-60);
-    Datetime unconfirmedWithoutCancellation = departure.addDays(-45);
-    Datetime cancelledWithoutCancellation = unconfirmedWithoutCancellation.addHours(
-      2
-    ); // 2 h default
-    Datetime removed = cancelledWithoutCancellation.addDays(1);
-
-    TestSegmentFactory.SegmentsInfo sInfo1 = new TestSegmentFactory.SegmentsInfo(
-      f1,
-      timeBooked,
-      unconfirmedWithoutCancellation,
-      TestSegmentFactory.History.DOUBLEUNCONFIRMED
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
     );
 
-    TestSegmentFactory.SegmentsInfo sInfo2 = new TestSegmentFactory.SegmentsInfo(
-      f2,
-      cancelledWithoutCancellation,
-      removed,
-      TestSegmentFactory.History.REMOVEDNOTCANCELLED
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      result.verdict,
+      'Claims without segment events should not be possible to handle'
     );
-
-    TestSegmentFactory.SegmentsInfo sInfo3 = new TestSegmentFactory.SegmentsInfo(
-      f3,
-      removed,
-      cancellationTime,
-      TestSegmentFactory.History.DEFAULTCANCELLATION
+    System.assertEquals(
+      'cannot get segment statuses',
+      result.reasoning,
+      'Reasoning should be "cannot get segment statuses"'
     );
-
-    TestSegmentFactory.SegmentsInfo sInfo4 = new TestSegmentFactory.SegmentsInfo(
-      f4,
-      cancellationTime,
-      null,
-      TestSegmentFactory.History.DEFAULTREPLACEMENT
-    );
-
-    TestSegmentFactory.SegmentsInfo sInfo5 = new TestSegmentFactory.SegmentsInfo(
-      f5,
-      cancellationTime,
-      null,
-      TestSegmentFactory.History.DEFAULTREPLACEMENT
-    );
-
-    List<TestSegmentFactory.SegmentsInfo> segmentInfos = new List<TestSegmentFactory.SegmentsInfo>{
-      sInfo1,
-      sInfo2,
-      sInfo3,
-      sInfo4,
-      sInfo5
-    };
-
-    b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
-
-    return new BookingClaim(b, c);
   }
 }

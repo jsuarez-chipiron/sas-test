@@ -47,6 +47,11 @@ public without sharing class Trip {
           'You must fetch airports for the segments in the booking.'
         );
       }
+      if (s.getEvents() == null) {
+        throw new InsufficientDataException(
+          'You must fetch events for the segments in the booking.'
+        );
+      }
     }
     return createFromSegments(b.segments, theTime);
   }
