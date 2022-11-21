@@ -327,41 +327,34 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       tripsBeforeIrregularity = getTripsAtTime(removed.addMinutes(-5));
     }
 
+    // First try to calculate this based on the UN time, then the removed time
     List<Trip> tripsAfterIrregularity;
-    if (removed != null) {
-      // TODO: ! This might be problematic (talk to Markus)
-      tripsAfterIrregularity = getTripsAtTime(removed);
-    } else {
+    List<Trip> tripBeforeAndAfter;
+    try {
       tripsAfterIrregularity = getTripsAtTime(unconfirmed);
-    }
-
-    if (tripsBeforeIrregularity.size() != tripsAfterIrregularity.size()) {
-      throw new Trip.InvalidException(
-        'Interpretation of booking changed after cancellation'
+      tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
+        tripsBeforeIrregularity,
+        tripsAfterIrregularity,
+        cancelledFlight
+      );
+    } catch (Trip.InvalidException e) {
+      // Typically happens when an agent has manually rebooked the passengers
+      tripsAfterIrregularity = getTripsAtTime(removed);
+      tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
+        tripsBeforeIrregularity,
+        tripsAfterIrregularity,
+        cancelledFlight
       );
     }
 
-    // Identify and set trip with flight and the replacement trip
+    Trip tripWithCancelledFlight = tripBeforeAndAfter[0];
+    Trip tripWithCancelledFlightReplacement = tripBeforeAndAfter[1];
+
     Boolean removedBeforeIrregularity =
       removed != null &&
       removed < cancellationTimeInfo.affectedByIrregularity;
 
-    Trip tripWithCancelledFlight;
-    Trip tripWithCancelledFlightReplacement;
-    for (Integer i = 0; i < tripsBeforeIrregularity.size(); i++) {
-      Trip tripBeforeIrregularity = tripsBeforeIrregularity[i];
-      if (tripBeforeIrregularity.containsFlight(cancelledFlight)) {
-        tripWithCancelledFlight = tripBeforeIrregularity;
-        tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeIrregularity;
-        tripWithCancelledFlightReplacement = tripsAfterIrregularity[i];
-        break;
-      }
-    }
-
-    Trip.checkIfValidReplacement(
-      tripWithCancelledFlight,
-      tripWithCancelledFlightReplacement
-    );
+    tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeIrregularity;
 
     return new List<Trip>{
       tripWithCancelledFlight,
@@ -389,17 +382,16 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     return withFlight;
   }
 
-  public Boolean hasReinstated(Flight f){
+  public Boolean hasReinstated(Flight f) {
     List<Segment> segments = this.getSegmentsForFlight(f);
 
-    for (Segment s : segments){
-      if (s.hasBeenReinstated()){
+    for (Segment s : segments) {
+      if (s.hasBeenReinstated()) {
         return true;
       }
     }
     return false;
   }
-
 
   /**
    * Returns true if the given string is a valid booking reference.
@@ -424,8 +416,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     for (Booking__c b : bookings) {
       toReturn.add(new Booking(b));
     }
-    
+
     return toReturn;
   }
-  
 }

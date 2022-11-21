@@ -36,6 +36,9 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
   }
 
   public void setEvents(List<SegmentEvent> events) {
+    if (events == null) {
+      return;
+    }
     events.sort();
     this.events = events;
   }

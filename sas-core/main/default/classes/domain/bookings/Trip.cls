@@ -361,6 +361,40 @@ public without sharing class Trip {
     return tripsToReturn;
   }
 
+  public static List<Trip> getTripBeforeAndAfterCancelledFlight(
+    List<Trip> tripsBefore,
+    List<Trip> tripsAfter,
+    Flight cancelledFlight
+  ) {
+    if (tripsBefore.size() != tripsAfter.size()) {
+      throw new InvalidException(
+        'Interpretation of booking changed after cancellation'
+      );
+    }
+
+    // Identify and set trip with flight and the replacement trip
+    Trip tripWithCancelledFlight;
+    Trip tripWithCancelledFlightReplacement;
+    for (Integer i = 0; i < tripsBefore.size(); i++) {
+      Trip tripBeforeIrregularity = tripsBefore[i];
+      if (tripBeforeIrregularity.containsFlight(cancelledFlight)) {
+        tripWithCancelledFlight = tripBeforeIrregularity;
+        tripWithCancelledFlightReplacement = tripsAfter[i];
+        break;
+      }
+    }
+
+    checkIfValidReplacement(
+      tripWithCancelledFlight,
+      tripWithCancelledFlightReplacement
+    );
+
+    return new List<Trip>{
+      tripWithCancelledFlight,
+      tripWithCancelledFlightReplacement
+    };
+  }
+
   public static void checkIfValidReplacement(Trip t, Trip replacement) {
     if (t == null || replacement == null) {
       throw new InvalidException('The trip and/or its replacement is null');
