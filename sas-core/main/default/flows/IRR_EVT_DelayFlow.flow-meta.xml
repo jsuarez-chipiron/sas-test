@@ -517,12 +517,19 @@
         <defaultConnectorLabel>Far from departure</defaultConnectorLabel>
         <rules>
             <name>Close_to_departure</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND ( 2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>delayInfo.minutesToScheduledTime</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
                     <numberValue>600.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>delayInfo.hasCouponBatchId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
