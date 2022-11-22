@@ -1712,6 +1712,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Booking__c.Is_Staff_Booking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Booking__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1803,6 +1808,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Flight__c.Actual_Departure_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Flight__c.Aircraft_Registration__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
