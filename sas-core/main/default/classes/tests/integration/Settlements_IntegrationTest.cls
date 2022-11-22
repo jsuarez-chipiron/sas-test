@@ -721,12 +721,6 @@ public with sharing class Settlements_IntegrationTest {
      * doesn't blow up anything else.
      */
 
-    System.debug('1' + comparisonText.length());
-    System.debug('2' + createdFile.VersionData.toString().length());
-    System.debug(
-      'diff' + comparisonText.difference(createdFile.VersionData.toString())
-    );
-
     System.assertEquals(
       comparisonText,
       createdFile.VersionData.toString(),
@@ -748,6 +742,57 @@ public with sharing class Settlements_IntegrationTest {
       5001,
       counterAfterwards.Payment_Run_Id__c,
       'Run Id should be incremented after file creation.'
+    );
+  }
+
+  @IsTest
+  public static void ebSettlementProcessingShouldHandleDomainFailuresProperly() {
+    // Given
+    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
+    insert settlementSubmitter;
+
+    LIA_Claim__c claim = new LIA_Claim__c(Liability_PNR__c = '0000AA');
+    insert claim;
+
+    Settlement__c settlement = new Settlement__c(
+      Claim__c = claim.Id,
+      EuroBonus_Number__c = APIMMock.EB_NUMBER_NOT_IN_CLM,
+      EuroBonus_Points__c = 3000,
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '00000',
+      RecordTypeId = Settlements.getRecordTypeId(
+        Settlements.RecordType.EBPoints
+      ),
+      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS,
+      Submitter__c = settlementSubmitter.Id
+    );
+
+    insert settlement;
+
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+
+    // When
+    settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
+    Test.startTest();
+    update settlement;
+    Test.stopTest();
+
+    // Then
+    Settlement__c settlementAfterProcessing = [
+      SELECT Id, Settlement_Status__c, Error_Message__c, External_Reference__c
+      FROM Settlement__c
+      WHERE Id = :settlement.Id
+    ];
+
+    System.assertEquals(
+      Settlements.STATUS_FAILED,
+      settlementAfterProcessing.Settlement_Status__c,
+      'Settlement should be marked as denied after failing to add points.'
+    );
+    System.assertEquals(
+      'Customer does not exist.',
+      settlementAfterProcessing.Error_Message__c,
+      'Settlement should have error detail set to response error.'
     );
   }
 

@@ -631,9 +631,7 @@ public class PaymentEntry {
           : s.Address_line_2__c,
         'city' => s.City__c,
         'postalCode' => s.Postal_Code__c,
-        'state' => (isChequeSettlement && s.State__c != null)
-          ? s.State__c
-          : null,
+        'state' => (isChequeSettlement && s.State__c != null) ? s.State__c : '',
         'countryExt' => countryShortCode
       },
       'invoiceData' => new Map<String, String>{

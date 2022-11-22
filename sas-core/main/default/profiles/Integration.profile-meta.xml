@@ -3502,11 +3502,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Settlement__c.State__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SFMC_SMSDefinition__mdt.SFMC_CountryPrefix__c</field>
         <readable>false</readable>
     </fieldPermissions>

@@ -3240,11 +3240,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Settlement__c.State__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SocialPost.FCS_CaseCreated__c</field>
         <readable>true</readable>
     </fieldPermissions>
