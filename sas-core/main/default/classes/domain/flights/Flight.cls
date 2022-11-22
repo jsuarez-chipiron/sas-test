@@ -50,9 +50,6 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     Unknown
   }
 
-  public class MissingDataException extends Exception {
-  }
-
   public class FlightException extends Exception {
   }
 
@@ -212,6 +209,20 @@ public without sharing class Flight extends AbstractSObjectWrapper {
       this.departureStatus == Status.Cancelled);
   }
 
+  public List<FlightIrregularity> getCancellations() {
+    if (this.irregularities == null) {
+      throw new MissingDataException('Irregularities have not been set');
+    }
+    List<FlightIrregularity> cancellations = new List<FlightIrregularity>{};
+    for (FlightIrregularity fi : this.irregularities) {
+      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+        cancellations.add(fi);
+      }
+    }
+
+    return cancellations;
+  }
+
   /**
    * Calculates the direct distance between this flight's departure and
    * arrival airports.
@@ -265,7 +276,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
   ) {
     return normalizeFlightNumber(flightNumber) +
       '-' +
-      String.valueOf(flightDate).remove('-');
+      StringUtils.dateToTEDSString(flightDate);
   }
 
   /**

@@ -4,9 +4,9 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
   public Id segmentId;
 
   public StatusCode newStatus;
+  public StatusCode previousStatus;
   public String officeCode;
   public OperationType operationType;
-  public String previousStatus;
   public Datetime updateDate;
   public Decimal updateNumber;
 
@@ -393,6 +393,7 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     StatusCode.C_ZK => 'Passive- API booking'
   };
 
+  @TestVisible
   private SegmentEvent() {
     this.underlyingSObject = new Segment_Event__c();
   }
@@ -407,7 +408,9 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     this.operationType = OPERATION_TYPE_PICKLIST_VALUE_TO_ENUM.get(
       se.Operation_Type__c
     );
-    this.previousStatus = se.Previous_Status__c;
+    this.previousStatus = STATUS_PICKLIST_VALUE_TO_ENUM.get(
+      se.Previous_Status__c
+    );
     this.updateDate = se.Update_Date__c;
     this.updateNumber = se.Update_Number__c;
   }
@@ -421,7 +424,9 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     this.underlyingSObject.Operation_Type__c = OPERATION_ENUM_TO_PICKLIST_VALUE.get(
       this.operationType
     );
-    this.underlyingSObject.Previous_Status__c = this.previousStatus;
+    this.underlyingSObject.Previous_Status__c = STATUS_ENUM_TO_PICKLIST_VALUE.get(
+      this.previousStatus
+    );
     this.underlyingSObject.Update_Date__c = this.updateDate;
     this.underlyingSObject.Update_Number__c = this.updateNumber;
   }
@@ -448,12 +453,22 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
       return 1;
     }
 
-    if (this.updateNumber > otherSe.updateNumber) {
+    if (this.updateDate > otherSe.updateDate) {
       return 1;
-    } else if (this.updateNumber < otherSe.updateNumber) {
+    } else if (this.updateDate < otherSe.updateDate) {
       return -1;
     } else {
-      return 0;
+      if (otherSe.updateDate == null) {
+        return 1;
+      } else if (this.updateNumber == null) {
+        return -1;
+      } else if (this.updateNumber > otherSe.updateNumber) {
+        return 1;
+      } else if (this.updateNumber < otherSe.updateNumber) {
+        return -1;
+      } else {
+        return 0;
+      }
     }
   }
 }

@@ -91,7 +91,7 @@ public with sharing class TestDataFactories {
       Case c = new Case(
         Origin = 'Form - Claims SE',
         RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
-        Status = Cases.STATUS_IN_PROGRESS,
+        Status = Cases.STATUS_NEW,
         SuppliedEmail = 'test@example.com'
       );
       LIA_Claim__c cl = new LIA_Claim__c(

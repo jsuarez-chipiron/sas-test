@@ -1,6 +1,3 @@
-/**
- * Service class for managing airports in Salesforce.
- */
 public without sharing class AirportService {
   public static AirportService newInstance() {
     return (AirportService) SAS_Service_Application.Service.newInstance(

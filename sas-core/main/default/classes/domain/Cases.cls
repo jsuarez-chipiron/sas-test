@@ -118,6 +118,28 @@ public without sharing class Cases extends ApplicationDomain {
     return this;
   }
 
+  public Cases submitToApproval(fflib_ISObjectUnitOfWork uow) {
+    Id currentUserId = UserInfo.getUserId();
+    for (Case c : instanceRecords) {
+      c.Approval_Submitter__c = currentUserId;
+      uow.registerDirty(c);
+    }
+
+    return this.updateStatus(uow, STATUS_WAITING_FOR_APPROVAL)
+      .routeToQueue(ClaimService.APPROVAL_QUEUE_NAME, uow);
+  }
+
+  public Cases setHandlingInstructions(
+    fflib_ISObjectUnitOfWork uow,
+    Map<Id, String> handlingInstructionsByCaseId
+  ) {
+    for (Case c : instanceRecords) {
+      c.EU261_Handling_Instructions__c = handlingInstructionsByCaseId.get(c.Id);
+    }
+    uow.registerDirty(instanceRecords);
+    return this;
+  }
+
   public Cases emailContactPeople(
     Map<Id, Messaging.SingleEmailMessage> emailToSendByCaseId,
     fflib_ISObjectUnitOfWork uow
@@ -847,6 +869,7 @@ public without sharing class Cases extends ApplicationDomain {
           emailToSend.setHtmlBody(existingDraftEmail.HtmlBody);
           emailToSend.setPlainTextBody(existingDraftEmail.TextBody);
           emailToSend.setSaveAsActivity(true);
+          emailToSend.setUseSignature(false);
           emailToSend.setWhatId(c.Id);
           uowTry.registerEmail(emailToSend);
           uowTry.registerDeleted(existingDraftEmail);

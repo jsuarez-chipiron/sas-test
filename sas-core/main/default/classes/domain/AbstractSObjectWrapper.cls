@@ -24,4 +24,7 @@ public without sharing abstract class AbstractSObjectWrapper {
     this.createdDate = (Datetime) obj.get('CreatedDate');
     this.lastModifiedDate = (Datetime) obj.get('LastModifiedDate');
   }
+
+  public class MissingDataException extends Exception {
+  }
 }

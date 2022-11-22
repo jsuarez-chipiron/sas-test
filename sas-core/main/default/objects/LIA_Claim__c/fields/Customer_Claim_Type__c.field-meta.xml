@@ -38,16 +38,6 @@
                 <label>Complaint about a refund</label>
             </value>
             <value>
-                <fullName>Denied boarding</fullName>
-                <default>false</default>
-                <label>Denied boarding</label>
-            </value>
-            <value>
-                <fullName>Downgrading</fullName>
-                <default>false</default>
-                <label>Downgrading</label>
-            </value>
-            <value>
                 <fullName>Extra baggage</fullName>
                 <default>false</default>
                 <label>Extra baggage</label>
@@ -147,6 +137,46 @@
                 <default>false</default>
                 <label>Voluntary Downgrading</label>
             </value>
+            <value>
+                <fullName>Denied boarding</fullName>
+                <default>false</default>
+                <label>Denied boarding</label>
+            </value>
+            <value>
+                <fullName>Downgrading</fullName>
+                <default>false</default>
+                <label>Downgrading</label>
+            </value>
+            <value>
+                <fullName>Missed connection - compensation</fullName>
+                <default>false</default>
+                <label>Missed connection - compensation</label>
+            </value>
+            <value>
+                <fullName>Missed connection - expenses</fullName>
+                <default>false</default>
+                <label>Missed connection - expenses</label>
+            </value>
+            <value>
+                <fullName>Flight cancellation - compensation</fullName>
+                <default>false</default>
+                <label>Flight cancellation - compensation</label>
+            </value>
+            <value>
+                <fullName>Flight cancellation - expenses</fullName>
+                <default>false</default>
+                <label>Flight cancellation - expenses</label>
+            </value>
+            <value>
+                <fullName>Flight delay - compensation</fullName>
+                <default>false</default>
+                <label>Flight delay - compensation</label>
+            </value>
+            <value>
+                <fullName>Flight delay - expenses</fullName>
+                <default>false</default>
+                <label>Flight delay - expenses</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Accident &amp; injury</controllingFieldValue>
@@ -156,9 +186,9 @@
             <controllingFieldValue>Accident &amp; injury</controllingFieldValue>
             <controllingFieldValue>Airport experience</controllingFieldValue>
             <controllingFieldValue>Booking</controllingFieldValue>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
             <controllingFieldValue>Flight experience</controllingFieldValue>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
-            <controllingFieldValue>Compensation Card</controllingFieldValue>
             <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
@@ -194,12 +224,20 @@
             <valueName>Complaint about a refund</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Denied boarding</valueName>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
+            <valueName>Involuntary Denied Boarding</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Downgrading</valueName>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
+            <valueName>Involuntary Downgrading</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
+            <valueName>Voluntary Denied Boarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Compensation Card</controllingFieldValue>
+            <valueName>Voluntary Downgrading</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
@@ -212,6 +250,14 @@
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Missed connection</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Denied boarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Flight disruptions</controllingFieldValue>
+            <valueName>Downgrading</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight experience</controllingFieldValue>
@@ -244,22 +290,6 @@
         <valueSettings>
             <controllingFieldValue>Travel extras bought not rendered</controllingFieldValue>
             <valueName>WiFi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Compensation Card</controllingFieldValue>
-            <valueName>Involuntary Denied Boarding</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Compensation Card</controllingFieldValue>
-            <valueName>Involuntary Downgrading</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Compensation Card</controllingFieldValue>
-            <valueName>Voluntary Denied Boarding</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Compensation Card</controllingFieldValue>
-            <valueName>Voluntary Downgrading</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

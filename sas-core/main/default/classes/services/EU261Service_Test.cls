@@ -1,51 +1,30 @@
-// Tests for overall function of the service class:
-// A. Create settlements
-// B. Send emails
-// C. Close cases
 @IsTest
 private class EU261Service_Test {
-  private static String duplicateBookingReference = 'DUPLIC';
-  private static String claimExpensesBookingReference = 'EXPENS';
-  private static String twoClaimsSameBookingReference = 'TWOCLA';
-  private static String careDuplicateBookingReference = 'CAREDU';
-  private static String cancellationWithRebookingBookingReference = 'CANCE5';
-  private static String individualPassengerBookingReference = 'INDIVI';
-  private static String coupleBookingReference = 'COUPLEB';
-  private static String oneWayBookingWithTwoSegmentsReference = 'TWOSEG';
-  private static String withFileBookingReference = 'WITHF';
-  private static String nonEUBookingReference = 'NONEUB';
-  private static String twoIrregularitiesBookingReference = 'TWOIRR';
-  private static String tooShortDelayBookingReference = 'TOOSHO';
-  private static String tooLongDelayBookingReference = 'TOOLON';
-  private static String cancellationBookingWithinSASControlReference = 'CANCEL';
-  private static String cancellationBookingOutsideSASControlReference = 'CANCE2';
-  private static String cancellationBookingUnsupportedReference = 'CANCE3';
-  private static String cancellationBookingTwoCancellationsReference = 'CANCE4';
-  private static String validBookingReference = 'CANCE6';
-  private static String missingClaimedFlightBookingReference = 'MISSIN';
-  private static String notOperatedBySASBookingReference = 'NOTOPE';
-  private static String minimalClaimBookingReference = 'MINIMA';
-  private static String rotationBookingReference = 'ROTATI';
-  private static String groupBookingReference = 'GROUPB';
-  private static String differentLastNamesReference = 'DIFFLA';
-  private static String missingTravelersBookingReference = 'MISSTR';
-  private static String claimFirmBookingReference = 'CLAIMF';
-  private static String twoFlightsCancelledInTimeBookingReference = 'TWOYES';
-  private static String twoFlightsCancelledNotOnTimeBookingReference = 'TWONOT';
-
-  public static Set<String> allTestPnrs = new Set<String>{
-    'DUPLIC',
-    'EXPENS',
-    'TWOCLA',
-    'CAREDU',
-    'CANCE5',
-    'INDIVI',
-    'COUPLEB'
+  private static final String NOT_ELIGIBLE_FLIGHT_TEDS_ID = 'SK0002-20220817';
+  private static final Date NOT_ELIGIBLE_FLIGHT_DATE = Date.parse('2022-08-17');
+  private static final String NOT_ELIGIBLE_FLIGHT_NUMBER = 'SK0002';
+  private static final String NOT_ELIGIBLE_REBOOKED_FLIGHT_TEDS_ID = 'SK0003-20220817';
+  private static final List<String> NOT_ELIGIBLE_FLIGHT_TEDS_IDS = new List<String>{
+    NOT_ELIGIBLE_FLIGHT_TEDS_ID,
+    NOT_ELIGIBLE_REBOOKED_FLIGHT_TEDS_ID
   };
+
+  private static final String ELIGIBLE_FLIGHT_NUMBER = 'SK0001';
+  private static final String ELIGIBLE_FLIGHT_TEDS_ID = 'SK0001-20220817';
+  private static final String ELIGIBLE_REBOOKED_FLIGHT_TEDS_ID = 'SK0001-20220818';
+  private static final List<String> ELIGIBLE_FLIGHT_TEDS_IDS = new List<String>{
+    ELIGIBLE_FLIGHT_TEDS_ID,
+    ELIGIBLE_REBOOKED_FLIGHT_TEDS_ID
+  };
+
+  private static final String CARE_DUPLICATE_BOOKING_REFERENCE = 'CAREDU';
+  private static final String DUPLICATE_BOOKING_REFERENCE = 'DUPLIC';
 
   @TestSetup
   static void setup() {
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
     Cases.bypassTrigger = true;
+
     TestDataFactories.insertEmailTemplates(
       new Set<String>{
         EU261Service.AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME,
@@ -53,732 +32,222 @@ private class EU261Service_Test {
       }
     );
 
-    Exchange_Rate__c eurSekRate = new Exchange_Rate__c(
-      From_Currency__c = 'EUR',
-      To_Currency__c = 'SEK',
-      Rate__c = 10,
-      Date__c = Date.valueOf('2022-10-31'),
-      Name = 'EUR-SEK'
-    );
+    List<SObject> objectsToCreate = new List<SObject>();
 
-    Exchange_Rate__c sekEurRate = new Exchange_Rate__c(
-      From_Currency__c = 'SEK',
-      To_Currency__c = 'EUR',
-      Rate__c = 0.1,
-      Date__c = Date.valueOf('2022-10-31'),
-      Name = 'EUR-SEK'
-    );
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-
-    Flight__c flight1 = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'HEL',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0001-20220817',
-      Arrival_Delayed_Minutes__c = 190,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
-      Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 4, 11, 0)
-    );
-    Flight__c flight2 = new Flight__c(
-      Arrival_Airport__c = 'HEL',
-      Departure_Airport__c = 'ARN',
-      Operating_Carrier__c = 'SK',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 18, 2, 1, 0),
-      TEDS_Identifier__c = 'SK0002-20220817'
-    );
-    Flight__c flight3 = new Flight__c(
-      Arrival_Airport__c = 'HEL',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0003-20220818',
-      Arrival_Delayed_Minutes__c = 130,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 18, 2, 1, 0),
-      Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 18, 4, 11, 0)
-    );
-    Flight__c nonSASFlight = new Flight__c(
-      Arrival_Airport__c = 'HEL',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'LH',
-      TEDS_Identifier__c = 'LH0001-20220818',
-      Arrival_Delayed_Minutes__c = 130,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 18, 2, 1, 0),
-      Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 18, 4, 11, 0)
-    );
-    Flight__c nonEUFlight = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'JFK',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0004-20220817',
-      Arrival_Delayed_Minutes__c = 130,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
-      Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 4, 11, 0)
-    );
-    Flight__c flightWithTwoIrregularities = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0005-20220817',
-      Arrival_Delayed_Minutes__c = 190,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
-      Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 4, 51, 0)
-    );
-    Flight__c flightWithTooShortDelay = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0006-20220817',
-      Arrival_Delayed_Minutes__c = 30,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
-      Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 31, 0)
-    );
-    Flight__c flightWithTooLongDelay = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0007-20220817',
-      Arrival_Delayed_Minutes__c = 400,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
-      Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 8, 41, 0)
-    );
-    Flight__c flightWithCancellationWithinSASControl = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0008-20220817',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0)
-    );
-    Flight__c flightForMinimalClaim = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0009-20220817',
-      Arrival_Delayed_Minutes__c = 280,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
-      Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 6, 41, 0)
-    );
-    Flight__c flightWithRotation = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0010-20220817',
-      Arrival_Delayed_Minutes__c = 280,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0),
-      Actual_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 6, 41, 0)
-    );
-    Flight__c flightWithCancellationOutsideSASControl = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0011-20220817',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0)
-    );
-    Flight__c flightWithCancellationUnsupported = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0012-20220817',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0)
-    );
-    Flight__c flightWithTECHCancellation = new Flight__c(
-      Arrival_Airport__c = 'CPH',
-      Departure_Airport__c = 'HEL',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0013-20220817',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 4, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 6, 1, 0)
-    );
-    Flight__c flightWithTECHCancellationReplacement = new Flight__c(
-      Arrival_Airport__c = 'CPH',
-      Departure_Airport__c = 'HEL',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0014-20220817',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 8, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 11, 1, 0)
-    );
-    Flight__c flightWithCancellationOutsideSASControlReplacement = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0015-20220817',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 8, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 11, 1, 0)
-    );
-    Flight__c flightAfterFlightWithTECHCancellationNotMissed = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0016-20220817',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 12, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 14, 1, 0)
-    );
-    Flight__c flightAfterFlightWithTECHCancellationMissed = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0017-20220817',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 8, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 10, 1, 0)
-    );
-    Flight__c flightAfterFlightWithTECHCancellationMissedReplacement = new Flight__c(
-      Arrival_Airport__c = 'ARN',
-      Departure_Airport__c = 'CPH',
-      Operating_Carrier__c = 'SK',
-      TEDS_Identifier__c = 'SK0018-20220817',
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 13, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 15, 1, 0)
-    );
-    Airport__c airportHEL = new Airport__c(
-      City__c = 'Helsinki',
-      Country_Code__c = 'FI',
-      Country_Name__c = 'Finland',
-      TEDS_Identifier__c = 'HEL',
-      Is_EU261_Applicable__c = true,
-      Latitude__c = 60.317199707031,
-      Longitude__c = 24.963300704956
-    );
-    Airport__c airportARN = new Airport__c(
-      City__c = 'Stockholm',
-      Country_Code__c = 'SE',
-      Country_Name__c = 'Sweden',
-      TEDS_Identifier__c = 'ARN',
-      Is_EU261_Applicable__c = true,
-      Latitude__c = 59.651901245117,
-      Longitude__c = 17.918600082397
-    );
-    Airport__c airportCPH = new Airport__c(
-      City__c = 'Copenhagen',
-      Country_Code__c = 'DK',
-      Country_Name__c = 'Denmark',
-      TEDS_Identifier__c = 'CPH',
-      Is_EU261_Applicable__c = true,
-      Latitude__c = 55.617900848389,
-      Longitude__c = 12.656000137329
-    );
-    Airport__c airportJFK = new Airport__c(
-      City__c = 'New York',
-      Country_Code__c = 'US',
-      Country_Name__c = 'United States',
-      TEDS_Identifier__c = 'JFK',
-      Is_EU261_Applicable__c = false,
-      Latitude__c = 40.639801,
-      Longitude__c = -73.7789
-    );
-    Booking__c duplicateBookingOne = new Booking__c(
-      Booking_Reference__c = duplicateBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking10',
-      Type__c = 'OneWay'
-    );
-    Booking__c duplicateBookingTwo = new Booking__c(
-      Booking_Reference__c = duplicateBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking11',
-      Type__c = 'OneWay'
-    );
-    Booking__c cancellationBookingWithRebooking = new Booking__c(
-      Booking_Reference__c = cancellationWithRebookingBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking31',
-      Type__c = 'OneWay'
-    );
-    Booking__c individualPassengerBooking = new Booking__c(
-      Booking_Reference__c = individualPassengerBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking7',
-      Type__c = 'OneWay'
-    );
-    Booking__c coupleBooking = new Booking__c(
-      Booking_Reference__c = coupleBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking8',
-      Type__c = 'OneWay'
-    );
-    Booking__c claimExpensesBooking = new Booking__c(
-      Booking_Reference__c = claimExpensesBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking19',
-      Type__c = 'OneWay'
-    );
-    Booking__c twoClaimsSameBookingReferenceBooking = new Booking__c(
-      Booking_Reference__c = twoClaimsSameBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking21',
-      Type__c = 'OneWay'
-    );
-    Booking__c careDuplicateBooking = new Booking__c(
-      Booking_Reference__c = careDuplicateBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking32',
-      Type__c = 'OneWay'
-    );
-    Booking__c twoFlightsCancelledInTimeBooking = new Booking__c(
-      Booking_Reference__c = twoFlightsCancelledInTimeBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking33',
-      Type__c = 'OneWay'
-    );
-    Booking__c twoFlightsCancelledNotInTimeBooking = new Booking__c(
-      Booking_Reference__c = twoFlightsCancelledNotOnTimeBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking34',
-      Type__c = 'OneWay'
-    );
-    Booking__c validBooking = new Booking__c(
-      Booking_Reference__c = validBookingReference,
-      TEDS_Identifier__c = 'uniqueBooking35',
-      Type__c = 'OneWay'
-    );
-
-    insert new List<SObject>{
-      eurSekRate,
-      sekEurRate,
-      airportHEL,
-      airportARN,
-      airportCPH,
-      airportJFK,
-      flight1,
-      flight2,
-      flight3,
-      nonSASFlight,
-      nonEUFlight,
-      flightWithTwoIrregularities,
-      flightWithTooShortDelay,
-      flightWithTooLongDelay,
-      flightWithCancellationWithinSASControl,
-      flightWithCancellationOutsideSASControl,
-      flightWithCancellationUnsupported,
-      flightWithTECHCancellation,
-      flightWithTECHCancellationReplacement,
-      flightWithCancellationOutsideSASControlReplacement,
-      flightForMinimalClaim,
-      flightWithRotation,
-      flightAfterFlightWithTECHCancellationNotMissed,
-      flightAfterFlightWithTECHCancellationMissed,
-      flightAfterFlightWithTECHCancellationMissedReplacement,
-      individualPassengerBooking,
-      coupleBooking,
-      duplicateBookingOne,
-      duplicateBookingTwo,
-      cancellationBookingWithRebooking,
-      claimExpensesBooking,
-      twoClaimsSameBookingReferenceBooking,
-      careDuplicateBooking,
-      twoFlightsCancelledInTimeBooking,
-      twoFlightsCancelledNotInTimeBooking,
-      validBooking
-    };
-
-    Segment__c individualsSegment = new Segment__c(
-      Booking__c = individualPassengerBooking.Id,
-      Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c husbandsSegment = new Segment__c(
-      Booking__c = coupleBooking.Id,
-      Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c wifesSegment = new Segment__c(
-      Booking__c = coupleBooking.Id,
-      Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1B',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c duplicateBookingOneSegment = new Segment__c(
-      Booking__c = duplicateBookingOne.Id,
-      Flight__c = flight1.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c duplicateBookingTwoSegment = new Segment__c(
-      Booking__c = duplicateBookingTwo.Id,
-      Flight__c = flight1.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c bookingRebookingSegment1 = new Segment__c(
-      Booking__c = cancellationBookingWithRebooking.Id,
-      Flight__c = flightWithTECHCancellation.Id,
-      Trip_Type__c = 'Cancelled',
-      Seat__c = '1A'
-    );
-    Segment__c bookingRebookingSegment2 = new Segment__c(
-      Booking__c = cancellationBookingWithRebooking.Id,
-      Flight__c = flightWithTECHCancellationReplacement.Id,
-      Trip_Type__c = 'Outbound',
-      Seat__c = '1A'
-    );
-    Segment__c claimExpensesSegment = new Segment__c(
-      Booking__c = claimExpensesBooking.Id,
-      Flight__c = flight1.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c twoClaimsSameBookingReferenceSegment = new Segment__c(
-      Booking__c = twoClaimsSameBookingReferenceBooking.Id,
-      Flight__c = flight1.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c careDuplicateClaimSegment = new Segment__c(
-      Booking__c = careDuplicateBooking.Id,
-      Flight__c = flightForMinimalClaim.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c twoFlightsCancelledInTimeSegment1 = new Segment__c(
-      Booking__c = twoFlightsCancelledInTimeBooking.Id,
-      Flight__c = flightWithTECHCancellation.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Cancelled'
-    );
-    Segment__c twoFlightsCancelledInTimeSegment2 = new Segment__c(
-      Booking__c = twoFlightsCancelledInTimeBooking.Id,
-      Flight__c = flightWithTECHCancellationReplacement.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c twoFlightsCancelledInTimeSegment3 = new Segment__c(
-      Booking__c = twoFlightsCancelledInTimeBooking.Id,
-      Flight__c = flightAfterFlightWithTECHCancellationNotMissed.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c twoFlightsCancelledNotInTimeSegment1 = new Segment__c(
-      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
-      Flight__c = flightWithTECHCancellation.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Cancelled'
-    );
-    Segment__c twoFlightsCancelledNotInTimeSegment2 = new Segment__c(
-      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
-      Flight__c = flightWithTECHCancellationReplacement.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c twoFlightsCancelledNotInTimeSegment3 = new Segment__c(
-      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
-      Flight__c = flightAfterFlightWithTECHCancellationMissed.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Cancelled'
-    );
-    Segment__c twoFlightsCancelledNotInTimeSegment4 = new Segment__c(
-      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
-      Flight__c = flightAfterFlightWithTECHCancellationMissedReplacement.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Segment__c validSegment = new Segment__c(
-      Booking__c = validBooking.Id,
-      Flight__c = flight1.Id,
-      Seat__c = '1A',
-      Trip_Type__c = 'Outbound'
-    );
-    Passenger__c individual = new Passenger__c(
-      Booking__c = individualPassengerBooking.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c husband = new Passenger__c(
-      Booking__c = coupleBooking.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c wife = new Passenger__c(
-      Booking__c = coupleBooking.Id,
-      Identifier__c = 'P2',
-      First_Name__c = 'Birgit',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c duplicateBookingOnePassenger = new Passenger__c(
-      Booking__c = duplicateBookingOne.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c duplicateBookingTwoPassenger = new Passenger__c(
-      Booking__c = duplicateBookingTwo.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c claimExpensesPassenger = new Passenger__c(
-      Booking__c = claimExpensesBooking.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c twoClaimsSameBookingReferencePassenger = new Passenger__c(
-      Booking__c = twoClaimsSameBookingReferenceBooking.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c rebookedPassenger = new Passenger__c(
-      Booking__c = cancellationBookingWithRebooking.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c careDuplicatePassenger = new Passenger__c(
-      Booking__c = careDuplicateBooking.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c twoFlightsCancelledNotInTimePassenger = new Passenger__c(
-      Booking__c = twoFlightsCancelledNotInTimeBooking.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c twoFlightsCancelledInTimePassenger = new Passenger__c(
-      Booking__c = twoFlightsCancelledInTimeBooking.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-    Passenger__c validPassenger = new Passenger__c(
-      Booking__c = validBooking.Id,
-      Identifier__c = 'P1',
-      First_Name__c = 'Sven',
-      Last_Name__c = 'Svensson'
-    );
-
-    FlightIrregularities__c flight1Delay = new FlightIrregularities__c(
-      Flight__c = flight1.Id,
-      Duration_minutes__c = 190,
-      Code__c = 'FA',
-      Type__c = 'Delay (arrival)'
-    );
-    FlightIrregularities__c flight3Delay = new FlightIrregularities__c(
-      Flight__c = flight3.Id,
-      Duration_minutes__c = 130,
-      Code__c = 'FA',
-      Type__c = 'Delay (arrival)'
-    );
-    FlightIrregularities__c nonEUFlightDelay = new FlightIrregularities__c(
-      Flight__c = nonEUFlight.Id,
-      Duration_minutes__c = 130,
-      Code__c = 'FA',
-      Type__c = 'Delay (arrival)'
-    );
-    FlightIrregularities__c tooShortFlightDelay = new FlightIrregularities__c(
-      Flight__c = flightWithTooShortDelay.Id,
-      Duration_minutes__c = 30,
-      Code__c = 'FA',
-      Type__c = 'Delay (arrival)'
-    );
-    FlightIrregularities__c tooLongFlightDelay = new FlightIrregularities__c(
-      Flight__c = flightWithTooLongDelay.Id,
-      Duration_minutes__c = 400,
-      Code__c = 'FA',
-      Type__c = 'Delay (arrival)'
-    );
-    FlightIrregularities__c twoDelaysFirstFlightDelay = new FlightIrregularities__c(
-      Flight__c = flightWithTwoIrregularities.Id,
-      Duration_minutes__c = 120,
-      Code__c = 'FA',
-      Type__c = 'Delay (arrival)'
-    );
-    FlightIrregularities__c twoDelaysSecondFlightDelay = new FlightIrregularities__c(
-      Flight__c = flightWithTwoIrregularities.Id,
-      Duration_minutes__c = 70,
-      Code__c = 'FA',
-      Type__c = 'Delay (arrival)'
-    );
-    FlightIrregularities__c flightCancellationWithinSASControl = new FlightIrregularities__c(
-      Flight__c = flightWithCancellationWithinSASControl.Id,
-      Code__c = 'TECH',
-      Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
-    );
-    FlightIrregularities__c flightCancellationOutsideSASControl = new FlightIrregularities__c(
-      Flight__c = flightWithCancellationOutsideSASControl.Id,
-      Code__c = 'WEAT',
-      Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
-    );
-    FlightIrregularities__c flightCancellationUnsupported = new FlightIrregularities__c(
-      Flight__c = flightWithCancellationUnsupported.Id,
-      Code__c = 'AIRS',
-      Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
-    );
-    FlightIrregularities__c flightCancellationTECH = new FlightIrregularities__c(
-      Flight__c = flightWithTECHCancellation.Id,
-      Code__c = 'TECH',
-      Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
-    );
-    FlightIrregularities__c nonSASDelay = new FlightIrregularities__c(
-      Flight__c = nonSASFlight.Id,
-      Duration_minutes__c = 130,
-      Code__c = 'FA',
-      Type__c = 'Delay (arrival)'
-    );
-    FlightIrregularities__c minimalClaimDelay = new FlightIrregularities__c(
-      Flight__c = flightForMinimalClaim.Id,
-      Duration_minutes__c = 280,
-      Code__c = 'FA',
-      Type__c = 'Delay (arrival)'
-    );
-    FlightIrregularities__c rotationDelay = new FlightIrregularities__c(
-      Flight__c = flightWithRotation.Id,
-      Duration_minutes__c = 280,
-      Code__c = 'RA',
-      Type__c = 'Delay (arrival)'
-    );
-
-    insert new List<SObject>{
-      individualsSegment,
-      husbandsSegment,
-      wifesSegment,
-      duplicateBookingOneSegment,
-      duplicateBookingTwoSegment,
-      claimExpensesSegment,
-      twoClaimsSameBookingReferenceSegment,
-      bookingRebookingSegment1,
-      bookingRebookingSegment2,
-      careDuplicateClaimSegment,
-      validSegment,
-      individual,
-      husband,
-      wife,
-      duplicateBookingOnePassenger,
-      duplicateBookingTwoPassenger,
-      claimExpensesPassenger,
-      twoClaimsSameBookingReferencePassenger,
-      rebookedPassenger,
-      careDuplicatePassenger,
-      validPassenger,
-      flight1Delay,
-      flight3Delay,
-      nonEUFlightDelay,
-      tooShortFlightDelay,
-      tooLongFlightDelay,
-      twoDelaysFirstFlightDelay,
-      twoDelaysSecondFlightDelay,
-      flightCancellationWithinSASControl,
-      flightCancellationOutsideSASControl,
-      flightCancellationUnsupported,
-      flightCancellationTECH,
-      nonSASDelay,
-      minimalClaimDelay,
-      rotationDelay
-    };
-
-    TestDataFactories.CasesClaims individualClaim = createDefaultTestClaim(
-      individualPassengerBookingReference,
-      null
-    );
-    TestDataFactories.CasesClaims coupleClaim = createDefaultTestClaim(
-      coupleBookingReference,
-      null
-    );
-    TestDataFactories.CasesClaims duplicatePNRClaim = createDefaultTestClaim(
-      duplicateBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Flight_Number__c => 'SK0001'
-      }
-    );
-    TestDataFactories.CasesClaims expenseClaim = createDefaultTestClaim(
-      claimExpensesBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Flight_Number__c => 'SK0001'
-      }
-    );
-    TestDataFactories.CasesClaims existingDuplicateClaim = createDefaultTestClaim(
-      twoClaimsSameBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Flight_Number__c => 'SK0001'
-      }
-    );
-    TestDataFactories.CasesClaims newDuplicateClaim = createDefaultTestClaim(
-      twoClaimsSameBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Flight_Number__c => 'SK0001'
-      }
-    );
-    TestDataFactories.CasesClaims claimWithValidRebooking = createDefaultTestClaim(
-      cancellationWithRebookingBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Flight_Number__c => 'SK0013',
-        LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
-        LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation'
-      }
-    );
-    TestDataFactories.CasesClaims careDuplicateClaim = createDefaultTestClaim(
-      careDuplicateBookingReference,
-      null
-    );
-    TestDataFactories.CasesClaims twoFlightsCancelledNotInTimeClaim = createDefaultTestClaim(
-      twoFlightsCancelledNotOnTimeBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Flight_Number__c => 'SK0013',
-        LIA_Claim__c.Customer_Claim_Type__c => 'Flight Cancellation'
-      }
-    );
-    TestDataFactories.CasesClaims twoFlightsCancelledInTimeClaim = createDefaultTestClaim(
-      twoFlightsCancelledInTimeBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Flight_Number__c => 'SK0013',
-        LIA_Claim__c.Customer_Claim_Type__c => 'Flight Cancellation'
-      }
-    );
-    TestDataFactories.CasesClaims validClaim = createDefaultTestClaim(
-      validBookingReference,
-      new Map<Schema.SObjectField, Object>{
-        LIA_Claim__c.Flight_Number__c => 'SK0001',
-        LIA_Claim__c.Preferred_Reimbursement_Method__c => 'EuroBonus Points'
-      }
-    );
-
-    createCaseToBookings(
-      new List<TestDataFactories.CasesClaims>{
-        individualClaim,
-        coupleClaim,
-        duplicatePNRClaim,
-        expenseClaim,
-        existingDuplicateClaim,
-        newDuplicateClaim,
-        claimWithValidRebooking,
-        careDuplicateClaim,
-        twoFlightsCancelledNotInTimeClaim,
-        twoFlightsCancelledInTimeClaim,
-        validClaim
-      }
-    );
-
-    insert new List<SObject>{
-      new Customer__c(
-        First_Name__c = 'Birgit',
-        Last_Name__c = 'Svensson',
-        Claim__c = coupleClaim.claims[0].Id
-      ),
-      new Claim_Expense__c(
-        Amount__c = 10,
-        Currency__c = 'SEK',
-        Type__c = 'Food',
-        Claim__c = expenseClaim.claims[0].Id
-      ),
-      new Claim_Expense__c(
-        Amount__c = 10,
-        Currency__c = 'SEK',
-        Type__c = 'Food',
-        Claim__c = validClaim.claims[0].Id
+    objectsToCreate.add(
+      new Exchange_Rate__c(
+        From_Currency__c = 'EUR',
+        To_Currency__c = 'SEK',
+        Rate__c = 10,
+        Date__c = Date.valueOf('2022-10-31'),
+        Name = 'EUR-SEK'
       )
-    };
+    );
+
+    objectsToCreate.add(
+      new Exchange_Rate__c(
+        From_Currency__c = 'SEK',
+        To_Currency__c = 'EUR',
+        Rate__c = 0.1,
+        Date__c = Date.valueOf('2022-10-31'),
+        Name = 'EUR-SEK'
+      )
+    );
+
+    Datetime departure = DateTime.newInstance(2022, 8, 17, 0, 1, 0);
+    Datetime replacementDeparture = departure.addDays(1);
+    Flight__c eligibleCancelledFlight = new Flight__c(
+      Arrival_Airport__c = 'HEL',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = ELIGIBLE_FLIGHT_TEDS_ID,
+      Scheduled_Departure_Time__c = departure,
+      Scheduled_Arrival_Time__c = departure.addHours(2)
+    );
+    Flight__c replacementForEligibleCancelledFlight = new Flight__c(
+      Arrival_Airport__c = 'HEL',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = ELIGIBLE_REBOOKED_FLIGHT_TEDS_ID,
+      Scheduled_Departure_Time__c = replacementDeparture,
+      Scheduled_Arrival_Time__c = replacementDeparture.addHours(2)
+    );
+    Flight__c notEligibleCancelledFlight = new Flight__c(
+      Arrival_Airport__c = 'HEL',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = NOT_ELIGIBLE_FLIGHT_TEDS_ID,
+      Scheduled_Departure_Time__c = departure,
+      Scheduled_Arrival_Time__c = departure.addHours(2)
+    );
+    Flight__c replacementForNotEligibleCancelledFlight = new Flight__c(
+      Arrival_Airport__c = 'HEL',
+      Departure_Airport__c = 'CPH',
+      Operating_Carrier__c = 'SK',
+      TEDS_Identifier__c = NOT_ELIGIBLE_REBOOKED_FLIGHT_TEDS_ID,
+      Scheduled_Departure_Time__c = replacementDeparture,
+      Scheduled_Arrival_Time__c = replacementDeparture.addHours(2)
+    );
+    objectsToCreate.add(eligibleCancelledFlight);
+    objectsToCreate.add(replacementForEligibleCancelledFlight);
+    objectsToCreate.add(notEligibleCancelledFlight);
+    objectsToCreate.add(replacementForNotEligibleCancelledFlight);
+
+    objectsToCreate.add(
+      new Airport__c(
+        City__c = 'Helsinki',
+        Country_Code__c = 'FI',
+        Country_Name__c = 'Finland',
+        TEDS_Identifier__c = 'HEL',
+        Is_EU261_Applicable__c = true,
+        Latitude__c = 60.317199707031,
+        Longitude__c = 24.963300704956
+      )
+    );
+    objectsToCreate.add(
+      new Airport__c(
+        City__c = 'Copenhagen',
+        Country_Code__c = 'DK',
+        Country_Name__c = 'Denmark',
+        TEDS_Identifier__c = 'CPH',
+        Is_EU261_Applicable__c = true,
+        Latitude__c = 55.617900848389,
+        Longitude__c = 12.656000137329
+      )
+    );
+
+    List<Booking__c> bookings = new List<Booking__c>();
+    List<Segment__c> segments = new List<Segment__c>();
+    List<Passenger__c> passengers = new List<Passenger__c>();
+
+    List<String> simpleBookingReferences = new List<String>();
+    simpleBookingReferences.add(CARE_DUPLICATE_BOOKING_REFERENCE);
+    simpleBookingReferences.add(DUPLICATE_BOOKING_REFERENCE);
+
+    for (Integer i = 0; i < 14; i++) {
+      simpleBookingReferences.add(String.valueOf(i).leftPad(6, '0'));
+    }
+
+    for (String pnr : simpleBookingReferences) {
+      bookings.add(
+        new Booking__c(
+          Booking_Reference__c = pnr,
+          TEDS_Identifier__c = pnr,
+          Type__c = 'OneWay'
+        )
+      );
+    }
+
+    objectsToCreate.addAll(bookings);
+    insert objectsToCreate;
+
+    for (Booking__c b : bookings) {
+      segments.add(
+        new Segment__c(
+          Booking__c = b.Id,
+          Flight__c = eligibleCancelledFlight.Id,
+          Seat__c = '1A',
+          Trip_Type__c = 'Cancelled'
+        )
+      );
+      segments.add(
+        new Segment__c(
+          Booking__c = b.Id,
+          Flight__c = replacementForEligibleCancelledFlight.Id,
+          Seat__c = '1A',
+          Trip_Type__c = 'Outbound'
+        )
+      );
+
+      passengers.add(
+        new Passenger__c(
+          Booking__c = b.Id,
+          Identifier__c = 'P1',
+          First_Name__c = 'Sven',
+          Last_Name__c = 'Svensson'
+        )
+      );
+    }
+
+    Datetime planeBreaks = departure.addDays(-5);
+    FlightIrregularities__c eligibleIrregularity = new FlightIrregularities__c(
+      Flight__c = eligibleCancelledFlight.Id,
+      Code__c = 'TECH',
+      Type__c = 'Cancellation (departure)',
+      Cancellation_Time__c = planeBreaks
+    );
+    FlightIrregularities__c notEligibleIrregularity = new FlightIrregularities__c(
+      Flight__c = notEligibleCancelledFlight.Id,
+      Code__c = 'WEAT',
+      Type__c = 'Cancellation (departure)',
+      Cancellation_Time__c = planeBreaks
+    );
+
+    List<SObject> toInsert = new List<SObject>();
+    toInsert.addAll(segments);
+    toInsert.addAll(passengers);
+    toInsert.add(eligibleIrregularity);
+    toInsert.add(notEligibleIrregularity);
+    insert toInsert;
+
+    createSegmentEvents(segments, departure.addDays(-60), planeBreaks);
+
+    List<TestDataFactories.CasesClaims> allClaims = new List<TestDataFactories.CasesClaims>();
+
+    for (String pnr : simpleBookingReferences) {
+      allClaims.add(createDefaultTestClaim(pnr, null));
+    }
+    allClaims.add(createDefaultTestClaim(DUPLICATE_BOOKING_REFERENCE, null));
+
+    createCaseToBookings(allClaims);
 
     Cases.bypassTrigger = false;
+  }
+
+  private static void createSegmentEvents(
+    List<Segment__c> segments,
+    Datetime timeAdded,
+    Datetime timeCancelled
+  ) {
+    List<Segment_Event__c> segmentEvents = new List<Segment_Event__c>();
+    for (Segment__c s : segments) {
+      Datetime t = null;
+
+      if (s.Trip_Type__c == 'Cancelled') {
+        Segment_Event__c added = new Segment_Event__c(
+          Segment__c = s.Id,
+          New_Status__c = 'HK',
+          Office_Code__c = 'STOSK00OC',
+          Operation_Type__c = 'A',
+          Previous_Status__c = null,
+          Update_Date__c = timeAdded,
+          Update_Number__c = 0
+        );
+        Segment_Event__c cancelled = new Segment_Event__c(
+          Segment__c = s.Id,
+          New_Status__c = 'UN',
+          Office_Code__c = 'STOSK00OC',
+          Operation_Type__c = 'C',
+          Previous_Status__c = null,
+          Update_Date__c = timeCancelled,
+          Update_Number__c = 1
+        );
+        segmentEvents.add(added);
+        segmentEvents.add(cancelled);
+      } else {
+        Segment_Event__c replacementAdded = new Segment_Event__c(
+          Segment__c = s.Id,
+          New_Status__c = 'HK',
+          Office_Code__c = 'STOSK00OC',
+          Operation_Type__c = 'A',
+          Previous_Status__c = null,
+          Update_Date__c = timeCancelled,
+          Update_Number__c = 0
+        );
+        segmentEvents.add(replacementAdded);
+      }
+    }
+    insert segmentEvents;
   }
 
   private static void createCaseToBookings(
@@ -822,13 +291,15 @@ private class EU261Service_Test {
       LIA_Claim__c.Bank_Country__c => 'Sweden',
       LIA_Claim__c.BIC_Swift__c => 'CITIUS33',
       LIA_Claim__c.City__c => 'Solna',
+      LIA_Claim__c.Contact_Email__c => 'test@example.com',
+      LIA_Claim__c.Contact_First_Name__c => 'Sven',
       LIA_Claim__c.Contact_Last_Name__c => 'Svensson',
       LIA_Claim__c.Country__c => 'Sweden',
       LIA_Claim__c.Currency__c => 'SEK',
       LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
-      LIA_Claim__c.Customer_Claim_Type__c => 'Flight delay',
+      LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation',
       LIA_Claim__c.EuroBonus_Number__c => '123456789',
-      LIA_Claim__c.Flight_Number__c => 'SK0009',
+      LIA_Claim__c.Flight_Number__c => 'SK0001',
       LIA_Claim__c.Flight_Date__c => Date.parse('2022-08-17'),
       LIA_Claim__c.Liability_PNR__c => bookingReference,
       LIA_Claim__c.Postal_Code__c => '11200',
@@ -859,401 +330,1275 @@ private class EU261Service_Test {
     return toReturn;
   }
 
-  private static Set<Id> getClaimIds(
-    List<TestDataFactories.CasesClaims> casesClaims
-  ) {
-    Set<Id> claimIds = new Set<Id>();
-    for (TestDataFactories.CasesClaims c : casesClaims) {
-      for (LIA_Claim__c claim : c.claims) {
-        claimIds.add(claim.Id);
-      }
-    }
-
-    return claimIds;
+  private class Result {
+    /**
+     * Cases from DB after EU261 processing
+     */
+    public List<Case> cases;
+    /**
+     * Claims from DB after EU261 processing
+     */
+    public List<LIA_Claim__c> claims;
+    /**
+     * Settlements from DB after EU261 processing
+     */
+    public List<Settlement__c> settlements;
   }
 
-  // Tests Settlement creation
-  @IsTest
-  static void claimsWithAnyNumberOfPassengersCanBeEvaluated() {
+  private static Result runProcessingFor(
+    List<String> bookingReferences,
+    EU261Service.Config serviceConfig
+  ) {
     Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
         [
           SELECT Id
           FROM LIA_Claim__c
-          WHERE
-            Liability_PNR__c = :individualPassengerBookingReference
-            OR Liability_PNR__c = :coupleBookingReference
+          WHERE Liability_PNR__c IN :bookingReferences
         ]
       ))
       .keySet();
 
+    EU261Service es = EU261Service.newInstance();
+    if (serviceConfig != null) {
+      es.config = serviceConfig;
+    } else {
+      es.config.enabledSettlements = true;
+      es.config.enabledRejections = true;
+      es.config.enabledSemiAutomation = true;
+      es.config.percentageRequiringManualApproval = 0;
+    }
+
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    EU261Service es = EU261Service.newInstance();
-    es.config.enabledSettlements = true;
-    es.config.enabledRejections = true;
-    es.config.percentageRequiringManualApproval = 0;
-    List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
-      claimIds,
-      uow
-    );
-    uow.commitWork();
+    es.processEU261Claims(claimIds);
     Test.stopTest();
 
-    List<Settlement__c> settlementsForClaim = [
-      SELECT Id, Amount__c, Claim__c, Currency__c
-      FROM Settlement__c
-      WHERE Claim__c IN :claimIds
+    Result res = new Result();
+
+    res.settlements = SettlementsSelector.newInstance()
+      .selectByClaimId(claimIds);
+    res.cases = [
+      SELECT Id, EU261_Handling_Instructions__c, Status
+      FROM Case
+      WHERE LIA_Claim__c IN :claimIds
     ];
+    res.claims = ClaimsSelector.newInstance().selectById(claimIds);
 
-    for (EU261Claim c : claimsWithEvaluationDetails) {
-      if (c.claimObj.customers.size() == 1) {
-        System.assertEquals(
-          Claim.EU261HandlingStatus.EligibleForCompensation,
-          c.decision.verdict,
-          'It should be possible to evaluate a claim with a single passenger.'
-        );
-        System.assertEquals(
-          new Money(250, Money.CurrencyCode.EUR),
-          c.decision.compensationPerCustomerInEUR.get(c.claimObj.customers[0]),
-          'Compensation amount should be 250 €'
-        );
-        Settlement__c settlementForClaim;
+    return res;
+  }
+  private static Result runProcessingFor(List<String> bookingReferences) {
+    return runProcessingFor(bookingReferences, null);
+  }
 
-        for (Settlement__c s : settlementsForClaim) {
-          if (s.Claim__c == c.claimObj.id) {
-            settlementForClaim = s;
+  @IsTest
+  static void nothingShouldBeCreatedIfAutomationIsDisabled() {
+    EU261Service.Config config = new EU261Service.Config();
+    config.enabledRejections = false;
+    config.enabledSemiAutomation = false;
+    config.enabledSettlements = false;
+    Result res = runProcessingFor(
+      new List<String>{ '000001', '000002', '000003' },
+      config
+    );
+
+    System.assertEquals(
+      0,
+      res.settlements.size(),
+      'No settlements should have been created when automation is disabled.'
+    );
+    System.assertEquals(
+      3,
+      res.claims.size(),
+      'Should have found the correct number of claims.'
+    );
+    System.assertEquals(
+      3,
+      res.cases.size(),
+      'Should have found the correct number of cases.'
+    );
+
+    for (Case c : res.cases) {
+      System.assertEquals(
+        Cases.STATUS_NEW,
+        c.Status,
+        'All cases should still be in new'
+      );
+    }
+  }
+
+  @IsTest
+  static void ineligibleClaimsAreRejectedAutomatically() {
+    List<String> testPnrs = new List<String>{ 'REJEC1', 'REJEC2' };
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
+    for (Flight__c f : [
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
+      FROM Flight__c
+      WHERE TEDS_Identifier__c IN :NOT_ELIGIBLE_FLIGHT_TEDS_IDS
+    ]) {
+      if (f.TEDS_Identifier__c == NOT_ELIGIBLE_FLIGHT_TEDS_ID) {
+        originalFlight = f;
+      } else {
+        rebookedFlight = f;
+      }
+    }
+
+    List<Booking__c> bookings = new List<Booking__c>();
+    List<Segment__c> segments = new List<Segment__c>();
+    List<Passenger__c> passengers = new List<Passenger__c>();
+
+    for (String pnr : testPnrs) {
+      bookings.add(
+        new Booking__c(
+          Booking_Reference__c = pnr,
+          TEDS_Identifier__c = pnr,
+          Type__c = 'OneWay'
+        )
+      );
+    }
+
+    insert bookings;
+
+    for (Booking__c b : bookings) {
+      segments.add(
+        new Segment__c(
+          Booking__c = b.Id,
+          Flight__c = originalFlight.Id,
+          Seat__c = '1A',
+          Trip_Type__c = 'Cancelled'
+        )
+      );
+      segments.add(
+        new Segment__c(
+          Booking__c = b.Id,
+          Flight__c = rebookedFlight.Id,
+          Seat__c = '1A',
+          Trip_Type__c = 'Outbound'
+        )
+      );
+
+      passengers.add(
+        new Passenger__c(
+          Booking__c = b.Id,
+          Identifier__c = 'P1',
+          First_Name__c = 'Sven',
+          Last_Name__c = 'Svensson'
+        )
+      );
+    }
+
+    List<SObject> toInsert = new List<SObject>();
+    toInsert.addAll(segments);
+    toInsert.addAll(passengers);
+    insert toInsert;
+
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
+
+    Cases.bypassTrigger = true;
+    List<TestDataFactories.CasesClaims> allClaims = new List<TestDataFactories.CasesClaims>();
+
+    for (String pnr : testPnrs) {
+      allClaims.add(
+        createDefaultTestClaim(
+          pnr,
+          new Map<Schema.SObjectField, Object>{
+            LIA_Claim__c.Flight_Number__c => NOT_ELIGIBLE_FLIGHT_NUMBER,
+            LIA_Claim__c.Flight_Date__c => NOT_ELIGIBLE_FLIGHT_DATE
           }
-        }
+        )
+      );
+    }
 
+    createCaseToBookings(allClaims);
+    Cases.bypassTrigger = false;
+
+    Result res = runProcessingFor(testPnrs);
+
+    System.assertEquals(
+      0,
+      res.settlements.size(),
+      'No settlements should have been created for rejected claims.'
+    );
+    System.assertEquals(
+      2,
+      res.claims.size(),
+      'All processed claims should have been rejected.'
+    );
+    System.assertEquals(
+      2,
+      res.cases.size(),
+      'Cases should exist for all claims.'
+    );
+
+    for (LIA_Claim__c cl : res.claims) {
+      System.assertEquals(
+        'Ineligible for compensation',
+        cl.EU261_Handling_Status__c,
+        'Handling status should have been set to ineligible for compensation'
+      );
+    }
+
+    for (Case c : res.cases) {
+      System.assertEquals(
+        'Closed',
+        c.Status,
+        'Rejected cases should have been closed'
+      );
+    }
+  }
+
+  @IsTest
+  static void eligibleAndSimpleClaimsAreSettledCorrectly() {
+    List<String> testPnrs = new List<String>{
+      'VALID1',
+      'VALID2',
+      'VALID3',
+      'VALID4'
+    };
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
+    for (Flight__c f : [
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
+      FROM Flight__c
+      WHERE TEDS_Identifier__c IN :ELIGIBLE_FLIGHT_TEDS_IDS
+    ]) {
+      if (f.TEDS_Identifier__c == ELIGIBLE_FLIGHT_TEDS_ID) {
+        originalFlight = f;
+      } else {
+        rebookedFlight = f;
+      }
+    }
+
+    List<Booking__c> bookings = new List<Booking__c>();
+    List<Segment__c> segments = new List<Segment__c>();
+    List<Passenger__c> passengers = new List<Passenger__c>();
+
+    for (String pnr : testPnrs) {
+      bookings.add(
+        new Booking__c(
+          Booking_Reference__c = pnr,
+          TEDS_Identifier__c = pnr,
+          Type__c = 'OneWay'
+        )
+      );
+    }
+
+    insert bookings;
+
+    for (Booking__c b : bookings) {
+      segments.add(
+        new Segment__c(
+          Booking__c = b.Id,
+          Flight__c = originalFlight.Id,
+          Seat__c = '1A',
+          Trip_Type__c = 'Cancelled'
+        )
+      );
+      segments.add(
+        new Segment__c(
+          Booking__c = b.Id,
+          Flight__c = rebookedFlight.Id,
+          Seat__c = '1A',
+          Trip_Type__c = 'Outbound'
+        )
+      );
+
+      passengers.add(
+        new Passenger__c(
+          Booking__c = b.Id,
+          Identifier__c = 'P1',
+          First_Name__c = 'Sven',
+          Last_Name__c = 'Svensson'
+        )
+      );
+    }
+
+    List<SObject> toInsert = new List<SObject>();
+    toInsert.addAll(segments);
+    toInsert.addAll(passengers);
+    insert toInsert;
+
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
+
+    Cases.bypassTrigger = true;
+
+    TestDataFactories.CasesClaims testClaimInEUR = createDefaultTestClaim(
+      'VALID1',
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Bank_Account_Number__c => 'FI1410093000123458',
+        LIA_Claim__c.Bank_Country__c => 'Finland',
+        LIA_Claim__c.Country__c => 'Finland',
+        LIA_Claim__c.Currency__c => 'EUR'
+      }
+    );
+
+    TestDataFactories.CasesClaims testClaimInSEK = createDefaultTestClaim(
+      'VALID2',
+      null
+    );
+
+    TestDataFactories.CasesClaims testClaimInEBPoints = createDefaultTestClaim(
+      'VALID3',
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Preferred_Compensation_Method__c => 'EuroBonus Points'
+      }
+    );
+
+    TestDataFactories.CasesClaims testClaimInVoucher = createDefaultTestClaim(
+      'VALID4',
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Preferred_Compensation_Method__c => 'Voucher'
+      }
+    );
+
+    createCaseToBookings(
+      new List<TestDataFactories.CasesClaims>{
+        testClaimInEUR,
+        testClaimInSEK,
+        testClaimInEBPoints,
+        testClaimInVoucher
+      }
+    );
+    Cases.bypassTrigger = false;
+
+    Result res = runProcessingFor(testPnrs);
+
+    System.assertEquals(4, res.claims.size(), 'All claims should be found.');
+    for (LIA_Claim__c cl : res.claims) {
+      System.assertEquals(
+        'Eligible for compensation',
+        cl.EU261_Handling_Status__c,
+        'Handling status should have been set to eligible for compensation'
+      );
+    }
+
+    System.assertEquals(
+      4,
+      res.cases.size(),
+      'Cases should exist for all claims.'
+    );
+    for (Case c : res.cases) {
+      System.assertEquals(
+        'Closed',
+        c.Status,
+        'Valid claim cases should be closed after processing.'
+      );
+    }
+
+    System.assertEquals(
+      4,
+      res.settlements.size(),
+      'Three settlements should have been created for the claims.'
+    );
+
+    for (Settlement__c s : res.settlements) {
+      if (s.Claim__c == testClaimInEUR.claims[0].Id) {
         System.assertEquals(
-          2500.00,
-          settlementForClaim.Amount__c,
-          'Settlement total should be smaller for one passenger.'
+          Settlements.STATUS_WAITING_FOR_TRANSFER,
+          s.Settlement_Status__c,
+          'Monetary settlement should be waiting for transfer after processing.'
+        );
+        System.assertEquals(
+          Settlements.getRecordTypeId(Settlements.RecordType.Monetary),
+          s.RecordTypeId,
+          'Settlement type should be monetary if customer has requested compensation as monetary.'
+        );
+        System.assertEquals(
+          250,
+          s.Amount__c,
+          'Settlement amount in euros should match the original compensation amount.'
+        );
+        System.assertEquals(
+          'EUR',
+          s.Currency__c,
+          'Monetary settlement should be in euros to Finland.'
+        );
+      } else if (s.Claim__c == testClaimInSEK.claims[0].Id) {
+        System.assertEquals(
+          Settlements.STATUS_WAITING_FOR_TRANSFER,
+          s.Settlement_Status__c,
+          'Monetary settlement should be waiting for transfer after processing.'
+        );
+        System.assertEquals(
+          Settlements.getRecordTypeId(Settlements.RecordType.Monetary),
+          s.RecordTypeId,
+          'Settlement type should be monetary if customer has requested compensation as monetary.'
+        );
+        System.assertEquals(
+          2500,
+          s.Amount__c,
+          'Settlement amount in SEK should be equal to exchange rate EUR-SEK times the settlement in euros.'
+        );
+        System.assertEquals(
+          'SEK',
+          s.Currency__c,
+          'Settlement currency should SEK for Sweden.'
+        );
+      } else if (s.Claim__c == testClaimInEBPoints.claims[0].Id) {
+        System.assertEquals(
+          Settlements.STATUS_FAILED,
+          s.Settlement_Status__c,
+          'Points settlement will fail in testing because it is processed in the same transaction. Savepoints have been created before the normally async callout.'
+        );
+        System.assertEquals(
+          Settlements.getRecordTypeId(Settlements.RecordType.EBPoints),
+          s.RecordTypeId,
+          'Settlement type should be EB points if customer has requested compensation in points.'
+        );
+        System.assertEquals(
+          25000,
+          s.EuroBonus_Points__c,
+          'EB points should be equal to 100 times the settlement in euros.'
+        );
+      } else if (s.Claim__c == testClaimInVoucher.claims[0].Id) {
+        System.assertEquals(
+          Settlements.STATUS_FAILED,
+          s.Settlement_Status__c,
+          'Voucher settlement will fail in testing because it is processed in the same transaction. Savepoints have been created before the normally async callout.'
+        );
+        System.assertEquals(
+          Settlements.getRecordTypeId(Settlements.RecordType.Voucher),
+          s.RecordTypeId,
+          'Settlement type should be voucher if customer has requested compensation as voucher.'
+        );
+        System.assertEquals(
+          500,
+          s.Amount__c,
+          'Voucher settlements should be double the normal amount.'
+        );
+        System.assertEquals(
+          'EUR',
+          s.Currency__c,
+          'Voucher settlements should always be in euros.'
+        );
+      } else {
+        System.assert(false, 'Found a non-matching settlement.');
+      }
+    }
+  }
+  @IsTest
+  static void eligibleClaimsWithLowExpensesAreSettledCorrectly() {
+    List<String> testPnrs = new List<String>{ '000008', '000009', '000010' };
+    List<LIA_Claim__c> cls = [
+      SELECT Id, Case__c, Liability_PNR__c
+      FROM LIA_Claim__c
+      WHERE Liability_PNR__c IN :testPnrs
+    ];
+    LIA_Claim__c oneExpenseSEKClaim = cls[0];
+    LIA_Claim__c oneExpenseEURClaim = cls[1];
+    LIA_Claim__c twoExpensesClaim = cls[2];
+
+    Claim_Expense__c singleExpenseSEK = new Claim_Expense__c(
+      Amount__c = 5,
+      Claim__c = oneExpenseSEKClaim.Id,
+      Currency__c = 'SEK',
+      Type__c = 'Food'
+    );
+
+    Claim_Expense__c singleExpenseEUR = new Claim_Expense__c(
+      Amount__c = 5,
+      Claim__c = oneExpenseEURClaim.Id,
+      Currency__c = 'EUR',
+      Type__c = 'Food'
+    );
+
+    Claim_Expense__c twoExpensesOne = new Claim_Expense__c(
+      Amount__c = 30,
+      Claim__c = twoExpensesClaim.Id,
+      Currency__c = 'SEK',
+      Type__c = 'Food'
+    );
+    Claim_Expense__c twoExpensesTwo = new Claim_Expense__c(
+      Amount__c = 300,
+      Claim__c = twoExpensesClaim.Id,
+      Currency__c = 'SEK',
+      Type__c = 'Transportation'
+    );
+
+    insert new List<SObject>{
+      singleExpenseSEK,
+      singleExpenseEUR,
+      twoExpensesOne,
+      twoExpensesTwo
+    };
+
+    EU261Service.Config config = new EU261Service.Config();
+    config.enabledRejections = true;
+    config.enabledSemiAutomation = true;
+    config.enabledSettlements = true;
+    config.expenseLimitFood = new Money(100, Money.CurrencyCode.SEK);
+    config.expenseLimitTransportation = new Money(1000, Money.CurrencyCode.SEK);
+    config.expenseLimitTotal = new Money(10000, Money.CurrencyCode.SEK);
+    config.percentageRequiringManualApproval = 0;
+
+    Result res = runProcessingFor(testPnrs, config);
+
+    System.assertEquals(
+      6,
+      res.settlements.size(),
+      'There should be two settlements per claim.'
+    );
+
+    Integer countCompensationSettlements = 0;
+    for (Settlement__c s : res.settlements) {
+      if (s.Amount__c == 2500) {
+        countCompensationSettlements++;
+      } else if (s.Claim__c == oneExpenseSEKClaim.Id) {
+        System.assertEquals(
+          'SEK',
+          s.Currency__c,
+          'Settlement currency should match customers bank country.'
+        );
+        System.assertEquals(
+          5,
+          s.Amount__c,
+          'Amount for SEK expenses should be the same.'
+        );
+      } else if (s.Claim__c == oneExpenseEURClaim.Id) {
+        System.assertEquals(
+          'SEK',
+          s.Currency__c,
+          'Settlement currency should match customers bank country.'
+        );
+        System.assertEquals(
+          50,
+          s.Amount__c,
+          'Amount for euro expenses should be multiplied by conversion rate.'
         );
       } else {
         System.assertEquals(
-          Claim.EU261HandlingStatus.EligibleForCompensation,
-          c.decision.verdict,
-          'It should be possible to evaluate a claim with two passengers.'
-        );
-        System.assertEquals(
-          new Money(250, Money.CurrencyCode.EUR),
-          c.decision.compensationPerCustomerInEUR.get(c.claimObj.customers[0]),
-          'Compensation should be 250€ for first customer'
-        );
-        System.assertEquals(
-          new Money(250, Money.CurrencyCode.EUR),
-          c.decision.compensationPerCustomerInEUR.get(c.claimObj.customers[1]),
-          'Compensation should be 250€ for second customer'
-        );
-
-        Settlement__c settlementForClaim;
-        for (Settlement__c s : settlementsForClaim) {
-          if (s.Claim__c == c.claimObj.id) {
-            settlementForClaim = s;
-          }
-        }
-
-        System.assertEquals(
           'SEK',
-          settlementForClaim.Currency__c,
-          'Currency should be set based on preferred currency.'
+          s.Currency__c,
+          'Settlement currency should match customers bank country.'
         );
-
         System.assertEquals(
-          5000.00,
-          settlementForClaim.Amount__c,
-          'Settlement total should be higher for two passengers.'
+          330,
+          s.Amount__c,
+          'Amount for claim with two settlements should be their sum.'
         );
       }
     }
+
+    System.assertEquals(
+      3,
+      countCompensationSettlements,
+      'Three of the settlements should be compensation settlements.'
+    );
+
+    // System.assertEquals(expected, actual, '');
   }
 
   @IsTest
-  static void onlyClaimsWithOneBookingCanBeEvaluated() {
-    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
-        [
-          SELECT Id
-          FROM LIA_Claim__c
-          WHERE Liability_PNR__c = :duplicateBookingReference
-        ]
-      ))
-      .keySet();
+  static void eligibleClaimsWithMoreThanOnePassengerAreSettledCorrectly() {
+    String testPnr = '000012';
 
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-    Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
-      .automateEU261Claims(claimIds, uow);
-    uow.commitWork();
-    Test.stopTest();
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
 
-    System.assertEquals(
-      Claim.EU261HandlingStatus.UnableToHandle,
-      claimsWithEvaluationDetails[0].decision.verdict,
-      'Claim with more than one booking cannot be evaluated.'
-    );
-    System.assertEquals(
-      'can handle only one booking per claim',
-      claimsWithEvaluationDetails[0].decision.reasoning,
-      'Rejection reason should be "can handle only one booking per claim"'
-    );
-  }
+    for (Flight__c f : [
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
+      FROM Flight__c
+      WHERE TEDS_Identifier__c IN :ELIGIBLE_FLIGHT_TEDS_IDS
+    ]) {
+      if (f.TEDS_Identifier__c == ELIGIBLE_FLIGHT_TEDS_ID) {
+        originalFlight = f;
+      } else {
+        rebookedFlight = f;
+      }
+    }
 
-  @IsTest
-  static void onlyClaimsWithoutExpensesCanBeEvaluated() {
-    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
-        [
-          SELECT Id
-          FROM LIA_Claim__c
-          WHERE Liability_PNR__c = :claimExpensesBookingReference
-        ]
-      ))
-      .keySet();
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-    Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
-      .automateEU261Claims(claimIds, uow);
-    uow.commitWork();
-    Test.stopTest();
-
-    System.assertEquals(
-      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
-      claimsWithEvaluationDetails[0].decision.verdict,
-      'It should not be possible to automatically evaluate claims with expenses.'
-    );
-    System.assertEquals(
-      'caveats: has high claim expenses',
-      claimsWithEvaluationDetails[0].decision.reasoning,
-      'Rejection reason should include caveat about expenses'
-    );
-  }
-
-  @IsTest
-  static void onlyClaimsWithoutDuplicatesCanBeEvaluated() {
-    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
-        [
-          SELECT Id
-          FROM LIA_Claim__c
-          WHERE Liability_PNR__c = :twoClaimsSameBookingReference
-        ]
-      ))
-      .keySet();
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-    Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
-      .automateEU261Claims(claimIds, uow);
-    uow.commitWork();
-    Test.stopTest();
-
-    System.assertEquals(
-      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
-      claimsWithEvaluationDetails[0].decision.verdict,
-      'It should not be possible to automatically evaluate claims with possible duplicates.'
-    );
-    System.assertEquals(
-      'caveats: has potential duplicates',
-      claimsWithEvaluationDetails[0].decision.reasoning,
-      'Rejection reason should include caveat about duplicates'
-    );
-  }
-
-  @IsTest
-  static void onlyClaimsWithoutCAREDuplicatesCanBeEvaluated() {
-    insert new CARE_Claim__c(
-      Booking_Reference__c = careDuplicateBookingReference,
-      Flight_Number__c = 'SK0009' // This is the default flight number for claims in these tests
-    );
-    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
-        [
-          SELECT Id
-          FROM LIA_Claim__c
-          WHERE Liability_PNR__c = :careDuplicateBookingReference
-        ]
-      ))
-      .keySet();
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-    Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<EU261Claim> claimsWithEvaluationDetails = EU261Service.newInstance()
-      .automateEU261Claims(claimIds, uow);
-    uow.commitWork();
-    Test.stopTest();
-
-    System.assertEquals(
-      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
-      claimsWithEvaluationDetails[0].decision.verdict,
-      'It should not be possible to automatically evaluate claims with possible CARE duplicates.'
-    );
-    System.assertEquals(
-      'caveats: has potential duplicates',
-      claimsWithEvaluationDetails[0].decision.reasoning,
-      'Rejection reason should include caveat about duplicates'
-    );
-  }
-
-  @IsTest
-  static void minimalCancellationClaimShouldBeAutomatedCorrectly() {
-    // A rebooked flight which arrives 3h later than the original flight.
-    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
-        [
-          SELECT Id
-          FROM LIA_Claim__c
-          WHERE Liability_PNR__c = :cancellationWithRebookingBookingReference
-        ]
-      ))
-      .keySet();
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-    Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    EU261Service es = EU261Service.newInstance();
-    es.config.enabledSettlements = true;
-    es.config.enabledRejections = true;
-    es.config.percentageRequiringManualApproval = 0;
-    List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
-      claimIds,
-      uow
-    );
-    uow.commitWork();
-    Test.stopTest();
-
-    System.assertEquals(
-      Claim.EU261HandlingStatus.EligibleForCompensation,
-      claimsWithEvaluationDetails[0].decision.verdict,
-      'The minimal cancellation claim should be automated.'
-    );
-    System.assertEquals(
-      new Money(250, Money.CurrencyCode.EUR),
-      claimsWithEvaluationDetails[0]
-        .decision.compensationPerCustomerInEUR.get(
-          claimsWithEvaluationDetails[0].claimObj.customers[0]
-        ),
-      'We should pay out €250 for the minimal cancellation claim'
-    );
-
-    Settlement__c settlementForClaim = [
-      SELECT Id, Amount__c
-      FROM Settlement__c
-      WHERE Claim__c = :claimsWithEvaluationDetails[0].claimObj.id
+    LIA_Claim__c testClaim = [
+      SELECT Id, Case__c, Liability_PNR__c
+      FROM LIA_Claim__c
+      WHERE Liability_PNR__c = :testPnr
     ][0];
 
-    System.assertEquals(
-      2500.0,
-      settlementForClaim.Amount__c,
-      'Settlement amount should be multiplied by the exchange rate.'
+    Booking__c b = [
+      SELECT Id
+      FROM Booking__c
+      WHERE Booking_Reference__c = :testPnr
+    ];
+
+    List<SObject> toInsert = new List<SObject>();
+
+    toInsert.add(
+      new Customer__c(
+        Claim__c = testClaim.Id,
+        First_Name__c = 'Viktor',
+        Last_Name__c = 'Svensson'
+      )
     );
 
-    Case caseForClaim = [
-      SELECT Id, Status
-      FROM Case
-      WHERE
-        Initially_Provided_PNR__c = :cancellationWithRebookingBookingReference
-    ][0];
+    toInsert.add(
+      new Passenger__c(
+        Booking__c = b.Id,
+        First_Name__c = 'Viktor',
+        Last_Name__c = 'Svensson',
+        Identifier__c = 'PT2'
+      )
+    );
 
+    List<Segment__c> segments = new List<Segment__c>{
+      new Segment__c(
+        Booking__c = b.Id,
+        Flight__c = originalFlight.Id,
+        Seat__c = '2A',
+        Trip_Type__c = 'Cancelled'
+      ),
+      new Segment__c(
+        Booking__c = b.Id,
+        Flight__c = rebookedFlight.Id,
+        Seat__c = '2A',
+        Trip_Type__c = 'Outbound'
+      )
+    };
+
+    toInsert.addAll(segments);
+
+    insert toInsert;
+
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
+
+    Result res = runProcessingFor(new List<String>{ testPnr });
+
+    System.assertEquals(1, res.claims.size(), 'There should one claim.');
+    System.assertEquals(
+      'Eligible for compensation',
+      res.claims[0].EU261_Handling_Status__c,
+      'Handling status should have been set to eligible for compensation'
+    );
+
+    System.assertEquals(1, res.cases.size(), 'There should be one case.');
     System.assertEquals(
       'Closed',
-      caseForClaim.Status,
-      'Parent case should be closed after handling.'
+      res.cases[0].Status,
+      'Valid claim cases should be closed after processing.'
     );
-  }
-
-  @IsTest
-  static void claimWithAllowedExpensesShouldBeAutomatedCorrectly() {
-    Set<Id> claimIds = (new Map<Id, LIA_Claim__c>(
-        [
-          SELECT Id
-          FROM LIA_Claim__c
-          WHERE Liability_PNR__c = :validBookingReference
-        ]
-      ))
-      .keySet();
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
-    Test.startTest();
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    EU261Service es = EU261Service.newInstance();
-    es.config.enabledSettlements = true;
-    es.config.enabledRejections = true;
-    es.config.percentageRequiringManualApproval = 0;
-    es.config.expenseLimitFood = new Money(100, Money.CurrencyCode.SEK);
-    es.config.expenseLimitTotal = new Money(1000, Money.CurrencyCode.SEK);
-    List<EU261Claim> claimsWithEvaluationDetails = es.automateEU261Claims(
-      claimIds,
-      uow
-    );
-    uow.commitWork();
-    Test.stopTest();
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.EligibleForCompensation,
-      claimsWithEvaluationDetails[0].decision.verdict,
-      'The minimal cancellation claim should be automated.'
-    );
-    System.assertEquals(
-      new Money(250, Money.CurrencyCode.EUR),
-      claimsWithEvaluationDetails[0]
-        .decision.compensationPerCustomerInEUR.get(
-          claimsWithEvaluationDetails[0].claimObj.customers[0]
-        ),
-      'We should pay out €250 for the minimal cancellation claim'
-    );
-    System.assertEquals(
-      new Money(10, Money.CurrencyCode.SEK),
-      claimsWithEvaluationDetails[0].decision.reimbursementAmountInSEK,
-      'We should pay out 10 SEK for reimbursement'
+      1,
+      res.settlements.size(),
+      'There should be only one settlement for two customers.'
     );
 
-    List<Settlement__c> settlementsForClaim = [
-      SELECT Id, Amount__c, EuroBonus_Points__c, RecordTypeId
-      FROM Settlement__c
-      WHERE Claim__c = :claimsWithEvaluationDetails[0].claimObj.id
+    Settlement__c s = res.settlements[0];
+
+    List<Settlement_Item__c> settlementItemsForClaim = [
+      SELECT Id, Amount__c, Customer_Name__c
+      FROM Settlement_Item__c
+      WHERE Settlement__c = :s.Id
     ];
 
     System.assertEquals(
       2,
-      settlementsForClaim.size(),
-      'Separate compensation and reimbursement settlements should have been created'
+      settlementItemsForClaim.size(),
+      'There should be one settlement item per claim customer.'
     );
 
     System.assertEquals(
-      2500.0,
-      settlementsForClaim[0].Amount__c,
-      'Settlement amount should be multiplied by the exchange rate.'
+      Settlements.STATUS_WAITING_FOR_TRANSFER,
+      s.Settlement_Status__c,
+      'Monetary settlement should be waiting for transfer after processing.'
+    );
+    System.assertEquals(
+      Settlements.getRecordTypeId(Settlements.RecordType.Monetary),
+      s.RecordTypeId,
+      'Settlement type should be monetary if customer has requested compensation as monetary.'
+    );
+    System.assertEquals(
+      5000,
+      s.Amount__c,
+      'Settlement amount in euros should match the original compensation amount.'
+    );
+    System.assertEquals(
+      'SEK',
+      s.Currency__c,
+      'Monetary settlement should be in SEK.'
     );
 
+    for (Settlement_Item__c si : settlementItemsForClaim) {
+      System.assertEquals(
+        2500,
+        si.Amount__c,
+        'Settlement item amount should be equal to individuals compensation.'
+      );
+      if (si.Customer_Name__c == 'Viktor Svensson') {
+        System.assertEquals(
+          'Viktor Svensson',
+          si.Customer_Name__c,
+          'Settlement item customer names should be based on customer names from claim.'
+        );
+      } else {
+        System.assertEquals(
+          'Sven Svensson',
+          si.Customer_Name__c,
+          'Settlement item customer names should be based on customer names from claim.'
+        );
+      }
+    }
+  }
+
+  @IsTest
+  static void eligibleClaimsCanEndUpInApproval() {
+    EU261Service.Config config = new EU261Service.Config();
+    config.enabledRejections = true;
+    config.enabledSemiAutomation = true;
+    config.enabledSettlements = true;
+    config.percentageRequiringManualApproval = 100;
+
+    Result res = runProcessingFor(new List<String>{ '000004' }, config);
+
     System.assertEquals(
-      Settlements.getRecordTypeId(Settlements.RecordType.EBPoints),
-      settlementsForClaim[1].RecordTypeId,
-      'Reimbursement settlement should be in eb points'
+      1,
+      res.settlements.size(),
+      'Settlement should have been prepared.'
     );
     System.assertEquals(
-      null,
-      settlementsForClaim[1].Amount__c,
-      'Points settlement for reimbursement should have amount as null'
+      1,
+      res.claims.size(),
+      'Should have found the correct number of claims.'
     );
     System.assertEquals(
-      100,
-      settlementsForClaim[1].EuroBonus_Points__c,
-      'Points settlement for reimbursement should have 10 SEK worth of points'
+      1,
+      res.cases.size(),
+      'Should have found the correct number of cases.'
     );
 
-    Case caseForClaim = [
-      SELECT Id, Status
-      FROM Case
-      WHERE Initially_Provided_PNR__c = :validBookingReference
+    for (Case c : res.cases) {
+      System.assertEquals(
+        Cases.STATUS_WAITING_FOR_APPROVAL,
+        c.Status,
+        'Case should be waiting for approval'
+      );
+    }
+    for (Settlement__c s : res.settlements) {
+      System.assertEquals(
+        Settlements.STATUS_WAITING_FOR_APPROVAL,
+        s.Settlement_Status__c,
+        'Settlement should be waiting for approval'
+      );
+    }
+  }
+
+  @IsTest
+  static void highExpensesCanBeSemiAutomated() {
+    List<String> testPnrs = new List<String>{ '000005', '000006', '000007' };
+    List<LIA_Claim__c> cls = [
+      SELECT Id, Case__c, Liability_PNR__c
+      FROM LIA_Claim__c
+      WHERE Liability_PNR__c IN :testPnrs
+    ];
+    LIA_Claim__c claimOverFoodLimit;
+    LIA_Claim__c claimOverTotalLimit;
+    LIA_Claim__c validClaim;
+    for (LIA_Claim__c cl : cls) {
+      if (cl.Liability_PNR__c == '000005') {
+        claimOverFoodLimit = cl;
+      } else if (cl.Liability_PNR__c == '000006') {
+        claimOverTotalLimit = cl;
+      } else {
+        validClaim = cl;
+      }
+    }
+
+    Claim_Expense__c foodOverLimitExpense = new Claim_Expense__c(
+      Amount__c = 20,
+      Claim__c = claimOverFoodLimit.Id,
+      Currency__c = 'SEK',
+      Type__c = 'Food'
+    );
+
+    Claim_Expense__c foodUnderLimitExpense = new Claim_Expense__c(
+      Amount__c = 8,
+      Claim__c = claimOverTotalLimit.Id,
+      Currency__c = 'SEK',
+      Type__c = 'Food'
+    );
+    Claim_Expense__c transportationUnderLimitExpense = new Claim_Expense__c(
+      Amount__c = 93,
+      Claim__c = claimOverTotalLimit.Id,
+      Currency__c = 'SEK',
+      Type__c = 'Transportation'
+    );
+
+    Claim_Expense__c foodUnderLimitExpenseForValidClaim = new Claim_Expense__c(
+      Amount__c = 8,
+      Claim__c = validClaim.Id,
+      Currency__c = 'SEK',
+      Type__c = 'Food'
+    );
+
+    insert new List<SObject>{
+      foodOverLimitExpense,
+      foodUnderLimitExpense,
+      transportationUnderLimitExpense,
+      foodUnderLimitExpenseForValidClaim
+    };
+
+    EU261Service.Config config = new EU261Service.Config();
+    config.enabledRejections = true;
+    config.enabledSemiAutomation = true;
+    config.enabledSettlements = true;
+    config.expenseLimitFood = new Money(10, Money.CurrencyCode.SEK);
+    config.expenseLimitTransportation = new Money(95, Money.CurrencyCode.SEK);
+    config.expenseLimitTotal = new Money(100, Money.CurrencyCode.SEK);
+    config.percentageRequiringManualApproval = 0;
+
+    Result res = runProcessingFor(testPnrs, config);
+
+    System.assertEquals(
+      4,
+      res.settlements.size(),
+      'There should be one compensation settlement for each claim and a reimbursement one for the valid one.'
+    );
+    System.assertEquals(
+      3,
+      res.claims.size(),
+      'Should have found the correct number of claims.'
+    );
+    System.assertEquals(
+      3,
+      res.cases.size(),
+      'Should have found the correct number of cases.'
+    );
+
+    for (Case c : res.cases) {
+      if (c.Id == validClaim.Case__c) {
+        System.assertEquals(
+          Cases.STATUS_CLOSED,
+          c.Status,
+          'Valid case should be closed.'
+        );
+      } else {
+        System.assertEquals(
+          Cases.STATUS_NEW,
+          c.Status,
+          'High expenses cases should be waiting for approval.'
+        );
+      }
+    }
+    for (LIA_Claim__c cl : res.claims) {
+      Claim c = new Claim(cl);
+      if (cl.Id == validClaim.Id) {
+        System.assertEquals(
+          Claim.EU261HandlingStatus.EligibleForCompensation,
+          c.eu261HandlingStatus,
+          'Valid claim should be eligible for compensation.'
+        );
+      } else {
+        System.assertEquals(
+          Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
+          c.eu261HandlingStatus,
+          'Claims with high expenses should be possibly eligible for compensation.'
+        );
+      }
+    }
+    for (Settlement__c s : res.settlements) {
+      if (s.Claim__c == validClaim.Id) {
+        System.assertEquals(
+          Settlements.STATUS_WAITING_FOR_TRANSFER,
+          s.Settlement_Status__c,
+          'Settlement for valid case should be waiting for transfer.'
+        );
+      } else {
+        System.assertEquals(
+          Settlements.STATUS_IN_PROGRESS,
+          s.Settlement_Status__c,
+          'Settlement should be in progress.'
+        );
+      }
+    }
+  }
+
+  @IsTest
+  static void claimsRequiringPowerOfAttorneyCanBeSemiAutomated() {
+    String testPnr = '000013';
+
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
+
+    for (Flight__c f : [
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
+      FROM Flight__c
+      WHERE TEDS_Identifier__c IN :ELIGIBLE_FLIGHT_TEDS_IDS
+    ]) {
+      if (f.TEDS_Identifier__c == ELIGIBLE_FLIGHT_TEDS_ID) {
+        originalFlight = f;
+      } else {
+        rebookedFlight = f;
+      }
+    }
+
+    LIA_Claim__c testClaim = [
+      SELECT Id, Case__c, Liability_PNR__c
+      FROM LIA_Claim__c
+      WHERE Liability_PNR__c = :testPnr
     ][0];
 
-    System.assertEquals(
-      'Closed',
-      caseForClaim.Status,
-      'Parent case should be closed after handling.'
+    Booking__c b = [
+      SELECT Id
+      FROM Booking__c
+      WHERE Booking_Reference__c = :testPnr
+    ];
+
+    List<SObject> toInsert = new List<SObject>();
+
+    toInsert.add(
+      new Customer__c(
+        Claim__c = testClaim.Id,
+        First_Name__c = 'Sven',
+        Last_Name__c = 'Testsson'
+      )
     );
+
+    toInsert.add(
+      new Passenger__c(
+        Booking__c = b.Id,
+        First_Name__c = 'Sven',
+        Last_Name__c = 'Testsson',
+        Identifier__c = 'PT2'
+      )
+    );
+
+    List<Segment__c> segments = new List<Segment__c>{
+      new Segment__c(
+        Booking__c = b.Id,
+        Flight__c = originalFlight.Id,
+        Seat__c = '2A',
+        Trip_Type__c = 'Cancelled'
+      ),
+      new Segment__c(
+        Booking__c = b.Id,
+        Flight__c = rebookedFlight.Id,
+        Seat__c = '2A',
+        Trip_Type__c = 'Outbound'
+      )
+    };
+    toInsert.addAll(segments);
+
+    insert toInsert;
+
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
+
+    Result res = runProcessingFor(new List<String>{ testPnr });
+
+    System.assertEquals(1, res.claims.size(), 'There should one claim.');
+    System.assertEquals(
+      'Possibly eligible for compensation',
+      res.claims[0].EU261_Handling_Status__c,
+      'Handling status should have been set to eligible for compensation'
+    );
+
+    System.assertEquals(1, res.cases.size(), 'There should be one case.');
+    System.assertEquals(
+      'New',
+      res.cases[0].Status,
+      'Case should still be in new'
+    );
+
+    System.assertEquals(1, res.cases.size(), 'There should be one case.');
+    System.assert(
+      res.cases[0].EU261_Handling_Instructions__c != null,
+      'There should be eu261 handling instructions in the case.'
+    );
+    System.assertEquals(
+      'Action needed: ' +
+      EU261Service.SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS.get(
+        EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney
+      ),
+      res.cases[0].EU261_Handling_Instructions__c,
+      'EU261 handling instructions should include comment no PoA'
+    );
+
+    System.assertEquals(
+      1,
+      res.settlements.size(),
+      'There should be only one settlement for two customers.'
+    );
+
+    Settlement__c s = res.settlements[0];
+
+    List<Settlement_Item__c> settlementItemsForClaim = [
+      SELECT Id, Amount__c, Customer_Name__c
+      FROM Settlement_Item__c
+      WHERE Settlement__c = :s.Id
+    ];
+
+    System.assertEquals(
+      2,
+      settlementItemsForClaim.size(),
+      'There should be one settlement item per claim customer.'
+    );
+
+    System.assertEquals(
+      Settlements.STATUS_IN_PROGRESS,
+      s.Settlement_Status__c,
+      'Settlement should bein progress after processing.'
+    );
+    System.assertEquals(
+      Settlements.getRecordTypeId(Settlements.RecordType.Monetary),
+      s.RecordTypeId,
+      'Settlement type should be monetary if customer has requested compensation as monetary.'
+    );
+    System.assertEquals(
+      5000,
+      s.Amount__c,
+      'Settlement amount in euros should match the original compensation amount.'
+    );
+    System.assertEquals(
+      'SEK',
+      s.Currency__c,
+      'Monetary settlement should be in SEK.'
+    );
+
+    for (Settlement_Item__c si : settlementItemsForClaim) {
+      System.assertEquals(
+        2500,
+        si.Amount__c,
+        'Settlement item amount should be equal to individuals compensation.'
+      );
+      if (si.Customer_Name__c == 'Sven Svensson') {
+        System.assertEquals(
+          'Sven Svensson',
+          si.Customer_Name__c,
+          'Settlement item customer names should be based on customer names from claim.'
+        );
+      } else {
+        System.assertEquals(
+          'Sven Testsson',
+          si.Customer_Name__c,
+          'Settlement item customer names should be based on customer names from claim.'
+        );
+      }
+    }
+  }
+
+  /*@IsTest
+  static void invalidSettlementsCanBeSemiAutomated() {
+    List<String> testPnrs = new List<String>{ '000011' };
+    LIA_Claim__c cls = [
+      SELECT Id, Case__c, Liability_PNR__c, Bank_Account_Number__c
+      FROM LIA_Claim__c
+      WHERE Liability_PNR__c IN :testPnrs
+    ][0];
+
+    cls.Bank_Account_Number__c = 'INVALID';
+    update cls;
+
+    Result res = runProcessingFor(testPnrs);
+
+    System.assertEquals(
+      Cases.STATUS_NEW,
+      res.cases[0].Status,
+      'Case should be still in new.'
+    );
+
+    System.assertEquals(
+      1,
+      res.settlements.size(),
+      'Settlement should have been created for the claim.'
+    );
+    System.assertEquals(
+      Settlements.STATUS_IN_PROGRESS,
+      res.settlements[0].Settlement_Status__c,
+      'Settlement should have been created for the claim.'
+    );
+  }*/
+
+  @IsTest
+  static void duplicatesCanBeSemiAutomated() {
+    List<String> testPnrs = new List<String>{
+      DUPLICATE_BOOKING_REFERENCE,
+      CARE_DUPLICATE_BOOKING_REFERENCE
+    };
+
+    // We can have duplicates either from other claims or from CARE data
+
+    insert new CARE_Claim__c(
+      Booking_Reference__c = CARE_DUPLICATE_BOOKING_REFERENCE,
+      Flight_Number__c = ELIGIBLE_FLIGHT_NUMBER
+    );
+
+    Result res = runProcessingFor(testPnrs);
+
+    System.assertEquals(
+      3,
+      res.claims.size(),
+      'Three claims should have been processed by the duplicate PNR and CARE duplicate PNR'
+    );
+    for (LIA_Claim__c cl : res.claims) {
+      Claim c = new Claim(cl);
+      System.assertEquals(
+        Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
+        c.eu261HandlingStatus,
+        'Duplicate claims should be possibly eligible compensation'
+      );
+    }
+
+    System.assertEquals(
+      3,
+      res.cases.size(),
+      'Same number of cases as claims should exist.'
+    );
+    for (Case c : res.cases) {
+      System.assertEquals(
+        Cases.STATUS_NEW,
+        c.Status,
+        'Case should be still in new.'
+      );
+    }
+
+    System.assertEquals(
+      3,
+      res.settlements.size(),
+      'There should be one settlement per claim.'
+    );
+    for (Settlement__c s : res.settlements) {
+      System.assertEquals(
+        Settlements.STATUS_IN_PROGRESS,
+        res.settlements[0].Settlement_Status__c,
+        'Settlement should have been created for the claim.'
+      );
+    }
+  }
+
+  @IsTest
+  static void compensationAndReimbursementCanHaveDifferentPaymentMethods() {
+    String testPnr = 'EXPEN1';
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
+    for (Flight__c f : [
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
+      FROM Flight__c
+      WHERE TEDS_Identifier__c IN :ELIGIBLE_FLIGHT_TEDS_IDS
+    ]) {
+      if (f.TEDS_Identifier__c == ELIGIBLE_FLIGHT_TEDS_ID) {
+        originalFlight = f;
+      } else {
+        rebookedFlight = f;
+      }
+    }
+
+    Booking__c b = new Booking__c(
+      Booking_Reference__c = testPnr,
+      TEDS_Identifier__c = testPnr,
+      Type__c = 'OneWay'
+    );
+
+    insert b;
+
+    List<SObject> toInsert = new List<SObject>();
+
+    List<Segment__c> segments = new List<Segment__c>{
+      new Segment__c(
+        Booking__c = b.Id,
+        Flight__c = originalFlight.Id,
+        Seat__c = '1A',
+        Trip_Type__c = 'Cancelled'
+      ),
+      new Segment__c(
+        Booking__c = b.Id,
+        Flight__c = rebookedFlight.Id,
+        Seat__c = '1A',
+        Trip_Type__c = 'Outbound'
+      )
+    };
+
+    toInsert.addAll(segments);
+    toInsert.add(
+      new Passenger__c(
+        Booking__c = b.Id,
+        Identifier__c = 'P1',
+        First_Name__c = 'Sven',
+        Last_Name__c = 'Svensson'
+      )
+    );
+
+    insert toInsert;
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
+
+    Cases.bypassTrigger = true;
+    TestDataFactories.CasesClaims testClaim = createDefaultTestClaim(
+      testPnr,
+      new Map<Schema.SObjectField, Object>{
+        LIA_Claim__c.Preferred_Reimbursement_Method__c => 'EuroBonus Points'
+      }
+    );
+    Cases.bypassTrigger = false;
+
+    Claim_Expense__c expenseOne = new Claim_Expense__c(
+      Amount__c = 30,
+      Claim__c = testClaim.claims[0].Id,
+      Currency__c = 'SEK',
+      Type__c = 'Food'
+    );
+    Claim_Expense__c expenseTwo = new Claim_Expense__c(
+      Amount__c = 300,
+      Claim__c = testClaim.claims[0].Id,
+      Currency__c = 'SEK',
+      Type__c = 'Transportation'
+    );
+
+    insert new List<SObject>{ expenseOne, expenseTwo };
+
+    createCaseToBookings(new List<TestDataFactories.CasesClaims>{ testClaim });
+
+    EU261Service.Config config = new EU261Service.Config();
+    config.enabledRejections = true;
+    config.enabledSemiAutomation = true;
+    config.enabledSettlements = true;
+    config.expenseLimitFood = new Money(100, Money.CurrencyCode.SEK);
+    config.expenseLimitTransportation = new Money(1000, Money.CurrencyCode.SEK);
+    config.expenseLimitTotal = new Money(10000, Money.CurrencyCode.SEK);
+    config.percentageRequiringManualApproval = 0;
+
+    Result res = runProcessingFor(new List<String>{ testPnr }, config);
+
+    System.assertEquals(
+      1,
+      res.claims.size(),
+      'There should be only one claim processed.'
+    );
+    System.assertEquals(
+      2,
+      res.settlements.size(),
+      'Two settlements should have been created: One for compensation and one for reimbursement.'
+    );
+
+    for (Settlement__c s : res.settlements) {
+      if (s.Amount__c == null) {
+        System.assertEquals(
+          3300,
+          s.EuroBonus_Points__c,
+          'Reimbursement should be in points with the correct amount.'
+        );
+      } else {
+        System.assertEquals(
+          2500,
+          s.Amount__c,
+          'Compensation should be in SEK.'
+        );
+      }
+    }
   }
 }

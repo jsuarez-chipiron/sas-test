@@ -22,7 +22,34 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
 
   public Flight flight;
 
-  public List<SegmentEvent> events; // Todo: handle initialization
+  private List<SegmentEvent> events;
+
+  public enum Status {
+    Unknown,
+    CallToConfirm,
+    Cancelled,
+    Confirmed,
+    SpaceAvailable,
+    Suspended,
+    Unconfirmed,
+    Waitlisted
+  }
+
+  public void setEvents(List<SegmentEvent> events) {
+    if (events != null) {
+      events.sort();
+    }
+    this.events = events;
+  }
+
+  public List<SegmentEvent> getEvents() {
+    return this.events;
+  }
+
+  public class UnsupportedException extends Exception {
+  }
+  public class CancelledFromConfirmedException extends Exception {
+  }
 
   private Segment() {
     this.underlyingSObject = new Segment__c();
@@ -101,5 +128,118 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
     } else {
       return 0;
     }
+  }
+
+  /**
+   * Gets the segment status at a specific time.
+   * Currently only supports Confirmed, Cancelled and Unknown
+   */
+  public Status getStatus(Datetime theTime) {
+    U.verifyNotNull(this.events);
+
+    Status currentStatus = Status.Unknown;
+    for (SegmentEvent se : events) {
+      if (se.updateDate > theTime) {
+        break;
+      }
+
+      switch on se.newStatus {
+        when C_HK, C_TK {
+          // Holds confirmed
+          // Schedule Change. Advise passenger of new scheduled times.
+          currentStatus = Status.Confirmed;
+        }
+        when C_UN {
+          // Unable - no flight
+          currentStatus = Status.Unconfirmed;
+        }
+        when C_XX {
+          // Cancel segment
+          currentStatus = Status.Cancelled;
+        }
+        when C_UC, C_US, C_UU {
+          // Unable to confirm or waitlist
+          // Unable to sell
+          // Unable to confirm. Waitlist requested'
+          throw new UnsupportedException(
+            'Segment has unsupported "Unable"-status'
+          );
+        }
+        when C_GF, C_GK, C_GL, C_GN, C_GO {
+          // Guaranteed/Merged. Also used in 1V as Passive - Group confirmed
+          throw new UnsupportedException('Group segments are not supported');
+        }
+        when C_HX, C_XK {
+          // Cancel confirm hold
+          // Cancel seg with change
+          // Group statuses
+          throw new UnsupportedException('Segment has an unsupported status');
+        }
+      }
+    }
+
+    return currentStatus;
+  }
+
+  /**
+   * (Unconfirmed = unable)
+   */
+  public Datetime getTimeUnconfirmed() {
+    U.verifyNotNull(this.events);
+
+    Datetime timeUnable;
+    for (SegmentEvent se : events) {
+      if (se.newStatus == SegmentEvent.StatusCode.C_UN) {
+        if (
+          timeUnable != null &&
+          se.previousStatus != SegmentEvent.StatusCode.C_UN
+        ) {
+          throw new UnsupportedException('More than one unconfirmed time.');
+        }
+
+        // Store the first time when the segment was "unable"
+        if (timeUnable == null) {
+          timeUnable = se.updateDate;
+        }
+      }
+    }
+
+    return timeUnable;
+  }
+
+  public Datetime getTimeRemoved() {
+    U.verifyNotNull(this.events);
+
+    Datetime timeRemoved;
+    for (SegmentEvent se : events) {
+      if (se.operationType == SegmentEvent.OperationType.C_X) {
+        if (timeRemoved != null) {
+          throw new UnsupportedException('More than one removal time.');
+        }
+        timeRemoved = se.updateDate;
+      }
+    }
+    return timeRemoved;
+  }
+
+  public Boolean hasBeenReinstated() {
+    U.verifyNotNull(this.events);
+
+    Status currentStatus = Status.Unknown;
+    for (SegmentEvent se : events) {
+      switch on se.newStatus {
+        when C_HK, C_TK {
+          if (currentStatus == Status.Unconfirmed) {
+            return true;
+          }
+        }
+        when C_UN {
+          // Unable - no flight
+          currentStatus = Status.Unconfirmed;
+        }
+      }
+    }
+
+    return false;
   }
 }
