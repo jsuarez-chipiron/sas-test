@@ -124,7 +124,7 @@ public without sharing class UsStateUtils {
       } else if (postalCode >= 96910 && postalCode <= 96932) {
         state = 'Guam';
       } else if (postalCode >= 801 && postalCode <= 851) {
-        state = 'United States Virgin Islands';
+        state = 'US Virgin Islands';
       } else {
         state = null;
         System.debug('No state found matching' + postalCode);

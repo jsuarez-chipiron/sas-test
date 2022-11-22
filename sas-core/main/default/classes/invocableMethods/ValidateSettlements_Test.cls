@@ -191,6 +191,8 @@ private class ValidateSettlements_Test {
     validSettlement3.Country__c = 'United States';
     validSettlement3.Bank_Country__c = 'United States';
     validSettlement3.Currency__c = 'USD';
+    validSettlement3.Postal_Code__c = '90801';
+    validSettlement3.State__c = UsStateUtils.getStateFromPostalCode('90801');
 
     validSettlement4.RecordTypeId = Settlements.getRecordTypeId(
       Settlements.RecordType.EBPoints
