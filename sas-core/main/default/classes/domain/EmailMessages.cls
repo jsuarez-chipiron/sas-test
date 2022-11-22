@@ -123,6 +123,7 @@ public without sharing class EmailMessages extends ApplicationDomain {
     }
 
     EmailTemplate emailTemplate = templates[0];
+    // Set whoId to null to not prepopulate the recipients
     Messaging.SingleEmailMessage emailToSend = Messaging.renderStoredEmailTemplate(
       emailTemplate.Id,
       null,
