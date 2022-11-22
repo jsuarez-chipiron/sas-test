@@ -1,6 +1,3 @@
-/**
- * Service class for managing bookings and flights in Salesforce.
- */
 public without sharing class BookingService {
   public static BookingService newInstance() {
     return (BookingService) SAS_Service_Application.Service.newInstance(

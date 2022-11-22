@@ -427,7 +427,8 @@ public without sharing class EU261Service {
           s.flight.irregularities = claimSpecificIrregularities.get(
             s.flight.id
           );
-          s.events = segmentIdToSegmentEvents.get(s.Id);
+          List<SegmentEvent> events = segmentIdToSegmentEvents.get(s.Id);
+          s.setEvents(events);
           b.setAirports(airportCodeToAirportObjects);
         }
       }

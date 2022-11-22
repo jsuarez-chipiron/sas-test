@@ -1,5 +1,45 @@
 @IsTest
 public with sharing class TestSegmentFactory {
+  public enum History {
+    DEFAULTCONFIRMED,
+    DEFAULTCANCELLATION,
+    DEFAULTREPLACEMENT,
+    REMOVEDNOTCANCELLED,
+    DOUBLEUNCONFIRMED,
+    UNABLETOCONFIRM,
+    GROUPBOOKING,
+    FULLHISTORY
+  } // TODO Rename
+
+  public class SegmentsInfo {
+    Flight f;
+    Datetime timeAddedToBooking;
+    Datetime timeRemovedFromBooking;
+    History history;
+
+    public SegmentsInfo(
+      Flight f,
+      Datetime timeAddedToBooking,
+      Datetime timeRemovedFromBooking
+    ) {
+      this.f = f;
+      this.timeAddedToBooking = timeAddedToBooking;
+      this.timeRemovedFromBooking = timeRemovedFromBooking;
+    }
+
+    public SegmentsInfo(
+      Flight f,
+      Datetime timeAddedToBooking,
+      Datetime timeRemovedFromBooking,
+      History history
+    ) {
+      this.f = f;
+      this.timeAddedToBooking = timeAddedToBooking;
+      this.timeRemovedFromBooking = timeRemovedFromBooking;
+      this.history = history;
+    }
+  }
+
   public static Segment createFromBookingFlightPassenger(
     Booking b,
     Flight f,
@@ -26,34 +66,104 @@ public with sharing class TestSegmentFactory {
     s.ticketType = '';
 
     s.tripType = 'Outbound';
-    if (f.irregularities != null) {
-      for (FlightIrregularity fi : f.irregularities) {
-        if (fi.isCancellation()) {
-          s.tripType = 'Cancelled';
-        }
+
+    for (FlightIrregularity fi : s.flight.irregularities) {
+      if (fi.isCancellation()) {
+        s.tripType = 'Cancelled';
       }
     }
 
     return s;
   }
 
-  public static List<Segment> createFromBookingFlight(Booking b, Flight f) {
-    List<Segment> segments = new List<Segment>{};
-    for (Passenger p : b.passengers) {
-      segments.add(createFromBookingFlightPassenger(b, f, p));
-    }
-    return segments;
-  }
   public static List<Segment> createFromBookingFlights(
     Booking b,
-    List<Flight> fs
+    List<SegmentsInfo> segmentsInfos
   ) {
     List<Segment> segments = new List<Segment>{};
-    for (Flight f : fs) {
+    for (SegmentsInfo si : segmentsInfos) {
       for (Passenger p : b.passengers) {
-        segments.add(createFromBookingFlightPassenger(b, f, p));
+        Segment s = createFromBookingFlightPassenger(b, si.f, p);
+        List<SegmentEvent> events = createEvents(
+          s,
+          si.timeAddedToBooking,
+          si.timeRemovedFromBooking,
+          si.history
+        );
+        s.setEvents(events);
+        segments.add(s);
       }
     }
     return segments;
+  }
+
+  public static List<SegmentEvent> createEvents(
+    Segment s,
+    Datetime timeAdded,
+    Datetime timeCancelled,
+    History segmentHistory
+  ) {
+    List<SegmentEvent> toReturn;
+    if (segmentHistory == null) {
+      if (s.tripType == 'Cancelled') {
+        toReturn = TestSegmentEventFactory.createForDefaultCancellation(
+          s,
+          timeAdded,
+          timeCancelled
+        );
+      } else {
+        toReturn = TestSegmentEventFactory.createForDefaultConfirmed(
+          s,
+          timeAdded
+        );
+      }
+    } else {
+      switch on segmentHistory {
+        when DEFAULTCANCELLATION {
+          toReturn = TestSegmentEventFactory.createForDefaultCancellation(
+            s,
+            timeAdded,
+            timeCancelled
+          );
+        }
+        when DEFAULTREPLACEMENT {
+          toReturn = TestSegmentEventFactory.createForDefaultReplacement(
+            s,
+            timeAdded
+          );
+        }
+        when REMOVEDNOTCANCELLED {
+          toReturn = TestSegmentEventFactory.createForRemovedNotCancelled(
+            s,
+            timeAdded,
+            timeCancelled
+          );
+        }
+        when DOUBLEUNCONFIRMED {
+          toReturn = TestSegmentEventFactory.createForDoubleUnconfirmed(
+            s,
+            timeAdded,
+            timeCancelled
+          );
+        }
+        when UNABLETOCONFIRM {
+          toReturn = TestSegmentEventFactory.createWithUnableToConfirm(
+            s,
+            timeAdded
+          );
+        }
+        when GROUPBOOKING {
+          toReturn = TestSegmentEventFactory.createGroup(s, timeAdded);
+        }
+        when else {
+          toReturn = TestSegmentEventFactory.createForDefaultConfirmed(
+            s,
+            timeAdded
+          );
+        }
+      }
+    }
+
+    return toReturn;
   }
 }

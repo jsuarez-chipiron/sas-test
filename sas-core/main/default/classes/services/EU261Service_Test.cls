@@ -54,37 +54,39 @@ private class EU261Service_Test {
       )
     );
 
+    Datetime departure = DateTime.newInstance(2022, 8, 17, 0, 1, 0);
+    Datetime replacementDeparture = departure.addDays(1);
     Flight__c eligibleCancelledFlight = new Flight__c(
       Arrival_Airport__c = 'HEL',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
       TEDS_Identifier__c = ELIGIBLE_FLIGHT_TEDS_ID,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0)
+      Scheduled_Departure_Time__c = departure,
+      Scheduled_Arrival_Time__c = departure.addHours(2)
     );
     Flight__c replacementForEligibleCancelledFlight = new Flight__c(
       Arrival_Airport__c = 'HEL',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
       TEDS_Identifier__c = ELIGIBLE_REBOOKED_FLIGHT_TEDS_ID,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 18, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 18, 2, 1, 0)
+      Scheduled_Departure_Time__c = replacementDeparture,
+      Scheduled_Arrival_Time__c = replacementDeparture.addHours(2)
     );
     Flight__c notEligibleCancelledFlight = new Flight__c(
       Arrival_Airport__c = 'HEL',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
       TEDS_Identifier__c = NOT_ELIGIBLE_FLIGHT_TEDS_ID,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 0, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 2, 1, 0)
+      Scheduled_Departure_Time__c = departure,
+      Scheduled_Arrival_Time__c = departure.addHours(2)
     );
     Flight__c replacementForNotEligibleCancelledFlight = new Flight__c(
       Arrival_Airport__c = 'HEL',
       Departure_Airport__c = 'CPH',
       Operating_Carrier__c = 'SK',
       TEDS_Identifier__c = NOT_ELIGIBLE_REBOOKED_FLIGHT_TEDS_ID,
-      Scheduled_Departure_Time__c = DateTime.newInstance(2022, 8, 17, 1, 1, 0),
-      Scheduled_Arrival_Time__c = DateTime.newInstance(2022, 8, 17, 3, 1, 0)
+      Scheduled_Departure_Time__c = replacementDeparture,
+      Scheduled_Arrival_Time__c = replacementDeparture.addHours(2)
     );
     objectsToCreate.add(eligibleCancelledFlight);
     objectsToCreate.add(replacementForEligibleCancelledFlight);
@@ -167,17 +169,18 @@ private class EU261Service_Test {
       );
     }
 
+    Datetime planeBreaks = departure.addDays(-5);
     FlightIrregularities__c eligibleIrregularity = new FlightIrregularities__c(
       Flight__c = eligibleCancelledFlight.Id,
       Code__c = 'TECH',
-      Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
+      Type__c = 'Cancellation (departure)',
+      Cancellation_Time__c = planeBreaks
     );
     FlightIrregularities__c notEligibleIrregularity = new FlightIrregularities__c(
       Flight__c = notEligibleCancelledFlight.Id,
-      Code__c = 'TECH',
-      Type__c = 'Cancellation (arrival)',
-      Cancellation_Time__c = DateTime.newInstance(2022, 8, 10, 0, 1, 0)
+      Code__c = 'WEAT',
+      Type__c = 'Cancellation (departure)',
+      Cancellation_Time__c = planeBreaks
     );
 
     List<SObject> toInsert = new List<SObject>();
@@ -186,6 +189,8 @@ private class EU261Service_Test {
     toInsert.add(eligibleIrregularity);
     toInsert.add(notEligibleIrregularity);
     insert toInsert;
+
+    createSegmentEvents(segments, departure.addDays(-60), planeBreaks);
 
     List<TestDataFactories.CasesClaims> allClaims = new List<TestDataFactories.CasesClaims>();
 
@@ -197,6 +202,52 @@ private class EU261Service_Test {
     createCaseToBookings(allClaims);
 
     Cases.bypassTrigger = false;
+  }
+
+  private static void createSegmentEvents(
+    List<Segment__c> segments,
+    Datetime timeAdded,
+    Datetime timeCancelled
+  ) {
+    List<Segment_Event__c> segmentEvents = new List<Segment_Event__c>();
+    for (Segment__c s : segments) {
+      Datetime t = null;
+
+      if (s.Trip_Type__c == 'Cancelled') {
+        Segment_Event__c added = new Segment_Event__c(
+          Segment__c = s.Id,
+          New_Status__c = 'HK',
+          Office_Code__c = 'STOSK00OC',
+          Operation_Type__c = 'A',
+          Previous_Status__c = null,
+          Update_Date__c = timeAdded,
+          Update_Number__c = 0
+        );
+        Segment_Event__c cancelled = new Segment_Event__c(
+          Segment__c = s.Id,
+          New_Status__c = 'UN',
+          Office_Code__c = 'STOSK00OC',
+          Operation_Type__c = 'C',
+          Previous_Status__c = null,
+          Update_Date__c = timeCancelled,
+          Update_Number__c = 1
+        );
+        segmentEvents.add(added);
+        segmentEvents.add(cancelled);
+      } else {
+        Segment_Event__c replacementAdded = new Segment_Event__c(
+          Segment__c = s.Id,
+          New_Status__c = 'HK',
+          Office_Code__c = 'STOSK00OC',
+          Operation_Type__c = 'A',
+          Previous_Status__c = null,
+          Update_Date__c = timeCancelled,
+          Update_Number__c = 0
+        );
+        segmentEvents.add(replacementAdded);
+      }
+    }
+    insert segmentEvents;
   }
 
   private static void createCaseToBookings(
@@ -378,17 +429,17 @@ private class EU261Service_Test {
   @IsTest
   static void ineligibleClaimsAreRejectedAutomatically() {
     List<String> testPnrs = new List<String>{ 'REJEC1', 'REJEC2' };
-    Id originalFlightId;
-    Id rebookedFlightId;
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
     for (Flight__c f : [
-      SELECT Id, TEDS_Identifier__c
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
       FROM Flight__c
       WHERE TEDS_Identifier__c IN :NOT_ELIGIBLE_FLIGHT_TEDS_IDS
     ]) {
       if (f.TEDS_Identifier__c == NOT_ELIGIBLE_FLIGHT_TEDS_ID) {
-        originalFlightId = f.Id;
+        originalFlight = f;
       } else {
-        rebookedFlightId = f.Id;
+        rebookedFlight = f;
       }
     }
 
@@ -412,7 +463,7 @@ private class EU261Service_Test {
       segments.add(
         new Segment__c(
           Booking__c = b.Id,
-          Flight__c = originalFlightId,
+          Flight__c = originalFlight.Id,
           Seat__c = '1A',
           Trip_Type__c = 'Cancelled'
         )
@@ -420,7 +471,7 @@ private class EU261Service_Test {
       segments.add(
         new Segment__c(
           Booking__c = b.Id,
-          Flight__c = rebookedFlightId,
+          Flight__c = rebookedFlight.Id,
           Seat__c = '1A',
           Trip_Type__c = 'Outbound'
         )
@@ -440,6 +491,12 @@ private class EU261Service_Test {
     toInsert.addAll(segments);
     toInsert.addAll(passengers);
     insert toInsert;
+
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
 
     Cases.bypassTrigger = true;
     List<TestDataFactories.CasesClaims> allClaims = new List<TestDataFactories.CasesClaims>();
@@ -502,17 +559,17 @@ private class EU261Service_Test {
       'VALID3',
       'VALID4'
     };
-    Id originalFlightId;
-    Id rebookedFlightId;
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
     for (Flight__c f : [
-      SELECT Id, TEDS_Identifier__c
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
       FROM Flight__c
       WHERE TEDS_Identifier__c IN :ELIGIBLE_FLIGHT_TEDS_IDS
     ]) {
       if (f.TEDS_Identifier__c == ELIGIBLE_FLIGHT_TEDS_ID) {
-        originalFlightId = f.Id;
+        originalFlight = f;
       } else {
-        rebookedFlightId = f.Id;
+        rebookedFlight = f;
       }
     }
 
@@ -536,7 +593,7 @@ private class EU261Service_Test {
       segments.add(
         new Segment__c(
           Booking__c = b.Id,
-          Flight__c = originalFlightId,
+          Flight__c = originalFlight.Id,
           Seat__c = '1A',
           Trip_Type__c = 'Cancelled'
         )
@@ -544,7 +601,7 @@ private class EU261Service_Test {
       segments.add(
         new Segment__c(
           Booking__c = b.Id,
-          Flight__c = rebookedFlightId,
+          Flight__c = rebookedFlight.Id,
           Seat__c = '1A',
           Trip_Type__c = 'Outbound'
         )
@@ -564,6 +621,12 @@ private class EU261Service_Test {
     toInsert.addAll(segments);
     toInsert.addAll(passengers);
     insert toInsert;
+
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
 
     Cases.bypassTrigger = true;
 
@@ -837,18 +900,18 @@ private class EU261Service_Test {
   static void eligibleClaimsWithMoreThanOnePassengerAreSettledCorrectly() {
     String testPnr = '000012';
 
-    Id originalFlightId;
-    Id rebookedFlightId;
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
 
     for (Flight__c f : [
-      SELECT Id, TEDS_Identifier__c
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
       FROM Flight__c
       WHERE TEDS_Identifier__c IN :ELIGIBLE_FLIGHT_TEDS_IDS
     ]) {
       if (f.TEDS_Identifier__c == ELIGIBLE_FLIGHT_TEDS_ID) {
-        originalFlightId = f.Id;
+        originalFlight = f;
       } else {
-        rebookedFlightId = f.Id;
+        rebookedFlight = f;
       }
     }
 
@@ -883,24 +946,31 @@ private class EU261Service_Test {
       )
     );
 
-    toInsert.add(
+    List<Segment__c> segments = new List<Segment__c>{
       new Segment__c(
         Booking__c = b.Id,
-        Flight__c = originalFlightId,
+        Flight__c = originalFlight.Id,
         Seat__c = '2A',
         Trip_Type__c = 'Cancelled'
-      )
-    );
-    toInsert.add(
+      ),
       new Segment__c(
         Booking__c = b.Id,
-        Flight__c = rebookedFlightId,
+        Flight__c = rebookedFlight.Id,
         Seat__c = '2A',
         Trip_Type__c = 'Outbound'
       )
-    );
+    };
+
+    toInsert.addAll(segments);
 
     insert toInsert;
+
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
+
     Result res = runProcessingFor(new List<String>{ testPnr });
 
     System.assertEquals(1, res.claims.size(), 'There should one claim.');
@@ -1156,18 +1226,18 @@ private class EU261Service_Test {
   static void claimsRequiringPowerOfAttorneyCanBeSemiAutomated() {
     String testPnr = '000013';
 
-    Id originalFlightId;
-    Id rebookedFlightId;
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
 
     for (Flight__c f : [
-      SELECT Id, TEDS_Identifier__c
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
       FROM Flight__c
       WHERE TEDS_Identifier__c IN :ELIGIBLE_FLIGHT_TEDS_IDS
     ]) {
       if (f.TEDS_Identifier__c == ELIGIBLE_FLIGHT_TEDS_ID) {
-        originalFlightId = f.Id;
+        originalFlight = f;
       } else {
-        rebookedFlightId = f.Id;
+        rebookedFlight = f;
       }
     }
 
@@ -1202,24 +1272,30 @@ private class EU261Service_Test {
       )
     );
 
-    toInsert.add(
+    List<Segment__c> segments = new List<Segment__c>{
       new Segment__c(
         Booking__c = b.Id,
-        Flight__c = originalFlightId,
+        Flight__c = originalFlight.Id,
         Seat__c = '2A',
         Trip_Type__c = 'Cancelled'
-      )
-    );
-    toInsert.add(
+      ),
       new Segment__c(
         Booking__c = b.Id,
-        Flight__c = rebookedFlightId,
+        Flight__c = rebookedFlight.Id,
         Seat__c = '2A',
         Trip_Type__c = 'Outbound'
       )
-    );
+    };
+    toInsert.addAll(segments);
 
     insert toInsert;
+
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
+
     Result res = runProcessingFor(new List<String>{ testPnr });
 
     System.assertEquals(1, res.claims.size(), 'There should one claim.');
@@ -1405,17 +1481,17 @@ private class EU261Service_Test {
   @IsTest
   static void compensationAndReimbursementCanHaveDifferentPaymentMethods() {
     String testPnr = 'EXPEN1';
-    Id originalFlightId;
-    Id rebookedFlightId;
+    Flight__c originalFlight;
+    Flight__c rebookedFlight;
     for (Flight__c f : [
-      SELECT Id, TEDS_Identifier__c
+      SELECT Id, TEDS_Identifier__c, Scheduled_Departure_Time__c
       FROM Flight__c
       WHERE TEDS_Identifier__c IN :ELIGIBLE_FLIGHT_TEDS_IDS
     ]) {
       if (f.TEDS_Identifier__c == ELIGIBLE_FLIGHT_TEDS_ID) {
-        originalFlightId = f.Id;
+        originalFlight = f;
       } else {
-        rebookedFlightId = f.Id;
+        rebookedFlight = f;
       }
     }
 
@@ -1429,22 +1505,22 @@ private class EU261Service_Test {
 
     List<SObject> toInsert = new List<SObject>();
 
-    toInsert.add(
+    List<Segment__c> segments = new List<Segment__c>{
       new Segment__c(
         Booking__c = b.Id,
-        Flight__c = originalFlightId,
+        Flight__c = originalFlight.Id,
         Seat__c = '1A',
         Trip_Type__c = 'Cancelled'
-      )
-    );
-    toInsert.add(
+      ),
       new Segment__c(
         Booking__c = b.Id,
-        Flight__c = rebookedFlightId,
+        Flight__c = rebookedFlight.Id,
         Seat__c = '1A',
         Trip_Type__c = 'Outbound'
       )
-    );
+    };
+
+    toInsert.addAll(segments);
     toInsert.add(
       new Passenger__c(
         Booking__c = b.Id,
@@ -1455,6 +1531,11 @@ private class EU261Service_Test {
     );
 
     insert toInsert;
+    createSegmentEvents(
+      segments,
+      originalFlight.Scheduled_Departure_Time__c.addDays(-60),
+      originalFlight.Scheduled_Departure_Time__c.addDays(-5)
+    );
 
     Cases.bypassTrigger = true;
     TestDataFactories.CasesClaims testClaim = createDefaultTestClaim(

@@ -137,10 +137,12 @@ public class EU261Claim {
   public Claim claimObj { public get; private set; }
   @TestVisible
   private Booking claimedBooking;
-  private List<Trip> trips;
   private Trip tripWithClaimFlight;
+  private Trip tripWithClaimFlightReplacement;
   private Boolean hasPotentiallyDuplicateClaims = false;
   private Boolean foundMultipleMatchingBookings = false;
+  private Boolean hasCancellation;
+  private Boolean couldInitializeTrips;
   private Flight claimFlight;
 
   private EU261Service.Config config;
@@ -165,26 +167,17 @@ public class EU261Claim {
       this.claimedBooking = b[0];
       this.foundMultipleMatchingBookings = b.size() > 1;
 
-      try {
-        this.trips = claimedBooking.getTrips();
-      } catch (Trip.BookingTypeNotSupportedException e) {
-        // If not supported, we'll leave trips empty. We'll ignore these when
-        // processing cases later on.
-        return;
-      }
-
       String flightNumberDate = Flight.constructTEDSFlightNumberDate(
         c.flightNumber,
         c.departureDate
       );
 
-      if (this.trips != null) {
-        for (Trip t : this.trips) {
-          Flight claimFlight = t.getFlight(flightNumberDate);
-          if (claimFlight != null) {
-            this.tripWithClaimFlight = t;
-            this.claimFlight = claimFlight;
-          }
+      for (Flight f : this.claimedBooking.flights) {
+        String flightId = Flight.TEDSIdToSimpleFlightIds(f.tedsIdentifier)[0];
+        if (flightId == flightNumberDate) {
+          this.claimFlight = f;
+          this.hasCancellation = f.getCancellations().size() > 0;
+          break;
         }
       }
     }
@@ -216,20 +209,6 @@ public class EU261Claim {
     return this.tripWithClaimFlight.isDelayedToDestination();
   }
 
-  private Boolean hasCancellation() {
-    if (claimFlight == null) {
-      throw new AutomationException('claimFlight not set');
-    }
-
-    for (FlightIrregularity fi : claimFlight.irregularities) {
-      if (fi.isCancellation()) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   private Boolean hasMoreThanOneCancellation() {
     Integer count = 0;
     for (Flight f : this.claimedBooking.flights) {
@@ -254,6 +233,51 @@ public class EU261Claim {
       if (segmentFlightRoute != firstFlightRoute) {
         return false;
       }
+    }
+    return true;
+  }
+
+  private static Set<Type> tripSetExceptions = new Set<Type>{
+    Trip.BookingTypeNotSupportedException.class,
+    Segment.UnsupportedException.class,
+    Trip.RouteException.class,
+    Trip.InvalidException.class,
+    AbstractSObjectWrapper.MissingDataException.class,
+    Booking.UnsupportedException.class
+  };
+
+  /**
+   * Calculates and sets the trip objects tripWithClaimFlight and tripWithClaimFlightReplacement
+   *
+   * @throws Trip.InvalidException if the trips calculated are invalid.
+   * @throws Trip.BookingTypeNotSupportedException if the booking type is not yet supported.
+   * @throws Segment.UnsupportedException if there are unsupported segment event statuses
+   * @throws Trip.RouteException if there is an error when checking the trip validity (infinite loop)
+   * @throws AbstractSObjectWrapper.MissingDataException if there is no cancellation time
+   * @throws Booking.UnsupportedException if there is more than one cancellation
+   */
+  private void calculateAndSetTrips() {
+    if (this.hasCancellation) {
+      List<Trip> beforeAndAfterCancellation = claimedBooking.getTripsBeforeAndAfterCancellation(
+        claimFlight
+      );
+
+      this.tripWithClaimFlight = beforeAndAfterCancellation[0];
+      this.tripWithClaimFlightReplacement = beforeAndAfterCancellation[1];
+    } else {
+      this.tripWithClaimFlight = claimedBooking.getTripWithFlight(claimFlight);
+    }
+  }
+
+  private Boolean canGetSegmentStatuses() {
+    try {
+      for (Segment s : this.claimedBooking.segments) {
+        s.getStatus(Datetime.now());
+      }
+    } catch (Segment.UnsupportedException e) {
+      return false;
+    } catch (U.InvalidArgumentException e) {
+      return false;
     }
     return true;
   }
@@ -369,52 +393,27 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle claims with a restricted fare basis.'
       );
-    } else if (this.trips == null) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'was not able to divide the booking into trips'
-      );
-    } else if (!this.hasTripWithClaimFlight()) {
+    } else if (this.claimFlight == null) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot find claimed flight from booking'
       );
     } else if (
-      !this.tripWithClaimFlight.originAirport.isEU261Applicable ||
-      !this.tripWithClaimFlight.destinationAirport.isEU261Applicable
-    ) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'can only handle claims with origin and destination airports in EU'
-      );
-    } else if (this.hasRotationIrregularities()) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot handle flights with irregularities caused by rotations'
-      );
-    } else if (!this.tripWithClaimFlight.SASIsOnlyOperatingCarrier) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot handle claims where SAS is not the only operating carrier'
-      );
-    } else if (
-      c.type == Claim.Type.FlightCancellation && !this.hasCancellation()
+      c.type == Claim.Type.FlightCancellation && !this.hasCancellation
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim flight is not cancelled'
       );
-    } else if (
-      this.hasCancellation() != this.tripWithClaimFlight.hasCancelledSegments()
-    ) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'the claim flight is cancelled but the booking has no cancelled segments'
-      );
     } else if (hasMoreThanOneCancellation()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'there are more than one cancellation connected to this claim'
+      );
+    } else if (this.hasRotationIrregularities()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'cannot handle flights with irregularities caused by rotations'
       );
     } else if (
       c.type == Claim.Type.FlightCancellation &&
@@ -424,20 +423,86 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot determine wether SAS is responsible or not for the cancellation'
       );
-    } else if (
-      c.type == Claim.Type.FlightCancellation &&
-      (!this.tripWithClaimFlight.canGetOriginalTrip() ||
-      !this.tripWithClaimFlight.canGetSuggestedRebookingTrip())
-    ) {
-      this.tripWithClaimFlight.logJSON(
-        'Case: ' +
-        String.valueOf(c.parentCaseId) +
-        '. PNR: ' +
-        c.bookingReference
-      ); // If we get here, this should not happen
+    } else if (!this.cancellationCodeIsWithinSASControl()) {
+      return null; // Maybe not fantastic, but if we are not responsible we don't need any more checks
+    } else if (!canGetSegmentStatuses()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'this trip type is not yet supported for automated cancellation handling'
+        'cannot get segment statuses'
+      );
+    }
+
+    // To continue the evaluation we have to construct the trip(s)
+    this.couldInitializeTrips = false;
+    Exception tripCalculationError;
+    try {
+      this.calculateAndSetTrips();
+      this.couldInitializeTrips = true;
+    } catch (Exception e) {
+      Type error = Type.forName(e.getTypeName());
+      if (tripSetExceptions.contains(error)) {
+        tripCalculationError = e;
+      } else {
+        throw e;
+      }
+    }
+
+    if (!this.couldInitializeTrips) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'was not able to divide the booking into trips (' +
+        tripCalculationError.getMessage() +
+        ')'
+      );
+    } else if (this.tripWithClaimFlight == null) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'could not set trip with claim flight'
+      );
+    } else if (this.tripWithClaimFlightReplacement == null) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'rebooking was likely not offered'
+      );
+    } else if (
+      !this.tripWithClaimFlight.originAirport.isEU261Applicable ||
+      !this.tripWithClaimFlight.destinationAirport.isEU261Applicable
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'can only handle claims with origin and destination airports in EU'
+      );
+    } else if (
+      !this.tripWithClaimFlight.SASIsOnlyOperatingCarrier ||
+      !this.tripWithClaimFlightReplacement.SASIsOnlyOperatingCarrier
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'cannot handle claims where SAS is not the only operating carrier'
+      );
+    } else if (
+      c.type == Claim.Type.FlightCancellation &&
+      this.tripWithClaimFlight == this.tripWithClaimFlightReplacement
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'the trip did not change before and after the cancellation (likely "cancellation <-> event" time mismatch)'
+      );
+    } else if (
+      c.type == Claim.Type.FlightCancellation &&
+      this.tripWithClaimFlight.cancelledSegmentRemovedBeforeCancellation
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'it is uncertain if SAS or the customer cancelled the flight'
+      );
+    } else if (
+      c.type == Claim.Type.FlightCancellation &&
+      this.claimedBooking.hasReinstated(this.claimFlight)
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'claim flight was reinstated'
       );
     } else if (c.type == Claim.Type.FlightDelay && !this.canCalculateDelay()) {
       return new Decision(
@@ -566,6 +631,13 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'id and staff tickets are not eligible'
       );
+    } else if (
+      this.hasCancellation && !this.cancellationCodeIsWithinSASControl()
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.IneligibleForCompensation,
+        'cancellation code not within SAS control'
+      );
     } else if (!this.isWithinEU261Jurisdiction()) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
@@ -576,16 +648,9 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'not filed on time'
       );
-    } else if (this.hasCancellation()) {
+    } else if (this.hasCancellation) {
       // If the claim flight was cancelled the customer should receive compensation according to the cancellation logic
-      if (!this.cancellationCodeIsWithinSASControl()) {
-        return new Decision(
-          Claim.EU261HandlingStatus.IneligibleForCompensation,
-          'cancellation code not within SAS control'
-        );
-      } else {
-        return this.calculateCompensationForCancellation();
-      }
+      return this.calculateCompensationForCancellation();
     } else if (!this.hasDelay()) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
@@ -602,8 +667,8 @@ public class EU261Claim {
    *
    */
   private Decision calculateCompensationForCancellation() {
-    // Get the original flight plan
-    Trip originalTrip = this.tripWithClaimFlight.getOriginalTripWithFlight();
+    // FLight plan before the cancellation
+    Trip originalTrip = this.tripWithClaimFlight;
     Datetime originalDeparture = originalTrip.getFirstFlight()
       .scheduledDepartureTime;
     Datetime originalArrival = originalTrip.getFlightToFinalDestination()
@@ -611,25 +676,24 @@ public class EU261Claim {
 
     Decimal flightDistanceInKm =
       Airport.distanceBetweenAirportsInMeters(
-        this.tripWithClaimFlight.originAirport,
-        this.tripWithClaimFlight.destinationAirport
+        originalTrip.originAirport,
+        originalTrip.destinationAirport
       ) / 1000;
     Integer flightDistanceInKmRounded = flightDistanceInKm.intValue();
     Boolean isIntraCommunity = originalTrip.isIntraCommunity();
     Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
 
-    // Get the new (suggested) flight plan
-    Trip newTrip = this.tripWithClaimFlight.getSuggestedRebookingWithoutFlight();
+    // Get the new (suggested) flight plan, todo: check that this is correct
+    Trip newTrip = this.tripWithClaimFlightReplacement;
     Integer arrivalDifference;
     Integer departureDifference;
     Money compensation;
     if (newTrip == null) {
-      // Current state of this automation as we cannot determine that we have not suggested a rebooking
-      Boolean allDataIsAvailable = false; // Temp (dev), EDW
-      if (!allDataIsAvailable) {
-        // TODO: Can we move this check out of here?
+      // This will currently never happen (see initialization of the EU261Claim)
+      if (true) {
+        // Temp, todo: handle these cases
         throw new AutomationException(
-          'We do not have enough data to evaluate this claim (likely cancellation without rebooking).'
+          'The replacement trip should never be null'
         );
       }
       // No suggested rebooking => full EU261 (10h outside timeframe => full compensation, except if you were informed on time)
@@ -807,7 +871,7 @@ public class EU261Claim {
     List<FlightIrregularity> claimIrregularities = new List<FlightIrregularity>();
 
     for (FlightIrregularity fi : this.claimFlight.irregularities) {
-      if (fi.isCancellation()) {
+      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
         claimIrregularities.add(fi);
       }
     }
@@ -839,8 +903,6 @@ public class EU261Claim {
   }
 
   private Boolean hasRotationIrregularities() {
-    Flight f = this.tripWithClaimFlight.getFlightToFinalDestination();
-
     for (FlightIrregularity fi : this.claimFlight.irregularities) {
       if (fi.isRotation()) {
         return true;

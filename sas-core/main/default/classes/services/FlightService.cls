@@ -1,6 +1,3 @@
-/**
- * Service class for managing flights in Salesforce.
- */
 public without sharing class FlightService {
   public static FlightService newInstance() {
     return (FlightService) SAS_Service_Application.Service.newInstance(

@@ -28,9 +28,6 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     }
   }
 
-  public class MissingDataException extends Exception {
-  }
-
   public enum Type {
     DayReturn,
     MultiCity,
@@ -99,6 +96,9 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     this.underlyingSObject.Is_Staff_Booking__c = this.isStaffBooking;
     this.underlyingSObject.TEDS_Identifier__c = this.tedsIdentifier;
     this.underlyingSObject.Type__c = TYPE_ENUM_TO_PICKLIST_VALUE.get(this.type);
+  }
+
+  public class UnsupportedException extends Exception {
   }
 
   /**
@@ -213,7 +213,187 @@ public without sharing class Booking extends AbstractSObjectWrapper {
    * @return A map of booking id to each trip in booking
    */
   public List<Trip> getTrips() {
-    return Trip.createFromBooking(this);
+    return Trip.createFromBooking(this, System.now());
+  }
+
+  /**
+   * Like getTrips() but you can get the trips at a specific time. E.g. before a cancellation.
+   */
+  public List<Trip> getTripsAtTime(Datetime theTime) {
+    return Trip.createFromBooking(this, theTime);
+  }
+
+  public List<Segment> getSegmentsForFlight(Flight f) {
+    List<Segment> claimSegments = new List<Segment>();
+    for (Segment s : this.segments) {
+      if (s.flight == f) {
+        claimSegments.add(s);
+      }
+    }
+    return claimSegments;
+  }
+
+  private class CancellationTime {
+    Datetime affectedByIrregularity;
+    Datetime unconfirmed;
+    Datetime removed;
+
+    public CancellationTime(
+      Datetime affectedByIrregularity,
+      Datetime unconfirmed,
+      Datetime removed
+    ) {
+      this.affectedByIrregularity = affectedByIrregularity;
+      this.unconfirmed = unconfirmed;
+      this.removed = removed;
+    }
+  }
+
+  public CancellationTime getCancellationTime(Flight f) {
+    List<FlightIrregularity> cancellations = f.getCancellations();
+
+    if (cancellations.size() > 1) {
+      throw new UnsupportedException(
+        'Bookings with flights which have more than one cancellation are not supported'
+      );
+    }
+
+    FlightIrregularity cancellation = cancellations[0];
+    if (cancellation.cancellationTime == null) {
+      throw new MissingDataException(
+        'Cancellation does not have a cancellation time'
+      );
+    }
+
+    // Make sure all segments for the flight have the same history
+    Datetime segmentUnconfirmed;
+    Datetime segmentRemoved;
+    for (Segment s : getSegmentsForFlight(f)) {
+      Datetime currentSegmentUnconfirmed = s.getTimeUnconfirmed();
+      Datetime currentSegmentRemoved = s.getTimeRemoved();
+
+      if (
+        currentSegmentUnconfirmed != segmentUnconfirmed &&
+        segmentUnconfirmed != null
+      ) {
+        throw new Trip.InvalidException(
+          'Segments with the same flight were unconfirmed at different times'
+        );
+      }
+      segmentUnconfirmed = currentSegmentUnconfirmed;
+
+      if (currentSegmentRemoved != segmentRemoved && segmentRemoved != null) {
+        throw new Trip.InvalidException(
+          'Segments with the same flight were removed at different times'
+        );
+      }
+      segmentRemoved = currentSegmentRemoved;
+    }
+
+    if (segmentUnconfirmed == null && segmentRemoved == null) {
+      throw new Trip.InvalidException(
+        'Was not able to get segment cancellation time'
+      );
+    }
+
+    return new CancellationTime(
+      cancellation.cancellationTime,
+      segmentUnconfirmed,
+      segmentRemoved
+    );
+  }
+
+  /**
+   * Calculates the trip with the cancelled flight before the cancellation and the replacement trip
+   *
+   * @throws Trip.InvalidException if the trips calculated are invalid.
+   * @throws Trip.BookingTypeNotSupportedException if the booking type is not yet supported.
+   * @throws Segment.UnsupportedException if there are unsupported segment event statuses
+   * @throws Trip.RouteException if there is an error when checking the trip validity (infinite loop)
+   * @throws AbstractSObjectWrapper.MissingDataException if there is no cancellation time
+   * @throws Booking.UnsupportedException if there is more than one cancellation
+   */
+  public List<Trip> getTripsBeforeAndAfterCancellation(Flight cancelledFlight) {
+    CancellationTime cancellationTimeInfo = getCancellationTime(
+      cancelledFlight
+    );
+    Datetime unconfirmed = cancellationTimeInfo.unconfirmed;
+    Datetime removed = cancellationTimeInfo.removed;
+
+    List<Trip> tripsBeforeIrregularity;
+    if (unconfirmed != null) {
+      tripsBeforeIrregularity = getTripsAtTime(unconfirmed.addMinutes(-5)); // Arbitrary
+    } else {
+      tripsBeforeIrregularity = getTripsAtTime(removed.addMinutes(-5));
+    }
+
+    // First try to calculate this based on the UN time, then the removed time
+    List<Trip> tripBeforeAndAfter;
+    try {
+      List<Trip> tripsAfterUnconfirmed = getTripsAtTime(unconfirmed);
+      tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
+        tripsBeforeIrregularity,
+        tripsAfterUnconfirmed,
+        cancelledFlight
+      );
+
+      if (tripBeforeAndAfter[1] == null){
+        throw new Trip.InvalidException('No replacement');
+      }
+    } catch (Trip.InvalidException e) {
+      // Typically happens when an agent has manually rebooked the passengers
+      List<Trip> tripsAfterRemoved = getTripsAtTime(removed);
+        tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
+          tripsBeforeIrregularity,
+          tripsAfterRemoved,
+          cancelledFlight
+        );
+      }
+
+    Trip tripWithCancelledFlight = tripBeforeAndAfter[0];
+    Trip tripWithCancelledFlightReplacement = tripBeforeAndAfter[1];
+
+    Boolean removedBeforeIrregularity =
+      removed != null &&
+      removed < cancellationTimeInfo.affectedByIrregularity;
+
+    tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeIrregularity;
+
+    return new List<Trip>{
+      tripWithCancelledFlight,
+      tripWithCancelledFlightReplacement
+    };
+  }
+
+  public Trip getTripWithFlight(Flight f) {
+    List<Trip> trips = getTrips();
+
+    Trip withFlight;
+    for (Trip t : trips) {
+      if (t.containsFlight(f)) {
+        withFlight = t;
+        break;
+      }
+    }
+
+    if (!withFlight.hasRouteFromOriginToDestination()) {
+      throw new Trip.InvalidException(
+        'Trip with flight does not have a route from origin to destination'
+      );
+    }
+
+    return withFlight;
+  }
+
+  public Boolean hasReinstated(Flight f) {
+    List<Segment> segments = this.getSegmentsForFlight(f);
+
+    for (Segment s : segments) {
+      if (s.hasBeenReinstated()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
