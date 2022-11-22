@@ -314,7 +314,8 @@ private class IRR_EVT_DelayProcessor_Test {
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.delayDifference = 20;
-        delayInfo.minutesToScheduledTime = 100;
+        delayInfo.minutesToScheduledTime = 100; 
+        delayInfo.hasCouponBatchId = false;
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
         passengerInfos[0].thisSegment = new IRR_MOD_SegmentInfo();
         passengerInfos[0].thisSegment.isConfirmed = true;
@@ -348,6 +349,7 @@ private class IRR_EVT_DelayProcessor_Test {
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.delayDifference = 15;
         delayInfo.minutesToScheduledTime = 100;
+        delayInfo.hasCouponBatchId = false;
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{new IRR_MOD_PassengerInfo()};
         passengerInfos[0].thisSegment = new IRR_MOD_SegmentInfo();
         passengerInfos[0].thisSegment.isConfirmed = true;
@@ -402,6 +404,7 @@ private class IRR_EVT_DelayProcessor_Test {
 
     @IsTest
     static void testProcessEvent_NotConfirmed_NoMessage() {
+        
         //Given
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.delayDifference = 10;
@@ -431,12 +434,25 @@ private class IRR_EVT_DelayProcessor_Test {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(fflib_SObjectUnitOfWork.class);
 
+         //Given
+            IRR_EventLog__c eventLogs = new IRR_EventLog__c();
+            eventLogs.IRR_ScheduleTime__c = System.Now().addHours(1);
+            eventLogs.IRR_FlightId__c ='SK1429-20191104-ARN-CPH' ;
+            eventLogs.IRR_Event_Type__c = 'ICOUPON';
+            eventLogs.IRR_Delayed_Minutes__c = 70;
+            eventLogs.IRR_Station_Departure__c = 'ARN';
+            eventLogs.IRR_Flight_Ref__c = 'SK1429';
+            eventLogs.Is_Communication_Send__c = false;
+
+            insert eventLogs;
+        
         //Given
         IRR_SVC_SFMCService.SMSMessage smsMessage = new IRR_SVC_SFMCService.SMSMessage(null, null, null);
         smsMessage.messageKey = 'TEST_MESSAGE_KEY';
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
         delayInfo.flightId = 'TEST_FLIGHT_ID';
         delayInfo.delayedMinutes = 10;
+        delayInfo.firstDelay = false;
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
         passengerInfo.lastNameSlashFirstName = 'TEST_LAST_NAME/TEST_FIRST_NAME';
         passengerInfo.phoneNumber = 'TEST_PHONE';
@@ -484,7 +500,8 @@ private class IRR_EVT_DelayProcessor_Test {
         //Set up mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(fflib_SObjectUnitOfWork.class);
-
+        
+       
         //Given
         IRR_EVT_DelayProcessor eventProcessor = (IRR_EVT_DelayProcessor) new IRR_EVT_DelayProcessor.Constructor()
                 .newInstance(null);
@@ -503,6 +520,17 @@ private class IRR_EVT_DelayProcessor_Test {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(fflib_SObjectUnitOfWork.class);
 
+        //Given
+            IRR_EventLog__c eventLogs = new IRR_EventLog__c();
+            eventLogs.IRR_ScheduleTime__c = System.Now().addHours(1);
+            eventLogs.IRR_FlightId__c ='TEST_FLIGHT_ID' ;
+            eventLogs.IRR_Event_Type__c = 'ICOUPON';
+            eventLogs.IRR_Delayed_Minutes__c = 70;
+            eventLogs.IRR_Station_Departure__c = 'ARN';
+            eventLogs.IRR_Flight_Ref__c = 'SK1429';
+            eventLogs.Is_Communication_Send__c = false;
+
+            insert eventLogs;
         //Given
         IRR_SVC_SFMCService.SMSMessage smsMessage = new IRR_SVC_SFMCService.SMSMessage(null, null, null);
         smsMessage.messageKey = 'TEST_MESSAGE_KEY';

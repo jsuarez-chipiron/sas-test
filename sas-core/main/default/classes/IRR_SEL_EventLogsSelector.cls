@@ -18,7 +18,13 @@ public class IRR_SEL_EventLogsSelector extends fflib_SObjectSelector
                 IRR_EventLog__c.CreatedDate,
                 IRR_EventLog__c.IRR_EventTime__c,
                 IRR_EventLog__c.IRR_ScheduleTime__c,
-                IRR_EventLog__c.IRR_FlightId__c
+                IRR_EventLog__c.IRR_FlightId__c,
+                IRR_EventLog__c.IRR_Delayed_Minutes__c,
+                IRR_EventLog__c.IRR_Station_Departure__c,
+                IRR_EventLog__c.IRR_Event_Type__c,
+                IRR_EventLog__c.MinuteDiff__c,
+                IRR_EventLog__c.Is_Communication_Send__c,
+                IRR_EventLog__c.IRR_Flight_Ref__c
         };
     }   
 
@@ -27,9 +33,24 @@ public class IRR_SEL_EventLogsSelector extends fflib_SObjectSelector
     }
 
     public Database.QueryLocator getQueuedManualQueryLocator() {
+        String eventType ='ICOUPON';
         Datetime currentTime = System.Now();
         fflib_QueryFactory queryFactory = newQueryFactory()
-            .setCondition('IRR_ScheduleTime__c <= :currentTime');
+            .setCondition('IRR_ScheduleTime__c <= :currentTime AND IRR_Event_Type__c !=:eventType');
+        return Database.getQueryLocator(queryFactory.toSOQL());
+
+    }
+    public Database.QueryLocator getQueuedIcouponQueryLocator(String flightId) {
+        String eventType ='ICOUPON';
+        fflib_QueryFactory queryFactory = newQueryFactory()
+            .setCondition('IRR_Event_Type__c =:eventType AND IRR_FlightId__c =:flightId');
+        return Database.getQueryLocator(queryFactory.toSOQL());
+
+    }
+    public Database.QueryLocator getQueuedIcouponBatchQueryLocator() {
+        String eventType ='ICOUPON';
+        fflib_QueryFactory queryFactory = newQueryFactory()
+            .setCondition('MinuteDiff__c <= 120 AND MinuteDiff__c > 0 AND IRR_Event_Type__c=:eventType AND Is_Communication_Send__c = false');
         return Database.getQueryLocator(queryFactory.toSOQL());
 
     }
