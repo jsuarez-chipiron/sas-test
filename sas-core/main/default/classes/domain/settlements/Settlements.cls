@@ -1010,6 +1010,11 @@ public without sharing class Settlements extends ApplicationDomain {
           if (!(s.Amount__c > 0)) {
             errorMessages.add('Amount has to be greater than 0.');
           }
+          if (s.State__c == null) {
+            errorMessages.add(
+              'State is not populated correctly. Please check the Postal Code.'
+            );
+          }
         }
         when Monetary {
           if (!(s.Amount__c > 0)) {
