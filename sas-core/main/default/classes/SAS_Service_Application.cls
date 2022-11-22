@@ -16,7 +16,6 @@ public class SAS_Service_Application {
       Customer__c.SObjectType => CustomersSelector.class,
       EmailMessage.SObjectType => EmailMessagesSelector.class,
       EmailTemplate.SObjectType => EmailTemplatesSelector.class,
-      EnhancedLetterhead.SObjectType => EnhancedLetterheadsSelector.class,
       Exchange_Rate__c.SObjectType => ExchangeRatesSelector.class,
       Flight__c.SObjectType => FlightsSelector.class,
       Airport__c.SObjectType => AirportsSelector.class,
