@@ -544,6 +544,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+    <apexClass>GetUsState</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IRR_ACT_StaticInput</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1250,6 +1254,10 @@
     <classAccesses>
         <apexClass>TravelPassService</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UsStateUtils</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
     <description>Used to provided access to Integttion user to expose web services</description>

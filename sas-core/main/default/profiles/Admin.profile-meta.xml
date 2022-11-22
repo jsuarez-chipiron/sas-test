@@ -217,6 +217,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GetUsState</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GroupTravelService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -362,6 +366,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>VoucherIntegrationService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UsStateUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
