@@ -38,16 +38,6 @@
                 <label>Complaint about a refund</label>
             </value>
             <value>
-                <fullName>Denied boarding</fullName>
-                <default>false</default>
-                <label>Denied boarding</label>
-            </value>
-            <value>
-                <fullName>Downgrading</fullName>
-                <default>false</default>
-                <label>Downgrading</label>
-            </value>
-            <value>
                 <fullName>Extra baggage</fullName>
                 <default>false</default>
                 <label>Extra baggage</label>
@@ -58,29 +48,9 @@
                 <label>Flight cancellation</label>
             </value>
             <value>
-                <fullName>Flight cancellation - compensation</fullName>
-                <default>false</default>
-                <label>Flight cancellation - compensation</label>
-            </value>
-            <value>
-                <fullName>Flight cancellation - expenses</fullName>
-                <default>false</default>
-                <label>Flight cancellation - expenses</label>
-            </value>
-            <value>
                 <fullName>Flight delay</fullName>
                 <default>false</default>
                 <label>Flight delay</label>
-            </value>
-            <value>
-                <fullName>Flight delay - compensation</fullName>
-                <default>false</default>
-                <label>Flight delay - compensation</label>
-            </value>
-            <value>
-                <fullName>Flight delay - expenses</fullName>
-                <default>false</default>
-                <label>Flight delay - expenses</label>
             </value>
             <value>
                 <fullName>Gate issues</fullName>
@@ -116,16 +86,6 @@
                 <fullName>Missed connection</fullName>
                 <default>false</default>
                 <label>Missed connection</label>
-            </value>
-            <value>
-                <fullName>Missed connection - compensation</fullName>
-                <default>false</default>
-                <label>Missed connection - compensation</label>
-            </value>
-            <value>
-                <fullName>Missed connection - expenses</fullName>
-                <default>false</default>
-                <label>Missed connection - expenses</label>
             </value>
             <value>
                 <fullName>Personal injury</fullName>
@@ -176,6 +136,46 @@
                 <fullName>Voluntary Downgrading</fullName>
                 <default>false</default>
                 <label>Voluntary Downgrading</label>
+            </value>
+            <value>
+                <fullName>Denied boarding</fullName>
+                <default>false</default>
+                <label>Denied boarding</label>
+            </value>
+            <value>
+                <fullName>Downgrading</fullName>
+                <default>false</default>
+                <label>Downgrading</label>
+            </value>
+            <value>
+                <fullName>Missed connection - compensation</fullName>
+                <default>false</default>
+                <label>Missed connection - compensation</label>
+            </value>
+            <value>
+                <fullName>Missed connection - expenses</fullName>
+                <default>false</default>
+                <label>Missed connection - expenses</label>
+            </value>
+            <value>
+                <fullName>Flight cancellation - compensation</fullName>
+                <default>false</default>
+                <label>Flight cancellation - compensation</label>
+            </value>
+            <value>
+                <fullName>Flight cancellation - expenses</fullName>
+                <default>false</default>
+                <label>Flight cancellation - expenses</label>
+            </value>
+            <value>
+                <fullName>Flight delay - compensation</fullName>
+                <default>false</default>
+                <label>Flight delay - compensation</label>
+            </value>
+            <value>
+                <fullName>Flight delay - expenses</fullName>
+                <default>false</default>
+                <label>Flight delay - expenses</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -241,23 +241,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Denied boarding</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Downgrading</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Flight cancellation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Flight cancellation - compensation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Flight cancellation - expenses</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
@@ -265,23 +249,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Flight delay - compensation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Flight delay - expenses</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Flight disruptions</controllingFieldValue>
             <valueName>Missed connection</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Missed connection - compensation</valueName>
+            <valueName>Denied boarding</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight disruptions</controllingFieldValue>
-            <valueName>Missed connection - expenses</valueName>
+            <valueName>Downgrading</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Flight experience</controllingFieldValue>
