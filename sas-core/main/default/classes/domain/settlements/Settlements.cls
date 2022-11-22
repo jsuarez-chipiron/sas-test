@@ -143,6 +143,7 @@ public without sharing class Settlements extends ApplicationDomain {
     removeSettlementItemsOnCurrencyChange(
       (Map<Id, Settlement__c>) existingRecords
     );
+    getStateOnPostalCodeChange((Map<Id, Settlement__c>) existingRecords);
   }
 
   public Settlements markAsSentToRacer(
@@ -592,6 +593,9 @@ public without sharing class Settlements extends ApplicationDomain {
           settlementToCreate.Payee_reference__c = claim.Customer_s_Reference__c;
           settlementToCreate.RecordTypeId = Settlements.getRecordTypeId(
             Settlements.RecordType.Cheque
+          );
+          settlementToCreate.State__c = UsStateUtils.getStateFromPostalCode(
+            claim.Postal_Code__c
           );
         }
         when EBPoints {
@@ -1218,6 +1222,26 @@ public without sharing class Settlements extends ApplicationDomain {
         settlement.Amount__c = 0;
         settlement.Settlement_amount_in_SEK__c = 0;
         delete itemToDelete;
+      }
+    }
+  }
+
+  private void getStateOnPostalCodeChange(
+    Map<Id, Settlement__c> existingRecords
+  ) {
+    for (Settlement__c settlement : instanceRecords) {
+      if (
+        settlement.RecordTypeId ==
+        Settlements.getRecordTypeId(Settlements.RecordType.Cheque)
+      ) {
+        if (
+          settlement.Postal_Code__c !=
+          existingRecords.get(Settlement.Id).Postal_Code__c
+        ) {
+          settlement.State__c = UsStateUtils.getStateFromPostalCode(
+            settlement.Postal_Code__c
+          );
+        }
       }
     }
   }

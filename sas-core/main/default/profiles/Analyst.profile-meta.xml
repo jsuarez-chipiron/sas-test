@@ -264,6 +264,10 @@
         <apexClass>GetRandomNumber</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+        <classAccesses>
+        <apexClass>GetUsState</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>GroupTravelService</apexClass>
         <enabled>true</enabled>
@@ -390,6 +394,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UnlockRecords</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+        <classAccesses>
+        <apexClass>UsStateUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2254,6 +2262,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBS_ScheduledBatchRun__c.StartTime__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Settlement__c.State__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

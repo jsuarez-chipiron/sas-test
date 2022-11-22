@@ -725,6 +725,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GetUsState</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GroupTravelJsonToApex</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1478,6 +1482,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UnlockRecords_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UsStateUtils</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

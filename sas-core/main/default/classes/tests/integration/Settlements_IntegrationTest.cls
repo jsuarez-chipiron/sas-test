@@ -607,53 +607,147 @@ public with sharing class Settlements_IntegrationTest {
   }
 
   @IsTest
-  public static void ebSettlementProcessingShouldHandleDomainFailuresProperly() {
+  public static void paymentFilesShouldTakeStateCorrectlyForChequePayments() {
     // Given
-    User settlementSubmitter = FCS_TestDataFactory.createUsers(1)[0];
-    insert settlementSubmitter;
+    Racer_Integration_Counter__c counter = new Racer_Integration_Counter__c(
+      Accounting_Verification_Number__c = 10000,
+      Currency__c = 'USD',
+      Payment_Run_Id__c = 5000
+    );
+    Settlement__c sekToInclude1 = new Settlement__c(
+      Address_line_1__c = 'Frösundaviks allé 1',
+      Address_line_2__c = 'Line 2',
+      Amount__c = 400,
+      City__c = 'Stockholm',
+      Control_verified__c = true,
+      Country__c = 'United States',
+      Currency__c = 'USD',
+      Date_of_Exchange_Calculation__c = Date.today(),
+      Payee_Name__c = 'Test Testsson',
+      Postal_Code__c = '98001',
+      State__c = UsStateUtils.getStateFromPostalCode('98001'),
+      RecordTypeId = Settlements.getRecordTypeId(Settlements.RecordType.Cheque),
+      Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
+    );
 
-    LIA_Claim__c claim = new LIA_Claim__c(Liability_PNR__c = '0000AA');
-    insert claim;
-
-    Settlement__c settlement = new Settlement__c(
-      Claim__c = claim.Id,
-      EuroBonus_Number__c = APIMMock.EB_NUMBER_NOT_IN_CLM,
-      EuroBonus_Points__c = 3000,
+    Settlement__c sekToInclude2 = new Settlement__c(
+      Address_line_1__c = 'Frösundaviks allé 1',
+      Address_line_2__c = 'Line 2',
+      Amount__c = 500,
+      Bank_Country__c = 'United States',
+      BIC_Swift__c = 'AAAAAAB1',
+      City__c = 'Stockholm',
+      Control_verified__c = true,
+      Country__c = 'United States',
+      Currency__c = 'USD',
+      Date_of_Exchange_Calculation__c = Date.today(),
+      Bank_Account_Number__c = 'ASD34223ABA123954389',
       Payee_Name__c = 'Test Testsson',
       Postal_Code__c = '00000',
       RecordTypeId = Settlements.getRecordTypeId(
-        Settlements.RecordType.EBPoints
+        Settlements.RecordType.Monetary
       ),
-      Settlement_Status__c = Settlements.STATUS_IN_PROGRESS,
-      Submitter__c = settlementSubmitter.Id
+      Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER
     );
 
-    insert settlement;
-
-    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    insert new List<SObject>{ counter, sekToInclude1, sekToInclude2 };
 
     // When
-    settlement.Settlement_Status__c = Settlements.STATUS_WAITING_FOR_TRANSFER;
     Test.startTest();
-    update settlement;
+    SettlementService.createPaymentFile(PaymentFileBuilder.PaymentCurrency.USD);
     Test.stopTest();
 
     // Then
-    Settlement__c settlementAfterProcessing = [
-      SELECT Id, Settlement_Status__c, Error_Message__c, External_Reference__c
+    Settlement__c sekToInclude1Afterwards = [
+      SELECT Id, Settlement_Status__c, State__c, Payment_File_Name__c, Name
       FROM Settlement__c
-      WHERE Id = :settlement.Id
+      WHERE Id = :sekToInclude1.Id
+    ];
+    Settlement__c sekToInclude2Afterwards = [
+      SELECT Id, Settlement_Status__c, State__c, Payment_File_Name__c, Name
+      FROM Settlement__c
+      WHERE Id = :sekToInclude2.Id
     ];
 
     System.assertEquals(
-      Settlements.STATUS_FAILED,
-      settlementAfterProcessing.Settlement_Status__c,
-      'Settlement should be marked as denied after failing to add points.'
+      Settlements.STATUS_SENT_TO_RACER,
+      sekToInclude1Afterwards.Settlement_Status__c,
+      'Status of settlements in given currency should be set to Sent to Racer.'
     );
     System.assertEquals(
-      'Customer does not exist.',
-      settlementAfterProcessing.Error_Message__c,
-      'Settlement should have error detail set to response error.'
+      Settlements.STATUS_SENT_TO_RACER,
+      sekToInclude2Afterwards.Settlement_Status__c,
+      'Status of settlements in given currency should be set to Sent to Racer.'
+    );
+
+    String expectedFileTitle =
+      'SF_NORDEA_USD_' +
+      Datetime.now().format('yyyyMMdd') +
+      counter.Payment_Run_Id__c +
+      '.txt';
+
+    System.assertEquals(
+      expectedFileTitle,
+      sekToInclude1Afterwards.Payment_File_Name__c,
+      'Payment file name should be stored in settlements.'
+    );
+    System.assertEquals(
+      expectedFileTitle,
+      sekToInclude2Afterwards.Payment_File_Name__c,
+      'Payment file name should be stored in settlements.'
+    );
+
+    ContentVersion createdFile = [
+      SELECT Id, Title, VersionData
+      FROM ContentVersion
+      WHERE PathOnClient = :expectedFileTitle
+    ];
+
+    String comparisonText = [
+        SELECT Body
+        FROM StaticResource
+        WHERE Name = 'RacerPaymentUSDFileReference'
+      ]
+      .Body.toString()
+      .replace('{-DATE-}', Datetime.now().format('yyyyMMdd'))
+      .replace('{-S1NAME---}', sekToInclude1Afterwards.Name)
+      .replace('{-S2NAME---}', sekToInclude2Afterwards.Name);
+
+    /**
+     * When the testing option 'Independent Auto-Number Sequence' is enabled, the
+     * generated autonumbers for Settlements are of format {YYMMDD}{000000}
+     * instead of the expected {YYMMDD}{0000}. Thus the placeholder in the
+     * template has to be 2 characters longer than expected. Hopefully this
+     * doesn't blow up anything else.
+     */
+
+    System.debug('1' + comparisonText.length());
+    System.debug('2' + createdFile.VersionData.toString().length());
+    System.debug(
+      'diff' + comparisonText.difference(createdFile.VersionData.toString())
+    );
+
+    System.assertEquals(
+      comparisonText,
+      createdFile.VersionData.toString(),
+      'Created payment file contents should match example file.'
+    );
+
+    Racer_Integration_Counter__c counterAfterwards = [
+      SELECT Id, Accounting_Verification_Number__c, Payment_Run_Id__c
+      FROM Racer_Integration_Counter__c
+      WHERE Id = :counter.Id
+    ];
+
+    System.assertEquals(
+      10000,
+      counterAfterwards.Accounting_Verification_Number__c,
+      'Accounting verification number should not be incremented afterwards.'
+    );
+    System.assertEquals(
+      5001,
+      counterAfterwards.Payment_Run_Id__c,
+      'Run Id should be incremented after file creation.'
     );
   }
 

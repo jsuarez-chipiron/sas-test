@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
+        <name>Get_State</name>
+        <label>Get State</label>
+        <locationX>314</locationX>
+        <locationY>1238</locationY>
+        <actionName>GetUsState</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Create_Cheque_Settlement</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>zipCode</name>
+            <value>
+                <elementReference>Get_Customer_Claim.Postal_Code__c</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>states</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Navigate_To_Created_Settlement</name>
         <label>Navigate To Created Settlement</label>
-        <locationX>842</locationX>
-        <locationY>1334</locationY>
+        <locationX>996</locationX>
+        <locationY>1670</locationY>
         <actionName>c:NavigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -26,7 +48,7 @@
     <assignments>
         <name>assignCustomerCount</name>
         <label>assignCustomerCount</label>
-        <locationX>1238</locationX>
+        <locationX>1403</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>countOfCustomerData</assignToReference>
@@ -74,7 +96,7 @@
     <decisions>
         <name>Check_Customer_Data</name>
         <label>Check Customer Data In Claim</label>
-        <locationX>1238</locationX>
+        <locationX>1403</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>NoCustomer</targetReference>
@@ -99,7 +121,7 @@
     <decisions>
         <name>InProgress</name>
         <label>Is Case Valid</label>
-        <locationX>974</locationX>
+        <locationX>1062</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>NoSettlement</targetReference>
@@ -151,9 +173,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Postal_Code_Is_Not_Null</name>
+        <label>Postal Code Is Not Null</label>
+        <locationX>446</locationX>
+        <locationY>1118</locationY>
+        <defaultConnector>
+            <targetReference>Create_Cheque_Settlement</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Null</defaultConnectorLabel>
+        <rules>
+            <name>Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Claim.Postal_Code__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_State</targetReference>
+            </connector>
+            <label>Not Null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
-        <locationX>842</locationX>
+        <locationX>996</locationX>
         <locationY>998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -167,7 +214,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Cheque_Settlement</targetReference>
+                <targetReference>Postal_Code_Is_Not_Null</targetReference>
             </connector>
             <label>Cheque Settlement</label>
         </rules>
@@ -262,8 +309,8 @@
     <recordCreates>
         <name>Create_Cheque_Settlement</name>
         <label>Create Cheque Settlement</label>
-        <locationX>314</locationX>
-        <locationY>1118</locationY>
+        <locationX>446</locationX>
+        <locationY>1454</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -358,12 +405,18 @@
                 <stringValue>In progress</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>State__c</field>
+            <value>
+                <elementReference>states</elementReference>
+            </value>
+        </inputAssignments>
         <object>Settlement__c</object>
     </recordCreates>
     <recordCreates>
         <name>Create_EB_Points_Settlement</name>
         <label>Create EB Points Settlement</label>
-        <locationX>578</locationX>
+        <locationX>754</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -440,7 +493,7 @@
     <recordCreates>
         <name>Create_Monetary_Settlement</name>
         <label>Create Monetary Settlement</label>
-        <locationX>842</locationX>
+        <locationX>1018</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -547,7 +600,7 @@
     <recordCreates>
         <name>Create_Voucher_Settlement</name>
         <label>Create Voucher Settlement</label>
-        <locationX>1106</locationX>
+        <locationX>1282</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -654,7 +707,7 @@
     <recordLookups>
         <name>Get_Customer_Claim</name>
         <label>Get Customer Claim Information</label>
-        <locationX>974</locationX>
+        <locationX>1062</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -676,7 +729,7 @@
         <description>Customer Data</description>
         <name>Get_Customer_Data</name>
         <label>Get Customer Data</label>
-        <locationX>1238</locationX>
+        <locationX>1403</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -697,7 +750,7 @@
     <recordLookups>
         <name>Get_Record_Type_Id</name>
         <label>Get Record Type Id</label>
-        <locationX>842</locationX>
+        <locationX>996</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -735,7 +788,7 @@
     <screens>
         <name>Create_a_Settlement</name>
         <label>Create a Settlement</label>
-        <locationX>842</locationX>
+        <locationX>996</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -778,7 +831,7 @@
     <screens>
         <name>NoCustomer</name>
         <label>Can Not Create Settlement</label>
-        <locationX>1634</locationX>
+        <locationX>1810</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -794,7 +847,7 @@
     <screens>
         <name>NoSettlement</name>
         <label>Can Not Create Settlement</label>
-        <locationX>1898</locationX>
+        <locationX>2074</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -808,7 +861,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>848</locationX>
+        <locationX>936</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Customer_Claim</targetReference>
@@ -835,6 +888,20 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>states</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>zipCodes</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

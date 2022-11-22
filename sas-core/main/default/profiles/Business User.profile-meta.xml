@@ -675,6 +675,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GetUsState</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GroupTravelJsonToApex</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1428,6 +1432,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UnlockRecords_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UsStateUtils</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3229,6 +3237,11 @@
         <editable>false</editable>
         <field>LiveChatTranscript.TURI_Chat_User_Id__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Settlement__c.State__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
