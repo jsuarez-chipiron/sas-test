@@ -3570,6 +3570,10 @@
         <recordType>Settlement__c.EB_points</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Settlement__c-Cheque Settlement</layout>
+        <recordType>Settlement__c.Cheque</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Settlement__c-Monetary Settlement</layout>
     </layoutAssignments>
     <layoutAssignments>
