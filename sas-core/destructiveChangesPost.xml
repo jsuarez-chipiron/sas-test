@@ -12,16 +12,14 @@
     the block can be removed from this document.
 -->
     <types>
-        <members>FetchCAREDataEventsTrigger</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>Currencies</members>
-        <members>FetchCAREDataEvents</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>Fetch_CARE_Data__e</members>
-        <name>CustomObject</name>
-    </types>
+
+    <members>IRR_Icoupon_Voucher__mdt.ARN_Delay_2_3_C</members>
+
+    <members>IRR_Icoupon_Voucher__mdt.ARN_Delay_2_3_M</members>
+
+    <members>IRR_Icoupon_Voucher__mdt.ARN_Delay_2_3_Y</members>
+
+    <name>CustomMetadata</name>
+
+ </types>
 </Package>
