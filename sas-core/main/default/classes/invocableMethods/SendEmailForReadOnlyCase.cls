@@ -7,6 +7,7 @@ public with sharing class SendEmailForReadOnlyCase {
       closedCasePermanentlyTemplate,
       caseIds[0]
     );
+    msg.SetReplyTo('no-reply@flysas.com');
     Cases.newInstance(
         CasesSelector.newInstance().selectById(new Set<Id>{ caseIds[0] })
       )
