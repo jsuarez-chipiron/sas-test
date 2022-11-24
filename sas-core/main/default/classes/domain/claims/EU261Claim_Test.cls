@@ -201,226 +201,6 @@ private class EU261Claim_Test {
   }
 
   @IsTest
-  static void onlyOneWayAndRoundTripTicketsCanBeEvaluated() {
-    ClaimCustomer cc = new ClaimCustomer();
-    cc.firstname = 'Test';
-    cc.lastName = 'Testsson';
-
-    Claim c = TestClaimFactory.create();
-    c.recordType = Claim.RecordType.CustomerClaim;
-    c.category = Claim.Category.FlightDisruptions;
-    c.type = Claim.Type.FlightCancellation;
-    c.departureDate = departure.date();
-    c.customers = new List<ClaimCustomer>{ cc };
-    c.flightNumber = 'SK0001';
-    c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
-    Datetime newDeparture = departure.addHours(4);
-    Datetime returnDeparture = departure.addDays(4);
-    Datetime dayReturnDeparture = departure.addHours(12);
-    Datetime multiCityDeparture1 = departure.addDays(4);
-    Datetime multiCityDeparture2 = multiCityDeparture1.addHours(4);
-    Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
-    Flight f2 = TestFlightFactory.create('SK0002', newDeparture, 'ARN', 'HEL');
-    Flight f3 = TestFlightFactory.create(
-      'SK0003',
-      returnDeparture,
-      'HEL',
-      'ARN'
-    );
-    Flight f4 = TestFlightFactory.create(
-      'SK0004',
-      dayReturnDeparture,
-      'ARN',
-      'HEL'
-    );
-    Flight f5 = TestFlightFactory.create(
-      'SK0005',
-      multiCityDeparture1,
-      'HEL',
-      'CPH'
-    );
-    Flight f6 = TestFlightFactory.create(
-      'SK0006',
-      multiCityDeparture2,
-      'CPH',
-      'JFK'
-    );
-
-    List<FlightIrregularity> fis = new List<FlightIrregularity>{
-      TestIrregularityFactory.createCancellation(f1)
-    };
-    Datetime cancellationTime = departure.addDays(-1);
-    fis[0].cancellationTime = cancellationTime;
-    f1.irregularities = fis;
-
-    TestSegmentFactory.SegmentsInfo sInfo1 = new TestSegmentFactory.SegmentsInfo(
-      f1,
-      departure.addDays(-60),
-      cancellationTime.addMinutes(20)
-    );
-    TestSegmentFactory.SegmentsInfo sInfo2 = new TestSegmentFactory.SegmentsInfo(
-      f2,
-      cancellationTime.addMinutes(20),
-      null
-    );
-    TestSegmentFactory.SegmentsInfo sInfo3 = new TestSegmentFactory.SegmentsInfo(
-      f3,
-      departure.addDays(-60),
-      null
-    );
-    TestSegmentFactory.SegmentsInfo sInfo4 = new TestSegmentFactory.SegmentsInfo(
-      f4,
-      departure.addDays(-60),
-      null
-    );
-    TestSegmentFactory.SegmentsInfo sInfo5 = new TestSegmentFactory.SegmentsInfo(
-      f5,
-      departure.addDays(-60),
-      null
-    );
-    TestSegmentFactory.SegmentsInfo sInfo6 = new TestSegmentFactory.SegmentsInfo(
-      f6,
-      departure.addDays(-60),
-      null
-    );
-
-    // OneWay
-    List<TestSegmentFactory.SegmentsInfo> segmentInfos1 = new List<TestSegmentFactory.SegmentsInfo>{
-      sInfo1,
-      sInfo2
-    };
-    Booking oneWay = TestBookingFactory.createValidForClaim(c);
-    oneWay.type = Booking.Type.OneWay;
-    oneWay.segments = TestSegmentFactory.createFromBookingFlights(
-      oneWay,
-      segmentInfos1
-    );
-
-    // RoundTrip
-    List<TestSegmentFactory.SegmentsInfo> segmentInfos2 = new List<TestSegmentFactory.SegmentsInfo>{
-      sInfo1,
-      sInfo2,
-      sInfo3
-    };
-    Booking roundTrip = TestBookingFactory.createValidForClaim(c);
-    roundTrip.type = Booking.Type.RoundTrip;
-    roundTrip.segments = TestSegmentFactory.createFromBookingFlights(
-      roundTrip,
-      segmentInfos2
-    );
-
-    // DayReturn
-    List<TestSegmentFactory.SegmentsInfo> segmentInfos3 = new List<TestSegmentFactory.SegmentsInfo>{
-      sInfo1,
-      sInfo2,
-      sInfo4
-    };
-    Booking dayReturn = TestBookingFactory.createValidForClaim(c);
-    dayReturn.type = Booking.Type.DayReturn;
-    dayReturn.segments = TestSegmentFactory.createFromBookingFlights(
-      dayReturn,
-      segmentInfos3
-    );
-
-    // MultiCity
-    List<TestSegmentFactory.SegmentsInfo> segmentInfos4 = new List<TestSegmentFactory.SegmentsInfo>{
-      sInfo1,
-      sInfo2,
-      sInfo5,
-      sInfo6
-    };
-    Booking multiCity = TestBookingFactory.createValidForClaim(c);
-    multiCity.type = Booking.Type.MultiCity;
-    multiCity.segments = TestSegmentFactory.createFromBookingFlights(
-      multiCity,
-      segmentInfos4
-    );
-
-    // Unknown
-    Booking unknown = TestBookingFactory.createValidForClaim(c);
-    unknown.type = Booking.Type.Unknown;
-    unknown.segments = TestSegmentFactory.createFromBookingFlights(
-      unknown,
-      segmentInfos1
-    );
-    unknown.segments[0].tripType = 'Unknown';
-
-    EU261Claim oneWayClaim = new EU261Claim(
-      c,
-      new List<Booking>{ oneWay },
-      false,
-      config
-    );
-    EU261Claim roundTripClaim = new EU261Claim(
-      c,
-      new List<Booking>{ roundTrip },
-      false,
-      config
-    );
-    EU261Claim dayReturnClaim = new EU261Claim(
-      c,
-      new List<Booking>{ dayReturn },
-      false,
-      config
-    );
-    EU261Claim multiCityClaim = new EU261Claim(
-      c,
-      new List<Booking>{ multiCity },
-      false,
-      config
-    );
-    EU261Claim unknownClaim = new EU261Claim(
-      c,
-      new List<Booking>{ unknown },
-      false,
-      config
-    );
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      c,
-      new List<Booking>{},
-      false,
-      config
-    );
-
-    EU261Claim.Decision oneWayResult = oneWayClaim.evaluate();
-    EU261Claim.Decision roundTripResult = roundTripClaim.evaluate();
-    EU261Claim.Decision dayReturnResult = dayReturnClaim.evaluate();
-    EU261Claim.Decision multiCityResult = multiCityClaim.evaluate();
-    EU261Claim.Decision unknownResult = unknownClaim.evaluate();
-
-    System.assertEquals(
-      Claim.EU261HandlingStatus.EligibleForCompensation,
-      oneWayResult.verdict,
-      'One way claim should be possible to evaluate.'
-    );
-    System.assertEquals(
-      Claim.EU261HandlingStatus.EligibleForCompensation,
-      roundTripResult.verdict,
-      'Round trip claim should be possible to evaluate.'
-    );
-
-    for (
-      EU261Claim.Decision d : new List<EU261Claim.Decision>{
-        dayReturnResult,
-        multiCityResult,
-        unknownResult
-      }
-    ) {
-      System.assertEquals(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        d.verdict,
-        'Other booking types should not be available for evaluation.'
-      );
-      System.assertEquals(
-        'can handle only one way or round trips',
-        d.reasoning,
-        'Rejection reason should be "can handle only one way or round trips"'
-      );
-    }
-  }
-
-  @IsTest
   static void onlyClaimsWhichDoNotRequirePOACanBeEvaluated() {
     Datetime newDeparture = departure.addHours(4);
     Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
@@ -568,7 +348,11 @@ private class EU261Claim_Test {
       groupResult.verdict,
       'It should not be possible to automatically evaluate a claim with more than four travelers.'
     );
-    System.assertEquals(1, groupResult.caveats.size(), 'There should be one caveat');
+    System.assertEquals(
+      1,
+      groupResult.caveats.size(),
+      'There should be one caveat'
+    );
     System.assertEquals(
       EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
       groupResult.caveats[0],
@@ -580,7 +364,11 @@ private class EU261Claim_Test {
       differentLastNameResult.verdict,
       'It should not be possible to automatically evaluate a claim with different last names.'
     );
-    System.assertEquals(1, differentLastNameResult.caveats.size(), 'There should be one caveat');
+    System.assertEquals(
+      1,
+      differentLastNameResult.caveats.size(),
+      'There should be one caveat'
+    );
     System.assertEquals(
       EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
       differentLastNameResult.caveats[0],
@@ -592,7 +380,11 @@ private class EU261Claim_Test {
       missingTravelersResult.verdict,
       'It should not be possible to automatically evaluate a claim when claimed travelers are not included in the booking.'
     );
-    System.assertEquals(1, missingTravelersResult.caveats.size(), 'There should be one caveat');
+    System.assertEquals(
+      1,
+      missingTravelersResult.caveats.size(),
+      'There should be one caveat'
+    );
     System.assertEquals(
       EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
       missingTravelersResult.caveats[0],
@@ -604,7 +396,11 @@ private class EU261Claim_Test {
       claimFirmResult.verdict,
       'It should not be possible to evaluate a claim submitted by a claim firm.'
     );
-    System.assertEquals(1, claimFirmResult.caveats.size(), 'There should be one caveat');
+    System.assertEquals(
+      1,
+      claimFirmResult.caveats.size(),
+      'There should be one caveat'
+    );
     System.assertEquals(
       EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
       claimFirmResult.caveats[0],

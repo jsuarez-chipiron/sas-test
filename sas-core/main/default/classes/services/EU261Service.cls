@@ -43,6 +43,8 @@ public without sharing class EU261Service {
     public Money expenseLimitTransportation;
     public Money expenseLimitTotal;
 
+    public Integer claimsPerBatch;
+
     public Config() {
       percentageRequiringManualApproval = 0;
 
@@ -55,6 +57,8 @@ public without sharing class EU261Service {
       expenseLimitPhoneCalls = new Money(0, Money.CurrencyCode.SEK);
       expenseLimitTransportation = new Money(0, Money.CurrencyCode.SEK);
       expenseLimitTotal = new Money(0, Money.CurrencyCode.SEK);
+
+      claimsPerBatch = 40;
     }
 
     public Config(EU261_Automation_Configuration__mdt config) {
@@ -88,6 +92,7 @@ public without sharing class EU261Service {
         0,
         config.Percentage_Sent_to_Control__c
       );
+      this.claimsPerBatch = U.getOr(40, (Integer) config.Claims_Per_Batch__c);
     }
   }
 
@@ -103,6 +108,7 @@ public without sharing class EU261Service {
         Automatic_Rejection__c,
         Automatic_Settlement__c,
         Claim_Expense_Max_Amount__c,
+        Claims_Per_Batch__c,
         Expense_Limit_Accommodation__c,
         Expense_Limit_Food__c,
         Expense_Limit_Phone_Calls__c,
@@ -132,13 +138,14 @@ public without sharing class EU261Service {
   }
 
   public void batchProcessEU261Claims(Set<Id> claimIds) {
+    Integer limitPerBatchRun = 40;
     List<Id> claimIdsOdered = new List<Id>(claimIds);
     Integer claimsRemaining = claimIdsOdered.size();
     while (claimsRemaining > 0) {
-      if (claimsRemaining > 100) {
+      if (claimsRemaining > limitPerBatchRun) {
         // 200 is too much
         List<Id> notAllClaimIds = new List<Id>{};
-        for (Integer i = 0; i < 100; i++) {
+        for (Integer i = 0; i < limitPerBatchRun; i++) {
           notAllClaimIds.add(claimIdsOdered[0]);
           claimIdsOdered.remove(0);
         }
