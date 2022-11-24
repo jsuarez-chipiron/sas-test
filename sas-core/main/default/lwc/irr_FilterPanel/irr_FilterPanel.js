@@ -8,13 +8,10 @@
 import {LightningElement, api} from 'lwc';
 
 const segmentOptions = [
-    { label: 'Cancelled', value: 'Cancelled' },
-    { label: 'Confirmed', value: 'Confirmed' },
-    { label: 'CallToConfirm', value: 'CallToConfirm' },
-    { label: 'SpaceAvailable', value: 'SpaceAvailable' },
-    { label: 'Suspended', value: 'Suspended' },
-    { label: 'Unconfirmed', value: 'Unconfirmed' },
-    { label: 'Waitlisted', value: 'Waitlisted' },
+    { label: 'Cancelled (UN)', value: 'Cancelled' },
+    { label: 'Confirmed (HK, TK)', value: 'Confirmed' },
+    { label: 'SpaceAvailable (SA)', value: 'SpaceAvailable' },
+    { label: 'Waitlisted (HL)', value: 'Waitlisted' },
 ];
 
 export default class IRR_FilterPanel extends LightningElement {
