@@ -27,7 +27,8 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
       Settlement__c.RecordTypeId,
       Settlement__c.Settlement_Status__c,
       Settlement__c.Voucher_Email__c,
-      Settlement__c.Voucher_Type__c
+      Settlement__c.Voucher_Type__c,
+      Settlement__c.State__c
     };
   }
 

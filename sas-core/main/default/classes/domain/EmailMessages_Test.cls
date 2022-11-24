@@ -56,4 +56,45 @@ private class EmailMessages_Test {
       .HtmlBody
     );
   }
+
+  @IsTest
+  public static void createdSingleEmailShouldHaveABodyButNoRecipients() {
+    String testTemplateName = 'createEmailFromTemplateApexTest';
+    Case[] c = FCS_TestDataFactory.createCases(1, null, null, null);
+    insert c;
+    User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+    System.runAs(thisUser) {
+      BrandTemplate bt = [
+        SELECT Id
+        FROM BrandTemplate
+        WHERE DeveloperName = 'SAS_Logo'
+      ];
+      EmailTemplate et = new EmailTemplate(
+        Subject = 'Test',
+        HtmlValue = '<html>test</html>',
+        Body = 'test',
+        BrandTemplateId = bt.Id,
+        Name = testTemplateName,
+        DeveloperName = 'createEmailFromTemplateApexTest1',
+        TemplateStyle = 'freeForm',
+        TemplateType = 'html',
+        FolderId = UserInfo.getUserId()
+      );
+      insert et;
+    }
+    Messaging.SingleEmailMessage newEmail = EmailMessages.createSingleEmailMessageFromTemplate(
+      testTemplateName,
+      c[0].Id
+    );
+    System.assertEquals(
+      'test',
+      newEmail.getPlainTextBody(),
+      'Email body should match template body'
+    );
+    System.assertEquals(
+      null,
+      newEmail.getToAddresses(),
+      'Created Email should not have a recipient'
+    );
+  }
 }

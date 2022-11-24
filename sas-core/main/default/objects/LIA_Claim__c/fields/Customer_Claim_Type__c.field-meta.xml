@@ -9,7 +9,7 @@
     <type>Picklist</type>
     <valueSet>
         <controllingField>Customer_Claim_Category__c</controllingField>
-        <restricted>true</restricted>
+        <restricted>false</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>

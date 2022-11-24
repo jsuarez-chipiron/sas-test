@@ -217,6 +217,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GetUsState</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GroupTravelService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -362,6 +366,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>VoucherIntegrationService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UsStateUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
@@ -511,6 +519,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EU261_Automation_Configuration__mdt.Claim_Expense_Max_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Claims_Per_Batch__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3147,6 +3160,10 @@
     <layoutAssignments>
         <layout>Settlement__c-EuroBonus Points Settlement</layout>
         <recordType>Settlement__c.EB_points</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Settlement__c-Cheque Settlement</layout>
+        <recordType>Settlement__c.Cheque</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Settlement__c-Monetary Settlement</layout>

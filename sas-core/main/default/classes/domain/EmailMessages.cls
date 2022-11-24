@@ -117,19 +117,23 @@ public without sharing class EmailMessages extends ApplicationDomain {
   ) {
     List<EmailTemplate> templates = EmailTemplatesSelector.newInstance()
       .selectByName(new Set<String>{ templateName });
-    Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
 
     if (templates.size() != 1) {
       throw new EmailTemplateNameException(templateName);
     }
 
+    EmailTemplate emailTemplate = templates[0];
+    // Set whoId to null to not prepopulate the recipients
+    Messaging.SingleEmailMessage emailToSend = Messaging.renderStoredEmailTemplate(
+      emailTemplate.Id,
+      null,
+      parentCaseId
+    );
     emailToSend.setSubject(
-      templates[0].Subject +
+      emailToSend.getSubject() +
       ' ' +
       Cases.getThreadId(parentCaseId)
     );
-    emailToSend.setHtmlBody(templates[0].HtmlValue);
-    emailToSend.setPlainTextBody(templates[0].Body);
     return emailToSend;
   }
 
