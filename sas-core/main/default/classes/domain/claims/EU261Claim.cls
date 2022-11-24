@@ -31,24 +31,33 @@ public class EU261Claim {
    * The result is also stored in this.decision.
    */
   public Decision evaluate() {
-    this.decision = this.canWeEvaluate();
+    try {
+      this.decision = this.canWeEvaluate();
 
-    if (this.decision == null) {
-      // If decision is null from above, we should be able to evaluate this claim.
-      this.decision = this.determineEligibilityAndCalculateCompensation();
-      this.decision.reimbursementAmountInSEK = calculateReimbursement();
+      if (this.decision == null) {
+        // If decision is null from above, we should be able to evaluate this claim.
+        this.decision = this.determineEligibilityAndCalculateCompensation();
+        this.decision.reimbursementAmountInSEK = calculateReimbursement();
+      }
+
+      if (
+        this.decision.verdict ==
+        Claim.EU261HandlingStatus.EligibleForCompensation &&
+        this.getSemiAutomationReasons().size() != 0
+      ) {
+        this.decision.verdict = Claim.EU261HandlingStatus.PossiblyEligibleForCompensation;
+        this.decision.caveats = this.getSemiAutomationReasons();
+      }
+
+      return this.decision;
+    } catch (Exception e) {
+      Decision errorDecision = new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'Uncaught exception: ' + e.getMessage()
+      );
+      this.decision = errorDecision;
+      return errorDecision;
     }
-
-    if (
-      this.decision.verdict ==
-      Claim.EU261HandlingStatus.EligibleForCompensation &&
-      this.getSemiAutomationReasons().size() != 0
-    ) {
-      this.decision.verdict = Claim.EU261HandlingStatus.PossiblyEligibleForCompensation;
-      this.decision.caveats = this.getSemiAutomationReasons();
-    }
-
-    return this.decision;
   }
 
   private static Set<String> invalidFareBases = new Set<String>{};

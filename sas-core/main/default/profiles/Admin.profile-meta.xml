@@ -523,6 +523,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Claims_Per_Batch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EU261_Automation_Configuration__mdt.Expense_Limit_Accommodation__c</field>
         <readable>true</readable>
     </fieldPermissions>
