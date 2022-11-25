@@ -726,7 +726,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GetUsState</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GroupTravelJsonToApex</apexClass>
@@ -1486,7 +1486,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UsStateUtils</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VoucherCreateRequest</apexClass>
