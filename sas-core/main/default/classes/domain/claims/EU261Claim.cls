@@ -465,20 +465,26 @@ public class EU261Claim {
         'rebooking was likely not offered'
       );
     } else if (
-      !this.tripWithClaimFlight.originAirport.isEU261Applicable ||
+      !this.tripWithClaimFlight.originAirport.isEU261Applicable &&
       !this.tripWithClaimFlight.destinationAirport.isEU261Applicable
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'can only handle claims with origin and destination airports in EU'
+        'can only handle claims with trips which begin or end in the EU'
       );
     } else if (
-      !this.tripWithClaimFlight.SASIsOnlyOperatingCarrier ||
-      !this.tripWithClaimFlightReplacement.SASIsOnlyOperatingCarrier
+      !this.claimFlight.isOperatedByStarAlliance()
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot handle claims where SAS is not the only operating carrier'
+        'claim flight is not operated by Star Alliance'
+      );
+    }else if (
+      !this.claimFlight.isOperatedBySAS()
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'claim flight is not operated by SAS'
       );
     } else if (
       c.type == Claim.Type.FlightCancellation &&
