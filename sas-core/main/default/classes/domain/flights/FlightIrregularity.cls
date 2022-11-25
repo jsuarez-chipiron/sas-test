@@ -99,9 +99,14 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   }
 
   public Boolean isNA0Delay() {
-    return (((this.code == 'N/A' && this.durationMinutes == 0) ||
-    (this.code == null &&
-    this.durationMinutes == null)));
+    Boolean codeIsEmpty =
+      this.code == 'N/A' ||
+      this.code == null ||
+      this.code == '';
+    Boolean durationIsEmpty =
+      this.durationMinutes == 0 ||
+      this.durationMinutes == null;
+    return codeIsEmpty && durationIsEmpty;
   }
 
   public Boolean isArrivalCancellation() {
