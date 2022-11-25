@@ -213,11 +213,24 @@ public without sharing class EU261Service {
     List<Claim> claims = new List<Claim>();
     List<List<String>> pnrFlightNumberTuples = new List<List<String>>();
 
+    Set<Id> claimIdsIgnored = new Set<Id>();
+
     for (LIA_Claim__c c : claimsSel.selectByIdWithCustomers(claimIds)) {
-      claims.add(new Claim(c));
-      pnrFlightNumberTuples.add(
-        new List<String>{ c.Liability_PNR__c, c.Flight_Number__c }
-      );
+      try {
+        Flight.normalizeFlightNumber(c.Flight_Number__c);
+        claims.add(new Claim(c));
+        pnrFlightNumberTuples.add(
+          new List<String>{ c.Liability_PNR__c, c.Flight_Number__c }
+        );
+      } catch (Exception e) {
+        System.debug(
+          'Unable to normalize flight number: ' +
+          c.Flight_Number__c +
+          ' for claim: ' +
+          c.Id
+        );
+        claimIdsIgnored.add(c.Id);
+      }
     }
 
     // 2. Extract information needed for selection
@@ -467,22 +480,21 @@ public without sharing class EU261Service {
         ac.decision.verdict == Claim.EU261HandlingStatus.EligibleForCompensation
       ) {
         c.eu261HandlingNote =
-          'Compensation: ' +
+          'C: ' +
           ac.decision.compensationPerCustomerInEUR.values() +
-          ' | Reimbursement: ' +
+          ' | R: ' +
           ac.decision.reimbursementAmountInSEK;
       } else if (
         ac.decision.verdict ==
         Claim.EU261HandlingStatus.PossiblyEligibleForCompensation
       ) {
         c.eu261HandlingNote =
-          'Compensation: ' +
+          'C: ' +
           ac.decision.compensationPerCustomerInEUR.values() +
-          ' | Reimbursement: ' +
+          ' | R: ' +
           ac.decision.reimbursementAmountInSEK +
-          ' (' +
-          ac.decision.reasoning +
-          ')';
+          ' ' +
+          ac.decision.caveats;
       } else {
         c.eu261HandlingNote = ac.decision.reasoning;
       }
