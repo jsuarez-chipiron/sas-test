@@ -34,7 +34,8 @@ public without sharing class Cases extends ApplicationDomain {
   }
 
   public static Map<String, Integer> departmentToDaysInactive = new Map<String, Integer>{
-    'Customer Claim' => 90
+    'Customer Claim' => 90,
+    'Liability' => 90
   };
 
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
