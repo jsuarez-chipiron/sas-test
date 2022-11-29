@@ -44,6 +44,17 @@ public with sharing class TestAirportFixture {
         Latitude__c = 40.639801,
         Longitude__c = -73.7789
       )
+    ),
+    'LAX' => new Airport(
+      new Airport__c(
+        City__c = 'Los Angeles',
+        Country_Code__c = 'US',
+        Country_Name__c = 'United States',
+        TEDS_Identifier__c = 'LAX',
+        Is_EU261_Applicable__c = false,
+        Latitude__c = 33.942501,
+        Longitude__c = -118.407997
+      )
     )
   };
 }

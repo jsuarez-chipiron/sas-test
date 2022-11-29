@@ -385,14 +385,6 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle claims without any travellers'
       );
-    } else if (
-      invalidFareBases.contains(this.claimedBooking.segments[0].fareBasis)
-    ) {
-      // TODO: Move this to be evaluation instead.
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot handle claims with a restricted fare basis.'
-      );
     } else if (this.claimFlight == null) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -419,6 +411,15 @@ public class EU261Claim {
       c.type == Claim.Type.FlightCancellation &&
       !this.canDetermineIfSASIsResponsibleForCancellation()
     ) {
+      try {
+        this.cancellationCodeIsWithinSASControl();
+      } catch (Exception e) {
+        return new Decision(
+          Claim.EU261HandlingStatus.UnableToHandle,
+          'cannot determine wether SAS is responsible or not for the cancellation | ' +
+          e.getMessage()
+        );
+      }
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot determine wether SAS is responsible or not for the cancellation'
@@ -527,7 +528,6 @@ public class EU261Claim {
     } else {
       return null;
     }
-    // TODO: ~Check proactivities Maybe something like if there's any proactivity for this claim, dont do anything. We could also move this to be later.
   }
 
   /**
@@ -537,10 +537,8 @@ public class EU261Claim {
    * They are allowed to do this only if all of the following are true:
    * 1. Claimant is a private customer
    * 2. All claimed passengers can be found from the booking's passengers
-   * 3. All claimed passengers have the same last name as the contaxt person
+   * 3. All claimed passengers have the same last name as the contact person
    * 4. There are less than four people overall in the booking
-   * 5. TODO: Check if we can somehow identify children from the booking
-   * 6. TODO: Consider infants
    */
   private Boolean requiresPowerOfAttorney() {
     Claim c = this.claimObj;
@@ -770,8 +768,6 @@ public class EU261Claim {
   }
 
   private List<ClaimCustomer> getPassengersEligibleForCompensation() {
-    // TODO: Check: Is fare = 0?
-
     List<Passenger> passengers = this.claimedBooking.passengers;
 
     List<ClaimCustomer> customers = this.claimObj.customers;
@@ -780,26 +776,19 @@ public class EU261Claim {
 
     for (Passenger passenger : passengers) {
       for (ClaimCustomer cc : customers) {
-        if (
-          cc.firstName.toLowerCase() == passenger.firstName.toLowerCase() &&
-          cc.lastName.toLowerCase() == passenger.lastName.toLowerCase()
-        ) {
-          Boolean isInfant = passenger.identifier.toLowerCase().contains('inf');
+        Boolean isInfant = passenger.identifier.toLowerCase().contains('inf');
 
-          if (!isInfant) {
+        if (!isInfant) {
+          eligibleCustomers.add(cc);
+        } else {
+          // Infants are usually not entitled to compensation
+          Boolean isDomesticTripInDenmark =
+            this.tripWithClaimFlight.destinationAirport.countryCode == 'DK' &&
+            this.tripWithClaimFlight.originAirport.countryCode == 'DK';
+          if (isDomesticTripInDenmark) {
+            // Unless the trip is a domestic flight in denmark.
             eligibleCustomers.add(cc);
-          } else {
-            // Infants are usually not entitled to compensation
-            Boolean isDomesticTripInDenmark =
-              this.tripWithClaimFlight.destinationAirport.countryCode == 'DK' &&
-              this.tripWithClaimFlight.originAirport.countryCode == 'DK';
-            if (isDomesticTripInDenmark) {
-              // Unless the trip is a domestic flight in denmark.
-              eligibleCustomers.add(cc);
-            }
           }
-
-          break;
         }
       }
     }
