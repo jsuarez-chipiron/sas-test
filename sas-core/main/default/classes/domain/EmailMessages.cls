@@ -35,7 +35,7 @@ public without sharing class EmailMessages extends ApplicationDomain {
   }
 
   public static Map<String, String> departmentToTemplateName = new Map<String, String>{
-    'Customer Claim' => 'permanent-case-closure',
+    'Customer Claim' => 'permanent-case-closure-cc',
     'Liability' => 'permanent-case-closure-lia'
   };
 
