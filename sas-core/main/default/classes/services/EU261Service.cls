@@ -66,7 +66,7 @@ public without sharing class EU261Service {
       this.enabledSettlements = U.getOr(false, config.Automatic_Settlement__c);
       this.enabledSemiAutomation = U.getOr(
         false,
-        config.Automatic_Settlement__c
+        config.Semi_Automation_Enabled__c
       ); // TODO: FIX to correct field.
       this.expenseLimitAccommodation = new Money(
         U.getOr(0, config.Expense_Limit_Accommodation__c),
@@ -113,7 +113,8 @@ public without sharing class EU261Service {
         Expense_Limit_Food__c,
         Expense_Limit_Phone_Calls__c,
         Expense_Limit_Transportation__c,
-        Percentage_Sent_to_Control__c
+        Percentage_Sent_to_Control__c,
+        Semi_Automation_Enabled__c
       FROM EU261_Automation_Configuration__mdt
       WHERE Label = 'Default'
     ];

@@ -783,7 +783,7 @@ private class EU261Claim_Test {
       'It should not be possible to evaluate claims with unsupported cancellation codes.'
     );
     System.assertEquals(
-      'cannot determine wether SAS is responsible or not for the cancellation',
+      'cannot determine wether SAS is responsible or not for the cancellation | Cannot determine whether SAS is within control or not.',
       result.reasoning,
       'Unhandled reason should be "cannot determine wether SAS is responsible or not for the cancellation"'
     );

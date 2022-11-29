@@ -425,7 +425,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     'Flight cancellation - expenses' => Type.FlightCancellationExpenses,
     'Flight delay' => Type.FlightDelay,
     'Flight delay - compensation' => Type.FlightDelayCompensation,
-    'Flight delay - expenses' => Type.FlightDelayExpenses,  
+    'Flight delay - expenses' => Type.FlightDelayExpenses,
     'Gate issues' => Type.GateIssues,
     'In-flight meal' => Type.InFlightMeal,
     'In-flight service' => Type.InFlightService,
