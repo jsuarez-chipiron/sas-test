@@ -813,9 +813,9 @@ private class EU261Claim_Test {
       'Should not be able to handle claim'
     );
     System.assertEquals(
-      'there are more than one cancellation connected to this claim',
+      'there are more than one cancellation connected to the claim flight',
       result.reasoning,
-      'Unhandled reason should be "there are more than one cancellation connected to this claim"'
+      'Unhandled reason should be "there are more than one cancellation connected to the claim flight"'
     );
   }
 
