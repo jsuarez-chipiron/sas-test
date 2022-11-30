@@ -218,15 +218,13 @@ public class EU261Claim {
     return this.tripWithClaimFlight.isDelayedToDestination();
   }
 
-  private Boolean hasMoreThanOneCancellation() {
+  private Boolean claimFlightHasMoreThanOneCancellation() {
     Integer count = 0;
-    for (Flight f : this.claimedBooking.flights) {
-      for (FlightIrregularity fi : f.irregularities) {
-        if (fi.isCancellation() && !fi.isArrivalCancellation()) {
-          // We can ignore arrival cancellation in here because there's always
-          // one if the departure is cancelled.
-          count += 1;
-        }
+    for (FlightIrregularity fi : claimFlight.irregularities) {
+      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+        // We can ignore arrival cancellation in here because there's always
+        // one if the departure is cancelled.
+        count += 1;
       }
     }
     return count > 1;
@@ -397,10 +395,10 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim flight is not cancelled'
       );
-    } else if (hasMoreThanOneCancellation()) {
+    } else if (claimFlightHasMoreThanOneCancellation()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'there are more than one cancellation connected to this claim'
+        'there are more than one cancellation connected to the claim flight'
       );
     } else if (this.hasRotationIrregularities()) {
       return new Decision(
@@ -473,16 +471,12 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can only handle claims with trips which begin or end in the EU'
       );
-    } else if (
-      !this.claimFlight.isOperatedByStarAlliance()
-    ) {
+    } else if (!this.claimFlight.isOperatedByStarAlliance()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'claim flight is not operated by Star Alliance'
       );
-    }else if (
-      !this.claimFlight.isOperatedBySAS()
-    ) {
+    } else if (!this.claimFlight.isOperatedBySAS()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'claim flight is not operated by SAS'
