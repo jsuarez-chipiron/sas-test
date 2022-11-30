@@ -1318,12 +1318,11 @@ private class EU261Service_Test {
       'There should be eu261 handling instructions in the case.'
     );
     System.assertEquals(
-      'Action needed: ' +
       EU261Service.SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS.get(
         EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney
       ),
       res.cases[0].EU261_Handling_Instructions__c,
-      'EU261 handling instructions should include comment no PoA'
+      'EU261 handling instructions should include comment on PoA'
     );
 
     System.assertEquals(
@@ -1389,7 +1388,6 @@ private class EU261Service_Test {
     }
   }
 
-  /*@IsTest
   static void invalidSettlementsCanBeSemiAutomated() {
     List<String> testPnrs = new List<String>{ '000011' };
     LIA_Claim__c cls = [
@@ -1408,6 +1406,13 @@ private class EU261Service_Test {
       res.cases[0].Status,
       'Case should be still in new.'
     );
+    System.assertEquals(
+      EU261Service.SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS.get(
+        EU261Claim.SemiAutomationReason.InvalidSettlementDetails
+      ),
+      res.cases[0].EU261_Handling_Instructions__c,
+      'EU261 handling instructions should include comment on invalid settlement details.'
+    );
 
     System.assertEquals(
       1,
@@ -1419,7 +1424,7 @@ private class EU261Service_Test {
       res.settlements[0].Settlement_Status__c,
       'Settlement should have been created for the claim.'
     );
-  }*/
+  }
 
   @IsTest
   static void duplicatesCanBeSemiAutomated() {
