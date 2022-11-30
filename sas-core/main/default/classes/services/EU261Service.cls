@@ -15,14 +15,14 @@ public without sharing class EU261Service {
   private static final String COMPENSATION_WITHOUT_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a total amount of {0} {1}.';
   private static final String COMPENSATION_WITH_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a flat rate compensation of {0} {1} and with a reimbursement of {2} {3} for the expenses you experienced during the delay.';
 
-  private static final String MANUAL_HANDLING_QUEUE = 'Customer_Claim';
+  private static final String SEMI_AUTOMATION_QUEUE = 'Claims_EU261_Semi_Automation';
 
   @TestVisible
   private static final Map<EU261Claim.SemiAutomationReason, String> SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS = new Map<EU261Claim.SemiAutomationReason, String>{
-    EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney => 'Requires power of attorney',
-    EU261Claim.SemiAutomationReason.HasPotentialDuplicates => 'Check and close duplicate case. Check the settlement and submit to approval.',
-    EU261Claim.SemiAutomationReason.HasHighClaimExpenses => '...',
-    EU261Claim.SemiAutomationReason.InvalidSettlementDetails => '...'
+    EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney => 'Check passenger names so they match claim and PNR, and if needed ask/validate PoA and submit to approval.',
+    EU261Claim.SemiAutomationReason.HasPotentialDuplicates => 'Potential duplicates might exist, validate potential duplicate according to duplicate procedure, and submit to approval.',
+    EU261Claim.SemiAutomationReason.HasHighClaimExpenses => 'Validate the expenses, create settlement, and submit to approval.',
+    EU261Claim.SemiAutomationReason.InvalidSettlementDetails => 'Ask/validate the account details, correct the settlement, and submit to approval.'
   };
 
   public Config config;
@@ -541,6 +541,7 @@ public without sharing class EU261Service {
 
     List<Case> parentCasesForAutomaticApproval = new List<Case>();
     List<Case> parentCasesForManualApproval = new List<Case>();
+    List<Case> parentCasesForInvalidSettlements = new List<Case>();
     List<Case> parentCasesForSemiAutomation = new List<Case>();
     List<Case> parentCasesForRejection = new List<Case>();
 
@@ -549,14 +550,8 @@ public without sharing class EU261Service {
         when EligibleForCompensation {
           if (shouldApproveAutomatically(c)) {
             claimsToApproveAutomatically.add(c);
-            parentCasesForAutomaticApproval.add(
-              parentCasesById.get(c.claimObj.parentCaseId)
-            );
           } else {
             claimsToManualApproval.add(c);
-            parentCasesForManualApproval.add(
-              parentCasesById.get(c.claimObj.parentCaseId)
-            );
           }
         }
         when PossiblyEligibleForCompensation {
@@ -588,17 +583,65 @@ public without sharing class EU261Service {
         claimsWhichNeedSettlements
       );
 
-      if (claimsToManualApproval.size() > 0) {
+      List<EU261Claim> invalidSettlementClaims = new List<EU261Claim>();
+      List<EU261Claim> validatedManualHandlingClaims = new List<EU261Claim>();
+      List<EU261Claim> validatedAutomaticApprovalClaims = new List<EU261Claim>();
+
+      for (EU261Claim cl : claimsToManualApproval) {
+        Integer numberOfSettlementsWithValidationErrors = Settlements.validateWithoutThrowing(
+            settlementsByClaimId.get(cl.claimObj.id)
+          )
+          .keySet()
+          .size();
+
+        if (numberOfSettlementsWithValidationErrors > 0) {
+          invalidSettlementClaims.add(cl);
+          parentCasesForInvalidSettlements.add(
+            parentCasesById.get(cl.claimObj.parentCaseId)
+          );
+        } else {
+          validatedManualHandlingClaims.add(cl);
+          parentCasesForManualApproval.add(
+            parentCasesById.get(cl.claimObj.parentCaseId)
+          );
+        }
+      }
+
+      for (EU261Claim cl : claimsToApproveAutomatically) {
+        Integer numberOfSettlementsWithValidationErrors = Settlements.validateWithoutThrowing(
+            settlementsByClaimId.get(cl.claimObj.id)
+          )
+          .keySet()
+          .size();
+
+        if (numberOfSettlementsWithValidationErrors > 0) {
+          invalidSettlementClaims.add(cl);
+          parentCasesForInvalidSettlements.add(
+            parentCasesById.get(cl.claimObj.parentCaseId)
+          );
+        } else {
+          validatedAutomaticApprovalClaims.add(cl);
+          parentCasesForAutomaticApproval.add(
+            parentCasesById.get(cl.claimObj.parentCaseId)
+          );
+        }
+      }
+
+      if (validatedManualHandlingClaims.size() > 0) {
         List<Settlement__c> settlementsForManualApproval = new List<Settlement__c>();
-        for (EU261Claim cl : claimsToManualApproval) {
+
+        for (EU261Claim cl : validatedManualHandlingClaims) {
           settlementsForManualApproval.addAll(
             settlementsByClaimId.get(cl.claimObj.id)
+          );
+          parentCasesForManualApproval.add(
+            parentCasesById.get(cl.claimObj.parentCaseId)
           );
         }
 
         uow.registerNew(
           createDraftApprovedEmails(
-            claimsToManualApproval,
+            validatedManualHandlingClaims,
             settlementsByClaimId
           )
         );
@@ -611,22 +654,39 @@ public without sharing class EU261Service {
         Cases.newInstance(parentCasesForManualApproval).submitToApproval(uow);
       }
 
-      if (claimsToApproveAutomatically.size() > 0) {
+      if (validatedAutomaticApprovalClaims.size() > 0) {
         Cases.newInstance(parentCasesForAutomaticApproval)
           .emailContactPeople(
             createApprovedEmails(
-              claimsToApproveAutomatically,
+              validatedAutomaticApprovalClaims,
               settlementsByClaimId
             ),
             uow
           )
           .close(uow);
 
-        // TODO: Catch validation issues for the settlements and send to semi-automation.
         Claims.newInstance(
-            EU261Claim.getClaimSObjectsFor(claimsToApproveAutomatically)
+            EU261Claim.getClaimSObjectsFor(validatedAutomaticApprovalClaims)
           )
           .settle(uow);
+      }
+
+      if (invalidSettlementClaims.size() > 0) {
+        // If automatically created settlements aren't valid, we can't fully
+        // resolve these claims automatically. An agent needs to either fix the
+        // payment details, or reach out to the customer to ask for new ones.
+        Map<Id, String> handlingInstructionsByCaseId = new Map<Id, String>();
+        for (Case c : parentCasesForInvalidSettlements) {
+          handlingInstructionsByCaseId.put(
+            c.Id,
+            SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS.get(
+              EU261Claim.SemiAutomationReason.InvalidSettlementDetails
+            )
+          );
+        }
+        Cases.newInstance(parentCasesForInvalidSettlements)
+          .setHandlingInstructions(uow, handlingInstructionsByCaseId)
+          .routeToQueue(SEMI_AUTOMATION_QUEUE, uow);
       }
 
       if (
@@ -647,16 +707,17 @@ public without sharing class EU261Service {
 
           handlingInstructionsByCaseId.put(
             cl.claimObj.parentCaseId,
-            'Action needed: ' + String.join(handlingInstructions, ' | ')
+            String.join(handlingInstructions, ' | ')
           );
         }
 
         Claims.newInstance(EU261Claim.getClaimSObjectsFor(claimsToSemiAutomate))
           .upsertToDB(uow);
 
+        // TODO: Fix cases too.
         Cases.newInstance(parentCasesForSemiAutomation)
           .setHandlingInstructions(uow, handlingInstructionsByCaseId)
-          .routeToQueue(MANUAL_HANDLING_QUEUE, uow);
+          .routeToQueue(SEMI_AUTOMATION_QUEUE, uow);
       }
     }
 

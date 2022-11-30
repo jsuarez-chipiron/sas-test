@@ -953,6 +953,7 @@ public without sharing class Settlements extends ApplicationDomain {
 
   /**
    * Validates that the settlement is ready to be submitted to approval
+   * TODO: Move the validation logic to a Settlement class.
    * Logic:
    * Monetary:
    * Check that Bank_Account_Number, BIC_Swift, Payee_Name, Currency, Bank_Country, and Amount are not null
@@ -1078,6 +1079,112 @@ public without sharing class Settlements extends ApplicationDomain {
     }
 
     return this;
+  }
+
+  /**
+   * Validates the instance records and returns the errors as a map from id to
+   * errors. If no map entry exists for a given instance record id, the
+   * settlement was validated successfully.
+   *
+   * TODO: Move this to a Settlement class.
+   */
+  public static Map<Id, String> validateWithoutThrowing(
+    List<Settlement__c> settlementsToValidate
+  ) {
+    Map<Id, String> errorsBySettlementId = new Map<Id, String>();
+
+    for (Settlement__c s : settlementsToValidate) {
+      List<String> errorMessages = new List<String>();
+
+      RecordType rt = getRecordType(s.RecordTypeId);
+
+      for (Schema.SObjectField field : getRequiredFieldsForSettlement(rt)) {
+        if (s.get(field) == null) {
+          errorMessages.add(
+            field.getDescribe().getLabel() + ' cannot be empty.'
+          );
+        }
+      }
+
+      switch on rt {
+        when EBPoints {
+          if (!(s.EuroBonus_Points__c > 0)) {
+            errorMessages.add('EuroBonus Points has to be greater than 0.');
+          }
+
+          try {
+            Accounts.parseIntoEuroBonusNumber(s.EuroBonus_Number__c);
+          } catch (Accounts.IncorrectEBNumberException e) {
+            errorMessages.add(
+              'EuroBonus number is not in correct format (9 digits).'
+            );
+          }
+        }
+        when Cheque {
+          if (!(s.Amount__c > 0)) {
+            errorMessages.add('Amount has to be greater than 0.');
+          }
+          if (s.State__c == null) {
+            errorMessages.add(
+              'State is not populated correctly. Please check the Postal Code.'
+            );
+          }
+        }
+        when Voucher {
+          if (!(s.Amount__c > 0)) {
+            errorMessages.add('Amount has to be greater than 0.');
+          }
+        }
+        when Monetary {
+          if (!(s.Amount__c > 0)) {
+            errorMessages.add('Amount has to be greater than 0.');
+          }
+          if (errorMessages.size() == 0) {
+            Boolean bankAccountNumberIsValid = true;
+            try {
+              bankAccountNumberIsValid = BankAccountUtils.validateIBAN(
+                s.Bank_Account_Number__c,
+                s.Bank_Country__c,
+                s.BIC_Swift__c
+              );
+            } catch (Exception e) {
+              errorMessages.add(
+                'Bank Account Number and the bank country do not match. ' +
+                e.getMessage()
+              );
+            }
+            if (!bankAccountNumberIsValid) {
+              errorMessages.add('Bank Account Number is invalid.');
+            }
+            if (!BankAccountUtils.validateBIC(s.BIC_Swift__c)) {
+              errorMessages.add(
+                'BIC number should be formatted as: XXXXXXYY or XXXXXXYYYYY (X\'s are letters, Y\'s are letters or numbers).'
+              );
+            }
+            if (
+              !BankAccountUtils.validateAddress(
+                s.Address_line_1__c,
+                s.Address_line_2__c
+              )
+            ) {
+              errorMessages.add(
+                'Address should not contain special character like (´,´,!,€,+,?)).'
+              );
+            }
+          }
+        }
+      }
+
+      if (errorMessages.size() != 0) {
+        String errors = '';
+        for (String e : errorMessages) {
+          errors += e + '\n';
+        }
+        errorsBySettlementId.put(s.Id, errors);
+      }
+    }
+
+    return errorsBySettlementId;
   }
 
   /**
@@ -1251,7 +1358,7 @@ public without sharing class Settlements extends ApplicationDomain {
     }
   }
 
-  private List<Schema.SObjectField> getRequiredFieldsForSettlement(
+  private static List<Schema.SObjectField> getRequiredFieldsForSettlement(
     RecordType settlementRecordType
   ) {
     Map<RecordType, List<Schema.SObjectField>> recordTypeIdToRequiredFields = new Map<RecordType, List<Schema.SObjectField>>{
