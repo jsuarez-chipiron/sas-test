@@ -218,15 +218,13 @@ public class EU261Claim {
     return this.tripWithClaimFlight.isDelayedToDestination();
   }
 
-  private Boolean hasMoreThanOneCancellation() {
+  private Boolean claimFlightHasMoreThanOneCancellation() {
     Integer count = 0;
-    for (Flight f : this.claimedBooking.flights) {
-      for (FlightIrregularity fi : f.irregularities) {
-        if (fi.isCancellation() && !fi.isArrivalCancellation()) {
-          // We can ignore arrival cancellation in here because there's always
-          // one if the departure is cancelled.
-          count += 1;
-        }
+    for (FlightIrregularity fi : claimFlight.irregularities) {
+      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+        // We can ignore arrival cancellation in here because there's always
+        // one if the departure is cancelled.
+        count += 1;
       }
     }
     return count > 1;
@@ -397,10 +395,10 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim flight is not cancelled'
       );
-    } else if (hasMoreThanOneCancellation()) {
+    } else if (claimFlightHasMoreThanOneCancellation()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'there are more than one cancellation connected to this claim'
+        'there are more than one cancellation connected to the claim flight'
       );
     } else if (this.hasRotationIrregularities()) {
       return new Decision(
@@ -460,11 +458,6 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'could not set trip with claim flight'
       );
-    } else if (this.tripWithClaimFlightReplacement == null) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'rebooking was likely not offered'
-      );
     } else if (
       !this.tripWithClaimFlight.originAirport.isEU261Applicable &&
       !this.tripWithClaimFlight.destinationAirport.isEU261Applicable
@@ -473,16 +466,12 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can only handle claims with trips which begin or end in the EU'
       );
-    } else if (
-      !this.claimFlight.isOperatedByStarAlliance()
-    ) {
+    } else if (!this.claimFlight.isOperatedByStarAlliance()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'claim flight is not operated by Star Alliance'
       );
-    }else if (
-      !this.claimFlight.isOperatedBySAS()
-    ) {
+    } else if (!this.claimFlight.isOperatedBySAS()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'claim flight is not operated by SAS'
@@ -693,13 +682,6 @@ public class EU261Claim {
     Integer departureDifference;
     Money compensation;
     if (newTrip == null) {
-      // This will currently never happen (see initialization of the EU261Claim)
-      if (true) {
-        // Temp, todo: handle these cases
-        throw new AutomationException(
-          'The replacement trip should never be null'
-        );
-      }
       // No suggested rebooking => full EU261 (10h outside timeframe => full compensation, except if you were informed on time)
       compensation = calculateCompensationCancellation(
         600,
