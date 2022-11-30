@@ -681,7 +681,7 @@ private class EU261Claim_Test {
   }
 
   @IsTest
-  static void minimalCancellationClaimWithoutRebookingCannotBeEvaluated() {
+  static void minimalCancellationClaimWithoutRebookingShouldReceiveFullCompensation() {
     Datetime newDeparture = departure.addHours(4);
     Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
 
@@ -731,14 +731,14 @@ private class EU261Claim_Test {
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.UnableToHandle,
+      Claim.EU261HandlingStatus.EligibleForCompensation,
       result.verdict,
-      'No rebooking cannot be automated.'
+      'A booking without rebooking should be awarded full compensation'
     );
     System.assertEquals(
-      'rebooking was likely not offered',
-      result.reasoning,
-      'Rejection reason should be "rebooking was likely not offered"'
+      new Money(250, Money.CurrencyCode.EUR),
+      result.compensationPerCustomerInEUR.values()[0],
+      'Compensation should be €250'
     );
   }
 
@@ -813,9 +813,9 @@ private class EU261Claim_Test {
       'Should not be able to handle claim'
     );
     System.assertEquals(
-      'there are more than one cancellation connected to this claim',
+      'there are more than one cancellation connected to the claim flight',
       result.reasoning,
-      'Unhandled reason should be "there are more than one cancellation connected to this claim"'
+      'Unhandled reason should be "there are more than one cancellation connected to the claim flight"'
     );
   }
 
