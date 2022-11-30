@@ -458,11 +458,6 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'could not set trip with claim flight'
       );
-    } else if (this.tripWithClaimFlightReplacement == null) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'rebooking was likely not offered'
-      );
     } else if (
       !this.tripWithClaimFlight.originAirport.isEU261Applicable &&
       !this.tripWithClaimFlight.destinationAirport.isEU261Applicable
@@ -687,13 +682,6 @@ public class EU261Claim {
     Integer departureDifference;
     Money compensation;
     if (newTrip == null) {
-      // This will currently never happen (see initialization of the EU261Claim)
-      if (true) {
-        // Temp, todo: handle these cases
-        throw new AutomationException(
-          'The replacement trip should never be null'
-        );
-      }
       // No suggested rebooking => full EU261 (10h outside timeframe => full compensation, except if you were informed on time)
       compensation = calculateCompensationCancellation(
         600,
