@@ -5,7 +5,7 @@
         <name>Assign_email_to_validate</name>
         <label>Assign email to validate</label>
         <locationX>512</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Assign_mandatory_name_values</name>
         <label>Assign mandatory name values</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>firstName</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +44,7 @@
         <name>Assign_optional_name_values</name>
         <label>Assign optional name values</label>
         <locationX>314</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>firstName</assignToReference>
             <operator>Assign</operator>
@@ -67,7 +67,7 @@
         <name>Assing_email_to_validate</name>
         <label>Assing email to validate</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
             <operator>Assign</operator>
@@ -93,7 +93,7 @@
         <name>is_the_email_valid</name>
         <label>is the email valid?</label>
         <locationX>512</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -130,7 +130,7 @@
         <name>What_is_the_type_of_customer</name>
         <label>What is the type of customer?</label>
         <locationX>182</locationX>
-        <locationY>1334</locationY>
+        <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>Update_Case_With_Liability_Claim</targetReference>
         </defaultConnector>
@@ -155,7 +155,7 @@
         <name>What_is_the_type_of_customer_0</name>
         <label>What is the type of customer?</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Assign_optional_name_values</targetReference>
         </defaultConnector>
@@ -269,7 +269,7 @@
         <name>Create_Customer</name>
         <label>Create Customer</label>
         <locationX>50</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Update_Case_With_Liability_Claim</targetReference>
         </connector>
@@ -299,7 +299,7 @@
         <name>Create_Liability_Claim</name>
         <label>Create Liability Claim</label>
         <locationX>182</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <connector>
             <targetReference>What_is_the_type_of_customer</targetReference>
         </connector>
@@ -532,7 +532,7 @@
         <name>Get_Claim_Record_Type_Id</name>
         <label>Get Claim Record Type Id</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>What_is_the_type_of_customer_0</targetReference>
@@ -554,7 +554,7 @@
         <name>Get_Liability_Queue_Id</name>
         <label>Get Liability Queue Id</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Claim_Record_Type_Id</targetReference>
@@ -576,7 +576,7 @@
         <name>GetCaseInfo</name>
         <label>GetCaseInfo</label>
         <locationX>512</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>New_Liability_Claim</targetReference>
@@ -597,7 +597,7 @@
         <name>Update_Case_With_Liability_Claim</name>
         <label>Update Case With Liability Claim</label>
         <locationX>182</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <connector>
             <targetReference>Outcome</targetReference>
         </connector>
@@ -628,7 +628,7 @@
         <name>Invalid_Input</name>
         <label>Invalid Input</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -658,11 +658,30 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Liability_Claim_Message</name>
+        <label>Liability Claim Message</label>
+        <locationX>512</locationX>
+        <locationY>158</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetCaseInfo</targetReference>
+        </connector>
+        <fields>
+            <name>screenMessage</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Is this a new Liability claim? &lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;If yes, click next&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <description>Create a new Liability Claim</description>
         <name>New_Liability_Claim</name>
         <label>New Liability Claim</label>
         <locationX>512</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -726,6 +745,9 @@
                 <fields>
                     <name>PNR</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Liability_PNR__c</elementReference>
+                    </defaultValue>
                     <fieldText>PNR</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
@@ -737,6 +759,9 @@
                 <fields>
                     <name>Flight_Number</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Flight_Number__c</elementReference>
+                    </defaultValue>
                     <fieldText>Flight Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <helpText>&lt;p&gt;Please add the flight number related to the PNR&lt;/p&gt;</helpText>
@@ -749,6 +774,9 @@
                 <fields>
                     <name>Flight_Date</name>
                     <dataType>Date</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Flight_Date__c</elementReference>
+                    </defaultValue>
                     <fieldText>Flight Date</fieldText>
                     <fieldType>InputField</fieldType>
                     <helpText>&lt;p&gt;Please add the flight number related to the PNR&lt;/p&gt;</helpText>
@@ -980,6 +1008,9 @@
             <name>Type_of_Customer</name>
             <choiceReferences>TypeOfCustomer</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Type_of_Customer__c</elementReference>
+            </defaultValue>
             <fieldText>Type of Customer</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
@@ -1006,6 +1037,12 @@
                     <stringValue>LIA_Claim__c</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Claim_Firm__c</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1023,6 +1060,9 @@
         <fields>
             <name>Customer_s_Reference</name>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Customer_s_Reference__c</elementReference>
+            </defaultValue>
             <fieldText>Customer&apos;s Reference</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
@@ -1046,6 +1086,9 @@
                 <fields>
                     <name>First_Name</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Contact_First_Name__c</elementReference>
+                    </defaultValue>
                     <fieldText>First Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
@@ -1063,6 +1106,9 @@
                 <fields>
                     <name>Last_Name</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Contact_Last_Name__c</elementReference>
+                    </defaultValue>
                     <fieldText>Last Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
@@ -1080,6 +1126,9 @@
                 <fields>
                     <name>First_Name1</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Contact_First_Name__c</elementReference>
+                    </defaultValue>
                     <fieldText>First Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1097,6 +1146,9 @@
                 <fields>
                     <name>Last_Name1</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Contact_Last_Name__c</elementReference>
+                    </defaultValue>
                     <fieldText>Last Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1139,6 +1191,9 @@
                 <fields>
                     <name>EuroBonus_Number</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.EuroBonus_Number__c</elementReference>
+                    </defaultValue>
                     <fieldText>EuroBonus Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1147,6 +1202,12 @@
                     <name>Phone</name>
                     <extensionName>flowruntime:phone</extensionName>
                     <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>value</name>
+                        <value>
+                            <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Phone_Number__c</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1154,6 +1215,9 @@
                 <fields>
                     <name>Company_Name</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Company_Name__c</elementReference>
+                    </defaultValue>
                     <fieldText>Company Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1195,6 +1259,9 @@
                 <fields>
                     <name>Street_Address</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Address_line_1__c</elementReference>
+                    </defaultValue>
                     <fieldText>Street Address</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1202,6 +1269,9 @@
                 <fields>
                     <name>City</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.City__c</elementReference>
+                    </defaultValue>
                     <fieldText>City</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1220,6 +1290,9 @@
                 <fields>
                     <name>Postal_Code</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Postal_Code__c</elementReference>
+                    </defaultValue>
                     <fieldText>Postal Code</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1228,6 +1301,9 @@
                     <name>CustomerCountry</name>
                     <choiceReferences>Country</choiceReferences>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Country__c</elementReference>
+                    </defaultValue>
                     <fieldText>Country</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>true</isRequired>
@@ -1257,6 +1333,9 @@
                 <fields>
                     <name>Bank_Account_Holder_Name</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Bank_Account_Holder_Name__c</elementReference>
+                    </defaultValue>
                     <fieldText>Bank Account Holder Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1264,6 +1343,9 @@
                 <fields>
                     <name>Bank_Name</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Bank_Name__c</elementReference>
+                    </defaultValue>
                     <fieldText>Bank Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1302,6 +1384,12 @@
                             <stringValue>Currency</stringValue>
                         </value>
                     </inputParameters>
+                    <inputParameters>
+                        <name>topValue</name>
+                        <value>
+                            <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Bank_Country__c</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1320,6 +1408,9 @@
                 <fields>
                     <name>BIC_SWIFT</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.BIC_Swift__c</elementReference>
+                    </defaultValue>
                     <fieldText>BIC/SWIFT</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1331,6 +1422,9 @@
                 <fields>
                     <name>Bank_Account_Number</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>GetCaseInfo.Parent.LIA_Claim__r.Bank_Account_Number__c</elementReference>
+                    </defaultValue>
                     <fieldText>Bank Account Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -1357,7 +1451,7 @@
         <name>Outcome</name>
         <label>Outcome</label>
         <locationX>182</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1373,7 +1467,7 @@
         <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>GetCaseInfo</targetReference>
+            <targetReference>Liability_Claim_Message</targetReference>
         </connector>
     </start>
     <status>Active</status>
