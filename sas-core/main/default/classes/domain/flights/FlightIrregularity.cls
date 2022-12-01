@@ -114,7 +114,20 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   }
 
   public Boolean isWithinSASControl() {
-    Boolean SASIsResponsible = codeToSASIsResponsible.get(this.code);
+    Boolean SASIsResponsible;
+
+    switch on this.eligibleForEU261 {
+      when Yes {
+        SASIsResponsible = true;
+      }
+      when No {
+        SASIsResponsible = false;
+      }
+      when else {
+        SASIsResponsible = codeToSASIsResponsible.get(this.code);
+      }
+    }
+
     if (SASIsResponsible == null) {
       throw new IrregularityException(
         'Cannot determine whether SAS is within control or not.'
@@ -163,12 +176,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
       if (cancellationOrDelay == 'Cancellation') {
         cancellationExists = true;
       } else {
-        Boolean SASisResponsible = codeToSASIsResponsible.get(f.code);
-        if (SASisResponsible == null) {
-          throw new IrregularityException(
-            'Cannot determine wether SAS is within control or not.'
-          );
-        }
+        Boolean SASisResponsible = f.isWithinSASControl();
 
         if (arrivalOrDeparture == '(departure)') {
           if (SASisResponsible) {
@@ -210,12 +218,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     String explanation = 'SAS is not responsible for delay(s) with reason code(s): ';
 
     for (FlightIrregularity f : irregularities) {
-      Boolean SASisResponsible = codeToSASIsResponsible.get(f.code);
-      if (SASisResponsible == null) {
-        throw new IrregularityException(
-          'Cannot get explanation of why SAS is within control or not.'
-        );
-      }
+      Boolean SASisResponsible = f.isWithinSASControl();
       if (!SASisResponsible) {
         totalDelayOutsideSASControl += f.durationMinutes;
         explanation += f.code + ' (' + f.durationMinutes + ' minutes), ';
