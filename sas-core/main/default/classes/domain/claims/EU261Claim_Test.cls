@@ -746,6 +746,9 @@ private class EU261Claim_Test {
   static void minimalCancellationClaimsWithCancellationsOutsideSASControlShouldBeDenied() {
     BookingClaim bc = getDefaultCancellationBookingClaim();
     bc.b.segments[0].flight.irregularities[0].code = 'WEAT';
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.No;
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,
@@ -767,6 +770,9 @@ private class EU261Claim_Test {
   static void claimsWithUnsupportedCancellationCodesShouldNotBeAutomated() {
     BookingClaim bc = getDefaultCancellationBookingClaim();
     bc.b.segments[0].flight.irregularities[0].code = 'AIRS';
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.Tentative;
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,
