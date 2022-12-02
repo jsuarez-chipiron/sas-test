@@ -98,6 +98,12 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     'ZH'
   };
 
+  private static final Set<String> hubAirports = new Set<String>{
+    'ARN',
+    'CPH',
+    'OSL'
+  };
+
   @TestVisible
   private Flight() {
     this.underlyingSObject = new Flight__c();
@@ -239,6 +245,10 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     return this.departureAirportObject.distanceInMetersTo(
       this.arrivalAirportObject
     );
+  }
+
+  public Boolean departsHub(){
+    return hubAirports.contains(this.departureAirport);
   }
 
   /*

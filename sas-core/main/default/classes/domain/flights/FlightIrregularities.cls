@@ -12,6 +12,10 @@ public without sharing class FlightIrregularities extends ApplicationDomain {
     }
   }
 
+  public override void onBeforeInsert() {
+    evaluateCREWResponsibility();
+  }
+
   public static FlightIrregularities newInstance(
     List<FlightIrregularities__c> sObjectList
   ) {
@@ -108,6 +112,35 @@ public without sharing class FlightIrregularities extends ApplicationDomain {
         }
       }
     }
+
+    return this;
+  }
+
+  public FlightIrregularities evaluateCREWResponsibility() {
+    Set<Id> crewFlightIds = new Set<Id>();
+    List<FlightIrregularities__c> crewIrregs = new List<FlightIrregularities__c>();
+
+    for (FlightIrregularities__c fi : instanceRecords) {
+      if (fi.Code__c == 'CREW') {
+        crewFlightIds.add(fi.Flight__c);
+        crewIrregs.add(fi);
+      }
+    }
+
+    List<Flight__c> crewFlights = FlightsSelector.newInstance()
+      .selectById(crewFlightIds);
+
+    Map<Id, Flight__c> idToFlight = new Map<Id, Flight__c>(crewFlights);
+
+    for (FlightIrregularities__c fi : crewIrregs) {
+      Flight__c irrFlight = idToFlight.get(fi.Flight__c);
+      Flight f = new Flight(irrFlight);
+      if (f.departsHub()) {
+        fi.Eligible_For_EU261__c = 'Yes';
+      }
+    }
+
+    update crewFlights;
 
     return this;
   }
