@@ -33,11 +33,10 @@ export default class CurrencyConverter extends LightningElement {
     ) {
       // Rounded to 2 decimals.
       return Math.round(
-        Math.round(
-          this.amount *
-            this.exchangeRates[this.fromCurrency][this.toCurrency] *
-            100
-        ) / 100
+        (this.amount *
+          this.exchangeRates[this.fromCurrency][this.toCurrency] *
+          100) /
+          100
       );
     } else {
       return 0;
