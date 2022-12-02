@@ -396,10 +396,21 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     }
 
     if (!String.isBlank(bookingReference)) {
+      List<String> excludedPNRs = new list<String> {
+        '-----',
+        'ABC12',
+        'ABC123',
+        'ABCDEF',
+        'AGENCY',
+        'SKCHAR',
+        'XXXXX',
+        'XXXXXX',
+        'YYYYY'
+      };
       if (String.isBlank(whereQuery)) {
-        whereQuery += 'Liability_PNR__c = :bookingReference';
+        whereQuery += '(Liability_PNR__c = :bookingReference AND Liability_PNR__c NOT IN :excludedPNRs)';
       } else {
-        whereQuery += ' OR Liability_PNR__c = :bookingReference';
+        whereQuery += ' OR (Liability_PNR__c = :bookingReference AND Liability_PNR__c NOT IN :excludedPNRs)';
       }
     }
 
