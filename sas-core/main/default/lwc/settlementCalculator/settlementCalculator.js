@@ -104,7 +104,7 @@ export default class SettlementCalculator extends LightningElement {
       currencyText: `Total settlement: ${currenciesToShow
         .map(
           (entry) =>
-            `<b>${Math.round(entry.amount * 100) / 100}</b> ${entry.currency}`
+            `<b>${Math.round((entry.amount * 100) / 100)}</b> ${entry.currency}`
         )
         .join("  |  ")}`,
       points: total,
