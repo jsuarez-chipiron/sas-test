@@ -1606,4 +1606,26 @@ private class EU261Service_Test {
       }
     }
   }
+
+  @IsTest
+  static void settlementAmountRounding() {
+    Settlement__c s1 = new Settlement__c(Amount__c = 500.00);
+    Settlement__c s2 = new Settlement__c(Amount__c = 1.49);
+    Settlement__c s3 = new Settlement__c(Amount__c = 55000.55);
+    System.assertEquals(
+      '500',
+      EU261Service.getSettlementAmount(s1),
+      'Should drop decimals.'
+    );
+    System.assertEquals(
+      '1',
+      EU261Service.getSettlementAmount(s2),
+      'Should always round down.'
+    );
+    System.assertEquals(
+      '55000',
+      EU261Service.getSettlementAmount(s3),
+      'Should always round down.'
+    );
+  }
 }

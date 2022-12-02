@@ -1142,6 +1142,7 @@ public without sharing class EU261Service {
     }
   }
 
+  @TestVisible
   private static String getSettlementAmount(Settlement__c s) {
     Id euroBonusRtId = Settlements.getRecordTypeId(
       Settlements.RecordType.EBPoints
@@ -1150,7 +1151,8 @@ public without sharing class EU261Service {
     if (s.RecordTypeId == euroBonusRtId) {
       return String.valueOf(s.EuroBonus_Points__c);
     } else {
-      return String.valueOf(s.Amount__c);
+      Decimal amount = s.Amount__c;
+      return String.valueOf(amount.round(RoundingMode.FLOOR));
     }
   }
 }
