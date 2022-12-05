@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_admin_can_edit</fullName>
+    <active>true</active>
+    <description>This Validation rule allows for only admins to edit this field</description>
+    <errorConditionFormula>AND( ISCHANGED( Name ), NOT($Profile.Name = &quot;System administrator&quot;))</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>Only administrators are allowed to edit this field. Please contact an administrator for further help.</errorMessage>
+</ValidationRule>
