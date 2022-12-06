@@ -527,14 +527,17 @@ public class EU261Claim {
 
     if (
       c.contactType != Claim.ContactType.PrivateCustomer ||
-      c.customers.size() > 5
+      (c.customers.size() > 5 && false)
     ) {
+      // Temp, customer.size() > 5 disabled during backlog from strike
       return true;
     }
 
     for (ClaimCustomer cust : c.customers) {
-      if (cust.lastName.toLowerCase() != c.contactLastName.toLowerCase()) {
-        return true;
+      if (
+        cust.lastName.toLowerCase() != c.contactLastName.toLowerCase() && false
+      ) {
+        return true; // Temp, disabled during backlog from strike
       }
 
       Boolean claimedCustomerFoundInBooking = false;
@@ -545,7 +548,7 @@ public class EU261Claim {
       }
 
       if (!claimedCustomerFoundInBooking) {
-        return true;
+        return true; // TODO: we need to fix this, maybe ignore temporarily?
       }
     }
 
