@@ -4,7 +4,7 @@ public class EU261Claim {
     'DK' => 3 * 12,
     'FI' => 3 * 12,
     'FR' => 5 * 12,
-    'DE' => 3 * 12,
+    'DE' => 3 * 12, // TODO: Make more complicated, slutet på året (25 mån 2022-12 -> 2024-12-31)
     'IT' => 2 * 12,
     'NL' => 5 * 12,
     'NO' => 3 * 12,
@@ -423,6 +423,7 @@ public class EU261Claim {
         'cannot determine wether SAS is responsible or not for the cancellation'
       );
     } else if (!this.cancellationCodeIsWithinSASControl()) {
+      // This probably works, maybe tell customer that this was automated (a lot of process issues)
       return null; // Maybe not fantastic, but if we are not responsible we don't need any more checks
     } else if (!canGetSegmentStatuses()) {
       return new Decision(
@@ -458,14 +459,6 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'could not set trip with claim flight'
       );
-    } else if (
-      !this.tripWithClaimFlight.originAirport.isEU261Applicable &&
-      !this.tripWithClaimFlight.destinationAirport.isEU261Applicable
-    ) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'can only handle claims with trips which begin or end in the EU'
-      );
     } else if (!this.claimFlight.isOperatedByStarAlliance()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -491,7 +484,7 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'it is uncertain if SAS or the customer cancelled the flight'
-      );
+      ); // TODO: Check office number => deny/accept
     } else if (
       c.type == Claim.Type.FlightCancellation &&
       this.claimedBooking.hasReinstated(this.claimFlight)
@@ -515,7 +508,7 @@ public class EU261Claim {
         'can handle only delays between 2 and 5 hours'
       ); // We should remove this early
     } else {
-      return null;
+      return null; // TODO: Check EU time limit earlier.
     }
   }
 
@@ -604,8 +597,17 @@ public class EU261Claim {
       timeLimit = limitInDepartureCountry;
     } else if (limitInArrivalCountry != null) {
       timeLimit = limitInArrivalCountry;
-    } else {
+    } else if (
+      CountryUtils.isInEUOrNorwaySwitzerlandIceland(
+        this.tripWithClaimFlight.originAirport.countryCode
+      ) ||
+      CountryUtils.isInEUOrNorwaySwitzerlandIceland(
+        this.tripWithClaimFlight.destinationAirport.countryCode
+      )
+    ) {
       timeLimit = countryToClaimTimeLimitInMonths.get('default');
+    } else {
+      timeLimit = 0; // Not applicable EU261, e.g.
     }
 
     // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
@@ -670,7 +672,7 @@ public class EU261Claim {
         originalTrip.destinationAirport
       ) / 1000;
     Integer flightDistanceInKmRounded = flightDistanceInKm.intValue();
-    Boolean isIntraCommunity = originalTrip.isIntraCommunity();
+    Boolean isIntraCommunity = originalTrip.isIntraCommunity(); // TODO: GB -> CH can be handled as EU
     Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
 
     // Get the new (suggested) flight plan, todo: check that this is correct
@@ -686,11 +688,14 @@ public class EU261Claim {
         flightDistanceInKmRounded,
         daysUntilFlightWhenInformedOfCancellation,
         isIntraCommunity
-      );
+      ); // Correct
     } else {
       Datetime newDeparture = newTrip.getFirstFlight().scheduledDepartureTime;
-      Datetime newArrival = newTrip.getFlightToFinalDestination()
-        .scheduledArrivalTime;
+      Flight finalFlight = newTrip.getFlightToFinalDestination();
+      Datetime newArrival = finalFlight.actualArrivalTime;
+      if (newArrival == null) {
+        newArrival = finalFlight.scheduledArrivalTime;
+      }
 
       // Compare the original rebooking against the suggested rebooking and calculate compensation
       departureDifference = Integer.valueOf(
@@ -753,21 +758,17 @@ public class EU261Claim {
 
     List<ClaimCustomer> eligibleCustomers = new List<ClaimCustomer>();
 
+    // Inf ska få om de betalar, inte om de inte betalar. De betalar inte inrikes förutom danmark.
+    // Denied domestic norge sverige. Aproved danmark, approved allting inte domestic.
+    // Kolla egentligen biljettpris (om betalat (även med !poäng!, fare basis) -> kompensation).
+    // Alla får utom domestic inf sweden norge. (basregel)
     for (Passenger passenger : passengers) {
       for (ClaimCustomer cc : customers) {
         Boolean isInfant = passenger.identifier.toLowerCase().contains('inf');
 
-        if (!isInfant) {
+        // Infants which are intra Sweden or Norway are not eligible
+        if (!isInfant || !tripWithClaimFlight.isIntraSEorIntraNO()) {
           eligibleCustomers.add(cc);
-        } else {
-          // Infants are usually not entitled to compensation
-          Boolean isDomesticTripInDenmark =
-            this.tripWithClaimFlight.destinationAirport.countryCode == 'DK' &&
-            this.tripWithClaimFlight.originAirport.countryCode == 'DK';
-          if (isDomesticTripInDenmark) {
-            // Unless the trip is a domestic flight in denmark.
-            eligibleCustomers.add(cc);
-          }
         }
       }
     }
@@ -903,7 +904,7 @@ public class EU261Claim {
    * @return a boolean which asserts if the claim is covered by EU261
    */
   private Boolean isWithinEU261Jurisdiction() {
-    return true; // Until we have other operating carriers.
+    return true; // Until we have other operating carriers. (confirmed, SAS är carrier)
     // As SAS is EU carrier, we're always under EU jurisdiction as operating carrier.
 
     /* TODO: Add operating carrier check
@@ -1014,34 +1015,39 @@ public class EU261Claim {
     }
 
     Money compensation;
-    if (flightDistanceInKm <= MEDIUM_DISTANCE) {
+    Boolean isShortDistance = flightDistanceInKm <= MEDIUM_DISTANCE;
+    Boolean isMediumDistanceOrIntraCommunity =
+      flightDistanceInKm > MEDIUM_DISTANCE &&
+      (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity);
+
+    if (isShortDistance) {
       compensation = new Money(250, Money.CurrencyCode.EUR);
-      if (
+      Boolean halveCompensation =
         minutesLateOnArrival <=
-        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE
-      ) {
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE;
+
+      if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
-    } else if (
-      flightDistanceInKm > MEDIUM_DISTANCE &&
-      (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity)
-    ) {
+    } else if (isMediumDistanceOrIntraCommunity) {
       compensation = new Money(400, Money.CurrencyCode.EUR);
-      if (
+      Boolean halveCompensation =
         minutesLateOnArrival <=
-        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE
-      ) {
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE;
+
+      if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
     } else {
       compensation = new Money(600, Money.CurrencyCode.EUR);
-      if (
+      Boolean halveCompensation =
         minutesLateOnArrival <=
-        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE
-      ) {
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE;
+
+      if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
-    }
+    } // OK
 
     return compensation;
   }
