@@ -8,8 +8,8 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Name</field>
+                <behavior>Readonly</behavior>
+                <field>ClaimNumberReadOnly__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -307,6 +307,10 @@
         <editHeading>true</editHeading>
         <label>System Information</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Name</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>

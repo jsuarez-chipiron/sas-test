@@ -611,7 +611,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>LIA_Claim__c.Submitted_Claim_Expenses_in_SEK__c</field>
         <readable>true</readable>
     </fieldPermissions>
