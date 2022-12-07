@@ -27,6 +27,11 @@
                 <label>European Court Case</label>
             </value>
             <value>
+                <fullName>Letter Before Action (LBA)</fullName>
+                <default>false</default>
+                <label>Letter Before Action (LBA)</label>
+            </value>
+            <value>
                 <fullName>National Court Case</fullName>
                 <default>false</default>
                 <label>National Court Case</label>
