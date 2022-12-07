@@ -94,6 +94,11 @@
                 <label>CAA (UK Civil Aviation Authority)</label>
             </value>
             <value>
+                <fullName>Canadian Transportation Agency (CTA)</fullName>
+                <default>false</default>
+                <label>Canadian Transportation Agency (CTA)</label>
+            </value>
+            <value>
                 <fullName>Castlebar Court Office (Ireland)</fullName>
                 <default>false</default>
                 <label>Castlebar Court Office (Ireland)</label>
@@ -234,6 +239,11 @@
                 <label>Kuluttajariitalautakunta (KRIL, Finland)</label>
             </value>
             <value>
+                <fullName>Letter Before Action (LBA)</fullName>
+                <default>false</default>
+                <label>Letter Before Action (LBA)</label>
+            </value>
+            <value>
                 <fullName>Luleå tingsrätt (Sweden)</fullName>
                 <default>false</default>
                 <label>Luleå tingsrätt (Sweden)</label>
@@ -352,6 +362,34 @@
         <valueSettings>
             <controllingFieldValue>Norway</controllingFieldValue>
             <valueName>Forliksrådet i Norge (Norway)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Norway</controllingFieldValue>
+            <controllingFieldValue>Poland</controllingFieldValue>
+            <controllingFieldValue>Portugal</controllingFieldValue>
+            <controllingFieldValue>Spain</controllingFieldValue>
+            <controllingFieldValue>Sweden</controllingFieldValue>
+            <controllingFieldValue>Switzerland</controllingFieldValue>
+            <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
+            <controllingFieldValue>France</controllingFieldValue>
+            <controllingFieldValue>United States</controllingFieldValue>
+            <controllingFieldValue>Germany</controllingFieldValue>
+            <controllingFieldValue>Greece</controllingFieldValue>
+            <controllingFieldValue>Iceland</controllingFieldValue>
+            <controllingFieldValue>Ireland</controllingFieldValue>
+            <controllingFieldValue>Italy</controllingFieldValue>
+            <controllingFieldValue>Latvia</controllingFieldValue>
+            <controllingFieldValue>Lithuania</controllingFieldValue>
+            <controllingFieldValue>Luxembourg</controllingFieldValue>
+            <controllingFieldValue>Austria</controllingFieldValue>
+            <controllingFieldValue>Belgium</controllingFieldValue>
+            <controllingFieldValue>Croatia</controllingFieldValue>
+            <controllingFieldValue>Czech Republic</controllingFieldValue>
+            <controllingFieldValue>Denmark</controllingFieldValue>
+            <controllingFieldValue>Estonia</controllingFieldValue>
+            <controllingFieldValue>Finland</controllingFieldValue>
+            <controllingFieldValue>Netherlands</controllingFieldValue>
+            <valueName>Letter Before Action (LBA)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Norway</controllingFieldValue>
@@ -506,6 +544,10 @@
         <valueSettings>
             <controllingFieldValue>Greece</controllingFieldValue>
             <valueName>Hellenic Republic Ministry of Infrastructure and Transport Civil Aciation Authority/HCAA (Greece)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canada</controllingFieldValue>
+            <valueName>Canadian Transportation Agency (CTA)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Iceland</controllingFieldValue>
