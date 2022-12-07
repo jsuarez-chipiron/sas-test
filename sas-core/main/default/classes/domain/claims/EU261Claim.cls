@@ -473,16 +473,12 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can only handle claims with trips which begin or end in the EU'
       );
-    } else if (
-      !this.claimFlight.isOperatedByStarAlliance()
-    ) {
+    } else if (!this.claimFlight.isOperatedByStarAlliance()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'claim flight is not operated by Star Alliance'
       );
-    }else if (
-      !this.claimFlight.isOperatedBySAS()
-    ) {
+    } else if (!this.claimFlight.isOperatedBySAS()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'claim flight is not operated by SAS'
@@ -557,10 +553,7 @@ public class EU261Claim {
 
       Boolean claimedCustomerFoundInBooking = false;
       for (Passenger p : this.claimedBooking.passengers) {
-        if (
-          p.lastName.toLowerCase() == cust.lastName.toLowerCase() &&
-          p.firstName.toLowerCase() == cust.firstName.toLowerCase()
-        ) {
+        if (p.normalizedFullName == cust.normalizedFullName) {
           claimedCustomerFoundInBooking = true;
         }
       }

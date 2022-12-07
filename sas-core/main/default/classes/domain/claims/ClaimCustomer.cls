@@ -11,6 +11,12 @@ public without sharing class ClaimCustomer extends AbstractSObjectWrapper {
     }
   }
 
+  public String normalizedFullName {
+    get {
+      return Passenger.normalizeName(this.fullName);
+    }
+  }
+
   public override void updateSObjectFields() {
     this.underlyingSObject.First_Name__c = this.firstName;
     this.underlyingSObject.Last_Name__c = this.lastName;
