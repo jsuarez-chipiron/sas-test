@@ -64,9 +64,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     'FA' => true
   };
 
-  private static final Set<String> POTENTIAL_ROTATION_CODES = new Set<String>{
-    'EQUI',
-    'CREW',
+  private static final Set<String> ROTATION_CODES = new Set<String>{
     'RA (93)',
     'RA',
     '93',
@@ -91,7 +89,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   };
 
   public Boolean isRotation() {
-    return POTENTIAL_ROTATION_CODES.contains(this.code);
+    return ROTATION_CODES.contains(this.code);
   }
 
   public Boolean isCancellation() {
