@@ -434,6 +434,32 @@ private class EU261Claim_Test {
   }
 
   @IsTest
+  static void claimsWhereFlightWasCancelled14DaysOrMoreBeforeDepartureShouldBeDenied() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0].flight.irregularities[0].cancellationTime = departure.addDays(-14);
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      result.verdict,
+      'Claim with more than one booking cannot be evaluated.'
+    );
+    System.assertEquals(
+      'flight was cancelled 14 or more days in advance',
+      result.reasoning,
+      'Rejection reason should be "flight was cancelled 14 or more days in advance"'
+    );
+  }
+
+  @IsTest
   static void onlyClaimsWithoutExpensesCanBeEvaluated() {
     BookingClaim bc = getDefaultCancellationBookingClaim();
 
