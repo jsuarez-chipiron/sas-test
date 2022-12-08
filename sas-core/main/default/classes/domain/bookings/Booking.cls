@@ -337,18 +337,18 @@ public without sharing class Booking extends AbstractSObjectWrapper {
         cancelledFlight
       );
 
-      if (tripBeforeAndAfter[1] == null){
+      if (tripBeforeAndAfter[1] == null) {
         throw new Trip.InvalidException('No replacement');
       }
     } catch (Trip.InvalidException e) {
       // Typically happens when an agent has manually rebooked the passengers
       List<Trip> tripsAfterRemoved = getTripsAtTime(removed);
-        tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
-          tripsBeforeIrregularity,
-          tripsAfterRemoved,
-          cancelledFlight
-        );
-      }
+      tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
+        tripsBeforeIrregularity,
+        tripsAfterRemoved,
+        cancelledFlight
+      ); // TODO: Look into if this can be loosened (talk to process owner)
+    }
 
     Trip tripWithCancelledFlight = tripBeforeAndAfter[0];
     Trip tripWithCancelledFlightReplacement = tripBeforeAndAfter[1];

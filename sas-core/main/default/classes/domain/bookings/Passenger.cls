@@ -11,6 +11,12 @@ public without sharing class Passenger extends AbstractSObjectWrapper {
   public String lastName;
   public String phone;
 
+  public String normalizedFullName {
+    get {
+      return normalizeName(this.firstName + ' ' + this.lastName);
+    }
+  }
+
   @TestVisible
   private Passenger() {
     this.underlyingSObject = new Passenger__c();
@@ -39,5 +45,11 @@ public without sharing class Passenger extends AbstractSObjectWrapper {
     this.underlyingSObject.Identifier__c = this.identifier;
     this.underlyingSObject.Last_Name__c = this.lastName;
     this.underlyingSObject.Phone__c = this.phone;
+  }
+
+  public static String normalizeName(String name) {
+    return StringUtils.removeWhitespace(StringUtils.scandicsToASCII(name))
+      .replaceAll('-', '')
+      .toLowerCase();
   }
 }

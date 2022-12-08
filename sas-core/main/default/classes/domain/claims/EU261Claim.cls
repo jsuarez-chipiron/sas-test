@@ -4,7 +4,7 @@ public class EU261Claim {
     'DK' => 3 * 12,
     'FI' => 3 * 12,
     'FR' => 5 * 12,
-    'DE' => 3 * 12,
+    'DE' => 3 * 12, // TODO: Change to 2 years + time until end of year 3 (e.g. 25 months 2022-12 -> 2024-12-31)
     'IT' => 2 * 12,
     'NL' => 5 * 12,
     'NO' => 3 * 12,
@@ -400,6 +400,10 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'there are more than one cancellation connected to the claim flight'
       );
+    } else if (
+      c.type == Claim.Type.FlightCancellation && flightCancelledWellInTime()
+    ) {
+      return null; // If flight was cancelled 14 days, or more, in advance the customer is not eligible
     } else if (this.hasRotationIrregularities()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -423,6 +427,7 @@ public class EU261Claim {
         'cannot determine wether SAS is responsible or not for the cancellation'
       );
     } else if (!this.cancellationCodeIsWithinSASControl()) {
+      // This probably works, maybe tell customer that this was automated (a lot of process issues)
       return null; // Maybe not fantastic, but if we are not responsible we don't need any more checks
     } else if (!canGetSegmentStatuses()) {
       return new Decision(
@@ -458,14 +463,6 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'could not set trip with claim flight'
       );
-    } else if (
-      !this.tripWithClaimFlight.originAirport.isEU261Applicable &&
-      !this.tripWithClaimFlight.destinationAirport.isEU261Applicable
-    ) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'can only handle claims with trips which begin or end in the EU'
-      );
     } else if (!this.claimFlight.isOperatedByStarAlliance()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -491,7 +488,7 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'it is uncertain if SAS or the customer cancelled the flight'
-      );
+      ); // TODO: Check office number => deny/accept
     } else if (
       c.type == Claim.Type.FlightCancellation &&
       this.claimedBooking.hasReinstated(this.claimFlight)
@@ -519,50 +516,77 @@ public class EU261Claim {
     }
   }
 
+  private Boolean contactIsATraveler() {
+    Claim c = this.claimObj;
+
+    Boolean contactFoundInBooking = false;
+    for (ClaimCustomer cust : c.customers) {
+      if (cust.normalizedFullName == c.normalizedContactFullName) {
+        contactFoundInBooking = true;
+      }
+    }
+
+    return contactFoundInBooking;
+  }
+
+  /**
+   * Asserts that all claimed travelers can be found from the booking's passengers
+   */
+  private Boolean allClaimedTravelersAreInBooking() {
+    Claim c = this.claimObj;
+
+    for (ClaimCustomer cust : c.customers) {
+      Boolean claimedCustomerFoundInBooking = false;
+      for (Passenger p : this.claimedBooking.passengers) {
+        if (p.normalizedFullName == cust.normalizedFullName) {
+          claimedCustomerFoundInBooking = true;
+        }
+      }
+
+      if (!claimedCustomerFoundInBooking) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   /**
    * Returns false if the contact person is allowed to make the claim for all
    * customers claimed in the claim without a power of attorney.
    *
    * They are allowed to do this only if all of the following are true:
    * 1. Claimant is a private customer
-   * 2. All claimed passengers can be found from the booking's passengers
-   * 3. All claimed passengers have the same last name as the contact person
-   * 4. There are less than four people overall in the booking
+   * 2. All claimed passengers have the same last name as the contact person
+   * 3. There are less than four people overall in the booking
    */
   private Boolean requiresPowerOfAttorney() {
     Claim c = this.claimObj;
-
     if (
       c.contactType != Claim.ContactType.PrivateCustomer ||
-      c.customers.size() > 5
+      (c.customers.size() > 5)
     ) {
       return true;
     }
 
+    if (!contactIsATraveler()) {
+      return true;
+    }
+
+    if (!allClaimedTravelersAreInBooking()) {
+      return true;
+    }
+
     for (ClaimCustomer cust : c.customers) {
-      if (cust.lastName.toLowerCase() != c.contactLastName.toLowerCase()) {
-        return true;
-      }
-
-      Boolean claimedCustomerFoundInBooking = false;
-      for (Passenger p : this.claimedBooking.passengers) {
-        if (
-          p.lastName.toLowerCase() == cust.lastName.toLowerCase() &&
-          p.firstName.toLowerCase() == cust.firstName.toLowerCase()
-        ) {
-          claimedCustomerFoundInBooking = true;
-        }
-      }
-
-      if (!claimedCustomerFoundInBooking) {
-        return true;
+      if (cust.normalizedLastName != c.normalizedContactLastName && false) {
+        return true; // Temporarily deactivated for backlog
       }
     }
 
     return false;
   }
 
-  private boolean canCalculateDelay() {
+  private Boolean canCalculateDelay() {
     try {
       getMinutesDelayedWithinSASControl();
     } catch (Exception e) {
@@ -570,6 +594,15 @@ public class EU261Claim {
       return false;
     }
     return true;
+  }
+
+  private Boolean flightCancelledWellInTime() {
+    try {
+      Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
+      return daysUntilFlightWhenInformedOfCancellation >= 14;
+    } catch (AutomationException e) {
+      return false; // Not perfect, wanted to avoid another canDetermineIfSASIsResponsibleForCancellation
+    }
   }
 
   private Boolean isStaffBooking() {
@@ -624,6 +657,11 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'id and staff tickets are not eligible'
       );
+    } else if (this.hasCancellation && flightCancelledWellInTime()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.IneligibleForCompensation,
+        'flight was cancelled 14 or more days in advance'
+      );
     } else if (
       this.hasCancellation && !this.cancellationCodeIsWithinSASControl()
     ) {
@@ -673,10 +711,9 @@ public class EU261Claim {
         originalTrip.destinationAirport
       ) / 1000;
     Integer flightDistanceInKmRounded = flightDistanceInKm.intValue();
-    Boolean isIntraCommunity = originalTrip.isIntraCommunity();
-    Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
+    Boolean isIntraCommunity = originalTrip.isIntraCommunity(); // TODO: GB -> CH can be handled as EU
+    Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture(); // TODO: check earlier
 
-    // Get the new (suggested) flight plan, todo: check that this is correct
     Trip newTrip = this.tripWithClaimFlightReplacement;
     Integer arrivalDifference;
     Integer departureDifference;
@@ -692,8 +729,11 @@ public class EU261Claim {
       );
     } else {
       Datetime newDeparture = newTrip.getFirstFlight().scheduledDepartureTime;
-      Datetime newArrival = newTrip.getFlightToFinalDestination()
-        .scheduledArrivalTime;
+      Flight finalFlight = newTrip.getFlightToFinalDestination();
+      Datetime newArrival = finalFlight.actualArrivalTime;
+      if (newArrival == null) {
+        newArrival = finalFlight.scheduledArrivalTime;
+      }
 
       // Compare the original rebooking against the suggested rebooking and calculate compensation
       departureDifference = Integer.valueOf(
@@ -701,7 +741,7 @@ public class EU261Claim {
       );
       arrivalDifference = Integer.valueOf(
         DateUtils.getHoursBetween(newArrival, originalArrival) * 60
-      ); // Do we need to round up?
+      );
       Integer minutesLateOnArrival = 0;
       Integer minutesEarlyOnDeparture = 0;
       if (newArrival > originalArrival) {
@@ -756,21 +796,15 @@ public class EU261Claim {
 
     List<ClaimCustomer> eligibleCustomers = new List<ClaimCustomer>();
 
+    // If an infant has a paid ticket they should receive compensation, otherwise not.
+    // We currently do not have payment data. But we know domestic flights in Sweden and Norway
+    // are free for infants, therefore we can deny these passengers.
     for (Passenger passenger : passengers) {
       for (ClaimCustomer cc : customers) {
         Boolean isInfant = passenger.identifier.toLowerCase().contains('inf');
 
-        if (!isInfant) {
+        if (!isInfant || !tripWithClaimFlight.isIntraSEorIntraNO()) {
           eligibleCustomers.add(cc);
-        } else {
-          // Infants are usually not entitled to compensation
-          Boolean isDomesticTripInDenmark =
-            this.tripWithClaimFlight.destinationAirport.countryCode == 'DK' &&
-            this.tripWithClaimFlight.originAirport.countryCode == 'DK';
-          if (isDomesticTripInDenmark) {
-            // Unless the trip is a domestic flight in denmark.
-            eligibleCustomers.add(cc);
-          }
         }
       }
     }
@@ -1017,31 +1051,36 @@ public class EU261Claim {
     }
 
     Money compensation;
-    if (flightDistanceInKm <= MEDIUM_DISTANCE) {
+    Boolean isShortDistance = flightDistanceInKm <= MEDIUM_DISTANCE;
+    Boolean isMediumDistanceOrIntraCommunity =
+      flightDistanceInKm > MEDIUM_DISTANCE &&
+      (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity);
+
+    if (isShortDistance) {
       compensation = new Money(250, Money.CurrencyCode.EUR);
-      if (
+      Boolean halveCompensation =
         minutesLateOnArrival <=
-        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE
-      ) {
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE;
+
+      if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
-    } else if (
-      flightDistanceInKm > MEDIUM_DISTANCE &&
-      (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity)
-    ) {
+    } else if (isMediumDistanceOrIntraCommunity) {
       compensation = new Money(400, Money.CurrencyCode.EUR);
-      if (
+      Boolean halveCompensation =
         minutesLateOnArrival <=
-        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE
-      ) {
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE;
+
+      if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
     } else {
       compensation = new Money(600, Money.CurrencyCode.EUR);
-      if (
+      Boolean halveCompensation =
         minutesLateOnArrival <=
-        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE
-      ) {
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE;
+
+      if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
     }

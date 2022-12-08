@@ -27,6 +27,11 @@
                 <label>Bulgaria</label>
             </value>
             <value>
+                <fullName>Canada</fullName>
+                <default>false</default>
+                <label>Canada</label>
+            </value>
+            <value>
                 <fullName>Croatia</fullName>
                 <default>false</default>
                 <label>Croatia</label>

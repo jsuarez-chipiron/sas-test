@@ -1247,6 +1247,10 @@ private class EU261Service_Test {
       WHERE Liability_PNR__c = :testPnr
     ][0];
 
+    testClaim.Type_of_Customer__c = 'Claim firm';
+
+    update testClaim;
+
     Booking__c b = [
       SELECT Id
       FROM Booking__c
@@ -1286,6 +1290,7 @@ private class EU261Service_Test {
         Trip_Type__c = 'Outbound'
       )
     };
+
     toInsert.addAll(segments);
 
     insert toInsert;

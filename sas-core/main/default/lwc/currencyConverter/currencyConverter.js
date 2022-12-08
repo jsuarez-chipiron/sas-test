@@ -6,7 +6,7 @@ import getAllExchangeRates from "@salesforce/apex/SettlementsController.getAllEx
 
 /**
  * A currency converter component which can be added to any record page.
- * 
+ *
  * Uses Exchange_Rate__c records to do the conversions.
  */
 export default class CurrencyConverter extends LightningElement {
@@ -32,8 +32,11 @@ export default class CurrencyConverter extends LightningElement {
       this.exchangeRates[this.fromCurrency][this.toCurrency]
     ) {
       // Rounded to 2 decimals.
-      return (
-        Math.round(this.amount * this.exchangeRates[this.fromCurrency][this.toCurrency] * 100) / 100
+      return Math.round(
+        (this.amount *
+          this.exchangeRates[this.fromCurrency][this.toCurrency] *
+          100) /
+          100
       );
     } else {
       return 0;

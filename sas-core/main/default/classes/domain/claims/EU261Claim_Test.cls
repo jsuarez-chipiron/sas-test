@@ -268,6 +268,7 @@ private class EU261Claim_Test {
     groupClaim.customers.add(cc3);
     groupClaim.customers.add(cc4);
     groupClaim.customers.add(cc5);
+    groupClaim.customers.add(cc6);
     Booking groupBooking = TestBookingFactory.createValidForClaim(groupClaim);
     groupBooking.type = Booking.Type.OneWay;
 
@@ -360,20 +361,20 @@ private class EU261Claim_Test {
     );
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
+      Claim.EU261HandlingStatus.EligibleForCompensation,
       differentLastNameResult.verdict,
-      'It should not be possible to automatically evaluate a claim with different last names.'
+      'It should TEMPORARILY be possible to automatically evaluate a claim with different last names.'
     );
-    System.assertEquals(
-      1,
-      differentLastNameResult.caveats.size(),
-      'There should be one caveat'
-    );
-    System.assertEquals(
-      EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
-      differentLastNameResult.caveats[0],
-      'Caveat should be power of attorney.'
-    );
+    // System.assertEquals(
+    //   1,
+    //   differentLastNameResult.caveats.size(),
+    //   'There should be one caveat'
+    // );
+    // System.assertEquals(
+    //   EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
+    //   differentLastNameResult.caveats[0],
+    //   'Caveat should be power of attorney.'
+    // );
 
     System.assertEquals(
       Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
@@ -434,56 +435,13 @@ private class EU261Claim_Test {
   }
 
   @IsTest
-  static void onlyClaimsToOrFromAirportsinEUCanBeEvaluated() {
-    Datetime newDeparture = departure.addHours(4);
-    Flight f1 = TestFlightFactory.create('SK0001', departure, 'JFK', 'LAX');
-    Flight f2 = TestFlightFactory.create('SK0002', newDeparture, 'JFK', 'LAX');
-
-    List<FlightIrregularity> fis = new List<FlightIrregularity>{
-      TestIrregularityFactory.createCancellation(f1)
-    };
-
-    Datetime cancellationTime = departure.addDays(-1);
-    fis[0].cancellationTime = cancellationTime;
-    f1.irregularities = fis;
-
-    TestSegmentFactory.SegmentsInfo sInfo1 = new TestSegmentFactory.SegmentsInfo(
-      f1,
-      departure.addDays(-60),
-      cancellationTime.addMinutes(20)
-    );
-    TestSegmentFactory.SegmentsInfo sInfo2 = new TestSegmentFactory.SegmentsInfo(
-      f2,
-      cancellationTime.addMinutes(20),
-      null
-    );
-
-    List<TestSegmentFactory.SegmentsInfo> segmentInfos = new List<TestSegmentFactory.SegmentsInfo>{
-      sInfo1,
-      sInfo2
-    };
-
-    ClaimCustomer cc = new ClaimCustomer();
-    cc.firstname = 'Test';
-    cc.lastName = 'Testsson';
-
-    Claim c = TestClaimFactory.create();
-    c.recordType = Claim.RecordType.CustomerClaim;
-    c.category = Claim.Category.FlightDisruptions;
-    c.type = Claim.Type.FlightCancellation;
-    c.departureDate = departure.date();
-    c.customers = new List<ClaimCustomer>{ cc };
-    c.flightNumber = 'SK0001';
-    c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
-
-    Booking b = TestBookingFactory.createValidForClaim(c);
-    b.type = Booking.Type.OneWay;
-
-    b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
+  static void claimsWhereFlightWasCancelled14DaysOrMoreBeforeDepartureShouldBeDenied() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0].flight.irregularities[0].cancellationTime = departure.addDays(-14);
 
     EU261Claim claimToEvaluate = new EU261Claim(
-      c,
-      new List<Booking>{ b },
+      bc.c,
+      new List<Booking>{ bc.b },
       false,
       config
     );
@@ -491,14 +449,14 @@ private class EU261Claim_Test {
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.UnableToHandle,
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
       result.verdict,
-      'It should not be possible to evaluate claims with both airports outside the EU.'
+      'Claim with more than one booking cannot be evaluated.'
     );
     System.assertEquals(
-      'can only handle claims with trips which begin or end in the EU',
+      'flight was cancelled 14 or more days in advance',
       result.reasoning,
-      'Rejection reason should be "can only handle claims with trips which begin or end in the EU"'
+      'Rejection reason should be "flight was cancelled 14 or more days in advance"'
     );
   }
 

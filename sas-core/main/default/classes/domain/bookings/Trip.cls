@@ -134,6 +134,14 @@ public without sharing class Trip {
       destinationAirport.isEU261Applicable;
   }
 
+  public Boolean isIntraSEorIntraNO() {
+    Boolean isWithinOneCountry = (originAirport.countryCode ==
+    destinationAirport.countryCode);
+    Boolean originsInSwedenOrNorway = (originAirport.countryCode == 'SE' ||
+    originAirport.countryCode == 'NO');
+    return (isWithinOneCountry && originsInSwedenOrNorway);
+  }
+
   public void logJSON(String additionalInfo) {
     System.debug(
       '--------- TRIP-DEBUG (' +

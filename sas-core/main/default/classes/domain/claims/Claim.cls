@@ -59,6 +59,20 @@ public without sharing class Claim extends AbstractSObjectWrapper {
 
   public Boolean containsDetailObjectData { get; private set; }
 
+  public String normalizedContactFullName {
+    get {
+      return Passenger.normalizeName(
+        this.contactFirstName + ' ' + this.contactLastName
+      );
+    }
+  }
+
+  public String normalizedContactLastName {
+    get {
+      return Passenger.normalizeName(this.contactLastName);
+    }
+  }
+
   public List<ClaimCustomer> customers;
   public List<ClaimExpense> expenses;
 

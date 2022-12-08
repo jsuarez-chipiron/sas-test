@@ -35,6 +35,24 @@ public without sharing class StringUtils {
   }
 
   /**
+   * Converts scandics to two-letter forms.
+   *
+   * @param s String to sanitize
+   */
+  public static String scandicsToASCII(String s) {
+    return s.replaceAll('ä', 'ae')
+      .replaceAll('Ä', 'AE')
+      .replaceAll('ö', 'oe')
+      .replaceAll('Ö', 'OE')
+      .replaceAll('ø', 'oe')
+      .replaceAll('Ø', 'OE')
+      .replaceAll('æ', 'ae')
+      .replaceAll('Æ', 'AE')
+      .replaceAll('å', 'o')
+      .replaceAll('Å', 'o');
+  }
+
+  /**
    * Returns a date with the form XXXXYYZZ
    */
   public static String dateToTEDSString(Date d) {
