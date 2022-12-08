@@ -47,7 +47,7 @@ public class AccountingFileBuilder {
     }
 
     List<String> fileContents = new List<String>();
-    Integer sumOfDebitEntries = 0;
+    Long sumOfDebitEntries = 0;
 
     // Create one debit line per accounting entry.
     for (AccountingEntry entry : accountingEntries) {
@@ -130,7 +130,7 @@ public class AccountingFileBuilder {
   }
 
   private static String createTotalLine(
-    Integer sumOfDebitEntries,
+    Long sumOfDebitEntries,
     Decimal verificationNumber
   ) {
     List<String> totalLine = new List<String>();
