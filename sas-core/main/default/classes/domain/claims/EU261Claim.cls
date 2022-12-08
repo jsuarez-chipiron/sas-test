@@ -400,6 +400,10 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'there are more than one cancellation connected to the claim flight'
       );
+    } else if (
+      c.type == Claim.Type.FlightCancellation && flightCancelledWellInTime()
+    ) {
+      return null; // If flight was cancelled 14 days, or more, in advance the customer is not eligible
     } else if (this.hasRotationIrregularities()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -552,7 +556,7 @@ public class EU261Claim {
     return false;
   }
 
-  private boolean canCalculateDelay() {
+  private Boolean canCalculateDelay() {
     try {
       getMinutesDelayedWithinSASControl();
     } catch (Exception e) {
@@ -560,6 +564,15 @@ public class EU261Claim {
       return false;
     }
     return true;
+  }
+
+  private Boolean flightCancelledWellInTime() {
+    try {
+      Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
+      return daysUntilFlightWhenInformedOfCancellation >= 14;
+    } catch (AutomationException e) {
+      return false; // Not perfect, wanted to avoid another canDetermineIfSASIsResponsibleForCancellation
+    }
   }
 
   private Boolean isStaffBooking() {
@@ -613,6 +626,11 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'id and staff tickets are not eligible'
+      );
+    } else if (this.hasCancellation && flightCancelledWellInTime()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.IneligibleForCompensation,
+        'flight was cancelled 14 or more days in advance'
       );
     } else if (
       this.hasCancellation && !this.cancellationCodeIsWithinSASControl()
