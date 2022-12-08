@@ -375,8 +375,6 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     String bookingReference = claim.Liability_PNR__c;
     String email = claim.Contact_Email__c;
     String euroBonusNumber = claim.EuroBonus_Number__c;
-    Date flightDate = claim.Flight_Date__c;
-    String flightNumber = claim.Flight_Number__c;
     //String passengerName = claim.Passenger_Name__c; // TODO: What should this be?
     String phoneNumber = claim.Phone_Number__c;
     String pirNumber = claim.PIR__c;
@@ -421,14 +419,6 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
         whereQuery += 'EuroBonus_Number__c = :euroBonusNumber';
       } else {
         whereQuery += ' OR EuroBonus_Number__c = :euroBonusNumber';
-      }
-    }
-
-    if (!String.isBlank(flightNumber) && flightDate != null) {
-      if (String.isBlank(whereQuery)) {
-        whereQuery += '(Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate)';
-      } else {
-        whereQuery += ' OR (Flight_Number__c = :flightNumber AND Flight_Date__c = :flightDate)';
       }
     }
 

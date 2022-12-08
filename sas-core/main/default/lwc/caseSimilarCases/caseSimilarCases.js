@@ -48,15 +48,6 @@ export default class CaseSimilarCases extends NavigationMixin(
       }
     },
     {
-      label: "Flight",
-      fieldName: "flight",
-      cellAttributes: {
-        class: {
-          fieldName: "classNameFlight"
-        }
-      }
-    },
-    {
       label: "Email",
       fieldName: "email",
       cellAttributes: {
@@ -143,7 +134,6 @@ export default class CaseSimilarCases extends NavigationMixin(
       const fields = [
         "EbNumber",
         "email",
-        "flight",
         "pir",
         "bookingReference",
         "department"
@@ -179,13 +169,6 @@ export default class CaseSimilarCases extends NavigationMixin(
           };
         } else {
           const caseWithClaim = entry.caseData;
-          const flightId =
-            caseWithClaim.Claims__r[0].Flight_Number__c !== undefined &&
-            caseWithClaim.Claims__r[0].Flight_Date__c !== undefined
-              ? caseWithClaim.Claims__r[0].Flight_Number__c +
-                "-" +
-                caseWithClaim.Claims__r[0].Flight_Date__c
-              : "";
           return {
             idx,
             id: caseWithClaim.Id,
@@ -194,7 +177,6 @@ export default class CaseSimilarCases extends NavigationMixin(
             date: caseWithClaim.CreatedDate,
             EbNumber: caseWithClaim.Claims__r[0].EuroBonus_Number__c,
             email: caseWithClaim.Claims__r[0].Contact_Email__c,
-            flight: flightId,
             owner: caseWithClaim.Owner.Name,
             pir: caseWithClaim.Claims__r[0].PIR__c,
             status: caseWithClaim.Status,
@@ -213,7 +195,6 @@ export default class CaseSimilarCases extends NavigationMixin(
           ...parsedCase,
           classNameEbNumber: getClassName(parsedCase, "EbNumber"),
           classNameEmail: getClassName(parsedCase, "email"),
-          classNameFlight: getClassName(parsedCase, "flight"),
           classNamePir: getClassName(parsedCase, "pir"),
           classNamePnr: getClassName(parsedCase, "bookingReference"),
           classNameDepartment: getClassName(parsedCase, "department"),
