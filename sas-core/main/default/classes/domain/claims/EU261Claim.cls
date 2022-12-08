@@ -4,7 +4,7 @@ public class EU261Claim {
     'DK' => 3 * 12,
     'FI' => 3 * 12,
     'FR' => 5 * 12,
-    'DE' => 3 * 12, // TODO: Make more complicated, slutet på året (25 mån 2022-12 -> 2024-12-31)
+    'DE' => 3 * 12, // TODO: Change to 2 years + time until end of year 3 (e.g. 25 months 2022-12 -> 2024-12-31)
     'IT' => 2 * 12,
     'NL' => 5 * 12,
     'NO' => 3 * 12,
@@ -508,7 +508,7 @@ public class EU261Claim {
         'can handle only delays between 2 and 5 hours'
       ); // We should remove this early
     } else {
-      return null; // TODO: Check EU time limit earlier.
+      return null;
     }
   }
 
@@ -527,17 +527,14 @@ public class EU261Claim {
 
     if (
       c.contactType != Claim.ContactType.PrivateCustomer ||
-      (c.customers.size() > 5 && false)
+      (c.customers.size() > 5)
     ) {
-      // Temp, customer.size() > 5 disabled during backlog from strike
       return true;
     }
 
     for (ClaimCustomer cust : c.customers) {
-      if (
-        cust.lastName.toLowerCase() != c.contactLastName.toLowerCase() && false
-      ) {
-        return true; // Temp, disabled during backlog from strike
+      if (cust.lastName.toLowerCase() != c.contactLastName.toLowerCase()) {
+        return true;
       }
 
       Boolean claimedCustomerFoundInBooking = false;
@@ -548,7 +545,7 @@ public class EU261Claim {
       }
 
       if (!claimedCustomerFoundInBooking) {
-        return true; // TODO: we need to fix this, maybe ignore temporarily?
+        return true;
       }
     }
 
@@ -600,17 +597,8 @@ public class EU261Claim {
       timeLimit = limitInDepartureCountry;
     } else if (limitInArrivalCountry != null) {
       timeLimit = limitInArrivalCountry;
-    } else if (
-      CountryUtils.isInEUOrNorwaySwitzerlandIceland(
-        this.tripWithClaimFlight.originAirport.countryCode
-      ) ||
-      CountryUtils.isInEUOrNorwaySwitzerlandIceland(
-        this.tripWithClaimFlight.destinationAirport.countryCode
-      )
-    ) {
-      timeLimit = countryToClaimTimeLimitInMonths.get('default');
     } else {
-      timeLimit = 0; // Not applicable EU261, e.g.
+      timeLimit = countryToClaimTimeLimitInMonths.get('default');
     }
 
     // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
@@ -676,9 +664,8 @@ public class EU261Claim {
       ) / 1000;
     Integer flightDistanceInKmRounded = flightDistanceInKm.intValue();
     Boolean isIntraCommunity = originalTrip.isIntraCommunity(); // TODO: GB -> CH can be handled as EU
-    Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
+    Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture(); // TODO: check earlier
 
-    // Get the new (suggested) flight plan, todo: check that this is correct
     Trip newTrip = this.tripWithClaimFlightReplacement;
     Integer arrivalDifference;
     Integer departureDifference;
@@ -691,7 +678,7 @@ public class EU261Claim {
         flightDistanceInKmRounded,
         daysUntilFlightWhenInformedOfCancellation,
         isIntraCommunity
-      ); // Correct
+      );
     } else {
       Datetime newDeparture = newTrip.getFirstFlight().scheduledDepartureTime;
       Flight finalFlight = newTrip.getFlightToFinalDestination();
@@ -706,7 +693,7 @@ public class EU261Claim {
       );
       arrivalDifference = Integer.valueOf(
         DateUtils.getHoursBetween(newArrival, originalArrival) * 60
-      ); // Do we need to round up?
+      );
       Integer minutesLateOnArrival = 0;
       Integer minutesEarlyOnDeparture = 0;
       if (newArrival > originalArrival) {
@@ -761,15 +748,13 @@ public class EU261Claim {
 
     List<ClaimCustomer> eligibleCustomers = new List<ClaimCustomer>();
 
-    // Inf ska få om de betalar, inte om de inte betalar. De betalar inte inrikes förutom danmark.
-    // Denied domestic norge sverige. Aproved danmark, approved allting inte domestic.
-    // Kolla egentligen biljettpris (om betalat (även med !poäng!, fare basis) -> kompensation).
-    // Alla får utom domestic inf sweden norge. (basregel)
+    // If an infant has a paid ticket they should receive compensation, otherwise not.
+    // We currently do not have payment data. But we know domestic flights in Sweden and Norway
+    // are free for infants, therefore we can deny these passengers.
     for (Passenger passenger : passengers) {
       for (ClaimCustomer cc : customers) {
         Boolean isInfant = passenger.identifier.toLowerCase().contains('inf');
 
-        // Infants which are intra Sweden or Norway are not eligible
         if (!isInfant || !tripWithClaimFlight.isIntraSEorIntraNO()) {
           eligibleCustomers.add(cc);
         }
@@ -907,7 +892,7 @@ public class EU261Claim {
    * @return a boolean which asserts if the claim is covered by EU261
    */
   private Boolean isWithinEU261Jurisdiction() {
-    return true; // Until we have other operating carriers. (confirmed, SAS är carrier)
+    return true; // Until we have other operating carriers.
     // As SAS is EU carrier, we're always under EU jurisdiction as operating carrier.
 
     /* TODO: Add operating carrier check
@@ -1050,7 +1035,7 @@ public class EU261Claim {
       if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
-    } // OK
+    }
 
     return compensation;
   }

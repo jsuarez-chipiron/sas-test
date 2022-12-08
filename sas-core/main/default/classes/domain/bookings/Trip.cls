@@ -135,9 +135,11 @@ public without sharing class Trip {
   }
 
   public Boolean isIntraSEorIntraNO() {
-    return ((originAirport.countryCode == destinationAirport.countryCode) &&
-    (originAirport.countryCode == 'SE' ||
-    originAirport.countryCode == 'NO'));
+    Boolean isWithinOneCountry = (originAirport.countryCode ==
+    destinationAirport.countryCode);
+    Boolean originsInSwedenOrNorway = (originAirport.countryCode == 'SE' ||
+    originAirport.countryCode == 'NO');
+    return (isWithinOneCountry && originsInSwedenOrNorway);
   }
 
   public void logJSON(String additionalInfo) {

@@ -347,7 +347,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
         tripsBeforeIrregularity,
         tripsAfterRemoved,
         cancelledFlight
-      ); // Nathan, Markus titta på det
+      ); // TODO: Look into if this can be loosened (talk to process owner)
     }
 
     Trip tripWithCancelledFlight = tripBeforeAndAfter[0];

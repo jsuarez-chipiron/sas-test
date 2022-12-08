@@ -64,7 +64,6 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     'FA' => true
   };
 
-  // EQUI borde vara "ja" (troligtvis)
   private static final Set<String> POTENTIAL_ROTATION_CODES = new Set<String>{
     'EQUI',
     'CREW',
