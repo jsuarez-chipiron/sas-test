@@ -437,7 +437,9 @@ private class EU261Claim_Test {
   @IsTest
   static void claimsWhereFlightWasCancelled14DaysOrMoreBeforeDepartureShouldBeDenied() {
     BookingClaim bc = getDefaultCancellationBookingClaim();
-    bc.b.segments[0].flight.irregularities[0].cancellationTime = departure.addDays(-14);
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime = departure.addDays(-14);
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,
@@ -520,9 +522,9 @@ private class EU261Claim_Test {
   }
 
   @IsTest
-  static void claimsWithRotationIrregularitiesCannotBeEvaluated() {
+  static void claimsWithRotationIrregularitiesFromHubCanBeEvaluated() {
     BookingClaim bc = getDefaultCancellationBookingClaim();
-    bc.b.segments[0].flight.irregularities[0].code = 'EQUI';
+    bc.b.segments[0].flight.irregularities[0].code = 'CREW';
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,
@@ -534,14 +536,9 @@ private class EU261Claim_Test {
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.UnableToHandle,
+      Claim.EU261HandlingStatus.EligibleForCompensation,
       result.verdict,
-      'It should not be possible to evaluate claims with rotation delays.'
-    );
-    System.assertEquals(
-      'cannot handle flights with irregularities caused by rotations',
-      result.reasoning,
-      'Rejection reason should be "cannot handle flights with irregularities caused by rotations"'
+      'It should be possible to evaluate claims with CREW delays.'
     );
   }
 
