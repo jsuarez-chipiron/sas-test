@@ -80,7 +80,7 @@ public with sharing class FlightIrregularity_Test {
     FlightIrregularities irr = new FlightIrregularities(
       new List<FlightIrregularities__c>{ CREWfromHub }
     );
-    irr.evaluateCREWResponsibility();
+    irr.setEU261EligibilityForCREWIrregularities();
 
     Boolean isWithinSASControl = new FlightIrregularity(CREWfromHub)
       .isWithinSASControl();

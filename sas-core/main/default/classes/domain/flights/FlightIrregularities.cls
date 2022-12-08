@@ -13,7 +13,7 @@ public without sharing class FlightIrregularities extends ApplicationDomain {
   }
 
   public override void onBeforeInsert() {
-    evaluateCREWResponsibility();
+    setEU261EligibilityForCREWIrregularities();
   }
 
   public static FlightIrregularities newInstance(
@@ -116,7 +116,7 @@ public without sharing class FlightIrregularities extends ApplicationDomain {
     return this;
   }
 
-  public FlightIrregularities evaluateCREWResponsibility() {
+  public FlightIrregularities setEU261EligibilityForCREWIrregularities() {
     Set<Id> crewFlightIds = new Set<Id>();
     List<FlightIrregularities__c> crewIrregs = new List<FlightIrregularities__c>();
 
@@ -139,8 +139,6 @@ public without sharing class FlightIrregularities extends ApplicationDomain {
         fi.Eligible_For_EU261__c = 'Yes';
       }
     }
-
-    update crewFlights;
 
     return this;
   }
