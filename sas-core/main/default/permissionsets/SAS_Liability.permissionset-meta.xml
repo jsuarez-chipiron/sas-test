@@ -151,6 +151,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>LIA_Claim__c.ClaimNumberReadOnly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Claim_Firm__c</field>
         <readable>true</readable>
