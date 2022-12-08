@@ -546,10 +546,7 @@ public class EU261Claim {
 
       Boolean claimedCustomerFoundInBooking = false;
       for (Passenger p : this.claimedBooking.passengers) {
-        if (
-          p.lastName.toLowerCase() == cust.lastName.toLowerCase() &&
-          p.firstName.toLowerCase() == cust.firstName.toLowerCase()
-        ) {
+        if (p.normalizedFullName == cust.normalizedFullName) {
           claimedCustomerFoundInBooking = true;
         }
       }
