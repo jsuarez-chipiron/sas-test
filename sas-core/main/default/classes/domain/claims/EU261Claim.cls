@@ -4,7 +4,7 @@ public class EU261Claim {
     'DK' => 3 * 12,
     'FI' => 3 * 12,
     'FR' => 5 * 12,
-    'DE' => 3 * 12,
+    'DE' => 3 * 12, // TODO: Change to 2 years + time until end of year 3 (e.g. 25 months 2022-12 -> 2024-12-31)
     'IT' => 2 * 12,
     'NL' => 5 * 12,
     'NO' => 3 * 12,
@@ -423,6 +423,7 @@ public class EU261Claim {
         'cannot determine wether SAS is responsible or not for the cancellation'
       );
     } else if (!this.cancellationCodeIsWithinSASControl()) {
+      // This probably works, maybe tell customer that this was automated (a lot of process issues)
       return null; // Maybe not fantastic, but if we are not responsible we don't need any more checks
     } else if (!canGetSegmentStatuses()) {
       return new Decision(
@@ -458,14 +459,6 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'could not set trip with claim flight'
       );
-    } else if (
-      !this.tripWithClaimFlight.originAirport.isEU261Applicable &&
-      !this.tripWithClaimFlight.destinationAirport.isEU261Applicable
-    ) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'can only handle claims with trips which begin or end in the EU'
-      );
     } else if (!this.claimFlight.isOperatedByStarAlliance()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -491,7 +484,7 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'it is uncertain if SAS or the customer cancelled the flight'
-      );
+      ); // TODO: Check office number => deny/accept
     } else if (
       c.type == Claim.Type.FlightCancellation &&
       this.claimedBooking.hasReinstated(this.claimFlight)
@@ -534,7 +527,7 @@ public class EU261Claim {
 
     if (
       c.contactType != Claim.ContactType.PrivateCustomer ||
-      c.customers.size() > 5
+      (c.customers.size() > 5)
     ) {
       return true;
     }
@@ -670,10 +663,9 @@ public class EU261Claim {
         originalTrip.destinationAirport
       ) / 1000;
     Integer flightDistanceInKmRounded = flightDistanceInKm.intValue();
-    Boolean isIntraCommunity = originalTrip.isIntraCommunity();
-    Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
+    Boolean isIntraCommunity = originalTrip.isIntraCommunity(); // TODO: GB -> CH can be handled as EU
+    Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture(); // TODO: check earlier
 
-    // Get the new (suggested) flight plan, todo: check that this is correct
     Trip newTrip = this.tripWithClaimFlightReplacement;
     Integer arrivalDifference;
     Integer departureDifference;
@@ -689,8 +681,11 @@ public class EU261Claim {
       );
     } else {
       Datetime newDeparture = newTrip.getFirstFlight().scheduledDepartureTime;
-      Datetime newArrival = newTrip.getFlightToFinalDestination()
-        .scheduledArrivalTime;
+      Flight finalFlight = newTrip.getFlightToFinalDestination();
+      Datetime newArrival = finalFlight.actualArrivalTime;
+      if (newArrival == null) {
+        newArrival = finalFlight.scheduledArrivalTime;
+      }
 
       // Compare the original rebooking against the suggested rebooking and calculate compensation
       departureDifference = Integer.valueOf(
@@ -698,7 +693,7 @@ public class EU261Claim {
       );
       arrivalDifference = Integer.valueOf(
         DateUtils.getHoursBetween(newArrival, originalArrival) * 60
-      ); // Do we need to round up?
+      );
       Integer minutesLateOnArrival = 0;
       Integer minutesEarlyOnDeparture = 0;
       if (newArrival > originalArrival) {
@@ -753,21 +748,15 @@ public class EU261Claim {
 
     List<ClaimCustomer> eligibleCustomers = new List<ClaimCustomer>();
 
+    // If an infant has a paid ticket they should receive compensation, otherwise not.
+    // We currently do not have payment data. But we know domestic flights in Sweden and Norway
+    // are free for infants, therefore we can deny these passengers.
     for (Passenger passenger : passengers) {
       for (ClaimCustomer cc : customers) {
         Boolean isInfant = passenger.identifier.toLowerCase().contains('inf');
 
-        if (!isInfant) {
+        if (!isInfant || !tripWithClaimFlight.isIntraSEorIntraNO()) {
           eligibleCustomers.add(cc);
-        } else {
-          // Infants are usually not entitled to compensation
-          Boolean isDomesticTripInDenmark =
-            this.tripWithClaimFlight.destinationAirport.countryCode == 'DK' &&
-            this.tripWithClaimFlight.originAirport.countryCode == 'DK';
-          if (isDomesticTripInDenmark) {
-            // Unless the trip is a domestic flight in denmark.
-            eligibleCustomers.add(cc);
-          }
         }
       }
     }
@@ -1014,31 +1003,36 @@ public class EU261Claim {
     }
 
     Money compensation;
-    if (flightDistanceInKm <= MEDIUM_DISTANCE) {
+    Boolean isShortDistance = flightDistanceInKm <= MEDIUM_DISTANCE;
+    Boolean isMediumDistanceOrIntraCommunity =
+      flightDistanceInKm > MEDIUM_DISTANCE &&
+      (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity);
+
+    if (isShortDistance) {
       compensation = new Money(250, Money.CurrencyCode.EUR);
-      if (
+      Boolean halveCompensation =
         minutesLateOnArrival <=
-        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE
-      ) {
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE;
+
+      if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
-    } else if (
-      flightDistanceInKm > MEDIUM_DISTANCE &&
-      (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity)
-    ) {
+    } else if (isMediumDistanceOrIntraCommunity) {
       compensation = new Money(400, Money.CurrencyCode.EUR);
-      if (
+      Boolean halveCompensation =
         minutesLateOnArrival <=
-        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE
-      ) {
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE;
+
+      if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
     } else {
       compensation = new Money(600, Money.CurrencyCode.EUR);
-      if (
+      Boolean halveCompensation =
         minutesLateOnArrival <=
-        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE
-      ) {
+        MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE;
+
+      if (halveCompensation) {
         compensation = compensation.divideBy(2);
       }
     }
