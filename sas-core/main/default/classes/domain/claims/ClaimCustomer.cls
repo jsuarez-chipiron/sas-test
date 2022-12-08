@@ -7,13 +7,19 @@ public without sharing class ClaimCustomer extends AbstractSObjectWrapper {
 
   public String fullName {
     get {
-      return firstName + ' ' + lastName;
+      return this.firstName + ' ' + this.lastName;
     }
   }
 
   public String normalizedFullName {
     get {
       return Passenger.normalizeName(this.fullName);
+    }
+  }
+
+  public String normalizedLastName {
+    get {
+      return Passenger.normalizeName(this.lastName);
     }
   }
 

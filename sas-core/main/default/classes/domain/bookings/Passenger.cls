@@ -13,7 +13,7 @@ public without sharing class Passenger extends AbstractSObjectWrapper {
 
   public String normalizedFullName {
     get {
-      return normalizeName(this.firstName + this.lastName);
+      return normalizeName(this.firstName + ' ' + this.lastName);
     }
   }
 
@@ -49,6 +49,7 @@ public without sharing class Passenger extends AbstractSObjectWrapper {
 
   public static String normalizeName(String name) {
     return StringUtils.removeWhitespace(StringUtils.scandicsToASCII(name))
-      .replaceAll('-', '');
+      .replaceAll('-', '')
+      .toLowerCase();
   }
 }

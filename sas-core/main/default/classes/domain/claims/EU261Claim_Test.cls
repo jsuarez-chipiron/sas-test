@@ -268,6 +268,7 @@ private class EU261Claim_Test {
     groupClaim.customers.add(cc3);
     groupClaim.customers.add(cc4);
     groupClaim.customers.add(cc5);
+    groupClaim.customers.add(cc6);
     Booking groupBooking = TestBookingFactory.createValidForClaim(groupClaim);
     groupBooking.type = Booking.Type.OneWay;
 
@@ -360,20 +361,20 @@ private class EU261Claim_Test {
     );
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
+      Claim.EU261HandlingStatus.EligibleForCompensation,
       differentLastNameResult.verdict,
-      'It should not be possible to automatically evaluate a claim with different last names.'
+      'It should TEMPORARILY be possible to automatically evaluate a claim with different last names.'
     );
-    System.assertEquals(
-      1,
-      differentLastNameResult.caveats.size(),
-      'There should be one caveat'
-    );
-    System.assertEquals(
-      EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
-      differentLastNameResult.caveats[0],
-      'Caveat should be power of attorney.'
-    );
+    // System.assertEquals(
+    //   1,
+    //   differentLastNameResult.caveats.size(),
+    //   'There should be one caveat'
+    // );
+    // System.assertEquals(
+    //   EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney,
+    //   differentLastNameResult.caveats[0],
+    //   'Caveat should be power of attorney.'
+    // );
 
     System.assertEquals(
       Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,

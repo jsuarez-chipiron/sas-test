@@ -516,31 +516,26 @@ public class EU261Claim {
     }
   }
 
-  /**
-   * Returns false if the contact person is allowed to make the claim for all
-   * customers claimed in the claim without a power of attorney.
-   *
-   * They are allowed to do this only if all of the following are true:
-   * 1. Claimant is a private customer
-   * 2. All claimed passengers can be found from the booking's passengers
-   * 3. All claimed passengers have the same last name as the contact person
-   * 4. There are less than four people overall in the booking
-   */
-  private Boolean requiresPowerOfAttorney() {
+  private Boolean contactIsATraveler() {
     Claim c = this.claimObj;
 
-    if (
-      c.contactType != Claim.ContactType.PrivateCustomer ||
-      (c.customers.size() > 5)
-    ) {
-      return true;
+    Boolean contactFoundInBooking = false;
+    for (ClaimCustomer cust : c.customers) {
+      if (cust.normalizedFullName == c.normalizedContactFullName) {
+        contactFoundInBooking = true;
+      }
     }
 
-    for (ClaimCustomer cust : c.customers) {
-      if (cust.lastName.toLowerCase() != c.contactLastName.toLowerCase()) {
-        return true;
-      }
+    return contactFoundInBooking;
+  }
 
+  /**
+   * Asserts that all claimed travelers can be found from the booking's passengers
+   */
+  private Boolean allClaimedTravelersAreInBooking() {
+    Claim c = this.claimObj;
+
+    for (ClaimCustomer cust : c.customers) {
       Boolean claimedCustomerFoundInBooking = false;
       for (Passenger p : this.claimedBooking.passengers) {
         if (p.normalizedFullName == cust.normalizedFullName) {
@@ -549,7 +544,42 @@ public class EU261Claim {
       }
 
       if (!claimedCustomerFoundInBooking) {
-        return true;
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Returns false if the contact person is allowed to make the claim for all
+   * customers claimed in the claim without a power of attorney.
+   *
+   * They are allowed to do this only if all of the following are true:
+   * 1. Claimant is a private customer
+   * 2. All claimed passengers have the same last name as the contact person
+   * 3. There are less than four people overall in the booking
+   */
+  private Boolean requiresPowerOfAttorney() {
+    Claim c = this.claimObj;
+    if (
+      c.contactType != Claim.ContactType.PrivateCustomer ||
+      (c.customers.size() > 5)
+    ) {
+      return true;
+    }
+
+    if (!contactIsATraveler()) {
+      return true;
+    }
+
+    if (!allClaimedTravelersAreInBooking()) {
+      return true;
+    }
+
+    for (ClaimCustomer cust : c.customers) {
+      if (cust.normalizedLastName != c.normalizedContactLastName && false) {
+        return true; // Temporarily deactivated for backlog
       }
     }
 
