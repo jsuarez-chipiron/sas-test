@@ -396,21 +396,40 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     }
 
     if (!String.isBlank(bookingReference)) {
+      List<String> excludedPNRs = new list<String> {
+        '-----',
+        'ABC12',
+        'ABC123',
+        'ABCDEF',
+        'AGENCY',
+        'SKCHAR',
+        'XXXXX',
+        'XXXXXX',
+        'YYYYY'
+      };
       if (String.isBlank(whereQuery)) {
-        whereQuery += 'Liability_PNR__c = :bookingReference';
+        whereQuery += '(Liability_PNR__c = :bookingReference AND Liability_PNR__c NOT IN :excludedPNRs)';
       } else {
-        whereQuery += ' OR Liability_PNR__c = :bookingReference';
+        whereQuery += ' OR (Liability_PNR__c = :bookingReference AND Liability_PNR__c NOT IN :excludedPNRs)';
       }
     }
 
     if (
       !String.isBlank(email) && claim.Type_of_Customer__c == 'Private customer'
     ) {
+      List<String> excludedEmails = new List<String> {
+        'claim@flyhjaelp.dk',
+        'claims@danskrejsehjaelp.dk',
+        'klient@flyforsinkelse.dk',
+        'kontakt@flyforsinkelser.no',
+        'kontakt@flygforsening.se',
+        'service@flightright.de'
+      };
       // Email should be checked only for private customers.
       if (String.isBlank(whereQuery)) {
-        whereQuery += 'Contact_Email__c = :email';
+        whereQuery += '(Contact_Email__c = :email AND Contact_Email__c NOT IN :excludedEmails)';
       } else {
-        whereQuery += ' OR Contact_Email__c = :email';
+        whereQuery += ' OR (Contact_Email__c = :email AND Contact_Email__c NOT IN :excludedEmails)';
       }
     }
 
