@@ -4,7 +4,7 @@
 public without sharing class UsStateUtils {
   public static String getStateFromPostalCode(String zipCode) {
     String state;
-    if (zipCode == null) {
+    if (String.isEmpty(zipCode) || !(zipCode.isNumeric())) {
       state = null;
     } else {
       Integer postalCode = integer.valueof(zipCode);
@@ -72,7 +72,13 @@ public without sharing class UsStateUtils {
         state = 'New Jersey';
       } else if (postalCode >= 87001 && postalCode <= 88439) {
         state = 'New Mexico';
-      } else if (postalCode >= 501 && postalCode <= 14925) {
+      } else if (
+        (postalCode >= 10000 &&
+        postalCode <= 14925) ||
+        (postalCode == 6390) ||
+        (postalCode == 501) ||
+        (postalCode == 544)
+      ) {
         state = 'New York';
       } else if (postalCode >= 27006 && postalCode <= 28909) {
         state = 'North Carolina';
@@ -114,7 +120,7 @@ public without sharing class UsStateUtils {
       } else if (postalCode == 96799) {
         state = 'American Samoa ';
       } else if (postalCode >= 96950 && postalCode <= 96952) {
-        state = 'Northern Mariana Islands';
+        state = 'Northern Marianas';
       } else if (
         (postalCode >= 601 && postalCode <= 799) ||
         (postalCode >= 900 &&
@@ -127,7 +133,6 @@ public without sharing class UsStateUtils {
         state = 'US Virgin Islands';
       } else {
         state = null;
-        System.debug('No state found matching' + postalCode);
       }
     }
     return state;

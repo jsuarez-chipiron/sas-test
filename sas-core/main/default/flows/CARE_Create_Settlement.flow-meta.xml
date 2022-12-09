@@ -25,7 +25,7 @@
     <actionCalls>
         <name>Navigate_To_Created_Settlement</name>
         <label>Navigate To Created Settlement</label>
-        <locationX>996</locationX>
+        <locationX>1040</locationX>
         <locationY>1670</locationY>
         <actionName>c:NavigateToRecord</actionName>
         <actionType>component</actionType>
@@ -48,7 +48,7 @@
     <assignments>
         <name>assignCustomerCount</name>
         <label>assignCustomerCount</label>
-        <locationX>1403</locationX>
+        <locationX>1469</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>countOfCustomerData</assignToReference>
@@ -96,7 +96,7 @@
     <decisions>
         <name>Check_Customer_Data</name>
         <label>Check Customer Data In Claim</label>
-        <locationX>1403</locationX>
+        <locationX>1469</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>NoCustomer</targetReference>
@@ -119,9 +119,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>If_Country_Is_US</name>
+        <label>If Country Is US</label>
+        <locationX>446</locationX>
+        <locationY>1118</locationY>
+        <defaultConnector>
+            <targetReference>Warning_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Us Country</defaultConnectorLabel>
+        <rules>
+            <name>countryIsUs</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Claim.Country__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>United States</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_State</targetReference>
+            </connector>
+            <label>Country is US</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>InProgress</name>
         <label>Is Case Valid</label>
-        <locationX>1062</locationX>
+        <locationX>1106</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>NoSettlement</targetReference>
@@ -173,34 +198,9 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Postal_Code_Is_Not_Null</name>
-        <label>Postal Code Is Not Null</label>
-        <locationX>446</locationX>
-        <locationY>1118</locationY>
-        <defaultConnector>
-            <targetReference>Create_Cheque_Settlement</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Null</defaultConnectorLabel>
-        <rules>
-            <name>Not_Null</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Customer_Claim.Postal_Code__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_State</targetReference>
-            </connector>
-            <label>Not Null</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
-        <locationX>996</locationX>
+        <locationX>1040</locationX>
         <locationY>998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -214,7 +214,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Postal_Code_Is_Not_Null</targetReference>
+                <targetReference>If_Country_Is_US</targetReference>
             </connector>
             <label>Cheque Settlement</label>
         </rules>
@@ -309,8 +309,8 @@
     <recordCreates>
         <name>Create_Cheque_Settlement</name>
         <label>Create Cheque Settlement</label>
-        <locationX>446</locationX>
-        <locationY>1454</locationY>
+        <locationX>314</locationX>
+        <locationY>1358</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
@@ -416,7 +416,7 @@
     <recordCreates>
         <name>Create_EB_Points_Settlement</name>
         <label>Create EB Points Settlement</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -493,7 +493,7 @@
     <recordCreates>
         <name>Create_Monetary_Settlement</name>
         <label>Create Monetary Settlement</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -600,7 +600,7 @@
     <recordCreates>
         <name>Create_Voucher_Settlement</name>
         <label>Create Voucher Settlement</label>
-        <locationX>1282</locationX>
+        <locationX>1370</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
@@ -707,7 +707,7 @@
     <recordLookups>
         <name>Get_Customer_Claim</name>
         <label>Get Customer Claim Information</label>
-        <locationX>1062</locationX>
+        <locationX>1106</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -729,7 +729,7 @@
         <description>Customer Data</description>
         <name>Get_Customer_Data</name>
         <label>Get Customer Data</label>
-        <locationX>1403</locationX>
+        <locationX>1469</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -750,7 +750,7 @@
     <recordLookups>
         <name>Get_Record_Type_Id</name>
         <label>Get Record Type Id</label>
-        <locationX>996</locationX>
+        <locationX>1040</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -788,7 +788,7 @@
     <screens>
         <name>Create_a_Settlement</name>
         <label>Create a Settlement</label>
-        <locationX>996</locationX>
+        <locationX>1040</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -831,7 +831,7 @@
     <screens>
         <name>NoCustomer</name>
         <label>Can Not Create Settlement</label>
-        <locationX>1810</locationX>
+        <locationX>1898</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -847,7 +847,7 @@
     <screens>
         <name>NoSettlement</name>
         <label>Can Not Create Settlement</label>
-        <locationX>2074</locationX>
+        <locationX>2162</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -860,8 +860,24 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Warning_Screen</name>
+        <label>Warning Screen</label>
+        <locationX>578</locationX>
+        <locationY>1238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>screenMessage</name>
+            <fieldText>&lt;p&gt;*Cheque settlement are supported only for US&lt;span style=&quot;color: rgb(106, 153, 85);&quot;&gt; &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>936</locationX>
+        <locationX>980</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Customer_Claim</targetReference>
