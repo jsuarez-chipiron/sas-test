@@ -474,12 +474,8 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       }
     }
 
-    if (!String.isBlank(whereQuery)) {
-      whereQuery += ' LIMIT 50';
-    }
-
     return (List<LIA_Claim__c>) Database.query(
-      newQueryFactory().setCondition(whereQuery).toSOQL()
+      newQueryFactory().setCondition(whereQuery).addOrdering('CreatedDate', fflib_QueryFactory.SortOrder.DESCENDING, true).setLimit(50).toSOQL()
     );
   }
 
