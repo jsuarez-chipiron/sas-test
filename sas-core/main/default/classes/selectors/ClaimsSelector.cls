@@ -475,7 +475,6 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     }
 
     if (!String.isBlank(whereQuery)) {
-      whereQuery += ' ORDER BY CreatedDate';
       whereQuery += ' LIMIT 50';
     }
 
