@@ -135,7 +135,7 @@ public without sharing class Cases extends ApplicationDomain {
     Map<Id, String> handlingInstructionsByCaseId
   ) {
     for (Case c : instanceRecords) {
-      c.EU261_Handling_Instructions__c = handlingInstructionsByCaseId.get(c.Id);
+      c.Handling_Instructions__c = handlingInstructionsByCaseId.get(c.Id);
     }
     uow.registerDirty(instanceRecords);
     return this;
