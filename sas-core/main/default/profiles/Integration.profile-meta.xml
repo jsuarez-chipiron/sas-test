@@ -2047,7 +2047,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.EU261_Handling_Instructions__c</field>
+        <field>Case.Handling_Instructions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Claim_EU261_Handling_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
