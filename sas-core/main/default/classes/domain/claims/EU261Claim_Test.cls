@@ -1071,6 +1071,48 @@ private class EU261Claim_Test {
   }
 
   @IsTest
+  static void claimWhereTheCustomerCancelledTheFlightShouldBeDenied() {
+    // A rebooked flight which arrives 4h later than the original flight.
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime = bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime.addDays(1);
+    List<SegmentEvent> newEvents = new List<SegmentEvent>();
+    for (SegmentEvent se : bc.b.segments[0].getEvents()) {
+      se.officeCode = 'STOSK08RV';
+      if (se.newStatus == SegmentEvent.StatusCode.C_UN) {
+        se.operationType = SegmentEvent.OperationType.C_X;
+        se.newStatus = SegmentEvent.StatusCode.C_XX;
+      }
+      newEvents.add(se);
+    } // TODO: change to real codes
+    bc.b.segments[0].events = newEvents;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals('', result.reasoning, 'Reasoning should be ""');
+    System.assertEquals(
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      result.verdict,
+      'A claim where the customer cancelled the flight should not be automated'
+    );
+    System.assertEquals(
+      'customer cancelled the flight',
+      result.reasoning,
+      'Reasoning should be "customer cancelled the flight"'
+    );
+  }
+
+  @IsTest
   static void claimWithRemovedButNotCancelledSegmentsAfterCancellationShouldBeAutomated() {
     // Create a default booking but edit the segment history
     BookingClaim bc = getDefaultCancellationBookingClaim();

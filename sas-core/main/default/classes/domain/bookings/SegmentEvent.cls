@@ -20,6 +20,10 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     C_AD
   }
 
+  public static final Map<String, Boolean> OFFICE_CODE_TO_IS_CUSTOMER = new Map<String, Boolean>{
+    'STOSK08RV' => true
+  }; // TODO fix
+
   private static final Map<String, OperationType> OPERATION_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, OperationType>{
     'XD' => OperationType.C_XD,
     'A' => OperationType.C_A,
