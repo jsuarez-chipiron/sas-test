@@ -361,8 +361,6 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       if (tripBeforeAndAfter[1] == null) {
         throw new Trip.InvalidException('No replacement');
       }
-      tripBeforeAndAfter[0]
-        .officeResponsibleForCancellation = cancellationTimeInfo.officeUnconfirming;
     } catch (Trip.InvalidException e) {
       // Typically happens when an agent has manually rebooked the passengers
       List<Trip> tripsAfterRemoved = getTripsAtTime(removed);
@@ -371,8 +369,6 @@ public without sharing class Booking extends AbstractSObjectWrapper {
         tripsAfterRemoved,
         cancelledFlight
       ); // TODO: Look into if this can be loosened (talk to process owner)
-      tripBeforeAndAfter[0]
-        .officeResponsibleForCancellation = cancellationTimeInfo.officeRemoving;
     }
 
     Trip tripWithCancelledFlight = tripBeforeAndAfter[0];
@@ -382,6 +378,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       removed != null &&
       removed < cancellationTimeInfo.affectedByIrregularity;
 
+    tripWithCancelledFlight.officeResponsibleForCancellation = cancellationTimeInfo.officeRemoving;
     tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeIrregularity;
 
     return new List<Trip>{

@@ -1099,7 +1099,6 @@ private class EU261Claim_Test {
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
-    System.assertEquals('', result.reasoning, 'Reasoning should be ""');
     System.assertEquals(
       Claim.EU261HandlingStatus.IneligibleForCompensation,
       result.verdict,
