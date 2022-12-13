@@ -3958,6 +3958,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>FlightIrregularities__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Group_Travel_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
