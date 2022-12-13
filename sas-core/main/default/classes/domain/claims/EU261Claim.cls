@@ -277,16 +277,29 @@ public class EU261Claim {
   }
 
   private Boolean canGetSegmentStatuses() {
-    try {
-      for (Segment s : this.claimedBooking.segments) {
+    for (Segment s : this.claimedBooking.segments) {
+      try {
         s.getStatus(Datetime.now());
+      } catch (Segment.UnsupportedException e) {
+        continue;
+      } catch (U.InvalidArgumentException e) {
+        return false;
       }
-    } catch (Segment.UnsupportedException e) {
-      return false;
-    } catch (U.InvalidArgumentException e) {
-      return false;
     }
     return true;
+  }
+
+  private Boolean bookingHasUnsupportedEvents() {
+    for (Segment s : this.claimedBooking.segments) {
+      try {
+        s.getStatus(Datetime.now());
+      } catch (Segment.UnsupportedException e) {
+        return true;
+      } catch (U.InvalidArgumentException e) {
+        continue;
+      }
+    }
+    return false;
   }
 
   /**
@@ -433,6 +446,11 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot get segment statuses'
+      );
+    } else if (bookingHasUnsupportedEvents()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'booking has unsupported event(s)'
       );
     }
 

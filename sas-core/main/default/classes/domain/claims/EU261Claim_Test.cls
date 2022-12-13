@@ -1213,9 +1213,9 @@ private class EU261Claim_Test {
       'A claim with segments which have unsupported segment events should not be handled.'
     );
     System.assertEquals(
-      'cannot get segment statuses',
+      'booking has unsupported event(s)',
       result.reasoning,
-      'Unhandled reason should be "cannot get segment statuses"'
+      'Unhandled reason should be "booking has unsupported event(s)"'
     );
   }
 
@@ -1256,9 +1256,9 @@ private class EU261Claim_Test {
       'A claim with segments which have group segment events should not be handled.'
     );
     System.assertEquals(
-      'cannot get segment statuses',
+      'booking has unsupported event(s)',
       result.reasoning,
-      'Unhandled reason should be "cannot get segment statuses"'
+      'Unhandled reason should be "booking has unsupported event(s)"'
     );
   }
 
