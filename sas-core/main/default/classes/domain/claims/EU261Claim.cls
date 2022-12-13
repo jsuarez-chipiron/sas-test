@@ -353,14 +353,12 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only claims in category "Flight disruptions"'
       );
-    } else if (
-      !(c.type == Claim.Type.FlightDelay ||
-      c.type == Claim.Type.FlightCancellation)
-    ) {
+    } else if (!(c.type == Claim.Type.FlightCancellation)) {
+      // c.type == Claim.Type.FlightDelay ||
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'can handle only claims in type "Flight delay" or "Flight cancellation"'
-      );
+        'can handle only claims in type "Flight cancellation"'
+      ); // "Flight delay" or
     } else if (c.recordType != Claim.RecordType.CustomerClaim) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -417,10 +415,12 @@ public class EU261Claim {
       c.type == Claim.Type.FlightCancellation && flightCancelledWellInTime()
     ) {
       return null; // If flight was cancelled 14 days, or more, in advance the customer is not eligible
-    } else if (this.hasRotationIrregularities()) {
+    } else if (
+      c.type == Claim.Type.FlightDelay && this.hasRotationIrregularities()
+    ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot handle flights with irregularities caused by rotations'
+        'cannot handle flights with delays caused by rotations'
       );
     } else if (
       c.type == Claim.Type.FlightCancellation &&
@@ -501,12 +501,17 @@ public class EU261Claim {
       );
     } else if (
       c.type == Claim.Type.FlightCancellation &&
-      this.tripWithClaimFlight.cancelledSegmentRemovedBeforeCancellation
+      this.tripWithClaimFlight.isUncertainWhoCancelled()
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'it is uncertain if SAS or the customer cancelled the flight'
       ); // TODO: Check office number => deny/accept
+    } else if (
+      c.type == Claim.Type.FlightCancellation &&
+      this.tripWithClaimFlight.customerCancelled()
+    ) {
+      return null; // Deny, customer cancelled the flight
     } else if (
       c.type == Claim.Type.FlightCancellation &&
       this.claimedBooking.hasReinstated(this.claimFlight)
@@ -696,6 +701,13 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'not filed on time'
+      );
+    } else if (
+      this.hasCancellation && this.tripWithClaimFlight.customerCancelled()
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.IneligibleForCompensation,
+        'customer cancelled the flight'
       );
     } else if (this.hasCancellation) {
       // If the claim flight was cancelled the customer should receive compensation according to the cancellation logic

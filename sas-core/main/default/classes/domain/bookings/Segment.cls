@@ -22,6 +22,7 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
 
   public Flight flight;
 
+  @TestVisible
   private List<SegmentEvent> events;
 
   public enum Status {
@@ -184,42 +185,42 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
   /**
    * (Unconfirmed = unable)
    */
-  public Datetime getTimeUnconfirmed() {
+  public SegmentEvent getUnconfirmedEvent() {
     U.verifyNotNull(this.events);
 
-    Datetime timeUnable;
+    SegmentEvent unableEvent;
     for (SegmentEvent se : events) {
       if (se.newStatus == SegmentEvent.StatusCode.C_UN) {
         if (
-          timeUnable != null &&
+          unableEvent != null &&
           se.previousStatus != SegmentEvent.StatusCode.C_UN
         ) {
           throw new UnsupportedException('More than one unconfirmed time.');
         }
 
         // Store the first time when the segment was "unable"
-        if (timeUnable == null) {
-          timeUnable = se.updateDate;
+        if (unableEvent == null) {
+          unableEvent = se;
         }
       }
     }
 
-    return timeUnable;
+    return unableEvent;
   }
 
-  public Datetime getTimeRemoved() {
+  public SegmentEvent getRemovedEvent() {
     U.verifyNotNull(this.events);
 
-    Datetime timeRemoved;
+    SegmentEvent removedEvent;
     for (SegmentEvent se : events) {
       if (se.operationType == SegmentEvent.OperationType.C_X) {
-        if (timeRemoved != null) {
+        if (removedEvent != null) {
           throw new UnsupportedException('More than one removal time.');
         }
-        timeRemoved = se.updateDate;
+        removedEvent = se;
       }
     }
-    return timeRemoved;
+    return removedEvent;
   }
 
   public Boolean hasBeenReinstated() {

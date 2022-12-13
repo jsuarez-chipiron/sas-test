@@ -237,15 +237,21 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     Datetime affectedByIrregularity;
     Datetime unconfirmed;
     Datetime removed;
+    String officeUnconfirming;
+    String officeRemoving;
 
     public CancellationTime(
       Datetime affectedByIrregularity,
       Datetime unconfirmed,
-      Datetime removed
+      Datetime removed,
+      String officeUnconfirming,
+      String officeRemoving
     ) {
       this.affectedByIrregularity = affectedByIrregularity;
       this.unconfirmed = unconfirmed;
       this.removed = removed;
+      this.officeUnconfirming = officeUnconfirming;
+      this.officeRemoving = officeRemoving;
     }
   }
 
@@ -268,9 +274,22 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     // Make sure all segments for the flight have the same history
     Datetime segmentUnconfirmed;
     Datetime segmentRemoved;
+    String officeUnconfirming;
+    String officeRemoving;
     for (Segment s : getSegmentsForFlight(f)) {
-      Datetime currentSegmentUnconfirmed = s.getTimeUnconfirmed();
-      Datetime currentSegmentRemoved = s.getTimeRemoved();
+      SegmentEvent unconfirmedEvent = s.getUnconfirmedEvent();
+      SegmentEvent removedEvent = s.getRemovedEvent();
+
+      Datetime currentSegmentUnconfirmed;
+      if (unconfirmedEvent != null) {
+        currentSegmentUnconfirmed = unconfirmedEvent.updateDate;
+        officeUnconfirming = unconfirmedEvent.officeCode;
+      }
+      Datetime currentSegmentRemoved;
+      if (removedEvent != null) {
+        currentSegmentRemoved = removedEvent.updateDate;
+        officeRemoving = removedEvent.officeCode;
+      }
 
       if (
         currentSegmentUnconfirmed != segmentUnconfirmed &&
@@ -299,7 +318,9 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     return new CancellationTime(
       cancellation.cancellationTime,
       segmentUnconfirmed,
-      segmentRemoved
+      segmentRemoved,
+      officeUnconfirming,
+      officeRemoving
     );
   }
 
@@ -357,6 +378,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       removed != null &&
       removed < cancellationTimeInfo.affectedByIrregularity;
 
+    tripWithCancelledFlight.officeResponsibleForCancellation = cancellationTimeInfo.officeRemoving;
     tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeIrregularity;
 
     return new List<Trip>{

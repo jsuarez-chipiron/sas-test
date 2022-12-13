@@ -4,6 +4,7 @@ public without sharing class Trip {
   public List<Leg> sortedLegs;
   public Boolean SASIsOnlyOperatingCarrier;
   public Boolean cancelledSegmentRemovedBeforeCancellation = false;
+  public String officeResponsibleForCancellation;
 
   /**
    * Returns an ordered list of all trips in a booking.
@@ -86,6 +87,9 @@ public without sharing class Trip {
   }
 
   public class RouteException extends Exception {
+  }
+
+  public class ResponsibilityException extends Exception {
   }
 
   private Trip(List<Leg> legsInOrder) {
@@ -434,5 +438,38 @@ public without sharing class Trip {
         'The replacement has a different origin or destination'
       );
     }
+  }
+
+  public Boolean isUncertainWhoCancelled() {
+    try {
+      customerCancelled();
+    } catch (ResponsibilityException e) {
+      return true;
+    }
+    return false;
+  }
+
+  public Boolean customerCancelled() {
+    if (!cancelledSegmentRemovedBeforeCancellation) {
+      return false;
+    }
+
+    if (officeResponsibleForCancellation == null) {
+      throw new ResponsibilityException(
+        'No office is responsible for cancelling the flight'
+      );
+    }
+
+    Boolean cancelledByCustomer = SegmentEvent.customerResponsibleForEvent(
+      officeResponsibleForCancellation
+    );
+
+    if (cancelledByCustomer == null) {
+      throw new ResponsibilityException(
+        'It is uncertain who is responsible for cancelling the flight'
+      );
+    }
+
+    return cancelledByCustomer;
   }
 }
