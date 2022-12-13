@@ -20,9 +20,12 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     C_AD
   }
 
-  public static final Map<String, Boolean> OFFICE_CODE_TO_IS_CUSTOMER = new Map<String, Boolean>{
-    'STOSK08RV' => true
-  }; // TODO fix
+  private static final Map<String, Boolean> OFFICE_CODE_TO_IS_CUSTOMER = new Map<String, Boolean>{
+    'SK08RV' => true,
+    'SK08MB' => true,
+    'SK08VB' => true,
+    'SK0001' => false
+  }; // TODO extend
 
   private static final Map<String, OperationType> OPERATION_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, OperationType>{
     'XD' => OperationType.C_XD,
@@ -474,5 +477,16 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
         return 0;
       }
     }
+  }
+
+  // TODO: refactor, rearrange logic so this does not have to be called this way
+  public static Boolean customerResponsibleForEvent(String officeCode) {
+    if (officeCode == null || officeCode.length() < 4) {
+      return null;
+    }
+
+    String countryNonSpecificCode = officeCode.substring(3);
+
+    return OFFICE_CODE_TO_IS_CUSTOMER.get(countryNonSpecificCode);
   }
 }

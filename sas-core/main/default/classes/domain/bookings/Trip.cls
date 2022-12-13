@@ -460,7 +460,7 @@ public without sharing class Trip {
       );
     }
 
-    Boolean cancelledByCustomer = SegmentEvent.OFFICE_CODE_TO_IS_CUSTOMER.get(
+    Boolean cancelledByCustomer = SegmentEvent.customerResponsibleForEvent(
       officeResponsibleForCancellation
     );
 
