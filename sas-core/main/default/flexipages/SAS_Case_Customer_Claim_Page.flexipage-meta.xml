@@ -463,8 +463,9 @@
                 <identifier>c_handlingInstructions</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.EU261_Handling_Instructions__c}</leftValue>
-                        <operator>NE</operator>
+                        <leftValue>{!Record.Claim_EU261_Handling_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Possibly eligible for compensation</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

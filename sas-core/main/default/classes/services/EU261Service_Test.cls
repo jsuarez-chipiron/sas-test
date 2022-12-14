@@ -378,7 +378,7 @@ private class EU261Service_Test {
     res.settlements = SettlementsSelector.newInstance()
       .selectByClaimId(claimIds);
     res.cases = [
-      SELECT Id, EU261_Handling_Instructions__c, Status
+      SELECT Id, Handling_Instructions__c, Status
       FROM Case
       WHERE LIA_Claim__c IN :claimIds
     ];
@@ -1319,14 +1319,14 @@ private class EU261Service_Test {
 
     System.assertEquals(1, res.cases.size(), 'There should be one case.');
     System.assert(
-      res.cases[0].EU261_Handling_Instructions__c != null,
+      res.cases[0].Handling_Instructions__c != null,
       'There should be eu261 handling instructions in the case.'
     );
     System.assertEquals(
       EU261Service.SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS.get(
         EU261Claim.SemiAutomationReason.RequiresPowerOfAttorney
       ),
-      res.cases[0].EU261_Handling_Instructions__c,
+      res.cases[0].Handling_Instructions__c,
       'EU261 handling instructions should include comment on PoA'
     );
 
@@ -1415,7 +1415,7 @@ private class EU261Service_Test {
       EU261Service.SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS.get(
         EU261Claim.SemiAutomationReason.InvalidSettlementDetails
       ),
-      res.cases[0].EU261_Handling_Instructions__c,
+      res.cases[0].Handling_Instructions__c,
       'EU261 handling instructions should include comment on invalid settlement details.'
     );
 

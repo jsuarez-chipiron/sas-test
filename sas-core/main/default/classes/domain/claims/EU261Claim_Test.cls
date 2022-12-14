@@ -200,6 +200,71 @@ private class EU261Claim_Test {
     return new BookingClaim(b, c);
   }
 
+  /** 
+   * Based on:
+  res_id;res_crea_dte;off_cd;staff_pnr;res_upd_tms;office_updating;seg_tattoo;record_opr_type;res_upd_no;action_cd;prev_action_cd;flt_airl_cd;flt_nb;stn_fr_cd;stn_to_cd;dep_dte;opr_bkg_cl;opr_svc_cl;arr_dte;seg_status;aircraft_registration;flt_status;std_tms;sta_tms;etd_tms;eta_tms;atd_tms;ata_tms;arrival_delay_mins;dep_delay_mins;change_reason;suppl_info;is_latest
+  NYCZTB ;2022-04-29 00:00:00;CPHSK08RV;N;2022-04-29 10:26:00;CPHSK08RV;1;A ;0;HK;  ;SK ;2517;CPH  ;BRI  ;2022-07-15 00:00:00;W;M;2022-07-15 00:00:00;ACTIVE;LNRGL   ;X;2022-07-15 13:40:00;2022-07-15 16:25:00;null;null;null;null;null;null;INDU;PILOT STRIKE;0
+  NYCZTB ;2022-04-29 00:00:00;CPHSK08RV;N;2022-04-29 10:26:00;CPHSK08RV;2;A ;0;HK;  ;SK ;2518;BRI  ;CPH  ;2022-07-25 00:00:00;W;M;2022-07-25 00:00:00;ACTIVE;SEROS   ;F;2022-07-25 17:15:00;2022-07-25 20:00:00;null;2022-07-25 19:49:00;2022-07-25 17:26:00;2022-07-25 19:58:00;−2;11;    ;MINIMIZE DELAYS;0
+  NYCZTB ;2022-04-29 00:00:00;CPHSK08RV;N;2022-04-29 10:28:00;CPHSK08RV;1;C ;2;HK;HK;SK ;2517;CPH  ;BRI  ;2022-07-15 00:00:00;W;M;2022-07-15 00:00:00;ACTIVE;LNRGL   ;X;2022-07-15 13:40:00;2022-07-15 16:25:00;null;null;null;null;null;null;INDU;PILOT STRIKE;0
+  NYCZTB ;2022-04-29 00:00:00;CPHSK08RV;N;2022-04-29 10:28:00;CPHSK08RV;2;C ;2;HK;HK;SK ;2518;BRI  ;CPH  ;2022-07-25 00:00:00;W;M;2022-07-25 00:00:00;ACTIVE;SEROS   ;F;2022-07-25 17:15:00;2022-07-25 20:00:00;null;2022-07-25 19:49:00;2022-07-25 17:26:00;2022-07-25 19:58:00;−2;11;    ;MINIMIZE DELAYS;1
+  NYCZTB ;2022-04-29 00:00:00;CPHSK08RV;N;2022-07-15 04:57:00;STOSK059A;1;C ;5;UN;HK;SK ;2517;CPH  ;BRI  ;2022-07-15 00:00:00;W;M;2022-07-15 00:00:00;CANCELLED;LNRGL   ;X;2022-07-15 13:40:00;2022-07-15 16:25:00;null;null;null;null;null;null;INDU;PILOT STRIKE;1
+  */
+  private static BookingClaim getCancellationFullBookingHistoryNoReplacement() {
+    Datetime returnTime = departure.addDays(7);
+    Flight f1 = TestFlightFactory.create('SK0001', departure, 'CPH', 'HEL');
+    Flight f2 = TestFlightFactory.create('SK0002', returnTime, 'HEL', 'CPH');
+    List<Flight> flights = new List<Flight>{ f1, f2 };
+
+    List<FlightIrregularity> fis = new List<FlightIrregularity>{
+      TestIrregularityFactory.createCancellation(f1)
+    };
+
+    Datetime cancellationTime = departure.addDays(-1);
+    fis[0].cancellationTime = cancellationTime;
+    f1.irregularities = fis;
+
+    ClaimCustomer cc = new ClaimCustomer();
+    cc.firstname = 'Test';
+    cc.lastName = 'Testsson';
+
+    Claim c = TestClaimFactory.create();
+    c.recordType = Claim.RecordType.CustomerClaim;
+    c.category = Claim.Category.FlightDisruptions;
+    c.type = Claim.Type.FlightCancellation;
+    c.departureDate = departure.date();
+    c.customers = new List<ClaimCustomer>{ cc };
+    c.flightNumber = 'SK0001';
+    c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
+
+    Booking b = TestBookingFactory.createValidForClaim(c);
+    b.type = Booking.Type.OneWay;
+
+    Datetime timeBooked = departure.addDays(-60);
+    Datetime unconfirmed = cancellationTime;
+
+    TestSegmentFactory.SegmentsInfo sInfo1 = new TestSegmentFactory.SegmentsInfo(
+      f1,
+      timeBooked,
+      unconfirmed,
+      TestSegmentFactory.History.DEFAULTCANCELLATION
+    );
+    TestSegmentFactory.SegmentsInfo sInfo2 = new TestSegmentFactory.SegmentsInfo(
+      f2,
+      timeBooked,
+      null,
+      TestSegmentFactory.History.DEFAULTCONFIRMED
+    );
+
+    List<TestSegmentFactory.SegmentsInfo> segmentInfos = new List<TestSegmentFactory.SegmentsInfo>{
+      sInfo1,
+      sInfo2
+    };
+
+    b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
+
+    return new BookingClaim(b, c);
+  }
+
   @IsTest
   static void onlyClaimsWhichDoNotRequirePOACanBeEvaluated() {
     Datetime newDeparture = departure.addHours(4);
@@ -1071,6 +1136,88 @@ private class EU261Claim_Test {
   }
 
   @IsTest
+  static void claimWhereTheCustomerCancelledTheFlightShouldBeDenied() {
+    // A rebooked flight which arrives 4h later than the original flight.
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime = bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime.addDays(1);
+    List<SegmentEvent> newEvents = new List<SegmentEvent>();
+    for (SegmentEvent se : bc.b.segments[0].getEvents()) {
+      se.officeCode = 'STOSK08RV';
+      if (se.newStatus == SegmentEvent.StatusCode.C_UN) {
+        se.operationType = SegmentEvent.OperationType.C_X;
+        se.newStatus = SegmentEvent.StatusCode.C_XX;
+      }
+      newEvents.add(se);
+    } // TODO: change to real codes
+    bc.b.segments[0].events = newEvents;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      result.verdict,
+      'A claim where the customer cancelled the flight should not be automated'
+    );
+    System.assertEquals(
+      'customer cancelled the flight',
+      result.reasoning,
+      'Reasoning should be "customer cancelled the flight"'
+    );
+  }
+
+  @IsTest
+  static void claimWhereTheSASRemovedTheFlightShouldBeApproved() {
+    // A rebooked flight which arrives 4h later than the original flight.
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime = bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime.addDays(1);
+    List<SegmentEvent> newEvents = new List<SegmentEvent>();
+    for (SegmentEvent se : bc.b.segments[0].getEvents()) {
+      se.officeCode = 'STOSK0001';
+      if (se.newStatus == SegmentEvent.StatusCode.C_UN) {
+        se.operationType = SegmentEvent.OperationType.C_X;
+        se.newStatus = SegmentEvent.StatusCode.C_XX;
+      }
+      newEvents.add(se);
+    } // TODO: change to real codes
+    bc.b.segments[0].events = newEvents;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      result.verdict,
+      'Claim where a segment has been removed without being cancelled should be evaluated.'
+    );
+    System.assertEquals(
+      new Money(250, Money.CurrencyCode.EUR),
+      result.compensationPerCustomerInEUR.values()[0],
+      'We should pay out €250 for the minimal cancellation claim'
+    );
+  }
+
+  @IsTest
   static void claimWithRemovedButNotCancelledSegmentsAfterCancellationShouldBeAutomated() {
     // Create a default booking but edit the segment history
     BookingClaim bc = getDefaultCancellationBookingClaim();
@@ -1213,9 +1360,9 @@ private class EU261Claim_Test {
       'A claim with segments which have unsupported segment events should not be handled.'
     );
     System.assertEquals(
-      'cannot get segment statuses',
+      'booking has unsupported event(s)',
       result.reasoning,
-      'Unhandled reason should be "cannot get segment statuses"'
+      'Unhandled reason should be "booking has unsupported event(s)"'
     );
   }
 
@@ -1256,9 +1403,9 @@ private class EU261Claim_Test {
       'A claim with segments which have group segment events should not be handled.'
     );
     System.assertEquals(
-      'cannot get segment statuses',
+      'booking has unsupported event(s)',
       result.reasoning,
-      'Unhandled reason should be "cannot get segment statuses"'
+      'Unhandled reason should be "booking has unsupported event(s)"'
     );
   }
 
@@ -1317,6 +1464,31 @@ private class EU261Claim_Test {
   @IsTest
   static void claimWithFullHistoryShouldBeAutomated() {
     BookingClaim bc = getCancellationFullBookingHistory();
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      result.verdict,
+      'The minimal cancellation claim should be automated.'
+    );
+    System.assertEquals(
+      new Money(250, Money.CurrencyCode.EUR),
+      result.compensationPerCustomerInEUR.values()[0],
+      'We should pay out €250 for the minimal cancellation claim'
+    );
+  }
+
+  @IsTest
+  static void test2() {
+    BookingClaim bc = getCancellationFullBookingHistoryNoReplacement();
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,

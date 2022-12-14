@@ -1,5 +1,13 @@
+/**
+ * A class for evaluating claims against the EU261 regulation to determine
+ * whether the claims should be compensated.
+ *
+ * Individuals instances of this class are individual claims from a customer.
+ *
+ * See EU261Service and Confluence for more details.
+ */
 public class EU261Claim {
-  private static Map<String, Integer> countryToClaimTimeLimitInMonths = new Map<String, Integer>{
+  private static final Map<String, Integer> COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS = new Map<String, Integer>{
     'BE' => 12,
     'DK' => 3 * 12,
     'FI' => 3 * 12,
@@ -277,51 +285,35 @@ public class EU261Claim {
   }
 
   private Boolean canGetSegmentStatuses() {
-    try {
-      for (Segment s : this.claimedBooking.segments) {
+    for (Segment s : this.claimedBooking.segments) {
+      try {
         s.getStatus(Datetime.now());
+      } catch (Segment.UnsupportedException e) {
+        continue;
+      } catch (U.InvalidArgumentException e) {
+        return false;
       }
-    } catch (Segment.UnsupportedException e) {
-      return false;
-    } catch (U.InvalidArgumentException e) {
-      return false;
     }
     return true;
   }
 
+  private Boolean bookingHasUnsupportedEvents() {
+    for (Segment s : this.claimedBooking.segments) {
+      try {
+        s.getStatus(Datetime.now());
+      } catch (Segment.UnsupportedException e) {
+        return true;
+      } catch (U.InvalidArgumentException e) {
+        continue;
+      }
+    }
+    return false;
+  }
+
   /**
-   * Verifies that we have necessessary information for this claim, and that the
-   * type of the claim is such that we are able to evaluate it.
-   *
-   * Populates unhandledReason and canBeEvaluated.
-   *
-   * If canBeEvaluated for the given claim is true, we can try to evaluate the claim.
-   *
-   * Current limitations:
-   *  [ ] flight disruption, correct record type etc.
-   *      [x] must be flight disruption
-   *      [x] must be CustomerClaim
-   *      [x] must be New
-   *      [ ] must have Queue as owner
-   *  [x] one way ticket
-   *  [x] only one person
-   *  [x] only one flight
-   *  [x] delay, not a cancellation
-   *  [x] no claim expenses
-   *  [x] no POA -> check that no attachments
-   *  [ ] no proactivity on the claim  WE MIGHT NOT BE ABLE TO TAKE PROACTIVITIES INTO ACCOUNT
-   *  [x] SAS is the only carrier
-   *  [x] no claim related to this PNR
-   *  [x] one delay reason
-   *  [x] within EU
-   *  [x] min 2h, max 5h delay
-   *  [x] revenue ticket -> check for farebasis for SAS claims.
-   *  [x] - not id ticket
-   *  [x] - not infant // only one passenger
-   *  [x] no duplicates
-   */
-  /**
-   * Returns a decision if we cannot handle this claim. Returns null if we can evaluate it.
+   * Checks whether we're able to evaluate this claim with the data we have on
+   * it. Returns a decision with verdict of UnableToHandle if we cannot handle
+   * this claim. Returns null if we _can_ evaluate it.
    */
   private Decision canWeEvaluate() {
     Claim c = this.claimObj;
@@ -340,14 +332,12 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only claims in category "Flight disruptions"'
       );
-    } else if (
-      !(c.type == Claim.Type.FlightDelay ||
-      c.type == Claim.Type.FlightCancellation)
-    ) {
+    } else if (!(c.type == Claim.Type.FlightCancellation)) {
+      // c.type == Claim.Type.FlightDelay ||
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'can handle only claims in type "Flight delay" or "Flight cancellation"'
-      );
+        'can handle only claims in type "Flight cancellation"'
+      ); // "Flight delay" or
     } else if (c.recordType != Claim.RecordType.CustomerClaim) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -370,9 +360,6 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only one booking per claim'
       );
-      // TODO: Think about how to handle repeat PNRs.
-      // TODO: Think about the potential fraud cases.
-      // TODO: Ensure that we have only a specific number of trips.
     } else if (this.claimedBooking.flights.size() == 0) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -404,10 +391,12 @@ public class EU261Claim {
       c.type == Claim.Type.FlightCancellation && flightCancelledWellInTime()
     ) {
       return null; // If flight was cancelled 14 days, or more, in advance the customer is not eligible
-    } else if (this.hasRotationIrregularities()) {
+    } else if (
+      c.type == Claim.Type.FlightDelay && this.hasRotationIrregularities()
+    ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot handle flights with irregularities caused by rotations'
+        'cannot handle flights with delays caused by rotations'
       );
     } else if (
       c.type == Claim.Type.FlightCancellation &&
@@ -433,6 +422,11 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot get segment statuses'
+      );
+    } else if (bookingHasUnsupportedEvents()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'booking has unsupported event(s)'
       );
     }
 
@@ -483,12 +477,17 @@ public class EU261Claim {
       );
     } else if (
       c.type == Claim.Type.FlightCancellation &&
-      this.tripWithClaimFlight.cancelledSegmentRemovedBeforeCancellation
+      this.tripWithClaimFlight.isUncertainWhoCancelled()
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'it is uncertain if SAS or the customer cancelled the flight'
       ); // TODO: Check office number => deny/accept
+    } else if (
+      c.type == Claim.Type.FlightCancellation &&
+      this.tripWithClaimFlight.customerCancelled()
+    ) {
+      return null; // Deny, customer cancelled the flight
     } else if (
       c.type == Claim.Type.FlightCancellation &&
       this.claimedBooking.hasReinstated(this.claimFlight)
@@ -558,7 +557,7 @@ public class EU261Claim {
    * They are allowed to do this only if all of the following are true:
    * 1. Claimant is a private customer
    * 2. All claimed passengers have the same last name as the contact person
-   * 3. There are less than four people overall in the booking
+   * 3. There are five or fewer people overall in the claim
    */
   private Boolean requiresPowerOfAttorney() {
     Claim c = this.claimObj;
@@ -566,6 +565,8 @@ public class EU261Claim {
       c.contactType != Claim.ContactType.PrivateCustomer ||
       (c.customers.size() > 5)
     ) {
+      // The larger than 5 customer is an arbitrary number to ensure that large
+      // groups are always vetted by an agent for safety.
       return true;
     }
 
@@ -625,10 +626,10 @@ public class EU261Claim {
     Claim c = this.claimObj;
     Datetime tripDate = this.tripWithClaimFlight.getFinalDestinationArrivalTime();
 
-    Integer limitInDepartureCountry = countryToClaimTimeLimitInMonths.get(
+    Integer limitInDepartureCountry = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
       this.tripWithClaimFlight.originAirport.countryCode
     );
-    Integer limitInArrivalCountry = countryToClaimTimeLimitInMonths.get(
+    Integer limitInArrivalCountry = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
       this.tripWithClaimFlight.destinationAirport.countryCode
     );
 
@@ -641,7 +642,7 @@ public class EU261Claim {
     } else if (limitInArrivalCountry != null) {
       timeLimit = limitInArrivalCountry;
     } else {
-      timeLimit = countryToClaimTimeLimitInMonths.get('default');
+      timeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get('default');
     }
 
     // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
@@ -679,6 +680,13 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'not filed on time'
       );
+    } else if (
+      this.hasCancellation && this.tripWithClaimFlight.customerCancelled()
+    ) {
+      return new Decision(
+        Claim.EU261HandlingStatus.IneligibleForCompensation,
+        'customer cancelled the flight'
+      );
     } else if (this.hasCancellation) {
       // If the claim flight was cancelled the customer should receive compensation according to the cancellation logic
       return this.calculateCompensationForCancellation();
@@ -696,6 +704,8 @@ public class EU261Claim {
    * Calculates how much compensation in EUR the customer(s) is/are entitled to as per EU261 regarding cancellations.
    * Source: EU261 Article 6 and 7. (https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1476179175834&uri=CELEX:32004R0261)
    *
+   * Returns the result as either a decision of Ineligible with explanations,
+   * or Eligible with compensation amounts set.
    */
   private Decision calculateCompensationForCancellation() {
     // FLight plan before the cancellation
@@ -769,6 +779,7 @@ public class EU261Claim {
       );
     }
 
+    // TODO: Is this being done correctly?
     if (compensation == new Money(0, Money.CurrencyCode.EUR)) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
@@ -845,7 +856,6 @@ public class EU261Claim {
   }
 
   /**
-   * TODO: Mover to gather all necessary information and batch
    * @return an Integer of the amount of minutes delayed for the ac.tripWithClaimFlight with the delay minutes outside SAS control deducted.
    */
   private Integer getMinutesDelayedWithinSASControl() {
@@ -928,16 +938,10 @@ public class EU261Claim {
 
   /**
    *
-   * Calculates whether the claim is covered by EU261
+   * Checks whether the claim is covered by EU261 jurisdiction.
    * EU261 is only applicable for flights leaving and/or arriving to an airport in the European Union, Iceland, Norway or Switzerland.
    * Also, if the customer has already received benefits related to a law of a non-EU country they are not eligable for compensation.
    * Source: https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm
-   *
-   * TODO:
-   * The "already received benefits"-part, might be impossible to automate.
-   * Is there any data which is shared between carriers? Can we add a checkmark "I have not received compensation under non-EU law"?
-   *
-   * @return a boolean which asserts if the claim is covered by EU261
    */
   private Boolean isWithinEU261Jurisdiction() {
     return true; // Until we have other operating carriers.
@@ -955,9 +959,9 @@ public class EU261Claim {
   }
 
   /**
-   * Calculates how much compensation in EUR the customer(s) is/are entitled to as per EU261 regarding delays.
+   * Calculates the actual amount of compensation in EUR the customer(s) is/are
+   * entitled according to EU261 for _delays_.
    * Source: EU261 Article 6 and 7. (https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1476179175834&uri=CELEX:32004R0261)
-   *
    */
   private Decision calculateCompensationForDelay() {
     final Integer MINIMUM_DELAY_FOR_COMPENSATION = 180;
@@ -1112,13 +1116,13 @@ public class EU261Claim {
     Decimal totalDelay,
     Decimal delayWithinSASControl
   ) {
-    List<Decimal> delayThresholds = new List<Decimal>{
+    final List<Decimal> DELAY_TRESHOLDS = new List<Decimal>{
       120.0,
       180.0,
       240.0,
       300.0
     };
-    for (Decimal threshold : delayThresholds) {
+    for (Decimal threshold : DELAY_TRESHOLDS) {
       Boolean totalDelayAbove = totalDelay > threshold;
       Boolean withinControlAbove = delayWithinSASControl > threshold;
       if (totalDelayAbove != withinControlAbove) {

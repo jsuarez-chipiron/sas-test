@@ -4,6 +4,7 @@ public without sharing class Trip {
   public List<Leg> sortedLegs;
   public Boolean SASIsOnlyOperatingCarrier;
   public Boolean cancelledSegmentRemovedBeforeCancellation = false;
+  public String officeResponsibleForCancellation;
 
   /**
    * Returns an ordered list of all trips in a booking.
@@ -53,24 +54,7 @@ public without sharing class Trip {
         );
       }
     }
-    return createFromSegments(b.segments, theTime);
-  }
-
-  public static List<Trip> createFromSegments(List<Segment> segments) {
-    return createFromSegments(segments, System.now());
-  }
-
-  public static List<Trip> createFromSegments(
-    List<Segment> segments,
-    Datetime theTime
-  ) {
-    List<Segment> activeSegments = new List<Segment>();
-    for (Segment s : segments) {
-      if (s.getStatus(theTime) == Segment.Status.Confirmed) {
-        activeSegments.add(s);
-      }
-    }
-    return divideActiveSegmentsIntoTrips(activeSegments);
+    return divideActiveSegmentsIntoTrips(b.getActiveSegmentsAtTime(theTime));
   }
 
   public class InsufficientDataException extends Exception {
@@ -86,6 +70,9 @@ public without sharing class Trip {
   }
 
   public class RouteException extends Exception {
+  }
+
+  public class ResponsibilityException extends Exception {
   }
 
   private Trip(List<Leg> legsInOrder) {
@@ -375,6 +362,62 @@ public without sharing class Trip {
     return tripsToReturn;
   }
 
+  public Trip getOfferedRebooking(List<Segment> activeSegments) {
+    if (activeSegments.size() == 0) {
+      return null;
+    }
+
+    List<Leg> sortedLegs = createLegsFromSegments(activeSegments);
+
+    // Add all flights scheduled between (and including) the flight with the same origin as
+    // the original trip and the flight with the same destination of the original trip.
+    Trip replacementTrip;
+    Boolean addFlight = false;
+    List<Leg> legsInCurrentTrip = new List<Leg>();
+    for (Leg leg : sortedLegs) {
+      if (leg.flight.departureAirport == this.originAirport.tedsIdentifier) {
+        addFlight = true;
+      }
+      if (addFlight) {
+        legsInCurrentTrip.add(leg);
+      }
+      if (leg.flight.arrivalAirport == this.destinationAirport.tedsIdentifier) {
+        replacementTrip = new Trip(legsInCurrentTrip);
+        break;
+      }
+    }
+
+    if (replacementTrip == null) {
+      if (legsInCurrentTrip.size() > 0) {
+        throw new RouteException(
+          'could not find route from origin to destination'
+        );
+      } else {
+        return null;
+      }
+    }
+
+    replacementTrip.originAirport = this.originAirport;
+    replacementTrip.destinationAirport = this.destinationAirport;
+
+    checkIfValidReplacement(this, replacementTrip);
+
+    return replacementTrip;
+  }
+
+  public static Trip getTripWithFlight(
+    List<Trip> trips,
+    Flight cancelledFlight
+  ) {
+    for (Trip t : trips) {
+      if (t.containsFlight(cancelledFlight)) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  // Deprecated
   public static List<Trip> getTripBeforeAndAfterCancelledFlight(
     List<Trip> tripsBefore,
     List<Trip> tripsAfter,
@@ -434,5 +477,38 @@ public without sharing class Trip {
         'The replacement has a different origin or destination'
       );
     }
+  }
+
+  public Boolean isUncertainWhoCancelled() {
+    try {
+      customerCancelled();
+    } catch (ResponsibilityException e) {
+      return true;
+    }
+    return false;
+  }
+
+  public Boolean customerCancelled() {
+    if (!cancelledSegmentRemovedBeforeCancellation) {
+      return false;
+    }
+
+    if (officeResponsibleForCancellation == null) {
+      throw new ResponsibilityException(
+        'No office is responsible for cancelling the flight'
+      );
+    }
+
+    Boolean cancelledByCustomer = SegmentEvent.customerResponsibleForEvent(
+      officeResponsibleForCancellation
+    );
+
+    if (cancelledByCustomer == null) {
+      throw new ResponsibilityException(
+        'It is uncertain who is responsible for cancelling the flight'
+      );
+    }
+
+    return cancelledByCustomer;
   }
 }

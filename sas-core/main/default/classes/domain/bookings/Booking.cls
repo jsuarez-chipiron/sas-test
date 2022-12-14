@@ -237,15 +237,21 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     Datetime affectedByIrregularity;
     Datetime unconfirmed;
     Datetime removed;
+    String officeUnconfirming;
+    String officeRemoving;
 
     public CancellationTime(
       Datetime affectedByIrregularity,
       Datetime unconfirmed,
-      Datetime removed
+      Datetime removed,
+      String officeUnconfirming,
+      String officeRemoving
     ) {
       this.affectedByIrregularity = affectedByIrregularity;
       this.unconfirmed = unconfirmed;
       this.removed = removed;
+      this.officeUnconfirming = officeUnconfirming;
+      this.officeRemoving = officeRemoving;
     }
   }
 
@@ -268,9 +274,22 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     // Make sure all segments for the flight have the same history
     Datetime segmentUnconfirmed;
     Datetime segmentRemoved;
+    String officeUnconfirming;
+    String officeRemoving;
     for (Segment s : getSegmentsForFlight(f)) {
-      Datetime currentSegmentUnconfirmed = s.getTimeUnconfirmed();
-      Datetime currentSegmentRemoved = s.getTimeRemoved();
+      SegmentEvent unconfirmedEvent = s.getUnconfirmedEvent();
+      SegmentEvent removedEvent = s.getRemovedEvent();
+
+      Datetime currentSegmentUnconfirmed;
+      if (unconfirmedEvent != null) {
+        currentSegmentUnconfirmed = unconfirmedEvent.updateDate;
+        officeUnconfirming = unconfirmedEvent.officeCode;
+      }
+      Datetime currentSegmentRemoved;
+      if (removedEvent != null) {
+        currentSegmentRemoved = removedEvent.updateDate;
+        officeRemoving = removedEvent.officeCode;
+      }
 
       if (
         currentSegmentUnconfirmed != segmentUnconfirmed &&
@@ -299,7 +318,9 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     return new CancellationTime(
       cancellation.cancellationTime,
       segmentUnconfirmed,
-      segmentRemoved
+      segmentRemoved,
+      officeUnconfirming,
+      officeRemoving
     );
   }
 
@@ -327,42 +348,45 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       tripsBeforeIrregularity = getTripsAtTime(removed.addMinutes(-5));
     }
 
-    // First try to calculate this based on the UN time, then the removed time
-    List<Trip> tripBeforeAndAfter;
-    try {
-      List<Trip> tripsAfterUnconfirmed = getTripsAtTime(unconfirmed);
-      tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
-        tripsBeforeIrregularity,
-        tripsAfterUnconfirmed,
-        cancelledFlight
-      );
+    Trip tripWithCancelledFlight = Trip.getTripWithFlight(
+      tripsBeforeIrregularity,
+      cancelledFlight
+    );
 
-      if (tripBeforeAndAfter[1] == null) {
+    if (tripWithCancelledFlight == null) {
+      throw new Trip.InvalidException(
+        'was not able to set trip with claim flight'
+      );
+    }
+
+    // First try to calculate this based on the UN time, then the removed time
+    Trip replacementTrip;
+    try {
+      List<Segment> activeSegments = getActiveSegmentsAtTime(unconfirmed);
+
+      replacementTrip = tripWithCancelledFlight.getOfferedRebooking(
+        activeSegments
+      );
+      if (replacementTrip == null) {
         throw new Trip.InvalidException('No replacement');
       }
     } catch (Trip.InvalidException e) {
-      // Typically happens when an agent has manually rebooked the passengers
-      List<Trip> tripsAfterRemoved = getTripsAtTime(removed);
-      tripBeforeAndAfter = Trip.getTripBeforeAndAfterCancelledFlight(
-        tripsBeforeIrregularity,
-        tripsAfterRemoved,
-        cancelledFlight
-      ); // TODO: Look into if this can be loosened (talk to process owner)
-    }
+      List<Segment> activeSegments = getActiveSegmentsAtTime(removed);
 
-    Trip tripWithCancelledFlight = tripBeforeAndAfter[0];
-    Trip tripWithCancelledFlightReplacement = tripBeforeAndAfter[1];
+      // Typically happens when an agent has manually rebooked the passengers
+      replacementTrip = tripWithCancelledFlight.getOfferedRebooking(
+        activeSegments
+      );
+    }
 
     Boolean removedBeforeIrregularity =
       removed != null &&
       removed < cancellationTimeInfo.affectedByIrregularity;
 
+    tripWithCancelledFlight.officeResponsibleForCancellation = cancellationTimeInfo.officeRemoving;
     tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeIrregularity;
 
-    return new List<Trip>{
-      tripWithCancelledFlight,
-      tripWithCancelledFlightReplacement
-    };
+    return new List<Trip>{ tripWithCancelledFlight, replacementTrip };
   }
 
   public Trip getTripWithFlight(Flight f) {
@@ -421,5 +445,18 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     }
 
     return toReturn;
+  }
+
+  public List<Segment> getActiveSegmentsAtTime(Datetime theTime) {
+    U.verifyNotNull(segments);
+
+    List<Segment> activeSegments = new List<Segment>();
+    for (Segment s : segments) {
+      if (s.getStatus(theTime) == Segment.Status.Confirmed) {
+        activeSegments.add(s);
+      }
+    }
+
+    return activeSegments;
   }
 }
