@@ -1056,7 +1056,7 @@ public without sharing class Settlements extends ApplicationDomain {
           }
         }
       }
-      if (!s.Postal_Code__c.isAlphanumeric()) {
+      if (s.Postal_Code__c != null && !s.Postal_Code__c.isAlphanumeric()) {
         errorMessages.add('Postal code should not contain special characters');
       }
 
