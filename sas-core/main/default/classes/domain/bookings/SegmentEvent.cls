@@ -507,4 +507,14 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
 
     return OFFICE_CODE_TO_EXPLANATION.get(countryNonSpecificCode);
   }
+  public static OperationType getOperationTypeFromPicklistValue(
+    String picklistValue
+  ) {
+    return OPERATION_TYPE_PICKLIST_VALUE_TO_ENUM.get(picklistValue);
+  }
+  public static StatusCode getStatusCodeFromPicklistValue(
+    String picklistValue
+  ) {
+    return STATUS_PICKLIST_VALUE_TO_ENUM.get(picklistValue);
+  }
 }

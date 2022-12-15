@@ -19,6 +19,8 @@ global class APIMMock implements HttpCalloutMock {
   public static final String DELAYED_FLIGHT_ID_2 = 'WF0075-20220531-TRD-OSL';
   public static final String CANCELLED_FLIGHT_ID = 'LH2434-20220531-MUC-BLL';
   public static final String FLIGHT_WITH_LONG_REASON = 'SK0909-20200410-ARN-CPH';
+  public static final String EDW_SINGLE_PNR = 'UUWBU6';
+  public static final String EDW_MULTIPLE_PNR = 'SX6QHB';
 
   public static final String DEFAULT_VALID_TEDS_IDENTIFIER =
     DEFAULT_VALID_TEDS_PNR +
@@ -169,6 +171,16 @@ global class APIMMock implements HttpCalloutMock {
       } else {
         res.setHeader('Content-Type', 'application/json');
         res.setBody(APIMMockResponses.CARE_CLAIM_NOT_FOUND);
+      }
+    } else if (endpoint.contains('claim/bookingdetails')) {
+      if (endpoint.contains(EDW_SINGLE_PNR)) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(APIMMockResponses.EDW_BOOKING_DATA_SINGLE_BOOKING_RETURN);
+      } else if (endpoint.contains(EDW_MULTIPLE_PNR)) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(APIMMockResponses.EDW_BOOKING_DATA_MULTIPLE_BOOKING_RETURN);
+      } else {
+        res.setStatusCode(404);
       }
     } else if (endpoint.contains('customercare')) {
       res.setStatusCode(200);

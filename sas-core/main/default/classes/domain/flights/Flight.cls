@@ -225,6 +225,10 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     return cancellations;
   }
 
+  public static Status getStatusFromPicklistValue(String picklistValue) {
+    return STATUS_PICKLIST_VALUE_TO_ENUM.get(picklistValue);
+  }
+
   /**
    * Calculates the direct distance between this flight's departure and
    * arrival airports.

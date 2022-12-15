@@ -1,12 +1,19 @@
 public without sharing class Passengers extends ApplicationDomain {
   public Passengers(List<SObject> records) {
     super(records);
+    this.instanceRecords = (List<Passenger__c>) Records;
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
       return new Passengers(records);
     }
+  }
+
+  public List<Passenger__c> instanceRecords;
+
+  public static Passengers newInstance(List<Passenger__c> sObjectList) {
+    return (Passengers) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
   public override void onApplyDefaults() {
@@ -57,5 +64,27 @@ public without sharing class Passengers extends ApplicationDomain {
         }
       }
     }
+  }
+  /**
+   * Creates a new Passengers instance based on the response from EDW
+   * @param passengerData List of passengers from the parsed EDW data
+   */
+  public static Passengers createFromEDWData(
+    List<FetchEDWDataResponse.Passenger> passengerData
+  ) {
+    List<Passenger__c> toReturn = new List<Passenger__c>();
+    for (FetchEDWDataResponse.Passenger passenger : passengerData) {
+      Passenger p = new Passenger(new Passenger__c());
+      p.firstName = passenger.firstName;
+      p.lastName = passenger.surName;
+      p.euroBonusNumber = String.valueOf(passenger.ebNumber);
+      p.email = passenger.email;
+      p.phone = String.valueOf(passenger.mobile);
+      p.identifier =
+        'PT' + String.valueOf(passengerData.indexOf(passenger) + 1);
+      p.updateSObjectFields();
+      toReturn.add(p.underlyingSObject);
+    }
+    return Passengers.newInstance(toReturn);
   }
 }
