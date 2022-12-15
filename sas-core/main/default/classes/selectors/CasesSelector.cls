@@ -180,7 +180,8 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     fflib_QueryFactory casesQF = newQueryFactory()
       .setCondition(
         'Status = :statusToFetch AND LastModifiedDate <= :lastUpdatedCutoff AND Department__c = :department'
-      );
+      )
+      .setLimit(10000);
     return (List<Case>) Database.query(casesQF.toSOQL());
   }
 
