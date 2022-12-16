@@ -1,4 +1,4 @@
-public with sharing class FetchEDWDataResponse {
+public with sharing class FetchEDWBookingResponse {
   public class Reservation {
     public String reservationNumber;
     public Long createdDate;
@@ -103,10 +103,10 @@ public with sharing class FetchEDWDataResponse {
     public Integer isLatest;
   }
 
-  public static FetchEDWDataResponse parse(String response) {
-    return (FetchEDWDataResponse) System.JSON.deserialize(
+  public static FetchEDWBookingResponse parse(String response) {
+    return (FetchEDWBookingResponse) System.JSON.deserialize(
       response,
-      FetchEDWDataResponse.class
+      FetchEDWBookingResponse.class
     );
   }
 }

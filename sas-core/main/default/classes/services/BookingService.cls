@@ -135,7 +135,7 @@ public without sharing class BookingService {
   ) {
     EDWIntegrationService.FetchEDWDataQuery query = new EDWIntegrationService.FetchEDWDataQuery();
     query.pnr = bookingReference;
-    FetchEDWDataResponse data = EDWIntegrationService.fetchEDWDataByQuery(
+    FetchEDWBookingResponse data = EDWIntegrationService.fetchEDWDataByQuery(
       query
     );
     Bookings toReturn = Bookings.createFromEDWData(

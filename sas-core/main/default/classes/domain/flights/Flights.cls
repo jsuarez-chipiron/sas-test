@@ -167,11 +167,11 @@ public without sharing class Flights extends ApplicationDomain {
   }
   //Flights and Irregularities are stored in the same table in EDW
   public static Flights createFromEDWData(
-    List<FetchEDWDataResponse.Irregularity> flightSourceData
+    List<FetchEDWBookingResponse.Irregularity> flightSourceData
   ) {
     Map<String, Flight__c> flightIdToRecord = new Map<String, Flight__c>();
-    List<FetchEDWDataResponse.Irregularity> irregularitiesToCreate = new List<FetchEDWDataResponse.Irregularity>();
-    for (FetchEDWDataResponse.Irregularity irr : flightSourceData) {
+    List<FetchEDWBookingResponse.Irregularity> irregularitiesToCreate = new List<FetchEDWBookingResponse.Irregularity>();
+    for (FetchEDWBookingResponse.Irregularity irr : flightSourceData) {
       //The input data contains different data based on if flight belongs to SK or other carrier
       String flightStatus = 'unknown';
       String arrivalStatus = 'unknown';

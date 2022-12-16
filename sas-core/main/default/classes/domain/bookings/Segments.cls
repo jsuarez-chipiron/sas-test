@@ -24,14 +24,14 @@ public without sharing class Segments extends ApplicationDomain {
    * a segment based on the latest update
    */
   public static Segments createFromEDWData(
-    List<FetchEDWDataResponse.Segment> sourceData,
+    List<FetchEDWBookingResponse.Segment> sourceData,
     List<Passenger__c> passengersInBooking
   ) {
     List<Segment__c> allCreatedSegments = new List<Segment__c>();
     Map<String, List<Segment__c>> flightIdToSegments = new Map<String, List<Segment__c>>();
-    List<FetchEDWDataResponse.Segment> segmentEventsToCreate = new List<FetchEDWDataResponse.Segment>();
+    List<FetchEDWBookingResponse.Segment> segmentEventsToCreate = new List<FetchEDWBookingResponse.Segment>();
 
-    for (FetchEDWDataResponse.Segment segment : sourceData) {
+    for (FetchEDWBookingResponse.Segment segment : sourceData) {
       if (segment.isLatest == 1 || segment.segStatus == 'SCHED') {
         String segmentFlightId = String.format(
           '{0}{1}-{2}-{3}-{4}',

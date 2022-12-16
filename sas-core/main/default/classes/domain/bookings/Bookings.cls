@@ -207,11 +207,11 @@ public without sharing class Bookings extends ApplicationDomain {
   }
 
   public static Bookings createFromEDWData(
-    List<FetchEDWDataResponse.Reservation> reservations
+    List<FetchEDWBookingResponse.Reservation> reservations
   ) {
     List<EDWBooking> edwBookings = new List<EDWBooking>();
     List<Booking__c> createdBookings = new List<Booking__c>();
-    for (FetchEDWDataResponse.Reservation reservation : reservations) {
+    for (FetchEDWBookingResponse.Reservation reservation : reservations) {
       String bookingIdentifier = String.format(
         '{0}-{1}',
         new List<Object>{

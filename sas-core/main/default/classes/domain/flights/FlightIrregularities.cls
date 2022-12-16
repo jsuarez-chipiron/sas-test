@@ -144,11 +144,11 @@ public without sharing class FlightIrregularities extends ApplicationDomain {
   }
 
   public static FlightIrregularities createFromEDWData(
-    List<FetchEDWDataResponse.Irregularity> irregularities
+    List<FetchEDWBookingResponse.Irregularity> irregularities
   ) {
     List<FlightIrregularities__c> processedIrregularities = new List<FlightIrregularities__c>();
     Map<String, List<FlightIrregularities__c>> flightIdToIrregularities = new Map<String, List<FlightIrregularities__c>>();
-    for (FetchEDWDataResponse.Irregularity irr : irregularities) {
+    for (FetchEDWBookingResponse.Irregularity irr : irregularities) {
       String irrFlightId = String.format(
         '{0}-{1}-{2}-{3}',
         new List<Object>{

@@ -70,10 +70,10 @@ public without sharing class Passengers extends ApplicationDomain {
    * @param passengerData List of passengers from the parsed EDW data
    */
   public static Passengers createFromEDWData(
-    List<FetchEDWDataResponse.Passenger> passengerData
+    List<FetchEDWBookingResponse.Passenger> passengerData
   ) {
     List<Passenger__c> toReturn = new List<Passenger__c>();
-    for (FetchEDWDataResponse.Passenger passenger : passengerData) {
+    for (FetchEDWBookingResponse.Passenger passenger : passengerData) {
       Passenger p = new Passenger(new Passenger__c());
       p.firstName = passenger.firstName;
       p.lastName = passenger.surName;

@@ -21,12 +21,12 @@ public without sharing class SegmentEvents extends ApplicationDomain {
   }
 
   public static SegmentEvents createFromEDWData(
-    List<FetchEDWDataResponse.Segment> segments,
+    List<FetchEDWBookingResponse.Segment> segments,
     List<Passenger__c> passengersInBooking
   ) {
     List<Segment_Event__c> processedEvents = new List<Segment_Event__c>();
     Map<String, Map<String, List<Segment_Event__c>>> segmentIdToEventsPerPassenger = new Map<String, Map<String, List<Segment_Event__c>>>();
-    for (FetchEDWDataResponse.Segment segment : segments) {
+    for (FetchEDWBookingResponse.Segment segment : segments) {
       String segmentFlightId = String.format(
         '{0}{1}-{2}-{3}-{4}',
         new List<Object>{

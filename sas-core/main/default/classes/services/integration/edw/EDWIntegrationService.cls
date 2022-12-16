@@ -23,7 +23,7 @@ public without sharing class EDWIntegrationService {
     }
   }
 
-  public static FetchEDWDataResponse fetchEDWDataByQuery(
+  public static FetchEDWBookingResponse fetchEDWDataByQuery(
     FetchEDWDataQuery query
   ) {
     if (
@@ -46,7 +46,7 @@ public without sharing class EDWIntegrationService {
       return null;
     }
 
-    return FetchEDWDataResponse.parse(response.getBody());
+    return FetchEDWBookingResponse.parse(response.getBody());
   }
 
   /**
