@@ -19,7 +19,7 @@ public without sharing class Bookings extends ApplicationDomain {
   public List<FullBookingData> fullRecords;
   // edwBookings exist only when an instance has been created from EDW
   // response data.
-  public List<EDWBooking> edwBookings;
+  public List<Booking.EDWBooking> edwBookings;
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
@@ -206,49 +206,8 @@ public without sharing class Bookings extends ApplicationDomain {
     return newBookingObject;
   }
 
-  public static Bookings createFromEDWData(
-    List<FetchEDWBookingResponse.Reservation> reservations
-  ) {
-    List<EDWBooking> edwBookings = new List<EDWBooking>();
-    List<Booking__c> createdBookings = new List<Booking__c>();
-    for (FetchEDWBookingResponse.Reservation reservation : reservations) {
-      String bookingIdentifier = String.format(
-        '{0}-{1}',
-        new List<Object>{
-          reservation.reservationNumber,
-          Datetime.newInstance(reservation.createdDate).format('yyyyMMdd')
-        }
-      );
-      //create booking
-      Booking b = new Booking(new Booking__c(Name = bookingIdentifier));
-      b.bookingReference = reservation.reservationNumber;
-      b.tedsIdentifier = bookingIdentifier;
-      b.updateSObjectFields();
-      //create flights
-      Flights createdFlights = Flights.createFromEDWData(
-        reservation.irregularityList.irregularity
-      );
-      //create passengers
-      Passengers createdPassengers = Passengers.createFromEDWData(
-        reservation.passengerList.passenger
-      );
-      Segments createdSegments = Segments.createFromEDWData(
-        reservation.segmentList.segment,
-        createdPassengers.instanceRecords
-      );
-      createdBookings.add(b.underlyingSObject);
-      edwBookings.add(
-        new EDWBooking(b, createdFlights, createdSegments, createdPassengers)
-      );
-    }
-    Bookings bookingsInstance = Bookings.newInstance(createdBookings);
-    bookingsInstance.edwBookings = edwBookings;
-    bookingsInstance.upsertEDWDataToDB();
-    return bookingsInstance;
-  }
-
   public Bookings upsertEDWDataToDB() {
-    for (EDWBooking edwb : edwBookings) {
+    for (Booking.EDWBooking edwb : edwBookings) {
       upsert edwb.booking.underlyingSObject TEDS_Identifier__c;
       edwb.flights.upsertToDB();
       for (Passenger__c p : edwb.passengers.instanceRecords) {
@@ -272,19 +231,6 @@ public without sharing class Bookings extends ApplicationDomain {
         .upsertToDB(edwb.passengers.instanceRecords);
     }
     return this;
-  }
-
-  public class EDWBooking {
-    public Booking booking { get; private set; }
-    public Segments segments { get; private set; }
-    public Flights flights { get; private set; }
-    public Passengers passengers { get; private set; }
-    public EDWBooking(Booking b, Flights f, Segments s, Passengers p) {
-      this.booking = b;
-      this.segments = s;
-      this.flights = f;
-      this.passengers = p;
-    }
   }
 
   /**

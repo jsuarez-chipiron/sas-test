@@ -13,7 +13,7 @@ public without sharing class EDWIntegrationService {
     );
   }
 
-  public class FetchEDWDataQuery extends APIMIntegrationService.BaseQuery {
+  public class FetchEDWBookingsQuery extends APIMIntegrationService.BaseQuery {
     public String pnr { get; set; }
 
     public override String toQueryParamString() {
@@ -23,8 +23,8 @@ public without sharing class EDWIntegrationService {
     }
   }
 
-  public static FetchEDWBookingResponse fetchEDWDataByQuery(
-    FetchEDWDataQuery query
+  public static FetchEDWBookingResponse fetchEDWBookingsByQuery(
+    FetchEDWBookingsQuery query
   ) {
     if (
       !String.isBlank(query.pnr) && !Booking.isValidBookingReference(query.pnr)

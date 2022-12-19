@@ -133,12 +133,12 @@ public without sharing class BookingService {
   public static Bookings fetchEDWBookingByBookingReference(
     String bookingReference
   ) {
-    EDWIntegrationService.FetchEDWDataQuery query = new EDWIntegrationService.FetchEDWDataQuery();
+    EDWIntegrationService.FetchEDWBookingsQuery query = new EDWIntegrationService.FetchEDWBookingsQuery();
     query.pnr = bookingReference;
-    FetchEDWBookingResponse data = EDWIntegrationService.fetchEDWDataByQuery(
+    FetchEDWBookingResponse data = EDWIntegrationService.fetchEDWBookingsByQuery(
       query
     );
-    Bookings toReturn = Bookings.createFromEDWData(
+    Bookings toReturn = Booking.createFromEDWData(
       data.reservationList.reservation
     );
     return toReturn;

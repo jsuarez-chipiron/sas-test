@@ -187,13 +187,13 @@ public with sharing class Bookings_IntegrationTest {
   public static void canInsertSingleEDWBooking() {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    List<Bookings.EDWBooking> edwb = BookingService.fetchEDWBookingByBookingReference(
+    List<Booking.EDWBooking> edwb = BookingService.fetchEDWBookingByBookingReference(
         APIMMock.EDW_SINGLE_PNR
       )
       .edwBookings;
     Test.stopTest();
     System.assert(edwb.size() != 0, 'Booking should have been created');
-    Bookings.EDWBooking edwBooking = edwb[0];
+    Booking.EDWBooking edwBooking = edwb[0];
     System.assert(
       edwBooking.booking != null,
       '1 Booking should have been created'
@@ -223,14 +223,14 @@ public with sharing class Bookings_IntegrationTest {
   public static void canInsertMultipleEDWBookings() {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    List<Bookings.EDWBooking> edwb = BookingService.fetchEDWBookingByBookingReference(
+    List<Booking.EDWBooking> edwb = BookingService.fetchEDWBookingByBookingReference(
         APIMMock.EDW_MULTIPLE_PNR
       )
       .edwBookings;
     Test.stopTest();
     System.assert(edwb.size() == 2, 'Bookings should have been created');
-    Bookings.EDWBooking edwBooking1 = edwb[0];
-    Bookings.EDWBooking edwBooking2 = edwb[1];
+    Booking.EDWBooking edwBooking1 = edwb[0];
+    Booking.EDWBooking edwBooking2 = edwb[1];
     System.assert(
       edwBooking1.booking != null,
       '1 Booking should have been created'
