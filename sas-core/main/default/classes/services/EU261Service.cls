@@ -1,4 +1,10 @@
 /**
+ * An overall service class for running the automation process for EU261
+ * claims. See EU261Claim.cls and Confluence for more details.
+ *
+ * Evaluation logic lives in EU261Claim and this class contains the infra
+ * around that: fetching data, creating settlements and moving claims
+ * around based on the results of the evaluation.
  *
  * An instance of this class is a single (batch) run of EU261 automation.
  */
@@ -131,13 +137,6 @@ public without sharing class EU261Service {
   public class AutomationException extends Exception {
   }
 
-  public void processEU261Claims(Set<Id> claimIds) {
-    U.verifyNotNull(claimIds);
-    //fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    this.automateEU261Claims(claimIds);
-    //uow.commitWork();
-  }
-
   public void batchProcessEU261Claims(Set<Id> claimIds) {
     Integer limitPerBatchRun = 40;
     List<Id> claimIdsOdered = new List<Id>(claimIds);
@@ -176,40 +175,39 @@ public without sharing class EU261Service {
   }
 
   /**
-   * @param claimIds a Set of Ids of the claims to be automated
+   * Runs the EU261 evaluation and processing for the given set of claims
+   * synchronously. See Config for options on what kinds of automation should
+   * be done, and for other configuration parameters.
+   *
+   * @param claimIds A set of claim Ids to process.
    *
    * @return A list of EU261Claims which contain the decision of how the automation handled them.
    */
-  @TestVisible
-  private List<EU261Claim> automateEU261Claims(Set<Id> claimIds) {
+  public List<EU261Claim> processEU261Claims(Set<Id> claimIds) {
+    U.verifyNotNull(claimIds);
+
     List<EU261Claim> claimsToAutomate = gatherAllNecessaryInformation(claimIds);
 
     for (EU261Claim c : claimsToAutomate) {
       c.evaluate();
     }
 
-    fflib_ISObjectUnitOfWork uow1 = SAS_Service_Application.UnitOfWork.newInstance();
-    storeClaimDecision(uow1, claimsToAutomate);
-    uow1.commitWork();
+    storeClaimDecision(claimsToAutomate);
 
-    fflib_ISObjectUnitOfWork uow2 = SAS_Service_Application.UnitOfWork.newInstance();
-    settleAndRejectClaims(uow2, claimsToAutomate);
-    uow2.commitWork();
-
-    // debugResult(claimsToAutomate);
+    settleAndRejectClaims(claimsToAutomate);
 
     return claimsToAutomate;
-
-    // TODO: Log out some details about how many were handled.
   }
 
   /**
-   * @param claims a list of claims for which to find information.
+   * Fetches all of the necessary data to construct EU261Claim objects which
+   * can be evaluated by the automation, and constructs the objects.
    *
-   * @return a list of ClaimWithCompensationDetails containing all information necessary to automate the claim.
+   * All information must already exist in Salesforce.
+   *
+   * @return A list of EU261Claims, one per given Id.
    */
   private List<EU261Claim> gatherAllNecessaryInformation(Set<Id> claimIds) {
-    // 1. Get claims
     ClaimsSelector claimsSel = ClaimsSelector.newInstance();
     List<Claim> claims = new List<Claim>();
     List<List<String>> pnrFlightNumberTuples = new List<List<String>>();
@@ -234,7 +232,6 @@ public without sharing class EU261Service {
       }
     }
 
-    // 2. Extract information needed for selection
     Set<String> allCountriesInClaims = new Set<String>{};
     Set<Id> allCaseIdsInClaims = new Set<Id>();
     Set<String> allPnrsInClaims = new Set<String>();
@@ -244,7 +241,6 @@ public without sharing class EU261Service {
       allPnrsInClaims.add(c.bookingReference);
     }
 
-    // 3. Get "duplicate" claims
     List<Claim> otherClaimsWithMatchingPnrs = new List<Claim>();
     for (LIA_Claim__c c : claimsSel.selectByBookingReference(allPnrsInClaims)) {
       otherClaimsWithMatchingPnrs.add(new Claim(c));
@@ -253,7 +249,6 @@ public without sharing class EU261Service {
     List<CARE_Claim__c> possiblyDuplicateCAREClaims = CAREClaimsSelector.newInstance()
       .selectPotentialDuplicates(pnrFlightNumberTuples);
 
-    // 4. Map cases to bookings and get bookings
     List<CaseToBooking__c> ctbs = CaseToBookingsSelector.newInstance()
       .selectByCaseId(allCaseIdsInClaims);
     Map<Id, List<CaseToBooking__c>> caseIdToCaseToBookings = new Map<Id, List<CaseToBooking__c>>();
@@ -280,12 +275,12 @@ public without sharing class EU261Service {
 
     List<Settlement__c> allSettlementsForClaims = SettlementsSelector.newInstance()
       .selectByClaimId(claimIds);
+
     if (
       this.config.enabledSettlements &&
       allSettlementsForClaims != null &&
       allSettlementsForClaims.size() > 0
     ) {
-      //
       List<String> claimsHavingSettlements = new List<String>();
       for (Settlement__c s : allSettlementsForClaims) {
         claimsHavingSettlements.add(s.Claim__c);
@@ -315,28 +310,19 @@ public without sharing class EU261Service {
       }
     }
 
-    List<Airport__c> allAirports = AirportsSelector.newInstance()
-      .selectByIATACode(allAirportCodes);
-    Map<String, Airport> airportCodeToAirportObjects = new Airports(allAirports)
+    Map<String, Airport> airportCodeToAirportObjects = new Airports(
+        AirportsSelector.newInstance().selectByIATACode(allAirportCodes)
+      )
       .getAirportCodeToAirportObject();
 
-    // 5. Get time limits for how long a pax can wait before filing a claim. Todo: Reimplement, do after airports are fetched in constructClaimWithCompensationDetails
-    Map<String, Decimal> countryToClaimSubmissionTimeLimit = new Map<String, Decimal>{};
-    // CountryUtils.getAmountOfYearsYouCanWaitToFileAClaim(
-    //   allCountriesInClaims
-    // );
-
-    // 6. Get flight irregularities:
     List<FlightIrregularities__c> flightIrregularities = FlightIrregularitiesSelector.newInstance()
       .selectByTEDSFlightId(allTEDSFlightIds);
 
-    // 7. Get all segment events (massive):
     List<Segment_Event__c> segmentEvents = SegmentEventsSelector.newInstance()
       .selectBySegmentId(segmentIds);
 
     return constructClaimWithCompensationDetails(
       claims,
-      countryToClaimSubmissionTimeLimit,
       otherClaimsWithMatchingPnrs,
       caseIdToCaseToBookings,
       bookingsById,
@@ -347,9 +333,13 @@ public without sharing class EU261Service {
     );
   }
 
+  /**
+   * Constructs a list of EU261Claims given all necessary information.
+   *
+   * Helper for gatherAllNecessaryInformation().
+   */
   private List<EU261Claim> constructClaimWithCompensationDetails(
     List<Claim> claims,
-    Map<String, Decimal> countryToClaimSubmissionTimeLimit,
     List<Claim> otherClaimsWithMatchingPnrs,
     Map<Id, List<CaseToBooking__c>> caseIdToCaseToBookings,
     Map<Id, Booking__c> bookingsById,
@@ -467,10 +457,11 @@ public without sharing class EU261Service {
     return toReturn;
   }
 
-  private void storeClaimDecision(
-    fflib_ISObjectUnitOfWork uow,
-    List<EU261Claim> claimsToAutomate
-  ) {
+  /**
+   * Stores the evaluation decision and possible reasoning to the claim object.
+   */
+  private void storeClaimDecision(List<EU261Claim> claimsToAutomate) {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     List<Claim> toUpsert = new List<Claim>();
     for (EU261Claim ac : claimsToAutomate) {
       Claim c = ac.claimObj;
@@ -504,6 +495,7 @@ public without sharing class EU261Service {
     }
 
     Claims.newInstance(toUpsert).upsertToDB(uow);
+    uow.commitWork();
   }
 
   /**
@@ -511,7 +503,8 @@ public without sharing class EU261Service {
    * partially. Creates settlements, emails and prepares them and the claim and
    * case to updated in the DB.
    *
-   * Splits claims into several groups based on w
+   * Splits claims into several groups based on the evaluation decision and
+   * finalizes the processing accordingly.
    *
    * At this stage claims can be split into four different categories based on
    * what we want to do with them:
@@ -521,17 +514,15 @@ public without sharing class EU261Service {
    * 4. Ones where we cannot determine eligibility at all
    *
    * Claims in the first category we pay out directly, but some of these fall
-   * to the approval queue for spot checcks. Claims in the second category we
+   * to the approval queue for spot checks. Claims in the second category we
    * can send to a specific manual handling queue with instructions for the
    * agents on what they need to check before rejecting or sending the claim to
    * approval. Claims in the third category we can just close and email the
    * customer the result and claims in the fourth category we do nothing with
    * as they need to go to manual handling.
    */
-  private void settleAndRejectClaims(
-    fflib_ISObjectUnitOfWork uow,
-    List<EU261Claim> claimsToAutomate
-  ) {
+  private void settleAndRejectClaims(List<EU261Claim> claimsToAutomate) {
+    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     ClaimService claimService = ClaimService.newInstance();
 
     List<EU261Claim> claimsToApproveAutomatically = new List<EU261Claim>();
@@ -714,7 +705,6 @@ public without sharing class EU261Service {
         Claims.newInstance(EU261Claim.getClaimSObjectsFor(claimsToSemiAutomate))
           .upsertToDB(uow);
 
-        // TODO: Fix cases too.
         Cases.newInstance(parentCasesForSemiAutomation)
           .setHandlingInstructions(uow, handlingInstructionsByCaseId)
           .routeToQueue(SEMI_AUTOMATION_QUEUE, uow);
@@ -726,6 +716,8 @@ public without sharing class EU261Service {
         .emailContactPeople(createRejectionEmails(claimsToReject), uow)
         .close(uow);
     }
+
+    uow.commitWork();
   }
 
   private Boolean shouldApproveAutomatically(EU261Claim cl) {
@@ -736,10 +728,10 @@ public without sharing class EU261Service {
    * Creates settlements with settlement items for the given claims and inserts
    * them to the DB.
    *
-   * Creates one or two settlements for each claim. If a claim
-   * has only reimbursement or compensation this creates one settlement. If the
-   * claim has both reimbursement and compensation, it creates two. We could
-   * combine these into one settlement when the preferred compensation and
+   * Creates one or two settlements for each claim. If a claim has only
+   * reimbursement or compensation this creates one settlement. If the claim
+   * has both reimbursement and compensation, it creates two. We could combine
+   * these into one settlement when the preferred compensation and
    * reimbursement methods are the same, but separating them out makes later
    * processing simpler.
    *
