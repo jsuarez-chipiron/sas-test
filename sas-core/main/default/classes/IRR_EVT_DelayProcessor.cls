@@ -97,9 +97,9 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
         // binding segment id with boarding sequence number 
          for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
  
-             if( passenger.hasThisSegment ==true && 
-                 passenger.thisSegment.serviceClass !=null&& 
-                 passenger.thisSegment.boardingSequenceNumber !=null
+             if( passenger.hasThisSegment == true && 
+                 passenger.thisSegment.serviceClass != null&& 
+                 passenger.thisSegment.boardingSequenceNumber != null
                ){
                      if(!segmentIdToBoarding.containsKey(passenger.thisSegment.serviceClass)){
                          segmentIdToBoarding.put(passenger.thisSegment.serviceClass,new List<String> { });
@@ -116,7 +116,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
     
           if(System.Isbatch()==true){
            List<IRR_MOD_ICouponInfo> iCouponInfo = IRR_SVC_ICouponService.createFlightIrregularity(delayInfo,segmentIdToBoarding);
-              if(iCouponInfo !=null && iCouponInfo.size()>0){
+              if(iCouponInfo != null && iCouponInfo.size() > 0){
                    delayInfo.hasCouponBatchId = true;
               }
              
@@ -126,21 +126,21 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
                   classToAmount.put(icouponMod.serviceClassCode,icouponMod);
               }
  
-             for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
+             for(IRR_MOD_PassengerInfo passenger : this.passengerInfos){
  
-             if( passenger.hasThisSegment ==true && 
-                 passenger.thisSegment.serviceClass !=null &&
-                 passenger.thisSegment.boardingSequenceNumber !=null
+             if( passenger.hasThisSegment == true && 
+                 passenger.thisSegment.serviceClass != null &&
+                 passenger.thisSegment.boardingSequenceNumber != null
  
                ){
                    if(classToAmount.containsKey(passenger.thisSegment.serviceClass)){
  
                    IRR_MOD_ICouponInfo icoupon =classToAmount.get(passenger.thisSegment.serviceClass);
  
-                       String str    = 'The voucher amount is ' ;
-                                str +=icoupon.voucherAmount;
-                                str +=' ' +icoupon.currencyCode;
-                               str +='.';
+                       String   str  = 'The voucher amount is ' ;
+                                str += icoupon.voucherAmount;
+                                str += ' ' +icoupon.currencyCode;
+                                str += '.';
  
                        passenger.thisSegment.emailBackBody = str;
                        passenger.thisSegment.couponBatchId  = classToAmount.get(passenger.thisSegment.serviceClass).couponBatchId;
@@ -148,7 +148,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
  
                }
                  else{
-                     passenger.thisSegment.emailBackBody ='';
+                     passenger.thisSegment.emailBackBody = '';
                  }
              }
           }
@@ -210,7 +210,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
             insertDelayLog(uow);
             
         }
-        if ( delayInfo !=null &&  System.Isbatch() ==false && delayInfo.delayedMinutes >= 120)
+        if ( delayInfo != null &&  System.Isbatch() == false && delayInfo.delayedMinutes >= 120)
             
         {
             insertEventLog(uow);
@@ -244,27 +244,31 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
      * @param uow Unit of Work
      */
     private void insertEventLog(fflib_ISObjectUnitOfWork uow) {
-             boolean isEventFound = false;
+            boolean isEventFound = false;
              // Get a query locator
             Database.QueryLocator sObjectList=   IRR_SEL_EventLogsSelector.newInstance()
               .getQueuedIcouponQueryLocator(delayInfo.flightId);
             
-              Database.QueryLocatorIterator it =  sObjectList.iterator();
+            Database.QueryLocatorIterator it =  sObjectList.iterator();
               // Iterate over the records
                 while (it.hasNext())
                 {
-                    IRR_EventLog__c eventLog = (IRR_EventLog__c)it.next();
-                    eventLog.IRR_ScheduleTime__c = delayInfo.estimatedTimeOfDepartureUTC;
-                    eventLog.IRR_FlightId__c =delayInfo.flightId ;
-                    eventLog.IRR_Event_Type__c = 'ICOUPON';
-                    eventLog.IRR_Delayed_Minutes__c = delayInfo.delayedMinutes;
-                    eventLog.IRR_Station_Departure__c = delayInfo.stationDeparture;
-                    eventLog.IRR_Flight_Ref__c = delayInfo.flightRef;
-                    uow.registerUpsert(eventLog);
-                    isEventFound = true ;
+                IRR_EventLog__c eventLog = (IRR_EventLog__c)it.next();
+                eventLog.IRR_ScheduleTime__c = delayInfo.estimatedTimeOfDepartureUTC;
+                eventLog.IRR_FlightId__c =delayInfo.flightId ;
+                eventLog.IRR_Event_Type__c = 'ICOUPON';
+                eventLog.IRR_Delayed_Minutes__c = delayInfo.delayedMinutes;
+                eventLog.IRR_Station_Departure__c = delayInfo.stationDeparture;
+                eventLog.IRR_Flight_Ref__c = delayInfo.flightRef;
+                uow.registerUpsert(eventLog);
+                isEventFound = true ;
                 }
             
                if(isEventFound == false){
+
+                List<IRR_Icoupon_Voucher__mdt> icouponVocuherMtd = IRR_SEL_IcouponVoucherSelector.newInstance().getIcouponVoucher();
+                for(IRR_Icoupon_Voucher__mdt icouponVocuher :icouponVocuherMtd){
+                if(icouponVocuher.AirportCode__c == delayInfo.stationDeparture){
                 IRR_EventLog__c eventLog = new IRR_EventLog__c();
                 eventLog.IRR_ScheduleTime__c = delayInfo.estimatedTimeOfDepartureUTC;
                 eventLog.IRR_FlightId__c =delayInfo.flightId ;
@@ -273,7 +277,10 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
                 eventLog.IRR_Station_Departure__c = delayInfo.stationDeparture;
                 eventLog.IRR_Flight_Ref__c = delayInfo.flightRef;
                 uow.registerNew(eventLog);
+                break;
                }
+            }
+        }
         
     }
 
