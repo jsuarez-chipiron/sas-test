@@ -17,7 +17,13 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>Get_station_manger_email_id.MasterLabel</elementReference>
+                <elementReference>Get_station_manager_email_id.MasterLabel</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <elementReference>Get_station_manager_email_id.From_Address__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -49,7 +55,7 @@ MID({!$Record.IRR_FlightId__c},12 , 2),
 &apos;12&apos;, &apos;DEC&apos;, 
 &apos;None&apos;
 ) &amp;&apos; &apos;&amp; RIGHT({!$Record.IRR_FlightId__c}, 7) &amp;&apos;.&apos;&amp; BR() &amp;  BR() &amp;
-&apos;Passengers are informed via SMS/E-mail accordingly.&apos;  &amp; BR() &amp;  BR()  &amp; &apos;Regards,&apos; &amp; BR() &amp; BR()  &amp;  &apos;SAS&apos;</expression>
+&apos;Passengers are informed via SMS/E-mail accordingly.&apos;  &amp; BR() &amp;  BR()  &amp; &apos;Regards,&apos; &amp; BR() &amp;  &apos;SAS&apos;</expression>
     </formulas>
     <formulas>
         <name>subect1</name>
@@ -94,8 +100,8 @@ MID({!$Record.IRR_FlightId__c},12 , 2),
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_station_manger_email_id</name>
-        <label>Get station manger email id</label>
+        <name>Get_station_manager_email_id</name>
+        <label>Get station manager email id</label>
         <locationX>456</locationX>
         <locationY>383</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -111,14 +117,14 @@ MID({!$Record.IRR_FlightId__c},12 , 2),
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>IRR_Icoupon_Station_Manger__mdt</object>
+        <object>IRR_Icoupon_Station_Manager__mdt</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
         <locationX>330</locationX>
         <locationY>48</locationY>
         <connector>
-            <targetReference>Get_station_manger_email_id</targetReference>
+            <targetReference>Get_station_manager_email_id</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -161,4 +167,14 @@ SAS</text>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>iCoupon activated {!$Record.IRR_FlightId__c}</text>
     </textTemplates>
+    <variables>
+        <name>SenderName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>SAS iCoupon</stringValue>
+        </value>
+    </variables>
 </Flow>
