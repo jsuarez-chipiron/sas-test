@@ -1487,7 +1487,7 @@ private class EU261Claim_Test {
   }
 
   @IsTest
-  static void test2() {
+  static void claimWithComplicatedHistoryShouldBeAutomated() {
     BookingClaim bc = getCancellationFullBookingHistoryNoReplacement();
 
     EU261Claim claimToEvaluate = new EU261Claim(
