@@ -141,7 +141,7 @@ public without sharing class ClaimService {
     // We need to do this dance because we want claim name to match the case
     // number, and they to be linked to each other.
     claimToCreate.parentCaseId = insertedCase.Id;
-    claimToCreate.Name = insertedCase.CaseNumber;
+    claimToCreate.underlyingSObject.Name = insertedCase.CaseNumber;
     c.upsertToDB();
 
     System.enqueueJob(
