@@ -557,11 +557,6 @@ public without sharing class ClaimService {
         : marketToOrigin.get(form.metaData.market);
     }
 
-    String bookingReference = form.formData.bookingReference;
-    if (!String.isBlank(form.formData.travelAgentBookingReference)) {
-      bookingReference = form.formData.travelAgentBookingReference;
-    }
-
     return new Case(
       Initially_Provided_PNR__c = form.formData.bookingReference,
       Description = form.formData.comment,
@@ -571,7 +566,7 @@ public without sharing class ClaimService {
       Origin = origin,
       SuppliedEmail = form.formData.email,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
-      Subject = 'Claim, PNR: ' + bookingReference
+      Subject = 'Claim, PNR: ' + form.formData.bookingReference
     );
   }
 
@@ -859,11 +854,6 @@ public without sharing class ClaimService {
     Group claimsQueue = GroupsSelector.newInstance()
       .selectQueuesByDeveloperName(new Set<String>{ 'Customer_Claim' })[0];
 
-      String bookingReference = request.bookingReference;
-      if (!String.isBlank(request.travelAgentBookingReference)) {
-        bookingReference = request.travelAgentBookingReference;
-      }
-
     return new Case(
       Initially_Provided_PNR__c = request.bookingReference,
       FCS_EBNumber__c = request.contact.euroBonusNumber,
@@ -872,7 +862,7 @@ public without sharing class ClaimService {
       Origin = request.origin,
       SuppliedEmail = request.contact.email,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
-      Subject = 'Claim, PNR: ' + bookingReference
+      Subject = 'Claim, PNR: ' + request.bookingReference
     );
   }
 
