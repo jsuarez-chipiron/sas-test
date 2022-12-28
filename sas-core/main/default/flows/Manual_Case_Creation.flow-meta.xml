@@ -350,6 +350,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>FCS_EBNumber__c</field>
+            <value>
+                <elementReference>EuroBonus_Number</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>GDPR_Consent__c</field>
             <value>
                 <booleanValue>false</booleanValue>
@@ -561,6 +567,23 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>EuroBonus_Number</name>
+            <dataType>String</dataType>
+            <fieldText>EuroBonus Number</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DepartmentTeamList.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>EuroBonus</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Subject</name>
