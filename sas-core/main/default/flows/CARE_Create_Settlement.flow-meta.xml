@@ -25,8 +25,8 @@
     <actionCalls>
         <name>Navigate_To_Created_Settlement</name>
         <label>Navigate To Created Settlement</label>
-        <locationX>974</locationX>
-        <locationY>1790</locationY>
+        <locationX>1502</locationX>
+        <locationY>2054</locationY>
         <actionName>c:NavigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -48,7 +48,7 @@
     <assignments>
         <name>assignCustomerCount</name>
         <label>assignCustomerCount</label>
-        <locationX>1392</locationX>
+        <locationX>2184</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>countOfCustomerData</assignToReference>
@@ -96,7 +96,7 @@
     <decisions>
         <name>Check_Customer_Data</name>
         <label>Check Customer Data In Claim</label>
-        <locationX>1392</locationX>
+        <locationX>2184</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>NoCustomer</targetReference>
@@ -146,7 +146,7 @@
     <decisions>
         <name>InProgress</name>
         <label>Is Case Valid</label>
-        <locationX>1062</locationX>
+        <locationX>1590</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>NoSettlement</targetReference>
@@ -200,7 +200,7 @@
     <decisions>
         <name>Settlement_Type</name>
         <label>Settlement Type</label>
-        <locationX>974</locationX>
+        <locationX>1502</locationX>
         <locationY>998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -315,6 +315,9 @@
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>FaultPath1</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Address_line_1__c</field>
             <value>
@@ -416,12 +419,15 @@
     <recordCreates>
         <name>Create_EB_Points_Settlement</name>
         <label>Create EB Points Settlement</label>
-        <locationX>754</locationX>
+        <locationX>1018</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Path</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Address_line_1__c</field>
             <value>
@@ -493,12 +499,15 @@
     <recordCreates>
         <name>Create_Monetary_Settlement</name>
         <label>Create Monetary Settlement</label>
-        <locationX>1018</locationX>
+        <locationX>1546</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>FaultPath</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Address_line_1__c</field>
             <value>
@@ -600,12 +609,15 @@
     <recordCreates>
         <name>Create_Voucher_Settlement</name>
         <label>Create Voucher Settlement</label>
-        <locationX>1282</locationX>
+        <locationX>2074</locationX>
         <locationY>1118</locationY>
         <assignRecordIdToReference>createdSettlementId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_To_Created_Settlement</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Path1</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Address_line_1__c</field>
             <value>
@@ -707,7 +719,7 @@
     <recordLookups>
         <name>Get_Customer_Claim</name>
         <label>Get Customer Claim Information</label>
-        <locationX>1062</locationX>
+        <locationX>1590</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -729,7 +741,7 @@
         <description>Customer Data</description>
         <name>Get_Customer_Data</name>
         <label>Get Customer Data</label>
-        <locationX>1392</locationX>
+        <locationX>2184</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -750,7 +762,7 @@
     <recordLookups>
         <name>Get_Record_Type_Id</name>
         <label>Get Record Type Id</label>
-        <locationX>974</locationX>
+        <locationX>1502</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -788,7 +800,7 @@
     <screens>
         <name>Create_a_Settlement</name>
         <label>Create a Settlement</label>
-        <locationX>974</locationX>
+        <locationX>1502</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -829,9 +841,73 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Fault_Path</name>
+        <label>Fault Path</label>
+        <locationX>1282</locationX>
+        <locationY>1238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorScreen</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not create settlement. Please review the error: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Fault_Path1</name>
+        <label>Fault Path</label>
+        <locationX>2338</locationX>
+        <locationY>1238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error_message</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not create settlement. Please review below error: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>FaultPath</name>
+        <label>Fault Path</label>
+        <locationX>1810</locationX>
+        <locationY>1238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error_scrren</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not create settlement. Please review below error:  &lt;/strong&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>FaultPath1</name>
+        <label>Fault Path</label>
+        <locationX>754</locationX>
+        <locationY>1694</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>errorMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not create settlement. Please review below error:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>NoCustomer</name>
         <label>Can Not Create Settlement</label>
-        <locationX>1810</locationX>
+        <locationX>2866</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -847,7 +923,7 @@
     <screens>
         <name>NoSettlement</name>
         <label>Can Not Create Settlement</label>
-        <locationX>2074</locationX>
+        <locationX>3130</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -880,13 +956,13 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>936</locationX>
+        <locationX>1464</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Customer_Claim</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>countOfCustomerData</name>
         <dataType>Number</dataType>

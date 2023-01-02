@@ -19,7 +19,7 @@
     <assignments>
         <name>Assign_email_to_validate</name>
         <label>Assign email to validate</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
@@ -35,7 +35,7 @@
     <assignments>
         <name>Assign_email_to_validate_0</name>
         <label>Assign email to validate</label>
-        <locationX>842</locationX>
+        <locationX>1370</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
@@ -183,7 +183,7 @@
     <decisions>
         <name>Is_the_email_valid</name>
         <label>Is the email valid?</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>638</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -396,6 +396,9 @@
         <connector>
             <targetReference>What_is_the_type_of_customer</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Path</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Address_line_1__c</field>
             <value>
@@ -633,7 +636,7 @@
     <recordLookups>
         <name>Get_Current_Case_Information_0</name>
         <label>Get Current Case Information</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -659,6 +662,9 @@
         <connector>
             <targetReference>Route_Case</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>FaultPath</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -715,7 +721,7 @@
     <screens>
         <name>Customer_Care_Creation</name>
         <label>Customer Care Creation</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1459,7 +1465,7 @@
     <screens>
         <name>Customer_Claim_Message</name>
         <label>Customer Claim Message</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1476,9 +1482,42 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Fault_Path</name>
+        <label>Fault Path</label>
+        <locationX>1106</locationX>
+        <locationY>1334</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <backButtonLabel>Go back to Claim Creation</backButtonLabel>
+        <fields>
+            <name>errorScreen</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not create claim due to below error please check the error and resubmit&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>FaultPath</name>
+        <label>Fault Path</label>
+        <locationX>842</locationX>
+        <locationY>2126</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Screen</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not update record. Please check the below error: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Invalid_input</name>
         <label>Invalid input</label>
-        <locationX>842</locationX>
+        <locationX>1370</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1527,13 +1566,13 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>584</locationX>
+        <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Customer_Claim_Message</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>flightDateToAssign</name>
         <dataType>Date</dataType>

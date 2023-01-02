@@ -284,6 +284,9 @@
         <connector>
             <targetReference>GetCaseNumber</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Path</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Department__c</field>
         </inputAssignments>
@@ -443,6 +446,22 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Fault_Path</name>
+        <label>Fault Path</label>
+        <locationX>754</locationX>
+        <locationY>974</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Screen</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not create emergency case. Please review below error:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Get_information_from_user</name>
         <label>Get information from user</label>
         <locationX>314</locationX>
@@ -513,7 +532,7 @@
             <targetReference>Get_information_from_user</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Create_Emergency_Claim</name>
         <label>Create Emergency Claim</label>
