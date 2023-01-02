@@ -274,6 +274,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_high_priority</name>
+        <label>Set priority to high</label>
+        <locationX>1320</locationX>
+        <locationY>1286</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_Cases.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Case_To_Update_List</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_High_Priority_Queue</name>
         <label>Set High Priority Queue</label>
         <locationX>264</locationX>
@@ -308,7 +324,7 @@
     <assignments>
         <name>Set_Priority_To_High</name>
         <label>Set Priority To Medium</label>
-        <locationX>1188</locationX>
+        <locationX>1056</locationX>
         <locationY>1286</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.Priority</assignToReference>
@@ -347,6 +363,14 @@
                     <stringValue>D</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Set_Priority_To_High</targetReference>
+            </connector>
+            <label>Yes, High Priority (INACTIVE)</label>
+        </rules>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Loop_Cases.LIA_Claim__r.Concerns_a_person_with_reduced_mobility__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -355,9 +379,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Priority_To_High</targetReference>
+                <targetReference>Set_high_priority</targetReference>
             </connector>
-            <label>Yes, High Priority (INACTIVE)</label>
+            <label>Yes</label>
         </rules>
     </decisions>
     <decisions>
@@ -763,7 +787,7 @@
             <targetReference>Set_Group_Variables</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>Baggage_Queue</name>
         <dataType>SObject</dataType>
