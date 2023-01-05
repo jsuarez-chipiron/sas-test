@@ -169,6 +169,7 @@ public without sharing class Settlements extends ApplicationDomain {
   }
 
   public Settlements markAsReceivedByBank(
+    String paymentDate,
     String bankStatus,
     String errorMessage,
     fflib_ISObjectUnitOfWork uow
@@ -178,6 +179,18 @@ public without sharing class Settlements extends ApplicationDomain {
 
       for (Settlement__c s : instanceRecords) {
         s.Settlement_Status__c = STATUS_DONE;
+        // Formatting String from dd/mm/yyyy to yyyy-mm-dd. Because yyyy-mm-dd is required to convert Date/Time From String.
+        List<String> pDate = paymentDate.split(' ');
+        List<String> splitPaymentDate = pDate[0].split('/');
+        String dateOfPayment =
+          splitPaymentDate[2] +
+          '-' +
+          splitPaymentDate[1] +
+          '-' +
+          splitPaymentDate[0] +
+          ' ' +
+          pdate[1];
+        s.Date_of_Payment__c = DateTime.valueOf(dateOfPayment);
         uow.registerDirty(s);
         acceptedSettlementIds.add(s.Id);
       }
@@ -250,6 +263,7 @@ public without sharing class Settlements extends ApplicationDomain {
   ) {
     for (Settlement__c s : instanceRecords) {
       s.Settlement_Status__c = STATUS_FAILED;
+      s.Date_of_Payment__c = null;
       s.Error_Message__c = settlementIdsToErrorMessages.get(s.Id);
       uow.registerDirty(s);
 

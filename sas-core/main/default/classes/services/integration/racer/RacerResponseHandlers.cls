@@ -124,6 +124,7 @@ public class RacerResponseHandlers {
        *  6 - racer document id
        */
 
+      String paymentDate = dataFields[0];
       String paymentFileName = dataFields[1];
       String documentStatus = dataFields[4];
       String errorDetail = dataFields[5];
@@ -133,7 +134,7 @@ public class RacerResponseHandlers {
       );
 
       Settlements.newInstance(correspondingSettlements)
-        .markAsReceivedByBank(documentStatus, errorDetail, uow);
+        .markAsReceivedByBank(paymentDate, documentStatus, errorDetail, uow);
       uow.commitWork();
     }
     moveToFolder(cv, L1_FOLDER_NAME);
