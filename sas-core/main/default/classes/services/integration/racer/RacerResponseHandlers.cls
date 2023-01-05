@@ -132,9 +132,25 @@ public class RacerResponseHandlers {
       List<Settlement__c> correspondingSettlements = settlementsSel.selectByPaymentFileName(
         paymentFileName
       );
+      // Formatting payment date String from dd/mm/yyyy to yyyy-mm-dd. Because yyyy-mm-dd is required to convert Date/Time From String.
+      String dateOfPayment;
+      try {
+        List<String> pDate = paymentDate.split(' ');
+        List<String> splitPaymentDate = pDate[0].split('/');
+        dateOfPayment =
+          splitPaymentDate[2] +
+          '-' +
+          splitPaymentDate[1] +
+          '-' +
+          splitPaymentDate[0] +
+          ' ' +
+          pdate[1];
+      } catch (Exception e) {
+        System.debug('Exception' + e.getMessage());
+      }
 
       Settlements.newInstance(correspondingSettlements)
-        .markAsReceivedByBank(paymentDate, documentStatus, errorDetail, uow);
+        .markAsReceivedByBank(dateOfPayment, documentStatus, errorDetail, uow);
       uow.commitWork();
     }
     moveToFolder(cv, L1_FOLDER_NAME);

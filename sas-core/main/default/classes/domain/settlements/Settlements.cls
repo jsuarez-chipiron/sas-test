@@ -176,21 +176,22 @@ public without sharing class Settlements extends ApplicationDomain {
   ) {
     if (bankStatus == 'ACCEPTED') {
       Set<Id> acceptedSettlementIds = new Set<Id>();
+      //validating Date format
+      Boolean result = false;
+      if (paymentDate != null) {
+        Pattern pattern = Pattern.compile(
+          '\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}'
+        );
+        Matcher matcher = pattern.matcher(paymentDate);
+        result = matcher.matches();
+      }
 
       for (Settlement__c s : instanceRecords) {
         s.Settlement_Status__c = STATUS_DONE;
-        // Formatting String from dd/mm/yyyy to yyyy-mm-dd. Because yyyy-mm-dd is required to convert Date/Time From String.
-        List<String> pDate = paymentDate.split(' ');
-        List<String> splitPaymentDate = pDate[0].split('/');
-        String dateOfPayment =
-          splitPaymentDate[2] +
-          '-' +
-          splitPaymentDate[1] +
-          '-' +
-          splitPaymentDate[0] +
-          ' ' +
-          pdate[1];
-        s.Date_of_Payment__c = DateTime.valueOf(dateOfPayment);
+        if (paymentDate != null && result == true) {
+          s.Date_of_Payment__c = DateTime.valueOf(paymentDate);
+        }
+        system.debug('payment date' + s.Date_of_Payment__c);
         uow.registerDirty(s);
         acceptedSettlementIds.add(s.Id);
       }
