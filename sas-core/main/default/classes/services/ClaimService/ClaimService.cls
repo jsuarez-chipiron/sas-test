@@ -116,11 +116,9 @@ public without sharing class ClaimService {
       insert objectsToCreate;
     }
 
-    /*
     for (Id contentId : request.filesToLink) {
       fileIdsToObjects.put(contentId, claimToCreate.underlyingSObject);
     }
-    */
 
     insert constructContentLinks(fileIdsToObjects, claimToCreate.id);
 
