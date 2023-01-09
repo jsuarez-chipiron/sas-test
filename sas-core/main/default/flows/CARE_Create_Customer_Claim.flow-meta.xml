@@ -1572,7 +1572,7 @@
             <targetReference>Customer_Claim_Message</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>flightDateToAssign</name>
         <dataType>Date</dataType>

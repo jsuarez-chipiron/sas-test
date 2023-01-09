@@ -532,7 +532,7 @@
             <targetReference>Get_information_from_user</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_Emergency_Claim</name>
         <label>Create Emergency Claim</label>

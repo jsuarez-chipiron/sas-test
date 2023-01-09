@@ -962,7 +962,7 @@
             <targetReference>Get_Customer_Claim</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>countOfCustomerData</name>
         <dataType>Number</dataType>

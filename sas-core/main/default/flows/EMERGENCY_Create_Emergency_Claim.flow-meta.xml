@@ -865,7 +865,7 @@
             <targetReference>Get_Current_Case_Information_0</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <description>Email to be validated</description>
         <name>providedEmail</name>

@@ -690,7 +690,7 @@
             <targetReference>Get_information_from_user</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <description>Set Record Type</description>
         <name>SetRecordType</name>
