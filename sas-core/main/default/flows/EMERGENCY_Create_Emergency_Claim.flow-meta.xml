@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_email_to_validate</name>
         <label>Assign email to validate</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Assign_email_to_validate_0</name>
         <label>Assign email to validate</label>
-        <locationX>314</locationX>
+        <locationX>842</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
@@ -37,7 +37,7 @@
     <decisions>
         <name>Is_the_email_valid</name>
         <label>Is the email valid?</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -156,6 +156,9 @@
         <connector>
             <targetReference>Create_Customer</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Path</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Address_line_1__c</field>
             <value>
@@ -339,7 +342,7 @@
     <recordLookups>
         <name>Get_Current_Case_Information_0</name>
         <label>Get Current Case Information</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -362,6 +365,9 @@
         <label>Update Case with Emergency Claim Information</label>
         <locationX>50</locationX>
         <locationY>998</locationY>
+        <faultConnector>
+            <targetReference>FaultPath</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -412,7 +418,7 @@
     <screens>
         <name>Emergecy_Claim_Creation</name>
         <label>Emergecy Claim Creation</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -770,9 +776,41 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Fault_Path</name>
+        <label>Fault Path</label>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_message</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not create Emergency Claim. Please review below error:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>FaultPath</name>
+        <label>Fault Path</label>
+        <locationX>314</locationX>
+        <locationY>1118</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Screen</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not update record. Please review below error: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Invalid_input</name>
         <label>Invalid input</label>
-        <locationX>314</locationX>
+        <locationX>842</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -821,7 +859,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Current_Case_Information_0</targetReference>

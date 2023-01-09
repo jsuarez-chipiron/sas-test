@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_email_to_validate</name>
         <label>Assign email to validate</label>
-        <locationX>512</locationX>
+        <locationX>776</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
@@ -66,7 +66,7 @@
     <assignments>
         <name>Assing_email_to_validate</name>
         <label>Assing email to validate</label>
-        <locationX>578</locationX>
+        <locationX>1106</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
@@ -92,7 +92,7 @@
     <decisions>
         <name>is_the_email_valid</name>
         <label>is the email valid?</label>
-        <locationX>512</locationX>
+        <locationX>776</locationX>
         <locationY>638</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -403,6 +403,9 @@
         <connector>
             <targetReference>What_is_the_type_of_customer</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Path</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Address_line_1__c</field>
             <value>
@@ -675,7 +678,7 @@
         <description>Get case information</description>
         <name>GetCaseInfo</name>
         <label>GetCaseInfo</label>
-        <locationX>512</locationX>
+        <locationX>776</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -701,6 +704,9 @@
         <connector>
             <targetReference>Outcome</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>FaultPath</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -725,9 +731,42 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Fault_Path</name>
+        <label>Fault Path</label>
+        <locationX>842</locationX>
+        <locationY>1454</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <backButtonLabel>Go to Liability Claim Creation</backButtonLabel>
+        <fields>
+            <name>Error_Screen</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not create Liability Claim. Please check below error and resubmit: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>FaultPath</name>
+        <label>Fault Path</label>
+        <locationX>578</locationX>
+        <locationY>1910</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorScreen</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not update record. Please check the error below:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Invalid_Input</name>
         <label>Invalid Input</label>
-        <locationX>578</locationX>
+        <locationX>1106</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -760,7 +799,7 @@
     <screens>
         <name>Liability_Claim_Message</name>
         <label>Liability Claim Message</label>
-        <locationX>512</locationX>
+        <locationX>776</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -780,7 +819,7 @@
         <description>Create a new Liability Claim</description>
         <name>New_Liability_Claim</name>
         <label>New Liability Claim</label>
-        <locationX>512</locationX>
+        <locationX>776</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1564,7 +1603,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>386</locationX>
+        <locationX>650</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Liability_Claim_Message</targetReference>

@@ -337,6 +337,9 @@
         <connector>
             <targetReference>GetCaseNumber</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Path</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Department__c</field>
             <value>
@@ -490,6 +493,22 @@
         <fields>
             <name>Outcome_0</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Case&lt;/span&gt;&lt;span style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt; &lt;/span&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;has been created to {!GetCaseNumber.Department__c}.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Click the notification in the top right corner to view the case!&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Fault_Path</name>
+        <label>Fault Path</label>
+        <locationX>1018</locationX>
+        <locationY>1094</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Screen</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Can not create claim.please review below error: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
