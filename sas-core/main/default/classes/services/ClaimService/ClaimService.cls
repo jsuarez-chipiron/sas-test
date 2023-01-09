@@ -117,7 +117,9 @@ public without sharing class ClaimService {
     }
 
     for (Id contentId : request.filesToLink) {
-      fileIdsToObjects.put(contentId, claimToCreate.underlyingSObject);
+      if (!fileIdsToObjects.containsKey(contentId)) {
+        fileIdsToObjects.put(contentId, claimToCreate.underlyingSObject);
+      }
     }
 
     insert constructContentLinks(fileIdsToObjects, claimToCreate.id);
