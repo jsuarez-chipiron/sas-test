@@ -191,7 +191,6 @@ public without sharing class Settlements extends ApplicationDomain {
         if (paymentDate != null && result == true) {
           s.Date_of_Payment__c = DateTime.valueOf(paymentDate);
         }
-        system.debug('payment date' + s.Date_of_Payment__c);
         uow.registerDirty(s);
         acceptedSettlementIds.add(s.Id);
       }
