@@ -117,14 +117,14 @@ public with sharing class FetchEDWBookingResponse {
     public String fltStatus;
     public Long stdTms;
     public Long staTms;
-    public Object etdTms;
-    public Object etaTms;
-    public Object atdTms;
-    public Object ataTms;
-    public Object arrivalDelayMins;
-    public Object depDelayMins;
+    public Long etdTms;
+    public Long etaTms;
+    public Long atdTms;
+    public Long ataTms;
+    public Integer arrivalDelayMins;
+    public Integer depDelayMins;
     public String changeReason;
-    public Object supplInfo;
+    public String supplInfo;
     public Integer isLatest;
   }
 
