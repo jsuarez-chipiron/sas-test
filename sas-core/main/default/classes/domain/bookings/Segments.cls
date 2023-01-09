@@ -38,6 +38,27 @@ public without sharing class Segments extends ApplicationDomain {
     }
     return this;
   }
+
+  public Segments addEDWTicketInformation(
+    List<FetchEDWBookingResponse.TicketInfo> ticketInfo
+  ) {
+    Map<String, FetchEDWBookingResponse.TicketInfo> segmentIdentifierToTicketInfo = new Map<String, FetchEDWBookingResponse.TicketInfo>();
+    for (FetchEDWBookingResponse.TicketInfo ticket : ticketInfo) {
+      if (segmentIdentifierToTicketInfo.get('ST' + ticket.segTattoo) == null) {
+        segmentIdentifierToTicketInfo.put('ST' + ticket.segTattoo, ticket);
+      }
+      for (Segment__c segment : instanceRecords) {
+        FetchEDWBookingResponse.TicketInfo ticketForSegment = segmentIdentifierToTicketInfo.get(
+          segment.Identifier__c
+        );
+        if (ticketForSegment != null) {
+          segment.Ticket_Number__c = ticketForSegment.tktNo;
+          segment.Seat__c = ticketForSegment.seatNo;
+        }
+      }
+    }
+    return this;
+  }
   public Segments upsertToDB(List<Passenger__c> passengersInBooking) {
     upsert this.instanceRecords;
     segmentEvents.addSegmentReferences(instanceRecords, passengersInBooking);

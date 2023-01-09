@@ -476,6 +476,9 @@ public without sharing class Booking extends AbstractSObjectWrapper {
         reservation.segmentList.segment,
         createdPassengers.instanceRecords
       );
+      createdSegments.addEDWTicketInformation(
+        reservation.ticketInfoList.ticketInfo
+      );
       createdBookings.add(b.underlyingSObject);
       edwBookings.add(
         new EDWBooking(b, createdFlights, createdSegments, createdPassengers)

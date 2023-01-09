@@ -1,10 +1,35 @@
 public with sharing class FetchEDWBookingResponse {
+  public class TicketInfo {
+    public String fltAirlCd;
+    public String fltNm;
+    public Long depDte;
+    public Integer segTattoo;
+    public String tktAirlCd;
+    public String tktNo;
+    public Integer tktCouponNo;
+    public String recordOprType;
+    public Integer resUpdNo;
+    public Integer tktTattoo;
+    public String fareBasis;
+    public String boardingInd;
+    public String acceptanceSts;
+    public String seatNo;
+    public Integer bagCnt;
+    public Integer bagWeightQty;
+    public Integer fltSegId;
+  }
+
   public class Reservation {
     public String reservationNumber;
     public Long createdDate;
     public PassengerList passengerList;
     public SegmentList segmentList;
     public IrregularityList irregularityList;
+    public TicketInfoList ticketInfoList;
+  }
+
+  public class TicketInfoList {
+    public List<TicketInfo> ticketInfo;
   }
 
   public ReservationList reservationList;
@@ -92,14 +117,14 @@ public with sharing class FetchEDWBookingResponse {
     public String fltStatus;
     public Long stdTms;
     public Long staTms;
-    public Long etdTms;
-    public Long etaTms;
-    public Long atdTms;
-    public Long ataTms;
-    public Integer arrivalDelayMins;
-    public Integer depDelayMins;
+    public Object etdTms;
+    public Object etaTms;
+    public Object atdTms;
+    public Object ataTms;
+    public Object arrivalDelayMins;
+    public Object depDelayMins;
     public String changeReason;
-    public String supplInfo;
+    public Object supplInfo;
     public Integer isLatest;
   }
 
