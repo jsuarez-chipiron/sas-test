@@ -36,6 +36,13 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
     Waitlisted
   }
 
+  public static final Map<String, String> ACCEPTANCE_STATUS_TO_PICKLIST_VALUE = new Map<String, String>{
+    'CAC' => 'Accepted',
+    'CNA' => 'NotAccepted',
+    'CST' => 'StandBy',
+    'CRJ' => 'Rejected'
+  };
+
   public void setEvents(List<SegmentEvent> events) {
     if (events != null) {
       events.sort();

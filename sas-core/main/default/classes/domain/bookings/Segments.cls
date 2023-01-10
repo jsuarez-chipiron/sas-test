@@ -47,16 +47,27 @@ public without sharing class Segments extends ApplicationDomain {
       if (segmentIdentifierToTicketInfo.get('ST' + ticket.segTattoo) == null) {
         segmentIdentifierToTicketInfo.put('ST' + ticket.segTattoo, ticket);
       }
-      for (Segment__c segment : instanceRecords) {
-        FetchEDWBookingResponse.TicketInfo ticketForSegment = segmentIdentifierToTicketInfo.get(
-          segment.Identifier__c
-        );
-        if (ticketForSegment != null) {
-          segment.Ticket_Number__c = ticketForSegment.tktNo;
-          segment.Seat__c = ticketForSegment.seatNo;
-        }
+    }
+    for (Segment__c createdSegment : instanceRecords) {
+      FetchEDWBookingResponse.TicketInfo ticketForSegment = segmentIdentifierToTicketInfo.get(
+        createdSegment.Identifier__c
+      );
+      if (ticketForSegment != null) {
+        createdSegment.Ticket_Number__c = ticketForSegment.tktNo;
+        createdSegment.Seat__c = ticketForSegment.seatNo;
+        createdSegment.Baggage_Quantity__c = ticketForSegment.bagCnt;
+        createdSegment.Fare_Basis__c = ticketForSegment.fareBasis;
+        createdSegment.Is_Boarded__c = ticketForSegment.boardingInd == 'Y';
+        createdSegment.Check_In_Status__c = Segment.ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.get(
+            ticketForSegment.acceptanceSts
+          ) == null
+          ? null
+          : Segment.ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.get(
+              ticketForSegment.acceptanceSts
+            );
       }
     }
+
     return this;
   }
   public Segments upsertToDB(List<Passenger__c> passengersInBooking) {
