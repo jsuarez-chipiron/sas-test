@@ -169,15 +169,28 @@ public without sharing class Settlements extends ApplicationDomain {
   }
 
   public Settlements markAsReceivedByBank(
+    String paymentDate,
     String bankStatus,
     String errorMessage,
     fflib_ISObjectUnitOfWork uow
   ) {
     if (bankStatus == 'ACCEPTED') {
       Set<Id> acceptedSettlementIds = new Set<Id>();
+      //validating Date format
+      Boolean result = false;
+      if (paymentDate != null) {
+        Pattern pattern = Pattern.compile(
+          '\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}'
+        );
+        Matcher matcher = pattern.matcher(paymentDate);
+        result = matcher.matches();
+      }
 
       for (Settlement__c s : instanceRecords) {
         s.Settlement_Status__c = STATUS_DONE;
+        if (paymentDate != null && result == true) {
+          s.Date_of_Payment__c = DateTime.valueOf(paymentDate);
+        }
         uow.registerDirty(s);
         acceptedSettlementIds.add(s.Id);
       }
@@ -250,6 +263,7 @@ public without sharing class Settlements extends ApplicationDomain {
   ) {
     for (Settlement__c s : instanceRecords) {
       s.Settlement_Status__c = STATUS_FAILED;
+      s.Date_of_Payment__c = null;
       s.Error_Message__c = settlementIdsToErrorMessages.get(s.Id);
       uow.registerDirty(s);
 
