@@ -259,6 +259,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Caller_Location__c</field>
+            <value>
+                <elementReference>threatIncident.Caller_Location__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Caller_Name__c</field>
+            <value>
+                <elementReference>threatIncident.Caller_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Caller_Phone__c</field>
             <value>
                 <elementReference>threatIncident.Caller_Phone__c</elementReference>
@@ -412,18 +424,6 @@
             <field>To__c</field>
             <value>
                 <elementReference>threatIncident.To__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Transgressor_Location__c</field>
-            <value>
-                <elementReference>threatIncident.Transgressor_Location__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Transgressor__c</field>
-            <value>
-                <elementReference>threatIncident.Transgressor__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -895,7 +895,7 @@
                 <fields>
                     <fieldType>ObjectProvided</fieldType>
                     <isRequired>false</isRequired>
-                    <objectFieldReference>threatIncident.Transgressor__c</objectFieldReference>
+                    <objectFieldReference>threatIncident.Caller_Name__c</objectFieldReference>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -927,7 +927,7 @@
                 <fields>
                     <fieldType>ObjectProvided</fieldType>
                     <isRequired>false</isRequired>
-                    <objectFieldReference>threatIncident.Transgressor_Location__c</objectFieldReference>
+                    <objectFieldReference>threatIncident.Caller_Location__c</objectFieldReference>
                 </fields>
                 <inputParameters>
                     <name>width</name>

@@ -27,9 +27,9 @@
 <strong>When shall it take place? </strong>{{{Threat_Incident__c.Threat_Execution_Time__c}}}<br />
 <strong>If it is a bomb, what does it look like? </strong>{{{Threat_Incident__c.Explosive_Device_Description__c}}}<br />
 <strong>Why are you doing this?&nbsp;&nbsp;</strong>{{{Threat_Incident__c.Threat_Reason__c}}}<br />
-<strong>Who are you?&nbsp;</strong>{{{Threat_Incident__c.Transgressor__c}}}<br />
+<strong>Who are you?&nbsp;</strong>{{{Threat_Incident__c.Caller_Name__c}}}<br />
 <strong>Organization:</strong>&nbsp;&nbsp;{{{Threat_Incident__c.Organization__c}}}<br />
-<strong>Where are you at:</strong>&nbsp;{{{Threat_Incident__c.Transgressor_Location__c}}}<br />
+<strong>Where are you at:</strong>&nbsp;{{{Threat_Incident__c.Caller_Location__c}}}<br />
 <br />
 <u><span style="font-size:18px"><b>Additional details</b></span></u><br />
 <br />
