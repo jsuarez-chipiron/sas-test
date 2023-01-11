@@ -1699,11 +1699,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
-	<customPermissions>
+    <customPermissions>
         <enabled>true</enabled>
         <name>Special_User_Permission</name>
     </customPermissions>
-       <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Booking__c.Booking_Reference__c</field>
         <readable>true</readable>
@@ -1968,32 +1968,32 @@
         <field>Airport__c.TEDS_Identifier__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.C_o_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.City__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Country__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.First_Name__c</field>
         <readable>true</readable>
@@ -2002,23 +2002,23 @@
         <editable>false</editable>
         <field>Group_Travel_Request__c.Full_Name__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Last_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Postal_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Alternate_Departure_date__c</field>
         <readable>true</readable>
@@ -2122,7 +2122,7 @@
         <editable>false</editable>
         <field>Group_Travel_Request__c.Number_Of_Passengers__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Number_Of_Special_Baggage__c</field>
@@ -2462,7 +2462,7 @@
         <editable>false</editable>
         <field>Case.Approval_Submitter__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Customer_Claim_Category__c</field>
@@ -2477,7 +2477,7 @@
         <editable>false</editable>
         <field>Case.Concerns_a_person_with_reduced_mobility__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Feedback_Category__c</field>
@@ -2517,7 +2517,7 @@
         <editable>false</editable>
         <field>Case.Created_Support_Case__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.LIA_CARE_Case_Number__c</field>
@@ -2547,17 +2547,17 @@
         <editable>false</editable>
         <field>Case.LIA_Jurisdiction__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.LIA_Name_of_Judicial_Body__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.LIA_Passenger_s__c</field>
         <readable>true</readable>
-    </fieldPermissions>        
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Deposit_Due_Date__c</field>
@@ -2572,7 +2572,7 @@
         <editable>false</editable>
         <field>Case.LIA_External_Case_Number_Court_Reference__c</field>
         <readable>false</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Final_Payment_Date__c</field>
@@ -2598,7 +2598,7 @@
         <field>Case.FCS_CaseReason__c</field>
         <readable>false</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_CaseResolutionDetails__c</field>
         <readable>true</readable>
@@ -2630,7 +2630,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-	    <field>Case.FCS_CaseType__c</field>
+        <field>Case.FCS_CaseType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2672,7 +2672,7 @@
         <editable>true</editable>
         <field>Case.FCS_PNR__c</field>
         <readable>true</readable>
-    </fieldPermissions>  
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.FCS_SurveyInvitationLink__c</field>
@@ -2682,8 +2682,8 @@
         <editable>true</editable>
         <field>Case.FCS_TPAccountNumber__c</field>
         <readable>true</readable>
-    </fieldPermissions>   
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.GDPR_Consent__c</field>
         <readable>true</readable>
@@ -2698,7 +2698,7 @@
         <field>Case.GSB_Flight_Length__c</field>
         <readable>true</readable>
     </fieldPermissions>
-      <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Flight_Info_Missing_Points_X1__c</field>
         <readable>true</readable>
@@ -2737,18 +2737,18 @@
         <editable>false</editable>
         <field>Case.Group_Departure_Airport__c</field>
         <readable>true</readable>
-    </fieldPermissions>      
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Destination__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Outbound_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Group_Travel_Request__c</field>
         <readable>true</readable>
@@ -2762,7 +2762,7 @@
         <editable>false</editable>
         <field>Case.IsReadOnly__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.IsRedirected__c</field>
@@ -2773,11 +2773,11 @@
         <field>Case.ContactId</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Last_Received_Email_On__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Previous_Owner__c</field>
@@ -2792,7 +2792,7 @@
         <editable>false</editable>
         <field>Case.Case_Owner_Site__c</field>
         <readable>true</readable>
-    </fieldPermissions>  
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Team__c</field>
@@ -2812,7 +2812,7 @@
         <editable>true</editable>
         <field>Case.Refund_Request__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Refund_PNR__c</field>
@@ -2827,7 +2827,7 @@
         <editable>false</editable>
         <field>Refund_Request__c.Created_Date_in_UTC__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Refund_Request_Sub_type__c</field>
@@ -2837,8 +2837,8 @@
         <editable>false</editable>
         <field>Case.Refund_Request_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Special_Service_Request__c</field>
         <readable>true</readable>
@@ -2847,8 +2847,8 @@
         <editable>false</editable>
         <field>Case.StatusReadOnly__c</field>
         <readable>true</readable>
-    </fieldPermissions>          
-     <fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>CaseToBooking__c.Case__c</field>
         <readable>true</readable>
@@ -2857,7 +2857,7 @@
         <editable>false</editable>
         <field>CaseToBooking__c.Booking__c</field>
         <readable>true</readable>
-    </fieldPermissions>  
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Refund_Request__c.Email__c</field>
@@ -2878,7 +2878,7 @@
         <field>Refund_Request__c.Last_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.Booked_Via__c</field>
         <readable>true</readable>
@@ -3077,7 +3077,7 @@
         <editable>false</editable>
         <field>LIA_Claim__c.Customer_Claim_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>     
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Customer_Reason_for_EU261_Claim__c</field>
@@ -3093,11 +3093,11 @@
         <field>LIA_Claim__c.Deadline__c</field>
         <readable>false</readable>
     </fieldPermissions>
-     <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Delay_Length__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.EuroBonus_Number__c</field>
@@ -3182,7 +3182,7 @@
         <editable>false</editable>
         <field>LIA_Claim__c.Travel_Agent_Booking_Reference__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Type_of_Customer__c</field>
@@ -3328,7 +3328,7 @@
         <field>Special_Service_Request__c.PNR__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Special_Service_Request__c.Brings_Own_Mobility_Device__c</field>
         <readable>true</readable>
@@ -3377,7 +3377,7 @@
         <editable>false</editable>
         <field>SurveyInvitation.ChatSurvey__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>SurveyInvitation.FCS_RelatedCase__c</field>
@@ -3419,6 +3419,191 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Accent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Aircraft_Flight_or_Building_Knowledge__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Attitude__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Background_Noise__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Caller_Approx_Age__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Caller_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Caller_EuroBonus_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Caller_Identity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Caller_Location__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Caller_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Caller_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Date_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Department__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Destination_Email2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Destination_Email3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Destination_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.During_Flight__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Explosive_Device_Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Flight_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.From__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Language_Ability__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Location__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Message_Wording__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Organization__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Other_Details__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Speech__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.SubmitterPhone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.ThreatCaseNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Threat_Details__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Threat_Execution_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Threat_Location__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Threat_Origin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Threat_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Threat_Receiver__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Threat_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.To__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Voice_Characteristics__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>User.FCS_ChatName__c</field>
         <readable>true</readable>
@@ -3446,7 +3631,7 @@
     <layoutAssignments>
         <layout>Airport__c-Airport Layout</layout>
     </layoutAssignments>
-	 <layoutAssignments>
+    <layoutAssignments>
         <layout>Group_Travel_Request__c-Group Travel Request Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -3458,8 +3643,8 @@
     <layoutAssignments>
         <layout>Account-B2B - Customer</layout>
         <recordType>Account.Business</recordType>
-    </layoutAssignments>    
-	<layoutAssignments>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Account-B2B - Partner</layout>
         <recordType>Account.Partner</recordType>
     </layoutAssignments>
@@ -3468,7 +3653,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Approval_Request__c-Approval Request Layout</layout>
-    </layoutAssignments>    
+    </layoutAssignments>
     <layoutAssignments>
         <layout>C_GeneralSetting__mdt-General Setting Layout</layout>
     </layoutAssignments>
@@ -3482,12 +3667,12 @@
     <layoutAssignments>
         <layout>Case-SAS Customer Claim Layout</layout>
         <recordType>Case.Customer_Claim</recordType>
-    </layoutAssignments>  
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Case-SAS Customer Claim Layout</layout>
         <recordType>Case.Emergency</recordType>
-    </layoutAssignments>        
-	<layoutAssignments>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Chat</recordType>
     </layoutAssignments>
@@ -3504,7 +3689,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Customer__c-Customer Layout</layout>
-    </layoutAssignments>    
+    </layoutAssignments>
     <layoutAssignments>
         <layout>LIA_Claim__c-Customer Claim Layout</layout>
         <recordType>LIA_Claim__c.CustomerClaim</recordType>
@@ -3512,24 +3697,24 @@
     <layoutAssignments>
         <layout>LIA_Claim__c-Customer Claim Layout</layout>
         <recordType>LIA_Claim__c.EmergencyClaim</recordType>
-    </layoutAssignments>    
+    </layoutAssignments>
     <layoutAssignments>
         <layout>LIA_Claim__c-Liability Claim Layout</layout>
         <recordType>LIA_Claim__c.LiabilityClaim</recordType>
-    </layoutAssignments>        
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Contact-Email Contact Layout</layout>
         <recordType>Contact.EmailContact</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contact-SAS Contact Layout</layout>
-    </layoutAssignments>   
+    </layoutAssignments>
     <layoutAssignments>
         <layout>FCS_CaseTag__c-Case Reason Layout</layout>
     </layoutAssignments>
-   <layoutAssignments>
+    <layoutAssignments>
         <layout>Insurance_Detail__c-Insurance Detail Layout</layout>
-    </layoutAssignments>      
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
     </layoutAssignments>
@@ -3539,13 +3724,13 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>LiveChatTranscript-Chat Transcript Layout</layout>
-    </layoutAssignments> 
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Macro-Macro Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>MessagingSession-Messaging Session Layout</layout>
-    </layoutAssignments>      
+    </layoutAssignments>
     <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>
         <recordType>PersonAccount.AnonymousCustomer</recordType>
@@ -3583,7 +3768,10 @@
     <layoutAssignments>
         <layout>Settlement__c-Voucher Settlement</layout>
         <recordType>Settlement__c.Voucher</recordType>
-    </layoutAssignments>    
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Threat_Incident__c-Threat Incident Layout</layout>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -3619,7 +3807,7 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>Customer__c</object>
         <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>    
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -3683,7 +3871,7 @@
         <object>LiveChatVisitor</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -3700,7 +3888,7 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>LIA_Claim__c</object>
         <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>    
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -3719,7 +3907,7 @@
         <object>Segment__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -3845,7 +4033,7 @@
         <object>SurveySubject</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3854,7 +4042,7 @@
         <object>MessagingEndUser</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3863,12 +4051,21 @@
         <object>MessagingSession</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Threat_Incident__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Business</recordType>
         <visible>true</visible>
-    </recordTypeVisibilities>    		
-	<recordTypeVisibilities>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Partner</recordType>
         <visible>true</visible>
@@ -3879,16 +4076,16 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>    
+        <default>false</default>
         <recordType>Case.Customer_Claim</recordType>
         <visible>true</visible>
-    </recordTypeVisibilities>    
-	<recordTypeVisibilities>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Channel</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Chat</recordType>
         <visible>true</visible>
@@ -3897,7 +4094,7 @@
         <default>false</default>
         <recordType>Case.Emergency</recordType>
         <visible>false</visible>
-    </recordTypeVisibilities>    
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>Case.Internal_Backoffice</recordType>
@@ -3909,20 +4106,20 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>   
+        <default>true</default>
         <recordType>LIA_Claim__c.CustomerClaim</recordType>
         <visible>true</visible>
-    </recordTypeVisibilities>   
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>LIA_Claim__c.EmergencyClaim</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
-    <recordTypeVisibilities>        
-        <default>false</default>   
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>LIA_Claim__c.LiabilityClaim</recordType>
-        <visible>false</visible>       
-    </recordTypeVisibilities>      
+        <visible>false</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
         <personAccountDefault>true</personAccountDefault>
@@ -3947,7 +4144,7 @@
     <tabVisibilities>
         <tab>CARE_Cases</tab>
         <visibility>DefaultOn</visibility>
-    </tabVisibilities> 
+    </tabVisibilities>
     <tabVisibilities>
         <tab>Exchange_Rate__c</tab>
         <visibility>DefaultOn</visibility>
@@ -3975,11 +4172,11 @@
     <tabVisibilities>
         <tab>standard-OmniSupervisor</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities>    
+    </tabVisibilities>
     <tabVisibilities>
         <tab>standard-OmniSupervisorLightning</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities>   
+    </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Survey</tab>
         <visibility>DefaultOff</visibility>
@@ -4008,7 +4205,7 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>CanUseNewDashboardBuilder</name>
-    </userPermissions>    
+    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>ChatterEditOwnPost</name>
@@ -4024,7 +4221,7 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ChangeDashboardColors</name>
-    </userPermissions>    
+    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>CreateCustomizeDashboards</name>
@@ -4040,7 +4237,7 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>CreateDashboardFolders</name>
-    </userPermissions>  
+    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>CreateLtngTempFolder</name>
@@ -4064,7 +4261,7 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>EditMyDashboards</name>
-    </userPermissions>    
+    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>EditMyReports</name>
@@ -4112,7 +4309,7 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>SubscribeToLightningDashboards</name>
-    </userPermissions>        
+    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>SubmitMacrosAllowed</name>
@@ -4125,7 +4322,7 @@
         <enabled>true</enabled>
         <name>RunReports</name>
     </userPermissions>
-	<userPermissions>
+    <userPermissions>
         <enabled>true</enabled>
         <name>TransferAnyEntity</name>
     </userPermissions>
@@ -4136,7 +4333,7 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewPublicDashboards</name>
-    </userPermissions>    
+    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewHelpLink</name>
