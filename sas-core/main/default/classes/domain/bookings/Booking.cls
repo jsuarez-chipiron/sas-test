@@ -11,6 +11,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
   public List<Segment> segments;
   public List<Passenger> passengers;
 
+  @TestVisible
   public Set<Flight> flights {
     get {
       if (this.segments == null) {
@@ -233,29 +234,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     return claimSegments;
   }
 
-  private class CancellationTime {
-    Datetime affectedByIrregularity;
-    Datetime unconfirmed;
-    Datetime removed;
-    String officeUnconfirming;
-    String officeRemoving;
-
-    public CancellationTime(
-      Datetime affectedByIrregularity,
-      Datetime unconfirmed,
-      Datetime removed,
-      String officeUnconfirming,
-      String officeRemoving
-    ) {
-      this.affectedByIrregularity = affectedByIrregularity;
-      this.unconfirmed = unconfirmed;
-      this.removed = removed;
-      this.officeUnconfirming = officeUnconfirming;
-      this.officeRemoving = officeRemoving;
-    }
-  }
-
-  public CancellationTime getCancellationTime(Flight f) {
+  public Trip.CancellationTime getCancellationTime(Flight f) {
     List<FlightIrregularity> cancellations = f.getCancellations();
 
     if (cancellations.size() > 1) {
@@ -315,7 +294,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       );
     }
 
-    return new CancellationTime(
+    return new Trip.CancellationTime(
       cancellation.cancellationTime,
       segmentUnconfirmed,
       segmentRemoved,
@@ -335,7 +314,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
    * @throws Booking.UnsupportedException if there is more than one cancellation
    */
   public List<Trip> getTripsBeforeAndAfterCancellation(Flight cancelledFlight) {
-    CancellationTime cancellationTimeInfo = getCancellationTime(
+    Trip.CancellationTime cancellationTimeInfo = getCancellationTime(
       cancelledFlight
     );
     Datetime unconfirmed = cancellationTimeInfo.unconfirmed;
@@ -352,6 +331,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       tripsBeforeIrregularity,
       cancelledFlight
     );
+    tripWithCancelledFlight.cancellationTimeInfo = cancellationTimeInfo;
 
     if (tripWithCancelledFlight == null) {
       throw new Trip.InvalidException(
@@ -378,13 +358,6 @@ public without sharing class Booking extends AbstractSObjectWrapper {
         activeSegments
       );
     }
-
-    Boolean removedBeforeIrregularity =
-      removed != null &&
-      removed < cancellationTimeInfo.affectedByIrregularity;
-
-    tripWithCancelledFlight.officeResponsibleForCancellation = cancellationTimeInfo.officeRemoving;
-    tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeIrregularity;
 
     return new List<Trip>{ tripWithCancelledFlight, replacementTrip };
   }

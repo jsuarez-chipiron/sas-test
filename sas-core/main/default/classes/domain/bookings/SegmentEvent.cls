@@ -25,6 +25,13 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     'SK08MB' => true,
     'SK08VB' => true,
     'SK0001' => false
+  }; // TODO extend, potentially: 08TC => true. Talk with process owner.
+
+  private static final Map<String, String> OFFICE_CODE_TO_EXPLANATION = new Map<String, String>{
+    'SK08RV' => 'the customer cancelled the trip on the website (regular tickets)',
+    'SK08MB' => 'the customer cancelled the trip on a mobile phone',
+    'SK08VB' => 'the customer cancelled the trip on the website (eurobonus tickets)',
+    'SK0001' => 'SAS cancelled the trip'
   }; // TODO extend
 
   private static final Map<String, OperationType> OPERATION_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, OperationType>{
@@ -479,14 +486,25 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     }
   }
 
-  // TODO: refactor, rearrange logic so this does not have to be called this way
-  public static Boolean customerResponsibleForEvent(String officeCode) {
-    if (officeCode == null || officeCode.length() < 4) {
+  // TODO: Refactor to make non static (issues connected to Trip and EU261claim)
+  public static Boolean customerResponsibleForEvent(String officeResponsible) {
+    if (officeResponsible == null || officeResponsible.length() < 4) {
       return null;
     }
 
-    String countryNonSpecificCode = officeCode.substring(3);
+    String countryNonSpecificCode = officeResponsible.substring(3);
 
     return OFFICE_CODE_TO_IS_CUSTOMER.get(countryNonSpecificCode);
+  }
+
+  // TODO: Refactor to make non static (issues connected to Trip and EU261claim)
+  public static String getOfficeCodeExplanation(String officeResponsible) {
+    if (officeResponsible == null || officeResponsible.length() < 4) {
+      return null;
+    }
+
+    String countryNonSpecificCode = officeResponsible.substring(3);
+
+    return OFFICE_CODE_TO_EXPLANATION.get(countryNonSpecificCode);
   }
 }
