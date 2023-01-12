@@ -17,13 +17,19 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>Get_station_manager_email_id.MasterLabel</elementReference>
+                <elementReference>Get_station_manager_email_id.To_Address__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>senderAddress</name>
             <value>
-                <elementReference>Get_station_manager_email_id.From_Address__c</elementReference>
+                <stringValue>no-reply@flysas.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -167,6 +173,16 @@ SAS</text>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>iCoupon activated {!$Record.IRR_FlightId__c}</text>
     </textTemplates>
+    <variables>
+        <name>OrgWideEmailAddress</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>OrgWideEmailAddress</stringValue>
+        </value>
+    </variables>
     <variables>
         <name>SenderName</name>
         <dataType>String</dataType>
