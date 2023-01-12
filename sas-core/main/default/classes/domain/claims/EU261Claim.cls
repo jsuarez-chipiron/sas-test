@@ -473,6 +473,11 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'could not set trip with claim flight'
       );
+    } else if (this.claimFlight.getOperator() == null) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'cannot parse claim flight operator'
+      );
     } else if (!this.claimFlight.isOperatedByStarAlliance()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,

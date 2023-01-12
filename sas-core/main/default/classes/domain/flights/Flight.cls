@@ -35,11 +35,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
   public Airport departureAirportObject;
   public Airport arrivalAirportObject;
 
-  public String operatingCarrier {
-    get {
-      return tedsIdentifier.substring(0, 2);
-    }
-  }
+  public String operatingCarrier;
 
   public List<FlightIrregularity> irregularities;
 
@@ -115,6 +111,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
 
     this.tedsIdentifier = f.TEDS_Identifier__c;
     this.operationalControlCenter = f.Operational_Control_Center__c;
+    this.operatingCarrier = f.Operating_Carrier__c;
     this.aircraftRegistration = f.Aircraft_Registration__c;
 
     this.arrivalAirport = f.Arrival_Airport__c;
@@ -157,6 +154,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
   public override void updateSObjectFields() {
     this.underlyingSObject.TEDS_Identifier__c = this.tedsIdentifier;
     this.underlyingSObject.Operational_Control_Center__c = this.operationalControlCenter;
+    this.underlyingSObject.Operating_Carrier__c = this.operatingCarrier;
     this.underlyingSObject.Aircraft_Registration__c = this.aircraftRegistration;
 
     this.underlyingSObject.Arrival_Airport__c = this.arrivalAirport;
@@ -196,13 +194,11 @@ public without sharing class Flight extends AbstractSObjectWrapper {
    * to Star Alliance.
    */
   public Boolean isOperatedByStarAlliance() {
-    return STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS.contains(
-      this.operatingCarrier
-    );
+    return STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS.contains(this.getOperator());
   }
 
   public Boolean isOperatedBySAS() {
-    return this.operatingCarrier == SAS_AIRLINE_IATA_DESIGNATOR;
+    return this.getOperator() == SAS_AIRLINE_IATA_DESIGNATOR;
   }
 
   /**
@@ -247,7 +243,7 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     );
   }
 
-  public Boolean departsHub(){
+  public Boolean departsHub() {
     return hubAirports.contains(this.departureAirport);
   }
 
@@ -342,5 +338,18 @@ public without sharing class Flight extends AbstractSObjectWrapper {
 
   public Integer hashCode() {
     return 31 * this.tedsIdentifier.hashCode();
+  }
+
+  // If operatingCarrier is null, try to parse it from the teds identifier
+  public String getOperator() {
+    String oper = this.operatingCarrier;
+    if (oper == null && this.tedsIdentifier != null) {
+      oper = this.tedsIdentifier.substring(0, 2);
+      if (oper == 'SK' && this.tedsIdentifier.substring(2, 3) == '3') {
+        // Codeshare
+        oper = null;
+      }
+    }
+    return oper;
   }
 }
