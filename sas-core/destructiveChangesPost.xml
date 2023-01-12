@@ -22,4 +22,8 @@
         <name>IRR_Icoupon_Station_Manger__mdt</name>
 
     </types>
+    <types>
+        <members>IRR_Icoupon_Station_Manager__mdt.From_Address__c</members>
+        <name>CustomField</name>
+    </types>
 </Package>
