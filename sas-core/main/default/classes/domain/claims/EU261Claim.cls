@@ -655,15 +655,16 @@ public class EU261Claim {
     );
 
     Integer timeLimit;
+    Integer defaultTimeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get('default');
 
     if (limitInDepartureCountry != null && limitInArrivalCountry != null) {
       timeLimit = Math.max(limitInDepartureCountry, limitInArrivalCountry);
     } else if (limitInDepartureCountry != null) {
-      timeLimit = limitInDepartureCountry;
+      timeLimit = Math.max(limitInDepartureCountry, defaultTimeLimit);
     } else if (limitInArrivalCountry != null) {
-      timeLimit = limitInArrivalCountry;
+      timeLimit = Math.max(limitInArrivalCountry, defaultTimeLimit);
     } else {
-      timeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get('default');
+      timeLimit = defaultTimeLimit;
     }
 
     protocol.claimFilingTimeLimit = timeLimit;
