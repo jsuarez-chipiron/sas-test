@@ -27,6 +27,7 @@ public with sharing class TestFlightFactory {
 
     f.operationalControlCenter = null; // TODO: implement
     f.aircraftRegistration = null; // TODO: implement
+    f.operatingCarrier = flightNumber.substring(0, 2);
 
     f.arrivalAirport = arrival;
     f.arrivalDelayedMinutes = 0;

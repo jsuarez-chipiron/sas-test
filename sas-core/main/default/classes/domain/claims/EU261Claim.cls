@@ -39,6 +39,7 @@ public class EU261Claim {
    * The result is also stored in this.decision.
    */
   public Decision evaluate() {
+    Decision toReturn;
     try {
       this.decision = this.canWeEvaluate();
 
@@ -56,15 +57,29 @@ public class EU261Claim {
         this.decision.verdict = Claim.EU261HandlingStatus.PossiblyEligibleForCompensation;
         this.decision.caveats = this.getSemiAutomationReasons();
       }
-
-      return this.decision;
     } catch (Exception e) {
       Decision errorDecision = new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'Uncaught exception: ' + e.getMessage()
       );
       this.decision = errorDecision;
-      return errorDecision;
+    }
+
+    writeProtocol();
+    return this.decision;
+  }
+
+  private void writeProtocol() {
+    protocol.decision = this.decision;
+    protocol.claimFlight = this.claimFlight;
+    protocol.initialTrip = this.tripWithClaimFlight;
+    protocol.replacementTrip = this.tripWithClaimFlightReplacement;
+    protocol.claimObj = this.claimObj;
+    if (
+      this.claimFlight != null &&
+      this.claimFlight.irregularities.size() == 1
+    ) {
+      protocol.irregularity = claimFlight.irregularities[0];
     }
   }
 
@@ -161,6 +176,7 @@ public class EU261Claim {
   private Boolean hasCancellation;
   private Boolean couldInitializeTrips;
   private Flight claimFlight;
+  public EU261Protocol protocol = new EU261Protocol();
 
   private EU261Service.Config config;
 
@@ -457,6 +473,11 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'could not set trip with claim flight'
       );
+    } else if (this.claimFlight.getOperator() == null) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'cannot parse claim flight operator'
+      );
     } else if (!this.claimFlight.isOperatedByStarAlliance()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -645,6 +666,8 @@ public class EU261Claim {
       timeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get('default');
     }
 
+    protocol.claimFilingTimeLimit = timeLimit;
+
     // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
     Boolean filedWithinTimelimit =
       c.createdDate.date().monthsBetween(tripDate.date()) <= timeLimit;
@@ -659,6 +682,7 @@ public class EU261Claim {
         'id and staff tickets are not eligible'
       );
     } else if (this.hasCancellation && flightCancelledWellInTime()) {
+      protocol.denialReason = EU261Protocol.DenialReason.CANCELLEDWELLINTIME;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'flight was cancelled 14 or more days in advance'
@@ -666,6 +690,8 @@ public class EU261Claim {
     } else if (
       this.hasCancellation && !this.cancellationCodeIsWithinSASControl()
     ) {
+      // Get explanation
+      protocol.denialReason = EU261Protocol.DenialReason.NOTWITHINSASCONTROL;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'cancellation code not within SAS control'
@@ -676,6 +702,8 @@ public class EU261Claim {
         'not covered by EU261'
       );
     } else if (!this.isFiledOnTime()) {
+      // Get info
+      protocol.denialReason = EU261Protocol.DenialReason.NOTFILEDONTIME;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'not filed on time'
@@ -683,13 +711,24 @@ public class EU261Claim {
     } else if (
       this.hasCancellation && this.tripWithClaimFlight.customerCancelled()
     ) {
+      // Get info (?)
+      protocol.denialReason = EU261Protocol.DenialReason.CUSTOMERCANCELLED;
+      this.calculateCompensationForCancellation(); // For protocol reasons
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
         'customer cancelled the flight'
       );
     } else if (this.hasCancellation) {
       // If the claim flight was cancelled the customer should receive compensation according to the cancellation logic
-      return this.calculateCompensationForCancellation();
+      // Get info
+      Decision compensationDecision = this.calculateCompensationForCancellation();
+      if (
+        compensationDecision.verdict ==
+        Claim.EU261HandlingStatus.IneligibleForCompensation
+      ) {
+        protocol.denialReason = EU261Protocol.DenialReason.NOTOUTSIDETIMEFRAME;
+      }
+      return compensationDecision;
     } else if (!this.hasDelay()) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
@@ -1050,44 +1089,55 @@ public class EU261Claim {
         daysUntilFlightWhenInformedOfCancellation
       );
 
+    protocol.minutesEarlyOnDeparture = minutesEarlyOnDeparture;
+    protocol.minutesLateOnArrival = minutesLateOnArrival;
+    protocol.flightDistanceInKm = flightDistanceInKm;
+    protocol.isOutsideTimeFrame = isEligableForCompensation;
+    protocol.daysUntilFlightWhenInformedOfCancellation = daysUntilFlightWhenInformedOfCancellation;
+
     if (!isEligableForCompensation) {
       return new Money(0, Money.CurrencyCode.EUR);
     }
 
     Money compensation;
+    Boolean halveCompensation;
     Boolean isShortDistance = flightDistanceInKm <= MEDIUM_DISTANCE;
     Boolean isMediumDistanceOrIntraCommunity =
       flightDistanceInKm > MEDIUM_DISTANCE &&
       (flightDistanceInKm <= LONG_DISTANCE || isIntraCommunity);
-
     if (isShortDistance) {
       compensation = new Money(250, Money.CurrencyCode.EUR);
-      Boolean halveCompensation =
+      halveCompensation =
         minutesLateOnArrival <=
         MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE;
 
       if (halveCompensation) {
         compensation = compensation.divideBy(2);
+        protocol.maxDelayForHalved = MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_SHORT_DISTANCE;
       }
     } else if (isMediumDistanceOrIntraCommunity) {
       compensation = new Money(400, Money.CurrencyCode.EUR);
-      Boolean halveCompensation =
+      halveCompensation =
         minutesLateOnArrival <=
         MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE;
 
       if (halveCompensation) {
         compensation = compensation.divideBy(2);
+        protocol.maxDelayForHalved = MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_MEDIUM_DISTANCE;
       }
     } else {
       compensation = new Money(600, Money.CurrencyCode.EUR);
-      Boolean halveCompensation =
+      halveCompensation =
         minutesLateOnArrival <=
         MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE;
 
       if (halveCompensation) {
         compensation = compensation.divideBy(2);
+        protocol.maxDelayForHalved = MAXIMUM_DELAY_FOR_HALVED_COMPENSATION_LONG_DISTANCE;
       }
     }
+
+    protocol.compensationIsHalved = halveCompensation;
 
     return compensation;
   }
