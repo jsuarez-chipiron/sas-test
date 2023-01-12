@@ -44,8 +44,12 @@ public without sharing class Segments extends ApplicationDomain {
   ) {
     Map<String, FetchEDWBookingResponse.TicketInfo> segmentIdentifierToTicketInfo = new Map<String, FetchEDWBookingResponse.TicketInfo>();
     for (FetchEDWBookingResponse.TicketInfo ticket : ticketInfo) {
-      if (segmentIdentifierToTicketInfo.get('ST' + ticket.segTattoo) == null) {
-        segmentIdentifierToTicketInfo.put('ST' + ticket.segTattoo, ticket);
+      String ticketIdentifier = String.format(
+        'ST{0}PT{1}',
+        new List<Object>{ ticket.segTattoo, ticket.tktTattoo }
+      );
+      if (segmentIdentifierToTicketInfo.get(ticketIdentifier) == null) {
+        segmentIdentifierToTicketInfo.put(ticketIdentifier, ticket);
       }
     }
     for (Segment__c createdSegment : instanceRecords) {
@@ -53,7 +57,10 @@ public without sharing class Segments extends ApplicationDomain {
         createdSegment.Identifier__c
       );
       if (ticketForSegment != null) {
-        createdSegment.Ticket_Number__c = ticketForSegment.tktNo;
+        createdSegment.Ticket_Number__c = String.format(
+          '{0}-{1}',
+          new List<Object>{ ticketForSegment.tktAirlCd, ticketForSegment.tktNo }
+        );
         createdSegment.Seat__c = ticketForSegment.seatNo;
         createdSegment.Baggage_Quantity__c = ticketForSegment.bagCnt;
         createdSegment.Fare_Basis__c = ticketForSegment.fareBasis;
