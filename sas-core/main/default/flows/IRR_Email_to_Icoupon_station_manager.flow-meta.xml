@@ -21,18 +21,6 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>senderAddress</name>
-            <value>
-                <stringValue>chetan.singh@sas.dk</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderType</name>
-            <value>
-                <stringValue>OrgWideEmailAddress</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>emailSubject</name>
             <value>
                 <elementReference>subect1</elementReference>
@@ -44,50 +32,45 @@
     <formulas>
         <name>emailBody1</name>
         <dataType>String</dataType>
-        <expression>&apos;Please note iCoupon activated for flight &apos; &amp;
-            LEFT({!$Record.IRR_FlightId__c}, 6)&amp;&apos;/&apos; &amp;
-            MID({!$Record.IRR_FlightId__c},14 , 2) &amp;
-            CASE(
-            MID({!$Record.IRR_FlightId__c},12 , 2),
-            &apos;01&apos;, &apos;JAN&apos;,
-            &apos;02&apos;, &apos;FEB&apos;,
-            &apos;03&apos;, &apos;MAR&apos;,
-            &apos;04&apos;, &apos;APR&apos;,
-            &apos;05&apos;, &apos;MAY&apos;,
-            &apos;06&apos;, &apos;JUN&apos;,
-            &apos;07&apos;, &apos;JUL&apos;,
-            &apos;08&apos;, &apos;AUG&apos;,
-            &apos;09&apos;, &apos;SEP&apos;,
-            &apos;10&apos;, &apos;OCT&apos;,
-            &apos;11&apos;, &apos;NOV&apos;,
-            &apos;12&apos;, &apos;DEC&apos;,
-            &apos;None&apos;
-            ) &amp;&apos; &apos;&amp; RIGHT({!$Record.IRR_FlightId__c}, 7) &amp;&apos;.&apos;&amp;
-            BR() &amp; BR() &amp;
-            &apos;Passengers are informed via SMS/E-mail accordingly.&apos; &amp; BR() &amp; BR()
-            &amp; &apos;Regards,&apos; &amp; BR() &amp; &apos;SAS&apos;</expression>
+        <expression>&apos;Please note iCoupon activated for flight &apos; &amp;  LEFT({!$Record.IRR_FlightId__c}, 6)&amp;&apos;/&apos; &amp; MID({!$Record.IRR_FlightId__c},14 , 2)  &amp;  
+CASE(
+MID({!$Record.IRR_FlightId__c},12 , 2), 
+&apos;01&apos;, &apos;JAN&apos;,
+&apos;02&apos;, &apos;FEB&apos;,
+&apos;03&apos;, &apos;MAR&apos;,
+&apos;04&apos;, &apos;APR&apos;,
+&apos;05&apos;, &apos;MAY&apos;,
+&apos;06&apos;, &apos;JUN&apos;,
+&apos;07&apos;, &apos;JUL&apos;,
+&apos;08&apos;, &apos;AUG&apos;,
+&apos;09&apos;, &apos;SEP&apos;,
+&apos;10&apos;, &apos;OCT&apos;, 
+&apos;11&apos;, &apos;NOV&apos;, 
+&apos;12&apos;, &apos;DEC&apos;, 
+&apos;None&apos;
+) &amp;&apos; &apos;&amp; RIGHT({!$Record.IRR_FlightId__c}, 7) &amp;&apos;.&apos;&amp; BR() &amp;  BR() &amp;
+&apos;Passengers are informed via SMS/E-mail accordingly.&apos;  &amp; BR() &amp;  BR()  &amp; &apos;Regards,&apos; &amp; BR() &amp;  &apos;SAS&apos;</expression>
     </formulas>
     <formulas>
         <name>subect1</name>
         <dataType>String</dataType>
-        <expression>&apos;iCoupon activated &apos; &amp; LEFT({!$Record.IRR_FlightId__c}, 6) &amp;
-            &apos;/&apos;&amp;MID({!$Record.IRR_FlightId__c},14 , 2) &amp;
-            CASE(
-            MID({!$Record.IRR_FlightId__c},12 , 2),
-            &apos;01&apos;, &apos;JAN&apos;,
-            &apos;02&apos;, &apos;FEB&apos;,
-            &apos;03&apos;, &apos;MAR&apos;,
-            &apos;04&apos;, &apos;APR&apos;,
-            &apos;05&apos;, &apos;MAY&apos;,
-            &apos;06&apos;, &apos;JUN&apos;,
-            &apos;07&apos;, &apos;JUL&apos;,
-            &apos;08&apos;, &apos;AUG&apos;,
-            &apos;09&apos;, &apos;SEP&apos;,
-            &apos;10&apos;, &apos;OCT&apos;,
-            &apos;11&apos;, &apos;NOV&apos;,
-            &apos;12&apos;, &apos;DEC&apos;,
-            &apos;None&apos;
-            ) &amp;&apos; &apos;&amp; RIGHT({!$Record.IRR_FlightId__c}, 7)</expression>
+        <expression>&apos;iCoupon activated &apos; &amp; LEFT({!$Record.IRR_FlightId__c}, 6) &amp; &apos;/&apos;&amp;MID({!$Record.IRR_FlightId__c},14 , 2)  &amp;  
+CASE(
+MID({!$Record.IRR_FlightId__c},12 , 2), 
+&apos;01&apos;, &apos;JAN&apos;,
+&apos;02&apos;, &apos;FEB&apos;,
+&apos;03&apos;, &apos;MAR&apos;,
+&apos;04&apos;, &apos;APR&apos;,
+&apos;05&apos;, &apos;MAY&apos;,
+&apos;06&apos;, &apos;JUN&apos;,
+&apos;07&apos;, &apos;JUL&apos;,
+&apos;08&apos;, &apos;AUG&apos;,
+&apos;09&apos;, &apos;SEP&apos;,
+&apos;10&apos;, &apos;OCT&apos;, 
+&apos;11&apos;, &apos;NOV&apos;, 
+&apos;12&apos;, &apos;DEC&apos;, 
+&apos;None&apos;
+) &amp;&apos; &apos;&amp; RIGHT({!$Record.IRR_FlightId__c}, 7)</expression>
     </formulas>
     <interviewLabel>IRR Email to Icoupon station manager {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IRR Email to Icoupon station manager</label>
@@ -167,35 +150,15 @@
     <textTemplates>
         <name>emailbody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Please note iCoupon activated for flight {!$Record.IRR_FlightId__c}.
-            Passengers are informed via SMS/E-mail accordingly.
+        <text>Please note iCoupon activated for flight {!$Record.IRR_FlightId__c}. 
+Passengers are informed via SMS/E-mail accordingly. 
 
-            Regards,
-            SAS</text>
+Regards, 
+SAS</text>
     </textTemplates>
     <textTemplates>
         <name>subject</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>iCoupon activated {!$Record.IRR_FlightId__c}</text>
     </textTemplates>
-    <variables>
-        <name>OrgWideEmailAddress</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>OrgWideEmailAddress</stringValue>
-        </value>
-    </variables>
-    <variables>
-        <name>SenderName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>SAS iCoupon</stringValue>
-        </value>
-    </variables>
 </Flow>
