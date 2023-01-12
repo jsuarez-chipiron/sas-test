@@ -1,32 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Send_email_to_station_manger</name>
-        <label>Send email to station manger</label>
-        <locationX>458</locationX>
-        <locationY>572</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailBody</name>
-            <value>
-                <elementReference>emailBody1</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>Get_station_manager_email_id.To_Address__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <elementReference>subect1</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
     <apiVersion>56.0</apiVersion>
     <environments>Default</environments>
     <formulas>
@@ -99,9 +72,6 @@ MID({!$Record.IRR_FlightId__c},12 , 2),
         <locationX>456</locationX>
         <locationY>383</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Send_email_to_station_manger</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
