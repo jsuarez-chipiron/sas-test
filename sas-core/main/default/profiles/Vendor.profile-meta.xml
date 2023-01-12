@@ -4334,4 +4334,8 @@
         <tab>Special_Service_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
+    <tabVisibilities>
+        <tab>Threat_Incident__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
 </Profile>

@@ -507,7 +507,7 @@
         </connector>
         <fields>
             <name>TestingInstructions</name>
-            <fieldText>&lt;p&gt;At the moment, you are using the &quot;Report Threat Incident&quot; in a test environment. Please provide the email to which you want to the send Threat Incident Report&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;At the moment, you are using the &quot;Report Threat Incident&quot; in a test environment. Please, provide the email address for sending a test Threat Incident Report.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
