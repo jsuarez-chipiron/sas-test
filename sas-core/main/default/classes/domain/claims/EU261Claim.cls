@@ -670,7 +670,7 @@ public class EU261Claim {
 
     // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
     Boolean filedWithinTimelimit =
-      c.createdDate.date().monthsBetween(tripDate.date()) <= timeLimit;
+      Math.abs(c.createdDate.date().monthsBetween(tripDate.date())) <= timeLimit;
 
     return filedWithinTimelimit;
   }

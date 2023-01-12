@@ -766,6 +766,38 @@ private class EU261Claim_Test {
   }
 
   @IsTest
+  static void claimWhereCustomerClaimedTooLateShouldBeDenied() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.c.createdDate = DateTime.newInstance(2030, 1, 1);
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      result.verdict,
+      'A claim where the customer filed too late should be denied'
+    );
+    System.assertEquals(
+      'not filed on time',
+      result.reasoning,
+      'Reasoning should be "not filed on time"'
+    );
+
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
   static void minimalClaimOutsideTheEUShouldBeEvaluatedCorrectly() {
     BookingClaim bc = getDefaultCancellationBookingClaim();
     Flight f1 = bc.b.segments[0].flight;
