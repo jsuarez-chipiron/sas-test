@@ -463,6 +463,11 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       Booking b = new Booking(new Booking__c(Name = bookingIdentifier));
       b.bookingReference = reservation.reservationNumber;
       b.tedsIdentifier = bookingIdentifier;
+      //TODO Ask SEIP to fix the Json response to have these separately
+      if (reservation.segmentList?.segment.size() > 0) {
+        b.createdAtTravelOfficeId = reservation.segmentList.segment[0].offCd;
+        b.isStaffBooking = reservation.segmentList.segment[0].staffPNR == 'Y';
+      }
       b.updateSObjectFields();
       //create flights
       Flights createdFlights = Flight.createFromEDWData(
