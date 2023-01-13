@@ -658,6 +658,36 @@
             <targetReference>Get_updated_Settlement_Information</targetReference>
         </connector>
         <fields>
+            <name>Preferred_Compensation_Method</name>
+            <fieldText>&lt;p&gt;Preferred Compensation Method: &lt;strong&gt;{!Get_Settlement_Information.Claim__r.Preferred_Compensation_Method__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Settlement_Information.Claim__r.Preferred_Compensation_Method__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Preferred_Reimbursement_Method</name>
+            <fieldText>&lt;p&gt;Preferred Reimbursement Method: &lt;strong&gt;{!Get_Settlement_Information.Claim__r.Preferred_Reimbursement_Method__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Settlement_Information.Claim__r.Preferred_Reimbursement_Method__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Approval_Status</name>
             <choiceReferences>approvedChoice</choiceReferences>
             <choiceReferences>rejectedChoice</choiceReferences>
