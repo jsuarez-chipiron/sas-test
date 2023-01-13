@@ -65,6 +65,9 @@ public without sharing class Flight extends AbstractSObjectWrapper {
 
   private static final String SAS_AIRLINE_IATA_DESIGNATOR = 'SK';
 
+  //Used by EDW when actual timestamp data is not available
+  private static final Long EDW_NULL_TIMESTAMP = -2208988800000L;
+
   private static final Set<String> STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS = new Set<String>{
     'A3',
     'AC',
@@ -400,22 +403,28 @@ public without sharing class Flight extends AbstractSObjectWrapper {
       f.departureAirport = irr.stnFrCd;
       f.departureDelayedMinutes = irr.depDelayMins;
       f.departureStatus = Flight.getStatusFromPicklistValue(departureStatus);
-      f.actualArrivalTime = irr.ataTms == null
+      f.actualArrivalTime = irr.ataTms == null ||
+        irr.ataTms == EDW_NULL_TIMESTAMP
         ? null
         : Datetime.newInstance(irr.ataTms);
-      f.actualDepartureTime = irr.atdTms == null
+      f.actualDepartureTime = irr.atdTms == null ||
+        irr.atdTms == EDW_NULL_TIMESTAMP
         ? null
         : Datetime.newInstance(irr.atdTms);
-      f.estimatedArrivalTime = irr.etaTms == null
+      f.estimatedArrivalTime = irr.etaTms == null ||
+        irr.etaTms == EDW_NULL_TIMESTAMP
         ? null
         : Datetime.newInstance(irr.etaTms);
-      f.estimatedDepartureTime = irr.etdTms == null
+      f.estimatedDepartureTime = irr.etdTms == null ||
+        irr.etdTms == EDW_NULL_TIMESTAMP
         ? null
         : Datetime.newInstance(irr.etdTms);
-      f.scheduledArrivalTime = irr.staTms == null
+      f.scheduledArrivalTime = irr.staTms == null ||
+        irr.staTms == EDW_NULL_TIMESTAMP
         ? null
         : Datetime.newInstance(irr.staTms);
-      f.scheduledDepartureTime = irr.stdTms == null
+      f.scheduledDepartureTime = irr.stdTms == null ||
+        irr.stdTms == EDW_NULL_TIMESTAMP
         ? null
         : Datetime.newInstance(irr.stdTms);
       f.updateSObjectFields();

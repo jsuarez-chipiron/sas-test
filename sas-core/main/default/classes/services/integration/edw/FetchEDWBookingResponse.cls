@@ -17,6 +17,7 @@ public with sharing class FetchEDWBookingResponse {
     public Integer bagCnt;
     public Integer bagWeightQty;
     public Integer fltSegId;
+    public String passengerTattoo;
   }
 
   public class Reservation {
@@ -92,6 +93,7 @@ public with sharing class FetchEDWBookingResponse {
     public String fqtvAirlineCode;
     public String tier;
     public String ebNumber;
+    public String passengerTattoo;
   }
 
   public class Segment {

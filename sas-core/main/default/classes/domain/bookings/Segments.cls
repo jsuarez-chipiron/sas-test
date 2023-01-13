@@ -46,7 +46,7 @@ public without sharing class Segments extends ApplicationDomain {
     for (FetchEDWBookingResponse.TicketInfo ticket : ticketInfo) {
       String ticketIdentifier = String.format(
         'ST{0}PT{1}',
-        new List<Object>{ ticket.segTattoo, ticket.tktTattoo }
+        new List<Object>{ ticket.segTattoo, ticket.passengerTattoo }
       );
       if (segmentIdentifierToTicketInfo.get(ticketIdentifier) == null) {
         segmentIdentifierToTicketInfo.put(ticketIdentifier, ticket);

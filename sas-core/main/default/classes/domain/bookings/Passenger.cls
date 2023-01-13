@@ -68,8 +68,7 @@ public without sharing class Passenger extends AbstractSObjectWrapper {
       p.euroBonusNumber = String.valueOf(passenger.ebNumber);
       p.email = passenger.email;
       p.phone = String.valueOf(passenger.mobile);
-      p.identifier =
-        'PT' + String.valueOf(passengerData.indexOf(passenger) + 1);
+      p.identifier = 'PT' + passenger.passengerTattoo;
       p.updateSObjectFields();
       toReturn.add(p.underlyingSObject);
     }
