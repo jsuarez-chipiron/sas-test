@@ -3,7 +3,7 @@
     <fullName>Aircraft_Flight_or_Building_Knowledge__c</fullName>
     <externalId>false</externalId>
     <inlineHelpText>Did it seem as if the person knows about the aircraft/flight or building based on the description of where the bomb is placed?</inlineHelpText>
-    <label>Aircraft/flight or building knowledge</label>
+    <label>Aircraft/flight or building knowledge?</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

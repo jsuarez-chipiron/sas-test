@@ -464,7 +464,7 @@
         <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <fields>
             <name>Error_Section1</name>
             <fieldType>RegionContainer</fieldType>
@@ -535,9 +535,9 @@
         <label>Threat Incident Submitted</label>
         <locationX>182</locationX>
         <locationY>1094</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <connector>
             <targetReference>Minimize_flow_screen</targetReference>
         </connector>
@@ -570,7 +570,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>InstructionDetails</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;If you receive a threat of any kind towards SAS, please act accordingly:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;Call SAS Traffic Control and the Police with as many details as possible from the below report&lt;/strong&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;SAS Traffic control STOOP/OCC) +46 8 797 5114&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;The Police 112&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;After the call submit threat incident report by pressing &quot;Submit&quot;, it will be sent automatically to:&lt;/strong&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;SAS Duty Security Officer (avsec@sas.se)&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;STOOP Duty Production Manager (dutymanager@sas.se)&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Crime Prevention (crimeprevention@sas.se)&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;If you receive a threat of any kind towards SAS, please act accordingly:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;Call SAS Traffic Control and the Police with as many details as possible from the below report&lt;/strong&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;SAS Traffic control STOOP/OCC) +46 8 797 5114&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;The Police 112&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;After the call submit threat incident report by pressing &quot;Submit&quot;, it will be sent automatically to:&lt;/strong&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;SAS Duty Security Officer &lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;STOOP Duty Production Manager &lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Crime Prevention&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -1067,7 +1067,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>InfoMessage</name>
-                    <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Before submitting the report please make sure that SAS Traffic Control has been contacted according to instructions above.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Before submitting the report please make sure that SAS Traffic Control has been contacted according to instructions above.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
