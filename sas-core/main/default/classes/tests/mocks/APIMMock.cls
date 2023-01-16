@@ -175,9 +175,6 @@ global class APIMMock implements HttpCalloutMock {
       if (endpoint.contains(EDW_SINGLE_PNR)) {
         res.setHeader('Content-Type', 'application/json');
         res.setBody(APIMMockResponses.EDW_BOOKING_DATA_SINGLE_BOOKING_RETURN);
-      } else if (endpoint.contains(EDW_MULTIPLE_PNR)) {
-        res.setHeader('Content-Type', 'application/json');
-        res.setBody(APIMMockResponses.EDW_BOOKING_DATA_MULTIPLE_BOOKING_RETURN);
       } else {
         res.setStatusCode(404);
       }
