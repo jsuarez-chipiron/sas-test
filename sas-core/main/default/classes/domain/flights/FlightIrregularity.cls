@@ -275,6 +275,50 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     return explanation;
   }
 
+  public static FlightIrregularities createFromEDWData(
+    List<FetchEDWBookingResponse.Irregularity> irregularities
+  ) {
+    List<FlightIrregularities__c> processedIrregularities = new List<FlightIrregularities__c>();
+    Map<String, List<FlightIrregularities__c>> flightIdToIrregularities = new Map<String, List<FlightIrregularities__c>>();
+    for (FetchEDWBookingResponse.Irregularity irr : irregularities) {
+      String irrFlightId = String.format(
+        '{0}-{1}-{2}-{3}',
+        new List<Object>{
+          irr.fltId.deleteWhitespace(),
+          Datetime.newInstance(irr.depDte).format('yyyyMMdd'),
+          irr.stnFrCd,
+          irr.stnToCd
+        }
+      );
+      FlightIrregularity fi = new FlightIrregularity(
+        new FlightIrregularities__c()
+      );
+      fi.cancellationTime = irr.cnlEventDts == null
+        ? null
+        : Datetime.newInstance(irr.cnlEventDts);
+      fi.code = irr.fltStatus == 'X' ? irr.cnlRsnCd : irr.delayRsnCd;
+      fi.description = irr.cnlSpplInfo;
+      fi.durationMinutes = Decimal.valueOf(irr.duration);
+      fi.nameC = '';
+      fi.reason = irr.fltStatus == 'X' ? irr.cnlSpplInfo : irr.delayRsnText;
+      fi.type = irr.status;
+      fi.updateSObjectFields();
+      processedIrregularities.add(fi.underlyingSObject);
+      if (flightIdToIrregularities.get(irrFlightId) == null) {
+        flightIdToIrregularities.put(
+          irrFlightId,
+          new List<FlightIrregularities__c>()
+        );
+      }
+      flightIdToIrregularities.get(irrFlightId).add(fi.underlyingSObject);
+    }
+    FlightIrregularities newIrregularities = FlightIrregularities.newInstance(
+      processedIrregularities
+    );
+    newIrregularities.TEDSIdToIrregularities = flightIdToIrregularities;
+    return newIrregularities;
+  }
+
   public Boolean equals(Object compareTo) {
     FlightIrregularity otherIrregularity = (FlightIrregularity) compareTo;
 

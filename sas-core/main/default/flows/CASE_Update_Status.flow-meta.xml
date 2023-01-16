@@ -5,7 +5,7 @@
         <name>Assign_StatusLiabilityCases</name>
         <label>Assign StatusLiability</label>
         <locationX>314</locationX>
-        <locationY>998</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>statusToAssign</assignToReference>
             <operator>Assign</operator>
@@ -93,14 +93,14 @@
         <name>Is_claim_result_necessary_for_updating_case_status</name>
         <label>Is claim result necessary for updating case status?</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Assign_StatusLiabilityCases</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not required</defaultConnectorLabel>
         <rules>
             <name>Yes_it_is_required</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditionLogic>1 AND 2 AND (3 or 4)</conditionLogic>
             <conditions>
                 <leftValueReference>StatusLiabilityCases</leftValueReference>
                 <operator>EqualTo</operator>
@@ -109,14 +109,21 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Liability_Claim.Result__c</leftValueReference>
+                <leftValueReference>GetCurrentCaseInformation.LIA_Claim__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.LIA_Claim__r.Result__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Pending</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Liability_Claim.Result__c</leftValueReference>
+                <leftValueReference>GetCurrentCaseInformation.LIA_Claim__r.Result__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -297,27 +304,6 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_Liability_Claim</name>
-        <label>Get Liability Claim</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Is_claim_result_necessary_for_updating_case_status</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCurrentCaseInformation.LIA_Claim__r.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>LIA_Claim__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>GetCurrentCaseInformation</name>
         <label>GetCurrentCaseInformation</label>
         <locationX>858</locationX>
@@ -342,7 +328,7 @@
         <name>UpdateStatus</name>
         <label>UpdateStatus</label>
         <locationX>380</locationX>
-        <locationY>1430</locationY>
+        <locationY>1310</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -400,7 +386,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Liability_Claim</targetReference>
+            <targetReference>Is_claim_result_necessary_for_updating_case_status</targetReference>
         </connector>
         <fields>
             <name>StatusLiabilityCases</name>
@@ -453,7 +439,7 @@
         <name>Validation_Error</name>
         <label>Validation Error</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

@@ -809,6 +809,36 @@
             <targetReference>Get_Record_Type_Id</targetReference>
         </connector>
         <fields>
+            <name>Preferred_Compensation_Method</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;Preferred Compensation Method: &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Customer_Claim.Preferred_Compensation_Method__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Customer_Claim.Preferred_Compensation_Method__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Preferred_Reimbursement_Method</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(68, 68, 68);&quot;&gt;Preferred Reimbursement Method: &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(68, 68, 68);&quot;&gt;{!Get_Customer_Claim.Preferred_Reimbursement_Method__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Customer_Claim.Preferred_Reimbursement_Method__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Select_Settlement_Type</name>
             <choiceReferences>Monetary</choiceReferences>
             <choiceReferences>EB_Points</choiceReferences>

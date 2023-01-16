@@ -1,12 +1,19 @@
 public without sharing class Passengers extends ApplicationDomain {
   public Passengers(List<SObject> records) {
     super(records);
+    this.instanceRecords = (List<Passenger__c>) Records;
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
       return new Passengers(records);
     }
+  }
+
+  public List<Passenger__c> instanceRecords;
+
+  public static Passengers newInstance(List<Passenger__c> sObjectList) {
+    return (Passengers) SAS_Service_Application.Domain.newInstance(sObjectList);
   }
 
   public override void onApplyDefaults() {
