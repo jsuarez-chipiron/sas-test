@@ -20,7 +20,6 @@ global class APIMMock implements HttpCalloutMock {
   public static final String CANCELLED_FLIGHT_ID = 'LH2434-20220531-MUC-BLL';
   public static final String FLIGHT_WITH_LONG_REASON = 'SK0909-20200410-ARN-CPH';
   public static final String EDW_SINGLE_PNR = 'UUWBU6';
-  public static final String EDW_MULTIPLE_PNR = 'SX6QHB';
 
   public static final String DEFAULT_VALID_TEDS_IDENTIFIER =
     DEFAULT_VALID_TEDS_PNR +
