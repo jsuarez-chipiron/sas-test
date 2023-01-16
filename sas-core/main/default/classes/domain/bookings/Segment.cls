@@ -36,6 +36,13 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
     Waitlisted
   }
 
+  public static final Map<String, String> ACCEPTANCE_STATUS_TO_PICKLIST_VALUE = new Map<String, String>{
+    'CAC' => 'Accepted',
+    'CNA' => 'NotAccepted',
+    'CST' => 'StandBy',
+    'CRJ' => 'Rejected'
+  };
+
   public void setEvents(List<SegmentEvent> events) {
     if (events != null) {
       events.sort();
@@ -242,5 +249,60 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
     }
 
     return false;
+  }
+
+  /**
+   * Creates Segments for each passenger from a list of parsed EDW data.
+   * The parsed data contains data for every update to each segment and we create
+   * a segment based on the latest update
+   */
+  public static Segments createFromEDWData(
+    List<FetchEDWBookingResponse.Segment> sourceData,
+    List<Passenger__c> passengersInBooking
+  ) {
+    List<Segment__c> allCreatedSegments = new List<Segment__c>();
+    Map<String, List<Segment__c>> flightIdToSegments = new Map<String, List<Segment__c>>();
+    List<FetchEDWBookingResponse.Segment> segmentEventsToCreate = new List<FetchEDWBookingResponse.Segment>();
+
+    for (FetchEDWBookingResponse.Segment segment : sourceData) {
+      if (segment.isLatest == 1 || segment.segStatus == 'SCHED') {
+        String segmentFlightId = String.format(
+          '{0}{1}-{2}-{3}-{4}',
+          new List<Object>{
+            segment.fltAirlCd,
+            segment.fltNm,
+            Datetime.newInstance(segment.depDte).format('yyyyMMdd'),
+            segment.stnFrCd,
+            segment.stnToCd
+          }
+        );
+        if (flightIdToSegments.get(segmentFlightId) == null) {
+          flightIdToSegments.put(segmentFlightId, new List<Segment__c>());
+        }
+        for (Passenger__c passenger : passengersInBooking) {
+          Segment s = new Segment(new Segment__c(Name = segmentFlightId));
+          s.identifier = String.format(
+            'ST{0}{1}',
+            new List<Object>{ segment.segTattoo, passenger.Identifier__c }
+          );
+          s.bookingClass = segment.oprBkgCl;
+          s.segmentStatusCode = segment.segStatus;
+          s.serviceClass = segment.oprSvcCl;
+          s.updateSObjectFields();
+          flightIdToSegments.get(segmentFlightId).add(s.underlyingSObject);
+          allCreatedSegments.add(s.underlyingSObject);
+        }
+      }
+      if (segment.recordOprType != null) {
+        segmentEventsToCreate.add(segment);
+      }
+    }
+    Segments newSegments = Segments.newInstance(allCreatedSegments);
+    newSegments.flightIdToSegments = flightIdToSegments;
+    newSegments.segmentEvents = SegmentEvent.createFromEDWData(
+      segmentEventsToCreate,
+      passengersInBooking
+    );
+    return newSegments;
   }
 }

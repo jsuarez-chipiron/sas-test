@@ -65,6 +65,9 @@ public without sharing class Flight extends AbstractSObjectWrapper {
 
   private static final String SAS_AIRLINE_IATA_DESIGNATOR = 'SK';
 
+  //Used by EDW when actual timestamp data is not available
+  private static final Long EDW_NULL_TIMESTAMP = -2208988800000L;
+
   private static final Set<String> STAR_ALLIANCE_AIRLINE_IATA_DESIGNATORS = new Set<String>{
     'A3',
     'AC',
@@ -225,6 +228,10 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     return cancellations;
   }
 
+  public static Status getStatusFromPicklistValue(String picklistValue) {
+    return STATUS_PICKLIST_VALUE_TO_ENUM.get(picklistValue);
+  }
+
   /**
    * Calculates the direct distance between this flight's departure and
    * arrival airports.
@@ -324,6 +331,111 @@ public without sharing class Flight extends AbstractSObjectWrapper {
     );
     Matcher matcher = validFlightNumberFormat.matcher(toCheck);
     return matcher.matches();
+  }
+
+  //Flights and Irregularities are stored in the same table in EDW
+  public static Flights createFromEDWData(
+    List<FetchEDWBookingResponse.Irregularity> flightSourceData
+  ) {
+    Map<String, Flight__c> flightIdToRecord = new Map<String, Flight__c>();
+    List<FetchEDWBookingResponse.Irregularity> irregularitiesToCreate = new List<FetchEDWBookingResponse.Irregularity>();
+    for (FetchEDWBookingResponse.Irregularity irr : flightSourceData) {
+      //The input data contains different data based on if flight belongs to SK or other carrier
+      String flightStatus = 'unknown';
+      String arrivalStatus = 'unknown';
+      String departureStatus = 'unknown';
+      switch on irr.status {
+        when 'DEPARTURE DELAYED' {
+          flightStatus = 'delayed';
+          arrivalStatus = 'ontime';
+          departureStatus = 'delayed';
+        }
+        when 'ARRIVAL DELAYED' {
+          flightStatus = 'delayed';
+          arrivalStatus = 'delayed';
+          departureStatus = 'ontime';
+        }
+        when 'DEPARTUE AND ARRIVAL DELAYED' {
+          flightStatus = 'delayed';
+          arrivalStatus = 'delayed';
+          departureStatus = 'delayed';
+        }
+        when 'CANCELLED' {
+          flightStatus = 'cancelled';
+          arrivalStatus = 'cancelled';
+          departureStatus = 'cancelled';
+        }
+        when 'ON TIME' {
+          flightStatus = 'ontime';
+          arrivalStatus = 'ontime';
+          departureStatus = 'ontime';
+        }
+        when else {
+          flightStatus = 'unknown';
+          arrivalStatus = 'unknown';
+          departureStatus = 'unknown';
+        }
+      }
+      Boolean cancelledOrDelayed =
+        flightStatus == 'delayed' ||
+        irr.fltStatus == 'X';
+      if (cancelledOrDelayed) {
+        irregularitiesToCreate.add(irr);
+      }
+      String irrFlightId = String.format(
+        '{0}-{1}-{2}-{3}',
+        new List<Object>{
+          irr.fltId.deleteWhitespace(),
+          Datetime.newInstance(irr.depDte).format('yyyyMMdd'),
+          irr.stnFrCd,
+          irr.stnToCd
+        }
+      );
+      if (flightIdToRecord.get(irrFlightId) != null) {
+        continue;
+      }
+      Flight f = new Flight(new Flight__c(Name = irrFlightId));
+      f.tedsIdentifier = irrFlightId;
+      f.aircraftRegistration = irr.aircraftRegistration;
+      f.arrivalAirport = irr.stnToCd;
+      f.arrivalDelayedMinutes = irr.arrivalDelayMins;
+      f.arrivalStatus = Flight.getStatusFromPicklistValue(arrivalStatus);
+      f.departureAirport = irr.stnFrCd;
+      f.departureDelayedMinutes = irr.depDelayMins;
+      f.departureStatus = Flight.getStatusFromPicklistValue(departureStatus);
+      f.actualArrivalTime = irr.ataTms == null ||
+        irr.ataTms == EDW_NULL_TIMESTAMP
+        ? null
+        : Datetime.newInstance(irr.ataTms);
+      f.actualDepartureTime = irr.atdTms == null ||
+        irr.atdTms == EDW_NULL_TIMESTAMP
+        ? null
+        : Datetime.newInstance(irr.atdTms);
+      f.estimatedArrivalTime = irr.etaTms == null ||
+        irr.etaTms == EDW_NULL_TIMESTAMP
+        ? null
+        : Datetime.newInstance(irr.etaTms);
+      f.estimatedDepartureTime = irr.etdTms == null ||
+        irr.etdTms == EDW_NULL_TIMESTAMP
+        ? null
+        : Datetime.newInstance(irr.etdTms);
+      f.scheduledArrivalTime = irr.staTms == null ||
+        irr.staTms == EDW_NULL_TIMESTAMP
+        ? null
+        : Datetime.newInstance(irr.staTms);
+      f.scheduledDepartureTime = irr.stdTms == null ||
+        irr.stdTms == EDW_NULL_TIMESTAMP
+        ? null
+        : Datetime.newInstance(irr.stdTms);
+      f.updateSObjectFields();
+      flightIdToRecord.put(irrFlightId, f.underlyingSObject);
+    }
+
+    Flights newFlights = Flights.newInstance(flightIdToRecord.values());
+    newFlights.flightIrregularities = FlightIrregularity.createFromEDWData(
+      irregularitiesToCreate
+    );
+    return newFlights;
   }
 
   public Boolean equals(Object obj) {

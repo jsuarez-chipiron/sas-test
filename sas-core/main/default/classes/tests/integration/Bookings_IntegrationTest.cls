@@ -2,7 +2,7 @@
 public with sharing class Bookings_IntegrationTest {
   public static String bookingReferenceOnlyInTEDS = 'TEDS12';
 
-  public static BookingsSelector bookings = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
+  public static BookingsSelector bookingsSel = (BookingsSelector) SAS_Service_Application.Selector.newInstance(
     Booking__c.SObjectType
   );
 
@@ -23,7 +23,7 @@ public with sharing class Bookings_IntegrationTest {
     Test.stopTest();
 
     // Then
-    Booking__c bookingFromDB = bookings.selectByCaseId(
+    Booking__c bookingFromDB = bookingsSel.selectByCaseId(
       new Set<Id>{ testCase.Id }
     )[0];
 
@@ -56,7 +56,7 @@ public with sharing class Bookings_IntegrationTest {
     Test.stopTest();
 
     // Then
-    List<Booking__c> bookingsByCaseId = bookings.selectByCaseId(
+    List<Booking__c> bookingsByCaseId = bookingsSel.selectByCaseId(
       new Set<Id>{ testCase.Id }
     );
 
@@ -84,7 +84,7 @@ public with sharing class Bookings_IntegrationTest {
     Test.stopTest();
 
     // Then
-    List<Booking__c> bookingsFromDB = bookings.selectByCaseId(
+    List<Booking__c> bookingsFromDB = bookingsSel.selectByCaseId(
       new Set<Id>{ testCase.Id }
     );
 
@@ -108,7 +108,7 @@ public with sharing class Bookings_IntegrationTest {
     Test.stopTest();
 
     // Then
-    Booking__c bookingFromDB = bookings.selectByAccountId(
+    Booking__c bookingFromDB = bookingsSel.selectByAccountId(
       new Set<Id>{ testAccount.Id }
     )[0];
 
@@ -133,7 +133,7 @@ public with sharing class Bookings_IntegrationTest {
     Test.stopTest();
 
     // Then
-    List<Booking__c> bookingsFromDB = bookings.selectByAccountId(
+    List<Booking__c> bookingsFromDB = bookingsSel.selectByAccountId(
       new Set<Id>{ testAccount.Id }
     );
 
@@ -174,13 +174,49 @@ public with sharing class Bookings_IntegrationTest {
     Test.stopTest();
 
     // Then
-    List<Booking__c> bookingsForAccount = bookings.selectByAccountId(
+    List<Booking__c> bookingsForAccount = bookingsSel.selectByAccountId(
       new Set<Id>{ testAccount.Id }
     );
 
     System.assert(
       bookingsForAccount.size() == 1,
       'There should be only one booking for the account.'
+    );
+  }
+  @IsTest
+  public static void canInsertSingleEDWBooking() {
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    List<Booking.EDWBooking> edwb = BookingService.fetchEDWBookingByBookingReference(
+        APIMMock.EDW_SINGLE_PNR
+      )
+      .edwBookings;
+    Test.stopTest();
+    System.assert(edwb.size() != 0, 'Booking should have been created');
+    Booking.EDWBooking edwBooking = edwb[0];
+    System.assert(
+      edwBooking.booking != null,
+      '1 Booking should have been created'
+    );
+    System.assert(
+      edwBooking.flights.instanceRecords.size() == 3,
+      '3 Flights should have been created'
+    );
+    System.assert(
+      edwBooking.flights.flightIrregularities.instanceRecords.size() == 2,
+      '3 Flight Irregularities should have been created'
+    );
+    System.assert(
+      edwBooking.segments.instanceRecords.size() == 15,
+      '15 Segments should have been created'
+    );
+    System.assert(
+      edwBooking.segments.segmentEvents.instanceRecords.size() == 55,
+      '55 Segment Events should have been created'
+    );
+    System.assert(
+      edwBooking.passengers.instanceRecords.size() == 5,
+      '5 Passengers should have been created'
     );
   }
 }
