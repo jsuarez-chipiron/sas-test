@@ -388,7 +388,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   };
 
   private static final Map<String, Category> CATEGORY_PICKLIST_VALUE_TO_ENUM = new Map<String, Category>{
-    'Accident &amp; injury' => Category.AccidentAndInjury,
+    'Accident & injury' => Category.AccidentAndInjury,
     'Airport experience' => Category.AirportExperience,
     'Baggage' => Category.Baggage,
     'Booking' => Category.Booking,
