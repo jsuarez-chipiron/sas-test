@@ -394,6 +394,7 @@ public without sharing class CreateClaimRequest {
     ticketNumber = jsonData.formData.claim.ticketNumber;
     baggagePurchaseYear = jsonData.formData.claim.baggagePurchaseYear;
     baggagePurchasePrice = jsonData.formData.claim.baggagePurchasePrice;
+    comment = jsonData.formData.claim.comment;
 
     delayLength = JSON_TO_DELAY_LENGTH.get(jsonData.formData.claim.delayLength);
     baggageDelayLength = JSON_TO_BAGGAGE_DELAY_LENGTH.get(
