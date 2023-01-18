@@ -294,6 +294,8 @@ public without sharing class CreateClaimRequest {
         jsonData.preferredReimbursementMethod
       );
 
+      this.referenceNumber = jsonData.referenceNumber;
+
       if (!String.isBlank(jsonData.bankCountry)) {
         this.bankCountry = CountryUtils.getCountryNameByShortCode(
           jsonData.bankCountry
