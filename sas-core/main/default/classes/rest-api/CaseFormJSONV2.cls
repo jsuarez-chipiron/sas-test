@@ -98,6 +98,7 @@ global class CaseFormJSONV2 {
   global class Traveler {
     global String firstName;
     global String lastName;
+    global List<String> contentVersionIds;
   }
 
   global class Expense {
