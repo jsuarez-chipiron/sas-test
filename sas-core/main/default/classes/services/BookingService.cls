@@ -138,6 +138,9 @@ public without sharing class BookingService {
     FetchEDWBookingResponse data = EDWIntegrationService.fetchEDWBookingsByQuery(
       query
     );
+    if (data == null || data.reservationList.reservation.size() == 0) {
+      return null;
+    }
     Bookings toReturn = Booking.createFromEDWData(
       data.reservationList.reservation
     );

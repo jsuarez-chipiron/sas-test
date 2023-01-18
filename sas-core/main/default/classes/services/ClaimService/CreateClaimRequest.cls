@@ -175,10 +175,19 @@ public without sharing class CreateClaimRequest {
   public class Traveler {
     public String firstName { get; private set; }
     public String lastName { get; private set; }
+    public Set<Id> contentVersionIds { get; private set; }
 
     public Traveler(CaseFormJSONV2.Traveler jsonData) {
       firstName = jsonData.firstName == null ? ' ' : jsonData.firstName;
       lastName = jsonData.lastName == null ? ' ' : jsonData.lastName;
+
+      Set<Id> contentVersionIdsToCreate = new Set<Id>();
+      if (jsonData.contentVersionIds != null) {
+        for (String i : jsonData.contentVersionIds) {
+          contentVersionIdsToCreate.add(Id.valueOf(i));
+        }
+      }
+      contentVersionIds = contentVersionIdsToCreate;
     }
 
     public override String toString() {
@@ -294,6 +303,8 @@ public without sharing class CreateClaimRequest {
       this.preferredReimbursementMethod = JSON_TO_COMPENSATION_TYPE.get(
         jsonData.preferredReimbursementMethod
       );
+
+      this.referenceNumber = jsonData.referenceNumber;
 
       if (!String.isBlank(jsonData.bankCountry)) {
         this.bankCountry = CountryUtils.getCountryNameByShortCode(
