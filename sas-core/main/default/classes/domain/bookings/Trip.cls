@@ -402,13 +402,15 @@ public without sharing class Trip {
     List<Leg> legsInCurrentTrip = new List<Leg>();
     for (Leg leg : sortedLegs) {
       if (leg.flight.departureAirport == this.originAirport.tedsIdentifier) {
-        addFlight = true;
+        addFlight = true; // If the departure no longer exists there will be an issue. TODO: implement special case.
       }
       if (addFlight) {
         legsInCurrentTrip.add(leg);
       }
       if (leg.flight.arrivalAirport == this.destinationAirport.tedsIdentifier) {
-        replacementTrip = new Trip(legsInCurrentTrip);
+        if (legsInCurrentTrip.size() > 0) {
+          replacementTrip = new Trip(legsInCurrentTrip);
+        }
         break;
       }
     }
