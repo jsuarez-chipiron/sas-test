@@ -44,6 +44,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       LIA_Claim__c.Preferred_Compensation_Method__c,
       LIA_Claim__c.Preferred_Reimbursement_Method__c,
       LIA_Claim__c.Purchase_Price__c,
+      LIA_Claim__c.Purchase_Currency__c,
       LIA_Claim__c.Purchase_Year__c,
       LIA_Claim__c.RecordTypeId,
       LIA_Claim__c.Submitted_Claim_Expenses_in_SEK__c,

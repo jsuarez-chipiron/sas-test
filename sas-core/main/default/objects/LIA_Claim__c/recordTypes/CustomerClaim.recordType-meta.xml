@@ -2147,6 +2147,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Flight cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Flight cancellation - compensation</fullName>
             <default>false</default>
         </values>
@@ -2155,19 +2159,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Flight delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Flight delay - compensation</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Flight delay - expenses</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Flight cancellation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Flight delay</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2195,15 +2195,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Missed connection</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Missed connection - compensation</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Missed connection - expenses</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Missed connection</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2822,6 +2822,69 @@
         </values>
         <values>
             <fullName>Voucher</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Purchase_Currency__c</picklist>
+        <values>
+            <fullName>AUD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CHF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CZK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DKK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EUR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GBP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HKD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JPY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NZD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PLN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SEK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USD</fullName>
             <default>false</default>
         </values>
     </picklistValues>

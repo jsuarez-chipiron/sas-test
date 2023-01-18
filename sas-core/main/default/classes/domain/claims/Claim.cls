@@ -48,6 +48,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public BaggageDelayLength baggageDelayLength;
   public String pir;
   public Decimal baggagePurchasePrice;
+  public String baggagePurchaseCurrency;
   public Decimal baggagePurchaseYear;
 
   public String compensationCardNumber;
@@ -127,6 +128,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
       this.preferredReimbursementMethod
     );
     this.underlyingSObject.Purchase_Price__c = this.baggagePurchasePrice;
+    this.underlyingSObject.Purchase_Currency__c = this.baggagePurchaseCurrency;
     this.underlyingSObject.Purchase_Year__c = this.baggagePurchaseYear;
     this.underlyingSObject.RecordTypeId = getRecordTypeIdByEnum(
       this.recordType
@@ -202,6 +204,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
       c.Preferred_Reimbursement_Method__c
     );
     this.baggagePurchasePrice = c.Purchase_Price__c;
+    this.baggagePurchaseCurrency = c.Purchase_Currency__c;
     this.baggagePurchaseYear = c.Purchase_Year__c;
     this.recordType = getRecordTypeEnumById(c.RecordTypeId);
     if (c.Submitted_Claim_Expenses_in_SEK__c != null) {
