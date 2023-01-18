@@ -87,7 +87,7 @@ public without sharing class ClaimService {
 
       travelersRichTextForAutoResponseEmail += traveler.toString() + '<br>';
 
-      for (Id contentId : cust.contentVersionIds) {
+      for (Id contentId : traveler.contentVersionIds) {
         fileIdsToObjects.put(contentId, cust.underlyingSObject);
       }
     }
