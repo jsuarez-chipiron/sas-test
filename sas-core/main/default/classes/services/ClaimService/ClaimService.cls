@@ -875,7 +875,6 @@ public without sharing class ClaimService {
     newClaim.bankName = r.compensationDetails.bankName;
     newClaim.bankBicSwift = r.compensationDetails.bankBic;
     newClaim.bankCountry = r.compensationDetails.bankCountry;
-    newClaim.referenceNumber = r.compensationDetails.referenceNumber;
     newClaim.bookingReference = r.bookingReference;
     newClaim.compensationCardNumber = r.compensationCardNumber;
     newClaim.contactAddressLine1 = r.contact.addressLine1;
