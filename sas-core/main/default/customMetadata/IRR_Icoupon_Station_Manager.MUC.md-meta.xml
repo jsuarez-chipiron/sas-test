@@ -3,10 +3,6 @@
     <label>MUC</label>
     <protected>false</protected>
     <values>
-        <field>From_Address__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>To_Address__c</field>
         <value xsi:type="xsd:string">muc.hoc.cad@dlh.de,muclgl1servicekoordinatoren@dlh.de,stations.germany@sas.dk,passengerrecoverycenter@sas.se</value>
     </values>
