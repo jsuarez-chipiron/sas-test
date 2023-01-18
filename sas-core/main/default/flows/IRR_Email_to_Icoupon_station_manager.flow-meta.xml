@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_email_to_station_manger</name>
+        <label>Send email to station manger</label>
+        <locationX>444</locationX>
+        <locationY>835</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>emailBody1</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Get_station_manager_email_id.To_Address__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply@flysas.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>subect1</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>check_station_maser_email_address</name>
+        <label>check station maser email address</label>
+        <locationX>441</locationX>
+        <locationY>579</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Email_There</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_station_manager_email_id.To_Address__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_email_to_station_manger</targetReference>
+            </connector>
+            <label>Is Email There</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>emailBody1</name>
@@ -72,6 +133,9 @@ MID({!$Record.IRR_FlightId__c},12 , 2),
         <locationX>456</locationX>
         <locationY>383</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>check_station_maser_email_address</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -131,4 +195,24 @@ SAS</text>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>iCoupon activated {!$Record.IRR_FlightId__c}</text>
     </textTemplates>
+    <variables>
+        <name>OrgWideEmailAddress</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>OrgWideEmailAddress</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>SenderName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>SAS iCoupon</stringValue>
+        </value>
+    </variables>
 </Flow>
