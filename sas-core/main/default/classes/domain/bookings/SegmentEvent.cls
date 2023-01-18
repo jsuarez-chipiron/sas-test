@@ -25,6 +25,13 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     'SK08MB' => true,
     'SK08VB' => true,
     'SK0001' => false
+  }; // TODO extend, potentially: 08TC => true. Talk with process owner.
+
+  private static final Map<String, String> OFFICE_CODE_TO_EXPLANATION = new Map<String, String>{
+    'SK08RV' => 'the customer cancelled the trip on the website (regular tickets)',
+    'SK08MB' => 'the customer cancelled the trip on a mobile phone',
+    'SK08VB' => 'the customer cancelled the trip on the website (eurobonus tickets)',
+    'SK0001' => 'SAS cancelled the trip'
   }; // TODO extend
 
   private static final Map<String, OperationType> OPERATION_TYPE_PICKLIST_VALUE_TO_ENUM = new Map<String, OperationType>{
@@ -438,6 +445,66 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     this.underlyingSObject.Update_Number__c = this.updateNumber;
   }
 
+  public static SegmentEvents createFromEDWData(
+    List<FetchEDWBookingResponse.Segment> segments,
+    List<Passenger__c> passengersInBooking
+  ) {
+    List<Segment_Event__c> processedEvents = new List<Segment_Event__c>();
+    Map<String, Map<String, List<Segment_Event__c>>> segmentIdToEventsPerPassenger = new Map<String, Map<String, List<Segment_Event__c>>>();
+    for (FetchEDWBookingResponse.Segment segment : segments) {
+      String segmentFlightId = String.format(
+        '{0}{1}-{2}-{3}-{4}',
+        new List<Object>{
+          segment.fltAirlCd.trim(),
+          segment.fltNm,
+          Datetime.newInstance(segment.depDte).format('yyyyMMdd'),
+          segment.stnFrCd,
+          segment.stnToCd
+        }
+      );
+      for (Passenger__c passenger : passengersInBooking) {
+        if (
+          segmentIdToEventsPerPassenger.get(passenger.Identifier__c) == null
+        ) {
+          segmentIdToEventsPerPassenger.put(
+            passenger.Identifier__c,
+            new Map<String, List<Segment_Event__c>>()
+          );
+        }
+        SegmentEvent se = new SegmentEvent(new Segment_Event__c());
+        se.operationType = SegmentEvent.getOperationTypeFromPicklistValue(
+          segment.recordOprType.replace('D', '').trim()
+        );
+        se.newStatus = SegmentEvent.getStatusCodeFromPicklistValue(
+          segment.actionCd?.trim()
+        );
+        se.previousStatus = SegmentEvent.getStatusCodeFromPicklistValue(
+          segment.prevActionCd?.trim()
+        );
+        se.officeCode = segment.officeUpdating;
+        se.updateDate = segment.resUpdTms == null
+          ? null
+          : Datetime.newInstance(segment.resUpdTms);
+        se.updateNumber = segment.resUpdateNo;
+        se.updateSObjectFields();
+        processedEvents.add(se.underlyingSObject);
+        if (
+          segmentIdToEventsPerPassenger.get(passenger.Identifier__c)
+            .get(segmentFlightId) == null
+        ) {
+          segmentIdToEventsPerPassenger.get(passenger.Identifier__c)
+            .put(segmentFlightId, new List<Segment_Event__c>());
+        }
+        segmentIdToEventsPerPassenger.get(passenger.Identifier__c)
+          .get(segmentFlightId)
+          .add(se.underlyingSObject);
+      }
+    }
+    SegmentEvents newSegmentEvents = SegmentEvents.newInstance(processedEvents);
+    newSegmentEvents.segmentIdToEventsPerPassenger = segmentIdToEventsPerPassenger;
+    return newSegmentEvents;
+  }
+
   public Boolean equals(Object other) {
     SegmentEvent otherSe = (SegmentEvent) other;
     if (
@@ -479,14 +546,35 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     }
   }
 
-  // TODO: refactor, rearrange logic so this does not have to be called this way
-  public static Boolean customerResponsibleForEvent(String officeCode) {
-    if (officeCode == null || officeCode.length() < 4) {
+  // TODO: Refactor to make non static (issues connected to Trip and EU261claim)
+  public static Boolean customerResponsibleForEvent(String officeResponsible) {
+    if (officeResponsible == null || officeResponsible.length() < 4) {
       return null;
     }
 
-    String countryNonSpecificCode = officeCode.substring(3);
+    String countryNonSpecificCode = officeResponsible.substring(3);
 
     return OFFICE_CODE_TO_IS_CUSTOMER.get(countryNonSpecificCode);
+  }
+
+  // TODO: Refactor to make non static (issues connected to Trip and EU261claim)
+  public static String getOfficeCodeExplanation(String officeResponsible) {
+    if (officeResponsible == null || officeResponsible.length() < 4) {
+      return null;
+    }
+
+    String countryNonSpecificCode = officeResponsible.substring(3);
+
+    return OFFICE_CODE_TO_EXPLANATION.get(countryNonSpecificCode);
+  }
+  public static OperationType getOperationTypeFromPicklistValue(
+    String picklistValue
+  ) {
+    return OPERATION_TYPE_PICKLIST_VALUE_TO_ENUM.get(picklistValue);
+  }
+  public static StatusCode getStatusCodeFromPicklistValue(
+    String picklistValue
+  ) {
+    return STATUS_PICKLIST_VALUE_TO_ENUM.get(picklistValue);
   }
 }

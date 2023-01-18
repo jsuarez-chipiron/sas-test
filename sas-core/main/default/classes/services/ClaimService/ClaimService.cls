@@ -86,6 +86,10 @@ public without sharing class ClaimService {
       objectsToCreate.add(cust.underlyingSObject);
 
       travelersRichTextForAutoResponseEmail += traveler.toString() + '<br>';
+
+      for (Id contentId : cust.contentVersionIds) {
+        fileIdsToObjects.put(contentId, cust.underlyingSObject);
+      }
     }
 
     String expensesRichTextForAutoResponseEmail = '';
@@ -117,7 +121,9 @@ public without sharing class ClaimService {
     }
 
     for (Id contentId : request.filesToLink) {
-      fileIdsToObjects.put(contentId, claimToCreate.underlyingSObject);
+      if (!fileIdsToObjects.containsKey(contentId)) {
+        fileIdsToObjects.put(contentId, claimToCreate.underlyingSObject);
+      }
     }
 
     insert constructContentLinks(fileIdsToObjects, claimToCreate.id);
@@ -141,7 +147,7 @@ public without sharing class ClaimService {
     // We need to do this dance because we want claim name to match the case
     // number, and they to be linked to each other.
     claimToCreate.parentCaseId = insertedCase.Id;
-    claimToCreate.Name = insertedCase.CaseNumber;
+    claimToCreate.underlyingSObject.Name = insertedCase.CaseNumber;
     c.upsertToDB();
 
     System.enqueueJob(
@@ -829,6 +835,11 @@ public without sharing class ClaimService {
     Group claimsQueue = GroupsSelector.newInstance()
       .selectQueuesByDeveloperName(new Set<String>{ 'Customer_Claim' })[0];
 
+    String bookingReference = request.bookingReference;
+    if (!String.isBlank(request.travelAgentBookingReference)) {
+      bookingReference = request.travelAgentBookingReference;
+    }
+
     return new Case(
       Initially_Provided_PNR__c = request.bookingReference,
       Description = request.comment,
@@ -838,7 +849,7 @@ public without sharing class ClaimService {
       Origin = request.origin,
       SuppliedEmail = request.contact.email,
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
-      Subject = 'Claim, PNR: ' + request.bookingReference
+      Subject = 'Claim, PNR: ' + bookingReference
     );
   }
 
@@ -896,6 +907,7 @@ public without sharing class ClaimService {
     Claim newClaim = new Claim();
 
     newClaim.bankAccountHolderName = r.compensationDetails.bankAccountHolderName;
+    newClaim.bankAccountNumber = r.compensationDetails.bankAccountNumber;
     newClaim.bankName = r.compensationDetails.bankName;
     newClaim.bankBicSwift = r.compensationDetails.bankBic;
     newClaim.bankCountry = r.compensationDetails.bankCountry;

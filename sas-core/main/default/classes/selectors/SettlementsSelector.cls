@@ -16,6 +16,7 @@ public inherited sharing class SettlementsSelector extends fflib_SObjectSelector
       Settlement__c.Claim__c,
       Settlement__c.Country__c,
       Settlement__c.Currency__c,
+      Settlement__c.Date_of_Payment__c,
       Settlement__c.EuroBonus_Number__c,
       Settlement__c.EuroBonus_Points__c,
       Settlement__c.IsEmergencyClaim__c,

@@ -36,6 +36,8 @@ private class EU261Claim_Test {
   private static BookingClaim getDefaultCancellationBookingClaim() {
     Datetime newDeparture = departure.addHours(4);
     Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
+    f1.actualArrivalTime = null;
+    f1.actualDepartureTime = null;
     Flight f2 = TestFlightFactory.create('SK0002', newDeparture, 'ARN', 'HEL');
     List<Flight> flights = new List<Flight>{ f1, f2 };
 
@@ -472,6 +474,27 @@ private class EU261Claim_Test {
       claimFirmResult.caveats[0],
       'Caveat should be power of attorney.'
     );
+
+    try {
+      System.debug(groupClaimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report 1.');
+    }
+    try {
+      System.debug(differentLastNameClaimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report 2.');
+    }
+    try {
+      System.debug(missingTravelersClaimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report 3.');
+    }
+    try {
+      System.debug(claimFirmClaimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report 4.');
+    }
   }
 
   @IsTest
@@ -497,6 +520,11 @@ private class EU261Claim_Test {
       result.reasoning,
       'Rejection reason should be "can handle only one booking per claim"'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -525,6 +553,12 @@ private class EU261Claim_Test {
       result.reasoning,
       'Rejection reason should be "flight was cancelled 14 or more days in advance"'
     );
+
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -558,6 +592,11 @@ private class EU261Claim_Test {
       result.caveats[0],
       'Caveat should be high expenses.'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -584,6 +623,11 @@ private class EU261Claim_Test {
       result.reasoning,
       'Rejection reason should be "cannot find claimed flight from booking"'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -605,6 +649,11 @@ private class EU261Claim_Test {
       result.verdict,
       'It should be possible to evaluate claims with CREW delays.'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -621,6 +670,7 @@ private class EU261Claim_Test {
       'LH0001',
       bc.c.departureDate
     );
+    bc.b.segments[0].flight.operatingCarrier = 'LH';
     bc.c.flightNumber = 'LH0001';
 
     EU261Claim claimToEvaluate = new EU261Claim(
@@ -642,6 +692,11 @@ private class EU261Claim_Test {
       result.reasoning,
       'Rejection reason should be "claim flight is not operated by SAS"'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -668,6 +723,11 @@ private class EU261Claim_Test {
       result.caveats[0],
       'Caveat should be duplicates.'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -698,6 +758,86 @@ private class EU261Claim_Test {
       result.reimbursementAmountInSEK,
       'Reimbursement should be 0 euros.'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void claimWhereCustomerClaimedTooLateShouldBeDenied() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.c.createdDate = DateTime.newInstance(2030, 1, 1);
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      result.verdict,
+      'A claim where the customer filed too late should be denied'
+    );
+    System.assertEquals(
+      'not filed on time',
+      result.reasoning,
+      'Reasoning should be "not filed on time"'
+    );
+
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void minimalClaimOutsideTheEUShouldBeEvaluatedCorrectly() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    Flight f1 = bc.b.segments[0].flight;
+    Flight f2 = bc.b.segments[1].flight;
+    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
+    f1.arrivalAirport = 'LAX';
+    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
+    f2.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
+    f2.arrivalAirport = 'LAX';
+    f2.tedsIdentifier = f2.tedsIdentifier.substringBefore('HEL') + 'LAX';
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      result.verdict,
+      'Handling status should be "Eligible for compensation"'
+    );
+    System.assertEquals(
+      new Money(300, Money.CurrencyCode.EUR),
+      result.compensationPerCustomerInEUR.values()[0],
+      'Compensation should be 300 euros.'
+    );
+    System.assertEquals(
+      new Money(0, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'Reimbursement should be 0 euros.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -760,6 +900,11 @@ private class EU261Claim_Test {
       result.compensationPerCustomerInEUR.values()[0],
       'Compensation should be €250'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -784,6 +929,11 @@ private class EU261Claim_Test {
       result.verdict,
       'It should be possible to evaluate minimal claims with cancellations outside SAS control and they should not receive any compensation.'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -813,6 +963,11 @@ private class EU261Claim_Test {
       result.reasoning,
       'Unhandled reason should be "cannot determine wether SAS is responsible or not for the cancellation"'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -843,6 +998,11 @@ private class EU261Claim_Test {
       result.reasoning,
       'Unhandled reason should be "there are more than one cancellation connected to the claim flight"'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -942,6 +1102,11 @@ private class EU261Claim_Test {
       result.compensationPerCustomerInEUR.values()[0],
       'The customer should be awarded 250 eur (two flights)'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1025,6 +1190,11 @@ private class EU261Claim_Test {
       result.reasoning,
       'If a cancelled flight does not affect the final arrival time the customer should not be compensated (two flights).'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1107,6 +1277,11 @@ private class EU261Claim_Test {
       result.compensationPerCustomerInEUR.values()[1],
       'Compensation should be 250€ for second customer'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1133,6 +1308,11 @@ private class EU261Claim_Test {
       result.compensationPerCustomerInEUR.values()[0],
       'We should pay out €250 for the minimal cancellation claim'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1174,6 +1354,12 @@ private class EU261Claim_Test {
       result.reasoning,
       'Reasoning should be "customer cancelled the flight"'
     );
+
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1215,6 +1401,11 @@ private class EU261Claim_Test {
       result.compensationPerCustomerInEUR.values()[0],
       'We should pay out €250 for the minimal cancellation claim'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1268,6 +1459,11 @@ private class EU261Claim_Test {
       result.compensationPerCustomerInEUR.values()[0],
       'We should pay out €250 for the minimal cancellation claim'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1321,6 +1517,11 @@ private class EU261Claim_Test {
       result.reasoning,
       'Reasoning should be "it is uncertain if SAS or the customer cancelled the flight"'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1364,6 +1565,11 @@ private class EU261Claim_Test {
       result.reasoning,
       'Unhandled reason should be "booking has unsupported event(s)"'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1407,6 +1613,11 @@ private class EU261Claim_Test {
       result.reasoning,
       'Unhandled reason should be "booking has unsupported event(s)"'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1460,6 +1671,11 @@ private class EU261Claim_Test {
       result.compensationPerCustomerInEUR.values()[0],
       'We should pay out €250 for the minimal cancellation claim'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
   @IsTest
   static void claimWithFullHistoryShouldBeAutomated() {
@@ -1484,10 +1700,15 @@ private class EU261Claim_Test {
       result.compensationPerCustomerInEUR.values()[0],
       'We should pay out €250 for the minimal cancellation claim'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
-  static void claimWithComplicatedHistoryShouldBeAutomated() {
+  static void claimWithComplicatedHistoryNoReplacementShouldBeAutomated() {
     BookingClaim bc = getCancellationFullBookingHistoryNoReplacement();
 
     EU261Claim claimToEvaluate = new EU261Claim(
@@ -1509,6 +1730,12 @@ private class EU261Claim_Test {
       result.compensationPerCustomerInEUR.values()[0],
       'We should pay out €250 for the minimal cancellation claim'
     );
+
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 
   @IsTest
@@ -1535,5 +1762,10 @@ private class EU261Claim_Test {
       result.reasoning,
       'Reasoning should be "cannot get segment statuses"'
     );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
   }
 }

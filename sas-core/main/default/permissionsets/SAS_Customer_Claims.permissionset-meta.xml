@@ -922,6 +922,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Settlement__c.Date_of_Payment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Settlement__c.Error_Message__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -963,6 +968,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Settlement__c.Postal_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Settlement__c.RecordTypeName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

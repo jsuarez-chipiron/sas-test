@@ -329,9 +329,9 @@
                 <label>Trafikstyrelsen (Denmark)</label>
             </value>
             <value>
-                <fullName>Transportklagenemnda (Norway)</fullName>
+                <fullName>Transportklagenemnda - NEB (Norway)</fullName>
                 <default>false</default>
-                <label>Transportklagenemnda (Norway)</label>
+                <label>Transportklagenemnda - NEB (Norway)</label>
             </value>
             <value>
                 <fullName>Tribunal d’Instance (France)</fullName>
@@ -393,7 +393,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Norway</controllingFieldValue>
-            <valueName>Transportklagenemnda (Norway)</valueName>
+            <valueName>Transportklagenemnda - NEB (Norway)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Poland</controllingFieldValue>

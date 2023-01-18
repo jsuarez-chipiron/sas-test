@@ -3,8 +3,7 @@ public without sharing class Trip {
   public Airport destinationAirport;
   public List<Leg> sortedLegs;
   public Boolean SASIsOnlyOperatingCarrier;
-  public Boolean cancelledSegmentRemovedBeforeCancellation = false;
-  public String officeResponsibleForCancellation;
+  public CancellationTime cancellationTimeInfo;
 
   /**
    * Returns an ordered list of all trips in a booking.
@@ -246,11 +245,38 @@ public without sharing class Trip {
    */
   public class Leg {
     transient List<Segment> segments;
-    Flight flight;
+    public Flight flight;
 
     public Leg(List<Segment> segments) {
       this.segments = segments;
       this.flight = segments[0].flight;
+    }
+  }
+
+  public class CancellationTime {
+    public Datetime affectedByIrregularity;
+    public Datetime unconfirmed;
+    public Datetime removed;
+    public String officeUnconfirming;
+    public String officeRemoving;
+
+    public CancellationTime(
+      Datetime affectedByIrregularity,
+      Datetime unconfirmed,
+      Datetime removed,
+      String officeUnconfirming,
+      String officeRemoving
+    ) {
+      this.affectedByIrregularity = affectedByIrregularity;
+      this.unconfirmed = unconfirmed;
+      this.removed = removed;
+      this.officeUnconfirming = officeUnconfirming;
+      this.officeRemoving = officeRemoving;
+    }
+
+    public Boolean removedBeforeIrregularity() {
+      Boolean wasRemoved = removed != null;
+      return wasRemoved && removed < affectedByIrregularity;
     }
   }
 
@@ -491,18 +517,20 @@ public without sharing class Trip {
   }
 
   public Boolean customerCancelled() {
-    if (!cancelledSegmentRemovedBeforeCancellation) {
+    if (!cancellationTimeInfo.removedBeforeIrregularity()) {
       return false;
     }
 
-    if (officeResponsibleForCancellation == null) {
+    String officeResponsible = cancellationTimeInfo.officeRemoving;
+
+    if (officeResponsible == null) {
       throw new ResponsibilityException(
         'No office is responsible for cancelling the flight'
       );
     }
 
     Boolean cancelledByCustomer = SegmentEvent.customerResponsibleForEvent(
-      officeResponsibleForCancellation
+      officeResponsible
     );
 
     if (cancelledByCustomer == null) {

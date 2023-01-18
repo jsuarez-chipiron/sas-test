@@ -11,6 +11,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
   public List<Segment> segments;
   public List<Passenger> passengers;
 
+  @TestVisible
   public Set<Flight> flights {
     get {
       if (this.segments == null) {
@@ -34,6 +35,19 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     OneWay,
     RoundTrip,
     Unknown
+  }
+
+  public class EDWBooking {
+    public Booking booking { get; private set; }
+    public Segments segments { get; private set; }
+    public Flights flights { get; private set; }
+    public Passengers passengers { get; private set; }
+    public EDWBooking(Booking b, Flights f, Segments s, Passengers p) {
+      this.booking = b;
+      this.segments = s;
+      this.flights = f;
+      this.passengers = p;
+    }
   }
 
   @TestVisible
@@ -233,29 +247,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     return claimSegments;
   }
 
-  private class CancellationTime {
-    Datetime affectedByIrregularity;
-    Datetime unconfirmed;
-    Datetime removed;
-    String officeUnconfirming;
-    String officeRemoving;
-
-    public CancellationTime(
-      Datetime affectedByIrregularity,
-      Datetime unconfirmed,
-      Datetime removed,
-      String officeUnconfirming,
-      String officeRemoving
-    ) {
-      this.affectedByIrregularity = affectedByIrregularity;
-      this.unconfirmed = unconfirmed;
-      this.removed = removed;
-      this.officeUnconfirming = officeUnconfirming;
-      this.officeRemoving = officeRemoving;
-    }
-  }
-
-  public CancellationTime getCancellationTime(Flight f) {
+  public Trip.CancellationTime getCancellationTime(Flight f) {
     List<FlightIrregularity> cancellations = f.getCancellations();
 
     if (cancellations.size() > 1) {
@@ -315,7 +307,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       );
     }
 
-    return new CancellationTime(
+    return new Trip.CancellationTime(
       cancellation.cancellationTime,
       segmentUnconfirmed,
       segmentRemoved,
@@ -335,7 +327,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
    * @throws Booking.UnsupportedException if there is more than one cancellation
    */
   public List<Trip> getTripsBeforeAndAfterCancellation(Flight cancelledFlight) {
-    CancellationTime cancellationTimeInfo = getCancellationTime(
+    Trip.CancellationTime cancellationTimeInfo = getCancellationTime(
       cancelledFlight
     );
     Datetime unconfirmed = cancellationTimeInfo.unconfirmed;
@@ -352,6 +344,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
       tripsBeforeIrregularity,
       cancelledFlight
     );
+    tripWithCancelledFlight.cancellationTimeInfo = cancellationTimeInfo;
 
     if (tripWithCancelledFlight == null) {
       throw new Trip.InvalidException(
@@ -378,13 +371,6 @@ public without sharing class Booking extends AbstractSObjectWrapper {
         activeSegments
       );
     }
-
-    Boolean removedBeforeIrregularity =
-      removed != null &&
-      removed < cancellationTimeInfo.affectedByIrregularity;
-
-    tripWithCancelledFlight.officeResponsibleForCancellation = cancellationTimeInfo.officeRemoving;
-    tripWithCancelledFlight.cancelledSegmentRemovedBeforeCancellation = removedBeforeIrregularity;
 
     return new List<Trip>{ tripWithCancelledFlight, replacementTrip };
   }
@@ -458,5 +444,54 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     }
 
     return activeSegments;
+  }
+
+  public static Bookings createFromEDWData(
+    List<FetchEDWBookingResponse.Reservation> reservations
+  ) {
+    List<EDWBooking> edwBookings = new List<EDWBooking>();
+    List<Booking__c> createdBookings = new List<Booking__c>();
+    for (FetchEDWBookingResponse.Reservation reservation : reservations) {
+      String bookingIdentifier = String.format(
+        '{0}-{1}',
+        new List<Object>{
+          reservation.reservationNumber,
+          Datetime.newInstance(reservation.createdDate).format('yyyyMMdd')
+        }
+      );
+      //create booking
+      Booking b = new Booking(new Booking__c(Name = bookingIdentifier));
+      b.bookingReference = reservation.reservationNumber;
+      b.tedsIdentifier = bookingIdentifier;
+      //TODO Ask SEIP to fix the Json response to have these separately
+      if (reservation.segmentList?.segment.size() > 0) {
+        b.createdAtTravelOfficeId = reservation.segmentList.segment[0].offCd;
+        b.isStaffBooking = reservation.segmentList.segment[0].staffPNR == 'Y';
+      }
+      b.updateSObjectFields();
+      //create flights
+      Flights createdFlights = Flight.createFromEDWData(
+        reservation.irregularityList.irregularity
+      );
+      //create passengers
+      Passengers createdPassengers = Passenger.createFromEDWData(
+        reservation.passengerList.passenger
+      );
+      Segments createdSegments = Segment.createFromEDWData(
+        reservation.segmentList.segment,
+        createdPassengers.instanceRecords
+      );
+      createdSegments.addEDWTicketInformation(
+        reservation.ticketInfoList.ticketInfo
+      );
+      createdBookings.add(b.underlyingSObject);
+      edwBookings.add(
+        new EDWBooking(b, createdFlights, createdSegments, createdPassengers)
+      );
+    }
+    Bookings bookingsInstance = Bookings.newInstance(createdBookings);
+    bookingsInstance.edwBookings = edwBookings;
+    bookingsInstance.upsertEDWDataToDB();
+    return bookingsInstance;
   }
 }

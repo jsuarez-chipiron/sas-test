@@ -55,6 +55,9 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     this.type = fi.Type__c;
   }
 
+  public enum CODE {
+  } // TODO
+
   // This should likely be stored in CancellationCode.globalValueSet. However, db calls makes that very annoying.
   // TODO: Populate, get help from liability: https://docs.google.com/spreadsheets/d/1lo-pu7Ew-f-5z18Ke51962j_VZkI9FfA8kYiKTFUw5o/edit#gid=801456937
   public static final Map<String, Boolean> codeToSASIsResponsible = new Map<String, Boolean>{
@@ -76,6 +79,30 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     '94'
   };
 
+  private static final Map<String, String> codeToExplanation = new Map<String, String>{
+    'AIRS' => 'airspace restrictions',
+    'ARPT' => 'airport restrictions',
+    'AUTH' => 'a diversion caused by ATC, security control or local authorities',
+    'COMM' => 'commercial reasons',
+    'CREW' => 'crew shortage',
+    'DAMA' => 'damage to the aircraft',
+    'EQUI' => 'missing equipment (including aircraft)',
+    'FUEL' => 'fuel related reasons',
+    'HDLG' => 'the handling agent',
+    'HOLI' => 'holiday season',
+    'INDU' => 'industrial action',
+    'NODE' => 'reduced or no commercial demand',
+    'OPCO' => 'reroutings, diversions, consolidations, cancellations and/or revisions to timetable as decided by a third party', // as decided by MOVEMENT CONTROL CENTRE or by a local operational control centre or by a local operational control
+    'OPER' => 'reroutings, diversions, consolidations, cancellations and/or revisions to timetable as decided by a third party',
+    'PERF' => 'planned aircraft type not being able to lift planned payload or fuelstop necessary due to payload',
+    'POLI' => 'political unrest, war or war-like situations etc.',
+    'REPO' => 'aircraft repositioning',
+    'RTNS' => 'an ad-hoc schedule change being withdrawn and the original schedule for the flight being reinstated',
+    'RUNW' => 'technical restrictions of a runway',
+    'TECH' => 'technical issues',
+    'WEAT' => 'weather conditions'
+  };
+
   private static final Map<String, EU261Eligibility> EU261_PICKLIST_VALUE_TO_ENUM = new Map<String, EU261Eligibility>{
     'Tentative' => EU261Eligibility.Tentative,
     'Yes' => EU261Eligibility.Yes,
@@ -87,6 +114,26 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     EU261Eligibility.Yes => 'Yes',
     EU261Eligibility.No => 'No'
   };
+
+  public String getExplanation() {
+    if (this.description != null && this.description != '') {
+      return this.description;
+    }
+
+    String explanation = codeToExplanation.get(this.code);
+    if (explanation == null) {
+      explanation = 'cancellation code "' + this.code + '"'; // Should not happen
+    }
+    return explanation;
+  }
+
+  public String getOutsideControlExplanationCancellation() {
+    String explanation = 'The flight was cancelled because of '; // TODO: improve
+    explanation += getExplanation();
+    explanation += ', which is not within SAS control.';
+
+    return explanation;
+  }
 
   public Boolean isRotation() {
     return ROTATION_CODES.contains(this.code);
@@ -209,7 +256,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   /**
    * @return a String with an explanation which of the irregularities SAS is not responsible for.
    */
-  public static String getOutsideSASControlExplanation(
+  public static String getOutsideSASControlExplanationDelay(
     List<FlightIrregularity> irregularities
   ) {
     Decimal totalDelayOutsideSASControl = 0;
@@ -226,6 +273,50 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     explanation += '(Total: ' + totalDelayOutsideSASControl + ' minutes)';
 
     return explanation;
+  }
+
+  public static FlightIrregularities createFromEDWData(
+    List<FetchEDWBookingResponse.Irregularity> irregularities
+  ) {
+    List<FlightIrregularities__c> processedIrregularities = new List<FlightIrregularities__c>();
+    Map<String, List<FlightIrregularities__c>> flightIdToIrregularities = new Map<String, List<FlightIrregularities__c>>();
+    for (FetchEDWBookingResponse.Irregularity irr : irregularities) {
+      String irrFlightId = String.format(
+        '{0}-{1}-{2}-{3}',
+        new List<Object>{
+          irr.fltId.deleteWhitespace(),
+          Datetime.newInstance(irr.depDte).format('yyyyMMdd'),
+          irr.stnFrCd,
+          irr.stnToCd
+        }
+      );
+      FlightIrregularity fi = new FlightIrregularity(
+        new FlightIrregularities__c()
+      );
+      fi.cancellationTime = irr.cnlEventDts == null
+        ? null
+        : Datetime.newInstance(irr.cnlEventDts);
+      fi.code = irr.fltStatus == 'X' ? irr.cnlRsnCd : irr.delayRsnCd;
+      fi.description = irr.cnlSpplInfo;
+      fi.durationMinutes = Decimal.valueOf(irr.duration);
+      fi.nameC = '';
+      fi.reason = irr.fltStatus == 'X' ? irr.cnlSpplInfo : irr.delayRsnText;
+      fi.type = irr.status;
+      fi.updateSObjectFields();
+      processedIrregularities.add(fi.underlyingSObject);
+      if (flightIdToIrregularities.get(irrFlightId) == null) {
+        flightIdToIrregularities.put(
+          irrFlightId,
+          new List<FlightIrregularities__c>()
+        );
+      }
+      flightIdToIrregularities.get(irrFlightId).add(fi.underlyingSObject);
+    }
+    FlightIrregularities newIrregularities = FlightIrregularities.newInstance(
+      processedIrregularities
+    );
+    newIrregularities.TEDSIdToIrregularities = flightIdToIrregularities;
+    return newIrregularities;
   }
 
   public Boolean equals(Object compareTo) {

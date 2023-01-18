@@ -130,6 +130,23 @@ public without sharing class BookingService {
     return fetchBookingsByQuery(query);
   }
 
+  public static Bookings fetchEDWBookingByBookingReference(
+    String bookingReference
+  ) {
+    EDWIntegrationService.FetchEDWBookingsQuery query = new EDWIntegrationService.FetchEDWBookingsQuery();
+    query.pnr = bookingReference;
+    FetchEDWBookingResponse data = EDWIntegrationService.fetchEDWBookingsByQuery(
+      query
+    );
+    if (data == null || data.reservationList.reservation.size() == 0) {
+      return null;
+    }
+    Bookings toReturn = Booking.createFromEDWData(
+      data.reservationList.reservation
+    );
+    return toReturn;
+  }
+
   /**
    *
    */

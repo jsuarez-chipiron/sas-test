@@ -5,7 +5,7 @@ public without sharing class Flights extends ApplicationDomain {
   }
 
   public List<Flight__c> instanceRecords;
-  private FlightIrregularities flightIrregularities;
+  public FlightIrregularities flightIrregularities;
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
