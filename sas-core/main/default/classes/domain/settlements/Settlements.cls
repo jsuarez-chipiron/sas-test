@@ -189,7 +189,7 @@ public without sharing class Settlements extends ApplicationDomain {
       for (Settlement__c s : instanceRecords) {
         s.Settlement_Status__c = STATUS_DONE;
         if (paymentDate != null && result == true) {
-          s.Date_of_Payment__c = DateTime.valueOf(paymentDate);
+          s.Date_of_Payment__c = DateTime.valueOfGMT(paymentDate);
         }
         uow.registerDirty(s);
         acceptedSettlementIds.add(s.Id);

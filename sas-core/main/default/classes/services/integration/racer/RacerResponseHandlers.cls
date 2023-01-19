@@ -132,7 +132,7 @@ public class RacerResponseHandlers {
       List<Settlement__c> correspondingSettlements = settlementsSel.selectByPaymentFileName(
         paymentFileName
       );
-      // Formatting payment date String from dd/mm/yyyy to yyyy-mm-dd. Because yyyy-mm-dd is required to convert Date/Time From String.
+      // Formatting payment date String from mm/dd/yyyy to yyyy-mm-dd. Because yyyy-mm-dd is required to convert Date/Time From String.
       String dateOfPayment;
       try {
         List<String> pDate = paymentDate.split(' ');
@@ -140,9 +140,9 @@ public class RacerResponseHandlers {
         dateOfPayment =
           splitPaymentDate[2] +
           '-' +
-          splitPaymentDate[1] +
-          '-' +
           splitPaymentDate[0] +
+          '-' +
+          splitPaymentDate[1] +
           ' ' +
           pdate[1];
       } catch (Exception e) {
