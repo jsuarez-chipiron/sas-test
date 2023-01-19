@@ -6,10 +6,10 @@ public class RacerResponseHandlersTest {
     String paymentFileName1 = 'TestPaymentFile1.txt';
     String paymentFileName2 = 'TestPaymentFile2.txt';
     String L1FileContents =
-      '01/01/2022 01:00:00|' +
+      '01/28/2022 01:00:00|' +
       paymentFileName1 +
       '|SEB_L1|46|ACCEPTED||ID0000\n' +
-      '01/01/2022 01:00:00|' +
+      '01/28/2022 01:00:00|' +
       paymentFileName2 +
       '|SEB_L1|105|ACCEPTED||ID0000';
     Settlement__c relevantSettlement1 = new Settlement__c(
@@ -77,17 +77,17 @@ public class RacerResponseHandlersTest {
 
     // Then
     Settlement__c relevantSettlement1Afterwards = [
-      SELECT Id, Settlement_Status__c
+      SELECT Id, Settlement_Status__c, Date_of_Payment__c
       FROM Settlement__c
       WHERE Id = :relevantSettlement1.Id
     ];
     Settlement__c relevantSettlement2Afterwards = [
-      SELECT Id, Settlement_Status__c
+      SELECT Id, Settlement_Status__c, Date_of_Payment__c
       FROM Settlement__c
       WHERE Id = :relevantSettlement2.Id
     ];
     Settlement__c irrelevantSettlementAfterwards = [
-      SELECT Id, Settlement_Status__c
+      SELECT Id, Settlement_Status__c, Date_of_Payment__c
       FROM Settlement__c
       WHERE Id = :irrelevantSettlement.Id
     ];
@@ -106,6 +106,16 @@ public class RacerResponseHandlersTest {
       Settlements.STATUS_SENT_TO_BANK,
       irrelevantSettlementAfterwards.Settlement_Status__c,
       'Settlement 3 should not be marked as accepted by Bank as it has not been processed.'
+    );
+    System.assertEquals(
+      '2022-01-28 01:00:00',
+      String.valueOfGMT(relevantSettlement1Afterwards.Date_of_Payment__c),
+      'Date Of Payment should be in proper format for Settlement 1 because file has been processed successfully.'
+    );
+    System.assertEquals(
+      null,
+      irrelevantSettlementAfterwards.Date_of_Payment__c,
+      'Date Of Payment should be null for Settlement 3 as it has not been processed .'
     );
   }
 
