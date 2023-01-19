@@ -39,7 +39,7 @@
         <application>standard__Chatter</application>
         <default>false</default>
         <visible>false</visible>
-    </applicationVisibilities>        
+    </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__SalesforceCMS</application>
         <default>false</default>
@@ -728,7 +728,7 @@
         <editable>false</editable>
         <field>Group_Travel_Request__c.Full_Name__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Last_Name__c</field>
@@ -848,7 +848,7 @@
         <editable>false</editable>
         <field>Group_Travel_Request__c.Number_Of_Passengers__c</field>
         <readable>true</readable>
-    </fieldPermissions>        
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Number_Of_Special_Baggage__c</field>
@@ -1158,7 +1158,7 @@
         <editable>false</editable>
         <field>Account.IATA_Number__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>C_GeneralSetting__mdt.Value__c</field>
@@ -1233,7 +1233,7 @@
         <editable>false</editable>
         <field>Case.Approval_Submitter__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Feedback_Category__c</field>
@@ -1263,7 +1263,7 @@
         <editable>false</editable>
         <field>Case.Concerns_a_person_with_reduced_mobility__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.PNR_Payment_Status__c</field>
@@ -1293,7 +1293,7 @@
         <editable>false</editable>
         <field>Case.LIA_Deadline__c</field>
         <readable>false</readable>
-    </fieldPermissions>        
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Deposit_Due_Date__c</field>
@@ -1313,7 +1313,7 @@
         <editable>false</editable>
         <field>Case.LIA_Judicial_Body__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.LIA_Passenger_s__c</field>
@@ -1448,7 +1448,7 @@
         <editable>false</editable>
         <field>Case.Customer_Claim_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>     
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Department__c</field>
@@ -1518,17 +1518,17 @@
         <editable>false</editable>
         <field>Case.Group_Departure_Airport__c</field>
         <readable>true</readable>
-    </fieldPermissions>     
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Destination__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Outbound_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Travel_Request__c</field>
@@ -1568,7 +1568,7 @@
         <editable>false</editable>
         <field>Case.GDPR_Wiped__c</field>
         <readable>false</readable>
-    </fieldPermissions>	
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Team__c</field>
@@ -1593,7 +1593,7 @@
         <editable>false</editable>
         <field>Refund_Request__c.Created_Date_in_UTC__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Refund_Request_Sub_type__c</field>
@@ -1603,7 +1603,7 @@
         <editable>false</editable>
         <field>Case.Refund_Request_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>Case.Special_Service_Request__c</field>
@@ -1613,7 +1613,7 @@
         <editable>false</editable>
         <field>Case.StatusReadOnly__c</field>
         <readable>true</readable>
-    </fieldPermissions>          
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>CaseToBooking__c.Case__c</field>
@@ -1698,7 +1698,7 @@
         <editable>true</editable>
         <field>Refund_Request__c.Request_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.Ticket_Numbers__c</field>
@@ -1763,7 +1763,7 @@
         <editable>false</editable>
         <field>LIA_Claim__c.Fees__c</field>
         <readable>false</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Flight_Date__c</field>
@@ -1788,17 +1788,17 @@
         <editable>false</editable>
         <field>LIA_Claim__c.Has_been_sent_to_settle__c</field>
         <readable>false</readable>
-    </fieldPermissions>          
+    </fieldPermissions>
      <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Judicial_Body__c</field>
         <readable>false</readable>
-    </fieldPermissions>   
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Jurisdiction__c</field>
         <readable>false</readable>
-    </fieldPermissions>      
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Legal_Conclusion__c</field>
@@ -1808,7 +1808,7 @@
         <editable>false</editable>
         <field>LIA_Claim__c.Liability_Claim_Type__c</field>
         <readable>false</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Name_of_Passenger_s__c</field>
@@ -1824,6 +1824,11 @@
         <field>LIA_Claim__c.Principal__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions>
+      <editable>false</editable>
+      <field>LIA_Claim__c.Purchase_Currency__c</field>
+      <readable>true</readable>
+  </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Reason_for_Delay_Cancellation__c</field>
@@ -2796,7 +2801,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Approval_Request__c-Approval Request Layout</layout>
-    </layoutAssignments> 	
+    </layoutAssignments>
     <layoutAssignments>
         <layout>C_GeneralSetting__mdt-General Setting Layout</layout>
     </layoutAssignments>
@@ -2810,7 +2815,7 @@
     <layoutAssignments>
         <layout>Case-SAS Customer Claim Layout</layout>
         <recordType>Case.Emergency</recordType>
-    </layoutAssignments>    
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Case-SAS Internal%2FBackoffice Layout</layout>
         <recordType>Case.Internal_Backoffice</recordType>
@@ -2837,14 +2842,14 @@
     <layoutAssignments>
         <layout>LIA_Claim__c-Liability Claim Layout</layout>
         <recordType>LIA_Claim__c.LiabilityClaim</recordType>
-    </layoutAssignments>    
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Contact-Email Contact Layout</layout>
         <recordType>Contact.EmailContact</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contact-SAS Contact Layout</layout>
-    </layoutAssignments>    
+    </layoutAssignments>
     <layoutAssignments>
         <layout>FCS_Booking__x-Booking Layout</layout>
     </layoutAssignments>
@@ -2865,7 +2870,7 @@
     </layoutAssignments>
    <layoutAssignments>
         <layout>Insurance_Detail__c-Insurance Detail Layout</layout>
-    </layoutAssignments>     
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Knowledge__kav-SAS SSI Layout</layout>
     </layoutAssignments>
@@ -2881,7 +2886,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>MessagingSession-Messaging Session Layout</layout>
-    </layoutAssignments>       
+    </layoutAssignments>
     <layoutAssignments>
         <layout>PersonAccount-B2C - Anonymous Customer</layout>
         <recordType>PersonAccount.AnonymousCustomer</recordType>
@@ -2931,7 +2936,7 @@
     <layoutAssignments>
         <layout>Settlement__c-Voucher Settlement</layout>
         <recordType>Settlement__c.Voucher</recordType>
-    </layoutAssignments>    
+    </layoutAssignments>
     <layoutAssignments>
         <layout>SocialPersona-Social Persona Layout</layout>
     </layoutAssignments>
@@ -3156,7 +3161,7 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>Survey</object>
         <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>  
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -3166,7 +3171,7 @@
         <object>SurveyInvitation</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>	
+    <objectPermissions>
 	    <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3174,8 +3179,8 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>SurveyResponse</object>
         <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>   
-	<objectPermissions>   
+    </objectPermissions>
+	<objectPermissions>
 	    <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3183,7 +3188,7 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>SurveySubject</object>
         <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>   
+    </objectPermissions>
     <pageAccesses>
         <apexPage>C_LocalAuth</apexPage>
         <enabled>false</enabled>
@@ -3225,7 +3230,7 @@
         <default>false</default>
         <recordType>Case.Claim</recordType>
         <visible>false</visible>
-    </recordTypeVisibilities>    
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.FunctionalProductSupport</recordType>
@@ -3236,7 +3241,7 @@
         <personAccountDefault>true</personAccountDefault>
         <recordType>Case.Internal_Backoffice</recordType>
         <visible>true</visible>
-    </recordTypeVisibilities> 
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Contact.EmailContact</recordType>
@@ -3271,11 +3276,11 @@
     <tabVisibilities>
         <tab>CARE_Cases</tab>
         <visibility>DefaultOn</visibility>
-    </tabVisibilities> 
+    </tabVisibilities>
     <tabVisibilities>
         <tab>LIA_Claim__c</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities>  
+    </tabVisibilities>
     <tabVisibilities>
         <tab>C_Log__c</tab>
         <visibility>Hidden</visibility>
@@ -3303,7 +3308,7 @@
         <tabVisibilities>
         <tab>Group_Travel_Request__c</tab>
         <visibility>DefaultOn</visibility>
-    </tabVisibilities>  
+    </tabVisibilities>
     <tabVisibilities>
         <tab>Refund_Request__c</tab>
         <visibility>DefaultOn</visibility>
@@ -3311,7 +3316,7 @@
     <tabVisibilities>
         <tab>Special_Service_Request__c</tab>
         <visibility>DefaultOn</visibility>
-    </tabVisibilities> 
+    </tabVisibilities>
     <tabVisibilities>
         <tab>SBS_ScheduledBatchRun__c</tab>
         <visibility>Hidden</visibility>
@@ -3352,7 +3357,7 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>CreateCustomizeReports</name>
-    </userPermissions>    
+    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>EditEvent</name>
