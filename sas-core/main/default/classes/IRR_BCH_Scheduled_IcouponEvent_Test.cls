@@ -24,36 +24,36 @@ public with sharing class IRR_BCH_Scheduled_IcouponEvent_Test {
         passengerInfos[0].hasEmailAddress = true;
         passengerInfos[0].emailAddress = 'TEST_EMAIL';
         Map<String,String> airportInfoMap = new Map<String,String>();
-        airportInfoMap.put('ARN','Stockholm');
+        airportInfoMap.put('FRA','Stockholm');
         airportInfoMap.put('CPH','Copenhagen');
         Map<String, Integer> delayMinutesByFlightIds = new Map<String, Integer>();
         mocks.startStubbing();
         mocks.when(selectorMock.sObjectType()).thenReturn(IRR_DelayLog__c.SObjectType);
-        mocks.when(selectorMock.getLatestDelayByFlightIds(new Set<String>{'SK1429-20191104-ARN-CPH'}))
+        mocks.when(selectorMock.getLatestDelayByFlightIds(new Set<String>{'SK1429-20191104-ABB-CPH'}))
                 .thenReturn(delayMinutesByFlightIds);
-        mocks.when(serviceMock.getPassengerInfosForFlight('SK1429-20191104-ARN-CPH'))
+        mocks.when(serviceMock.getPassengerInfosForFlight('SK1429-20191104-ABB-CPH'))
                 .thenReturn(passengerInfos);
-        mocks.when(serviceMock.getAirportCityNames(new Set<String>{'ARN','CPH'}))
+        mocks.when(serviceMock.getAirportCityNames(new Set<String>{'ABB','CPH'}))
                 .thenReturn(airportInfoMap);
         mocks.stopStubbing();
         IRR_MOD_DelayInfo delayInfo = new IRR_MOD_DelayInfo();
-        delayInfo.flightId = 'SK1429-20191104-ARN-CPH';
+        delayInfo.flightId = 'SK1429-20191104-ABB-CPH';
         delayInfo.delayedMinutes = 10;
         delayInfo.scheduledTimeOfDepartureUTC = Datetime.now().addHours(3);
         delayInfo.scheduledTimeOfDepartureLocal = Datetime.now().addHours(4);
         delayInfo.estimatedTimeOfDepartureLocal = Datetime.now().addHours(5);
         delayInfo.stationArrival='CPH';
-        delayInfo.stationDeparture='ARN';
+        delayInfo.stationDeparture='ABB';
         IRR_EVT_IEventProcessor eventProcessor = new IRR_EVT_DelayProcessor.Constructor().newInstance(delayInfo);
         IRR_Application.Selector.setMock(selectorMock);
         IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
             //Given
             IRR_EventLog__c eventLogs = new IRR_EventLog__c();
             eventLogs.IRR_ScheduleTime__c = System.Now().addHours(1);
-            eventLogs.IRR_FlightId__c ='SK1429-20191104-ARN-CPH' ;
+            eventLogs.IRR_FlightId__c ='SK1429-20191104-ABB-CPH' ;
             eventLogs.IRR_Event_Type__c = 'ICOUPON';
             eventLogs.IRR_Delayed_Minutes__c = 70;
-            eventLogs.IRR_Station_Departure__c = 'ARN';
+            eventLogs.IRR_Station_Departure__c = 'ABB';
             eventLogs.IRR_Flight_Ref__c = 'SK1429';
             eventLogs.Is_Communication_Send__c = false;
 
