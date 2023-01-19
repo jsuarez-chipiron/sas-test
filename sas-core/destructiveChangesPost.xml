@@ -13,13 +13,16 @@
 -->
     <types>
 
-    <members>IRR_Icoupon_Voucher__mdt.ARN_Delay_2_3_C</members>
-
-    <members>IRR_Icoupon_Voucher__mdt.ARN_Delay_2_3_M</members>
-
-    <members>IRR_Icoupon_Voucher__mdt.ARN_Delay_2_3_Y</members>
-
+    <members>IRR_Icoupon_Station_Manager__mdt.sanjay.singhbisht@sas.dk</members>
+    
     <name>CustomMetadata</name>
 
  </types>
+ <types>
+
+        <members>IRR_Icoupon_Station_Manger__mdt</members>
+
+        <name>CustomObject</name>
+
+    </types>
 </Package>
