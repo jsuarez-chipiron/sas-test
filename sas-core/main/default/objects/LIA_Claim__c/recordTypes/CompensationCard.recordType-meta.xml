@@ -2226,6 +2226,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>EU261_Handling_Status__c</picklist>
+        <values>
+            <fullName>Eligible for compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ineligible for compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Possibly eligible for compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unable to handle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unhandled</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Judicial_Body__c</picklist>
         <values>
             <fullName>ADR</fullName>
@@ -2767,6 +2790,69 @@
         </values>
         <values>
             <fullName>Voucher</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Purchase_Currency__c</picklist>
+        <values>
+            <fullName>AUD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CHF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CZK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DKK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EUR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GBP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HKD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JPY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NZD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PLN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SEK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USD</fullName>
             <default>false</default>
         </values>
     </picklistValues>

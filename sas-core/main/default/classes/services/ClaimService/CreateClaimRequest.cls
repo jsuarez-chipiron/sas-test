@@ -24,6 +24,7 @@ public without sharing class CreateClaimRequest {
 
   public Integer baggagePurchaseYear { get; private set; }
   public Decimal baggagePurchasePrice { get; private set; }
+  public String baggagePurchaseCurrency { get; private set; }
 
   public Boolean personWithReducedMobility { get; private set; }
   public Boolean unaccompaniedMinor { get; private set; }
@@ -303,6 +304,8 @@ public without sharing class CreateClaimRequest {
         jsonData.preferredReimbursementMethod
       );
 
+      this.referenceNumber = jsonData.referenceNumber;
+
       if (!String.isBlank(jsonData.bankCountry)) {
         this.bankCountry = CountryUtils.getCountryNameByShortCode(
           jsonData.bankCountry
@@ -403,6 +406,8 @@ public without sharing class CreateClaimRequest {
     ticketNumber = jsonData.formData.claim.ticketNumber;
     baggagePurchaseYear = jsonData.formData.claim.baggagePurchaseYear;
     baggagePurchasePrice = jsonData.formData.claim.baggagePurchasePrice;
+    baggagePurchaseCurrency = jsonData.formData.claim.baggagePurchaseCurrency;
+    comment = jsonData.formData.claim.comment;
 
     delayLength = JSON_TO_DELAY_LENGTH.get(jsonData.formData.claim.delayLength);
     baggageDelayLength = JSON_TO_BAGGAGE_DELAY_LENGTH.get(
