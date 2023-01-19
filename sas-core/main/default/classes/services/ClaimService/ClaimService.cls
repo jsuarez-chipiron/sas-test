@@ -473,6 +473,7 @@ public without sharing class ClaimService {
       Phone_Number__c = form.formData.phone,
       Postal_Code__c = form.formData.postalCode,
       Purchase_Price__c = form.formData.baggagePurchasePrice,
+      Purchase_Currency__c = form.formData.baggagePurchaseCurrency,
       Purchase_Year__c = form.formData.baggagePurchaseYear,
       PIR__c = form.formData.passengerIrregularityReportNumber,
       Preferred_Compensation_Method__c = jsonToPicklist.get(
@@ -936,6 +937,7 @@ public without sharing class ClaimService {
     newClaim.contactPhone = r.contact.phone;
     newClaim.contactPostalCode = r.contact.postalCode;
     newClaim.baggagePurchasePrice = r.baggagePurchasePrice;
+    newClaim.baggagePurchaseCurrency = r.baggagePurchaseCurrency;
     newClaim.baggagePurchaseYear = r.baggagePurchaseYear;
     newClaim.pir = r.passengerIrregularityReportNumber;
     newClaim.preferredCompensationMethod = r.compensationDetails.preferredCompensationMethod;

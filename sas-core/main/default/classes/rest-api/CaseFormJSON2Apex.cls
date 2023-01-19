@@ -57,6 +57,7 @@ global class CaseFormJSON2Apex {
 
     global String baggageDelayTime; // less-than-21-days, more-than-21-days
     global Decimal baggagePurchasePrice;
+    global String baggagePurchaseCurrency;
     global Integer baggagePurchaseYear;
   }
 

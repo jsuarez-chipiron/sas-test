@@ -2322,6 +2322,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+      <editable>true</editable>
+      <field>LIA_Claim__c.Purchase_Currency__c</field>
+      <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.Reason_for_Delay_Cancellation__c</field>
         <readable>true</readable>
