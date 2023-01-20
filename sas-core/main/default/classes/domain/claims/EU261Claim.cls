@@ -65,12 +65,11 @@ public class EU261Claim {
         this.decision.caveats = this.getSemiAutomationReasons();
       }
     } catch (Exception e) {
-      throw e;
-      // Decision errorDecision = new Decision(
-      //   Claim.EU261HandlingStatus.UnableToHandle,
-      //   'Uncaught exception: ' + e.getMessage()
-      // );
-      // this.decision = errorDecision;
+      Decision errorDecision = new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'Uncaught exception: ' + e.getMessage()
+      );
+      this.decision = errorDecision;
     }
 
     writeProtocol();
