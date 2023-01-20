@@ -596,6 +596,9 @@ public without sharing class EU261Service {
             parentCasesById.get(c.claimObj.parentCaseId)
           );
         }
+        when ReimbursementOnly {
+          // TODO. Currently we do nothing.
+        }
       }
     }
 

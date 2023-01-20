@@ -64,7 +64,9 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     'WEAT' => false,
     'TECH' => true,
     'INDU' => true,
-    'FA' => true
+    'FA' => true,
+    'CA' => true,
+    'AF' => false
   };
 
   private static final Set<String> ROTATION_CODES = new Set<String>{
@@ -101,7 +103,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     'RUNW' => 'technical restrictions of a runway',
     'TECH' => 'technical issues',
     'WEAT' => 'weather conditions'
-  };
+  }; // TODO: CHeck with liability and process owners that this is ok
 
   private static final Map<String, EU261Eligibility> EU261_PICKLIST_VALUE_TO_ENUM = new Map<String, EU261Eligibility>{
     'Tentative' => EU261Eligibility.Tentative,

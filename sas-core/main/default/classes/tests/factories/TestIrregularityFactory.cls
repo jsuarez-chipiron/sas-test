@@ -7,7 +7,7 @@ public with sharing class TestIrregularityFactory {
 
     fi.id = fflib_IDGenerator.generate(
       FlightIrregularities__c.getSObjectType()
-    ); 
+    );
     fi.cancellationTime = DateTime.newInstance(2020, 1, 1, 1, 1, 1);
     fi.code = 'TECH';
     fi.description = null;
@@ -20,17 +20,42 @@ public with sharing class TestIrregularityFactory {
     return fi;
   }
 
-  public static FlightIrregularity createDelay(Flight f) {
+  public static FlightIrregularity createDelay(
+    Flight f,
+    String code,
+    Integer durationMinutes
+  ) {
     FlightIrregularity fi = new FlightIrregularity(
       new FlightIrregularities__c()
     );
 
     fi.id = fflib_IDGenerator.generate(
       FlightIrregularities__c.getSObjectType()
-    ); 
+    );
+    fi.code = code;
+    fi.description = null;
+    fi.durationMinutes = durationMinutes;
+    fi.eligibleForEU261 = FlightIrregularity.codeToSASIsResponsible.get(code)
+      ? FlightIrregularity.EU261Eligibility.Yes
+      : FlightIrregularity.EU261Eligibility.No;
+    fi.flightId = f.id;
+    fi.reason = '';
+    fi.type = 'Delay (departure)';
+
+    return fi;
+  }
+
+  public static FlightIrregularity createDefaultDelay(Flight f) {
+    FlightIrregularity fi = new FlightIrregularity(
+      new FlightIrregularities__c()
+    );
+
+    fi.id = fflib_IDGenerator.generate(
+      FlightIrregularities__c.getSObjectType()
+    );
     fi.code = 'FA';
     fi.description = null;
-    fi.durationMinutes = 240;
+    fi.durationMinutes = 180;
     fi.eligibleForEU261 = FlightIrregularity.EU261Eligibility.Yes;
     fi.flightId = f.id;
     fi.reason = 'Special request caused issues';

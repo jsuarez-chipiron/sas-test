@@ -4,7 +4,9 @@ public without sharing class EU261Protocol {
     NOTWITHINSASCONTROL,
     NOTFILEDONTIME,
     CUSTOMERCANCELLED,
-    NOTOUTSIDETIMEFRAME
+    NOTOUTSIDETIMEFRAME,
+    DELAYTOOSMALL,
+    NODELAYORCANCELLATION
   }
 
   public Flight claimFlight;
@@ -22,6 +24,8 @@ public without sharing class EU261Protocol {
   public Claim claimObj;
   public Integer claimFilingTimeLimit;
   public Integer daysUntilFlightWhenInformedOfCancellation;
+  public Integer delayWithinSASControl;
+  public String delayExplanation;
 
   public EU261Protocol() {
   }
@@ -47,8 +51,16 @@ public without sharing class EU261Protocol {
       when IneligibleForCompensation {
         explanation.addAll(getIneligibilityExplanation());
       }
+      when ReimbursementOnly {
+        // TODO
+      }
       when UnableToHandle {
         explanation.add('Claim cannot be handled.');
+      }
+      when else {
+        throw new EU261Claim.AutomationException(
+          'Unsupported verdict for protocol'
+        );
       }
     }
 
@@ -80,15 +92,26 @@ public without sharing class EU261Protocol {
 
   private List<String> getEligibilityExplanation() {
     List<String> toReturn = new List<String>();
-    toReturn.add(getCancellationInfo());
-    toReturn.addAll(getDetailedExplanation());
+
+    if (claimObj.type == Claim.Type.FlightCancellation) {
+      toReturn.add(getCancellationInfo());
+      toReturn.addAll(getDetailedExplanation());
+    } else if (claimObj.type == Claim.Type.FlightDelay) {
+      toReturn.addAll(getDelayInfo());
+      toReturn.addAll(getDetailedExplanationDelay());
+    }
 
     return toReturn;
   }
 
   private List<String> getIneligibilityExplanation() {
     List<String> toReturn = new List<String>();
-    toReturn.add(getCancellationInfo());
+    if (claimObj.type == Claim.Type.FlightCancellation) {
+      toReturn.add(getCancellationInfo());
+    }
+    if (claimObj.type == Claim.Type.FlightCancellation) {
+      toReturn.addAll(getDelayInfo());
+    }
 
     switch on denialReason {
       when CANCELLEDWELLINTIME {
@@ -108,6 +131,12 @@ public without sharing class EU261Protocol {
         toReturn.addAll(getDetailedExplanation());
         toReturn.addAll(getNotOutsideTimeFrameExplanation());
       }
+      when DELAYTOOSMALL {
+        toReturn.add(this.delayExplanation);
+      }
+      when NODELAYORCANCELLATION {
+        toReturn.addAll(getNoDelayOrCancellationExplanation());
+      }
       when else {
         throw new EU261Claim.AutomationException(
           'Unsupported ineligibility reason.'
@@ -115,6 +144,15 @@ public without sharing class EU261Protocol {
       }
     }
 
+    return toReturn;
+  }
+
+  private List<String> getNoDelayOrCancellationExplanation() {
+    List<String> toReturn = new List<String>();
+    toReturn.add(
+      this.claimFlight.tedsIdentifier.substring(0, 6) +
+      ' was not cancelled and was not delayed.'
+    );
     return toReturn;
   }
 
@@ -284,7 +322,7 @@ public without sharing class EU261Protocol {
     } else {
       flightPlan.add('\nThe offered replacement for this trip was:\n');
       flightPlan.add(buildFlightPlan(this.replacementTrip));
-      delayInfo = getDelayInfo();
+      delayInfo = getDelayInfoCancellation();
 
       if (isOutsideTimeFrame) {
         compensationInfo.add(getCompensationExplanation());
@@ -316,6 +354,12 @@ public without sharing class EU261Protocol {
     return toReturn;
   }
 
+  // TODO
+  private List<String> getDetailedExplanationDelay() {
+    List<String> toReturn = new List<String>();
+    return toReturn;
+  }
+
   private String getCancellationInfo() {
     String cancellationInfo = '\n';
     cancellationInfo += this.claimFlight.tedsIdentifier.substringBefore('-');
@@ -333,7 +377,12 @@ public without sharing class EU261Protocol {
     return cancellationInfo;
   }
 
+  // TODO
   private List<String> getDelayInfo() {
+    return new List<String>();
+  }
+
+  private List<String> getDelayInfoCancellation() {
     List<String> delayInfo = new List<String>();
     String earlyInfo = '';
     String lateInfo = '';

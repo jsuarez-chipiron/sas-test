@@ -39,7 +39,6 @@ public class EU261Claim {
    * The result is also stored in this.decision.
    */
   public Decision evaluate() {
-    Decision toReturn;
     try {
       this.decision = this.canWeEvaluate();
 
@@ -56,13 +55,22 @@ public class EU261Claim {
       ) {
         this.decision.verdict = Claim.EU261HandlingStatus.PossiblyEligibleForCompensation;
         this.decision.caveats = this.getSemiAutomationReasons();
+      } else if (
+        this.decision.verdict ==
+        Claim.EU261HandlingStatus.IneligibleForCompensation &&
+        this.decision.reimbursementAmountInSEK.amount != 0
+      ) {
+        // Not eligible for compensation but eligible for reimbursement
+        this.decision.verdict = Claim.EU261HandlingStatus.ReimbursementOnly;
+        this.decision.caveats = this.getSemiAutomationReasons();
       }
     } catch (Exception e) {
-      Decision errorDecision = new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'Uncaught exception: ' + e.getMessage()
-      );
-      this.decision = errorDecision;
+      throw e;
+      // Decision errorDecision = new Decision(
+      //   Claim.EU261HandlingStatus.UnableToHandle,
+      //   'Uncaught exception: ' + e.getMessage()
+      // );
+      // this.decision = errorDecision;
     }
 
     writeProtocol();
@@ -135,11 +143,6 @@ public class EU261Claim {
      */
     public List<SemiAutomationReason> caveats { get; private set; }
 
-    /**
-     * The calculated delay (cancellation delay or pure delay).
-     */
-    public Integer netDelayInMinutes;
-
     Decision(Claim.EU261HandlingStatus verdict, String reasoning) {
       if (verdict == Claim.EU261HandlingStatus.EligibleForCompensation) {
         throw new CreateException(
@@ -182,6 +185,7 @@ public class EU261Claim {
   private Boolean couldInitializeTrips;
   private Flight claimFlight;
   public EU261Protocol protocol = new EU261Protocol();
+  public Integer netDelayInMinutes;
 
   private EU261Service.Config config;
 
@@ -360,7 +364,7 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'can handle only claims in type "Flight cancellation" or "Flight delay"'
-      ); 
+      );
     } else if (c.recordType != Claim.RecordType.CustomerClaim) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -391,16 +395,12 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot find claimed flight from booking'
       );
-    } else if (
-      isCancellationClaim && !this.hasCancellation
-    ) {
+    } else if (isCancellationClaim && !this.hasCancellation) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'the claim flight is not cancelled'
       );
-    }else if (
-      isDelayClaim && this.hasCancellation
-    ) {
+    } else if (isDelayClaim && this.hasCancellation) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'the flight is cancelled but the customer has claimed for a delay'
@@ -410,13 +410,10 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'there are more than one cancellation connected to the claim flight'
       );
-    } else if (
-      isCancellationClaim && flightCancelledWellInTime()
-    ) {
-      return null; // If flight was cancelled 14 days, or more, in advance the customer is not eligible 
-    } else if (
-      isDelayClaim && this.hasRotationIrregularities()
-    ) { // TODO: fix
+    } else if (isCancellationClaim && flightCancelledWellInTime()) {
+      return null; // If flight was cancelled 14 days, or more, in advance the customer is not eligible
+    } else if (isDelayClaim && this.hasRotationIrregularities()) {
+      // TODO: fix
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle flights with delays caused by rotations'
@@ -438,12 +435,16 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot determine wether SAS is responsible or not for the cancellation'
       );
+    } else if (isDelayClaim && !this.canDetermineIfSASIsResponsibleForDelay()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'cannot determine if SAS is responsible for the delay.'
+      );
     } else if (
-      isDelayClaim &&
-      !this.canDetermineIfSASIsResponsibleForDelay()
+      isCancellationClaim &&
+      !this.cancellationCodeIsWithinSASControl() &&
+      this.claimObj.submittedClaimExpenses.amount == 0
     ) {
-      // TODO
-    }else if (isCancellationClaim && !this.cancellationCodeIsWithinSASControl() && this.claimObj.submittedClaimExpenses.amount == 0) {
       // This probably works, maybe tell customer that this was automated (a lot of process issues)
       return null; // If we are not responsible, and if the customer did not submit expenses, we don't need any more checks
     } else if (!canGetSegmentStatuses()) {
@@ -509,21 +510,18 @@ public class EU261Claim {
         'the trip did not change before and after the cancellation (likely "cancellation <-> event" time mismatch)'
       );
     } else if (
-      isCancellationClaim &&
-      this.tripWithClaimFlight.isUncertainWhoCancelled()
+      isCancellationClaim && this.tripWithClaimFlight.isUncertainWhoCancelled()
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'it is uncertain if SAS or the customer cancelled the flight'
-      ); // TODO: Check office number => deny/accept
+      );
     } else if (
-      isCancellationClaim &&
-      this.tripWithClaimFlight.customerCancelled()
+      isCancellationClaim && this.tripWithClaimFlight.customerCancelled()
     ) {
       return null; // Deny, customer cancelled the flight
     } else if (
-      isCancellationClaim &&
-      this.claimedBooking.hasReinstated(this.claimFlight)
+      isCancellationClaim && this.claimedBooking.hasReinstated(this.claimFlight)
     ) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
@@ -532,7 +530,7 @@ public class EU261Claim {
     } else if (isDelayClaim && !this.canCalculateDelay()) {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
-        'there were issues calculating the delay'
+        'cannot handle tentative delays'
       );
     } else {
       return null;
@@ -614,8 +612,7 @@ public class EU261Claim {
   private Boolean canCalculateDelay() {
     try {
       getMinutesDelayedWithinSASControl();
-    } catch (Exception e) {
-      System.debug(e.getMessage());
+    } catch (FlightIrregularity.IrregularityException e) {
       return false;
     }
     return true;
@@ -658,7 +655,9 @@ public class EU261Claim {
     );
 
     Integer timeLimit;
-    Integer defaultTimeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get('default');
+    Integer defaultTimeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
+      'default'
+    );
 
     if (limitInDepartureCountry != null && limitInArrivalCountry != null) {
       timeLimit = Math.max(limitInDepartureCountry, limitInArrivalCountry);
@@ -674,7 +673,8 @@ public class EU261Claim {
 
     // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
     Boolean filedWithinTimelimit =
-      Math.abs(c.createdDate.date().monthsBetween(tripDate.date())) <= timeLimit;
+      Math.abs(c.createdDate.date().monthsBetween(tripDate.date())) <=
+      timeLimit;
 
     return filedWithinTimelimit;
   }
@@ -694,7 +694,9 @@ public class EU261Claim {
     } else if (
       this.hasCancellation && !this.cancellationCodeIsWithinSASControl()
     ) {
-      // Get explanation
+      if (this.claimObj.submittedClaimExpenses.amount != 0) {
+        this.calculateCompensationForCancellation();
+      }
       protocol.denialReason = EU261Protocol.DenialReason.NOTWITHINSASCONTROL;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
@@ -722,7 +724,7 @@ public class EU261Claim {
       );
     } else if (this.hasCancellation) {
       // If the claim flight was cancelled the customer should receive compensation according to the cancellation logic
-      Decision compensationDecision = this.calculateCompensationForCancellation();
+      Decision compensationDecision = this.calculateCompensationForCancellation(); // For protocol reasons
       if (
         compensationDecision.verdict ==
         Claim.EU261HandlingStatus.IneligibleForCompensation
@@ -731,12 +733,20 @@ public class EU261Claim {
       }
       return compensationDecision;
     } else if (!this.hasDelay()) {
+      protocol.denialReason = EU261Protocol.DenialReason.NODELAYORCANCELLATION;
       return new Decision(
-        Claim.EU261HandlingStatus.IneligibleForCompensation,
+        Claim.EU261HandlingStatus.UnableToHandle,
         'flight not cancelled and not delayed'
-      );
+      ); // TODO: change to deny
     } else {
-      return this.calculateCompensationForDelay();
+      Decision compensationDecision = this.calculateCompensationForDelay();
+      if (
+        compensationDecision.verdict ==
+        Claim.EU261HandlingStatus.IneligibleForCompensation
+      ) {
+        protocol.denialReason = EU261Protocol.DenialReason.DELAYTOOSMALL;
+      }
+      return compensationDecision;
     }
   }
 
@@ -794,12 +804,16 @@ public class EU261Claim {
       arrivalDifference = Integer.valueOf(
         DateUtils.getHoursBetween(newArrival, originalArrival) * 60
       );
-      
+
       if (newArrival > originalArrival) {
         minutesLateOnArrival = arrivalDifference;
+      } else {
+        minutesLateOnArrival = 0;
       }
       if (newDeparture < originalDeparture) {
         minutesEarlyOnDeparture = departureDifference;
+      } else {
+        minutesEarlyOnDeparture = 0;
       }
 
       compensation = calculateCompensationCancellation(
@@ -811,6 +825,8 @@ public class EU261Claim {
       );
     }
 
+    this.netDelayInMinutes = minutesLateOnArrival;
+
     List<ClaimCustomer> eligiblePassengers = this.getPassengersEligibleForCompensation();
 
     if (eligiblePassengers.size() == 0) {
@@ -820,7 +836,6 @@ public class EU261Claim {
       );
     }
 
-    // TODO: Is this being done correctly?
     if (compensation == new Money(0, Money.CurrencyCode.EUR)) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
@@ -834,14 +849,11 @@ public class EU261Claim {
       compensationByCustomer.put(p, compensation);
     }
 
-    Decision toReturn = new Decision(
+    return new Decision(
       '',
       compensationByCustomer,
-      new Money(0, Money.CurrencyCode.EUR)
-    ); 
-
-    toReturn.netDelayInMinutes = minutesLateOnArrival;
-    return toReturn;
+      new Money(0, Money.CurrencyCode.SEK)
+    );
   }
 
   private List<ClaimCustomer> getPassengersEligibleForCompensation() {
@@ -869,30 +881,36 @@ public class EU261Claim {
 
   private Money calculateReimbursement() {
     // Check if arrived 2h late or not
-    Boolean customerCancelled = c.type == Claim.Type.FlightCancellation && this.tripWithClaimFlight.customerCancelled();
-    Boolean flightCancelledWellInTime = c.type == Claim.Type.FlightCancellation && flightCancelledWellInTime(); 
-
-    if (customerCancelled){
-      return new Money(0, Money.currencyCode.EUR);
+    if (this.claimObj.submittedClaimExpenses.amount == 0) {
+      return new Money(0, Money.currencyCode.SEK);
     }
-    if (flightCancelledWellInTime){
-      return new Money(0, Money.currencyCode.EUR);
-    }
-
-    Integer netDelayInMinutes; 
-    if (c.type == Claim.Type.FlightCancellation){
-      netDelayInMinutes = this.decision.netDelayInMinutes;
-    }else{
-      this.tripWithClaimFlight.getFlightToFinalDestination().arrivalDelayedMinutes;
+    Boolean flightCancelledWellInTime =
+      this.claimObj.type == Claim.Type.FlightCancellation &&
+      flightCancelledWellInTime();
+    if (flightCancelledWellInTime) {
+      return new Money(0, Money.currencyCode.SEK);
     }
 
+    Boolean customerCancelled =
+      this.claimObj.type == Claim.Type.FlightCancellation &&
+      this.tripWithClaimFlight.customerCancelled();
+    if (customerCancelled) {
+      return new Money(0, Money.currencyCode.SEK);
+    }
+
+    Integer netDelay;
+    if (this.claimObj.type == Claim.Type.FlightCancellation) {
+      netDelay = this.netDelayInMinutes;
+    } else {
+      netDelay = this.tripWithClaimFlight.getFlightToFinalDestination()
+        .arrivalDelayedMinutes.intValue();
+    }
     Money reimbursement;
-    if (netDelayInMinutes > 120){
+    if (netDelay > 120) {
       reimbursement = this.claimObj.submittedClaimExpenses.setScale(0);
-    } else{
-      reimbursement = new Money(0, Money.currencyCode.EUR);
+    } else {
+      reimbursement = new Money(0, Money.currencyCode.SEK);
     }
-
     return reimbursement;
   }
 
@@ -924,6 +942,10 @@ public class EU261Claim {
     }
   }
 
+  private Boolean canDetermineIfSASIsResponsibleForDelay() {
+    return true; //TODO implement
+  }
+
   /**
    * @return an Integer of the amount of minutes delayed for the ac.tripWithClaimFlight with the delay minutes outside SAS control deducted.
    */
@@ -944,14 +966,20 @@ public class EU261Claim {
         delayCausedByIrregularitiesWithinSASControl
       )
     ) {
-      // TODO: Move this to a decision somehow?
-      /*this.outsideSASControlExplanation =
+      this.protocol.delayExplanation =
         'The flight was delayed ' +
         netDelayedMinutes +
         ' minutes on arrival of which ' +
         delayCausedByIrregularitiesWithinSASControl +
         ' minutes were within SAS control. ' +
-        irregularities.getOutsideSASControlExplanation();*/
+        FlightIrregularity.getOutsideSASControlExplanationDelay(
+          f.irregularities
+        );
+    } else {
+      this.protocol.delayExplanation =
+        'The flight was delayed ' +
+        netDelayedMinutes +
+        ' minutes on arrival.';
     }
 
     return delayCausedByIrregularitiesWithinSASControl;
@@ -1032,10 +1060,9 @@ public class EU261Claim {
    * entitled according to EU261 for _delays_.
    * Source: EU261 Article 6 and 7. (https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1476179175834&uri=CELEX:32004R0261)
    * TODO: go through this, something is off. Article 6 never refers to article 7, however, it details this in: https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm#compensation-delay-1
+   * TODO: Check "Present themselves for check-in 45 minutes before the published departure time"
    */
   private Decision calculateCompensationForDelay() {
-    // present themselves for check-in
-    // 45 minutes before the published departure time
     final Integer MINIMUM_DELAY_FOR_COMPENSATION = 180;
     final Integer MINIMUM_DELAY_FOR_INCREASED_COMPENSATION = 240;
     final Integer MEDIUM_DISTANCE = 1500;
@@ -1057,11 +1084,25 @@ public class EU261Claim {
       );
     }
 
+    protocol.delayWithinSASControl = delayedMinutes;
     if (delayedMinutes < MINIMUM_DELAY_FOR_COMPENSATION) {
-      return new Decision(
-        Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'delayed less than 180 minutes.'
-      );
+      if (
+        delayedMinutes <
+        Integer.valueOf(
+          this.tripWithClaimFlight.getFlightToFinalDestination()
+            .arrivalDelayedMinutes
+        )
+      ) {
+        return new Decision(
+          Claim.EU261HandlingStatus.IneligibleForCompensation,
+          'SAS is not responsible for 3 hours or more of the delay'
+        );
+      } else {
+        return new Decision(
+          Claim.EU261HandlingStatus.IneligibleForCompensation,
+          'delayed less than 180 minutes'
+        );
+      }
     }
 
     Money compensationAmount = new Money(0, Money.CurrencyCode.EUR);
@@ -1078,7 +1119,7 @@ public class EU261Claim {
       compensationAmount = new Money(300, Money.CurrencyCode.EUR);
     } else {
       compensationAmount = new Money(600, Money.CurrencyCode.EUR);
-    } 
+    }
     Map<ClaimCustomer, Money> compensationByCustomer = new Map<ClaimCustomer, Money>();
 
     for (ClaimCustomer p : passengersEligibleForCompensation) {
@@ -1088,7 +1129,7 @@ public class EU261Claim {
     return new Decision(
       '',
       compensationByCustomer,
-      new Money(0, Money.CurrencyCode.EUR)
+      new Money(0, Money.CurrencyCode.SEK)
     );
   }
 

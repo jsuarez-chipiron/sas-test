@@ -32,6 +32,11 @@
                 <label>Unable to handle</label>
             </value>
             <value>
+                <fullName>ReimbursementOnly</fullName>
+                <default>false</default>
+                <label>ReimbursementOnly</label>
+            </value>
+            <value>
                 <fullName>Unhandled</fullName>
                 <default>true</default>
                 <label>Unhandled</label>
