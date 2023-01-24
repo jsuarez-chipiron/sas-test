@@ -412,7 +412,6 @@ public class EU261Claim {
     } else if (isCancellationClaim && flightCancelledWellInTime()) {
       return null; // If flight was cancelled 14 days, or more, in advance the customer is not eligible
     } else if (isDelayClaim && this.hasRotationIrregularities()) {
-      // TODO: fix
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle flights with delays caused by rotations'
@@ -433,11 +432,6 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot determine wether SAS is responsible or not for the cancellation'
-      );
-    } else if (isDelayClaim && !this.canDetermineIfSASIsResponsibleForDelay()) {
-      return new Decision(
-        Claim.EU261HandlingStatus.UnableToHandle,
-        'cannot determine if SAS is responsible for the delay.'
       );
     } else if (
       isCancellationClaim &&
@@ -531,6 +525,11 @@ public class EU261Claim {
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot handle tentative delays'
       );
+    } else if (isDelayClaim && !this.isSimpleDelay()) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'the delay is too complicated'
+      );
     } else {
       return null;
     }
@@ -609,6 +608,7 @@ public class EU261Claim {
   }
 
   private Boolean canCalculateDelay() {
+    // TODO: improve
     try {
       getMinutesDelayedWithinSASControl();
     } catch (FlightIrregularity.IrregularityException e) {
@@ -771,7 +771,7 @@ public class EU261Claim {
       ) / 1000;
     Integer flightDistanceInKmRounded = flightDistanceInKm.intValue();
     Boolean isIntraCommunity = originalTrip.isIntraCommunity(); // TODO: GB -> CH can be handled as EU
-    Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture(); // TODO: check earlier
+    Integer daysUntilFlightWhenInformedOfCancellation = this.getDaysBetweenCancellationAndDeparture();
 
     Trip newTrip = this.tripWithClaimFlightReplacement;
     Integer arrivalDifference;
@@ -853,6 +853,41 @@ public class EU261Claim {
       compensationByCustomer,
       new Money(0, Money.CurrencyCode.SEK)
     );
+  }
+
+  /**
+   * Checks if the delay caused the trip to be altered in any major way.
+   * E.g. if the customer had to catch another plane.
+   * If not, the delay is simple.
+   * @throws InsufficientDataException If there is no info about the boarding status
+   * @return If we currently consider the delay automatically handleable.
+   */
+  private Boolean isSimpleDelay() {
+    Datetime beforeTime = tripWithClaimFlight.getScheduledDeparture();
+    Datetime afterTime = tripWithClaimFlight.getFinalDestinationArrivalTime();
+    List<Trip> tripsBeforeDelay = claimedBooking.getTripsAtTime(beforeTime); // Trips at time of scheduled departure
+    List<Trip> tripsAfterDelay = claimedBooking.getTripsAtTime(afterTime); // Trips at time of actual arrival
+
+    if (tripsAfterDelay == null || tripsBeforeDelay == null) {
+      return false;
+    } else if (tripsBeforeDelay.size() != tripsAfterDelay.size()) {
+      return false;
+    }
+
+    for (Integer i = 0; i < tripsBeforeDelay.size(); i++) {
+      Trip tripBefore = tripsBeforeDelay[i];
+      Trip tripAfter = tripsAfterDelay[i];
+
+      if (tripBefore != tripAfter) {
+        return false;
+      }
+
+      if (!tripAfter.allFlightsAreBoarded()) {
+        return false; // If the customers did not board all flights something is going on
+      }
+    }
+
+    return true;
   }
 
   private List<ClaimCustomer> getPassengersEligibleForCompensation() {
@@ -941,12 +976,9 @@ public class EU261Claim {
     }
   }
 
-  private Boolean canDetermineIfSASIsResponsibleForDelay() {
-    return true; //TODO implement
-  }
-
   /**
    * @return an Integer of the amount of minutes delayed for the ac.tripWithClaimFlight with the delay minutes outside SAS control deducted.
+   * TODO: improve
    */
   private Integer getMinutesDelayedWithinSASControl() {
     Flight f = this.tripWithClaimFlight.getFlightToFinalDestination();

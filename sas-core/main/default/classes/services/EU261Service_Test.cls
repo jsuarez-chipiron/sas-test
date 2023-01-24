@@ -18,7 +18,7 @@ private class EU261Service_Test {
   };
 
   private static final String CARE_DUPLICATE_BOOKING_REFERENCE = 'CAREDU';
-  private static final String DUPLICATE_BOOKING_REFERENCE = 'DUPLIC'; //
+  private static final String DUPLICATE_BOOKING_REFERENCE = 'DUPLIC';
 
   @TestSetup
   static void setup() {
