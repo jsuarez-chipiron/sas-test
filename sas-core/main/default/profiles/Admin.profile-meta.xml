@@ -508,6 +508,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Cancellation_Automation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Delay_Automation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EU261_Automation_Configuration__mdt.Automatic_Rejection__c</field>
         <readable>true</readable>
     </fieldPermissions>
