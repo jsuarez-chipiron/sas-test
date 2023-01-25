@@ -4,12 +4,12 @@
         <description>Posts the internal comments to the chatter feed on the case</description>
         <name>CaseChatterFeed</name>
         <label>CaseChatterFeed</label>
-        <locationX>2866</locationX>
+        <locationX>2998</locationX>
         <locationY>1358</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <connector>
-            <targetReference>Redirect_Case</targetReference>
+            <targetReference>Check_if_redirection_from_Customer_Claim_to_Liability</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -90,7 +90,7 @@
     <assignments>
         <name>Assign_department_name_as_queue_name</name>
         <label>Assign department name as queue name</label>
-        <locationX>2448</locationX>
+        <locationX>2514</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>queueName</assignToReference>
@@ -213,6 +213,38 @@
         </value>
     </choices>
     <decisions>
+        <name>Check_if_redirection_from_Customer_Claim_to_Liability</name>
+        <label>Check if redirection from Customer Claim to Liability</label>
+        <locationX>2998</locationX>
+        <locationY>1478</locationY>
+        <defaultConnector>
+            <targetReference>Redirect_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCurrentCaseInformation.Department__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DependentList.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Liability</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Message_Screen</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Do_we_need_set_the_parent_case_to_On_hold</name>
         <label>Do we need set the parent case to &quot;On hold&quot;?</label>
         <locationX>2030</locationX>
@@ -272,7 +304,7 @@
     <decisions>
         <name>Is_it_record_type_emergency</name>
         <label>Is it record type emergency?</label>
-        <locationX>381</locationX>
+        <locationX>385</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Is_status_valid</targetReference>
@@ -298,7 +330,7 @@
         <description>Validates refund cases have a refund request record with a PNR before redirecting, creating a support case or escalating the case</description>
         <name>Is_refund_case_with_refund_request_record</name>
         <label>Is refund case with refund request record?</label>
-        <locationX>1111</locationX>
+        <locationX>1128</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>To_Other_Department</targetReference>
@@ -355,7 +387,7 @@
     <decisions>
         <name>Is_status_valid</name>
         <label>Is status valid?</label>
-        <locationX>712</locationX>
+        <locationX>721</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Is_refund_case_with_refund_request_record</targetReference>
@@ -395,7 +427,7 @@
         <description>Validating that the department and team is validated for redirection, support and escalations cases</description>
         <name>Is_the_department_validated</name>
         <label>Is the department validated?</label>
-        <locationX>1645</locationX>
+        <locationX>1678</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Assign_department_name_as_queue_name</targetReference>
@@ -506,7 +538,7 @@
     <decisions>
         <name>Redirection_Support_Or_Escalation</name>
         <label>Redirection Support Or Escalation</label>
-        <locationX>2448</locationX>
+        <locationX>2514</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>CaseChatterFeed</targetReference>
@@ -950,7 +982,7 @@
         <description>Gets all the information of the case where the flow was triggered from</description>
         <name>GetCurrentCaseInformation</name>
         <label>GetCurrentCaseInformation</label>
-        <locationX>381</locationX>
+        <locationX>385</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -971,7 +1003,7 @@
     <recordLookups>
         <name>GetDepartmentQueueId</name>
         <label>GetDepartmentQueueId</label>
-        <locationX>2448</locationX>
+        <locationX>2514</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1072,8 +1104,8 @@
         <description>Update the current case to be directed to the right skill</description>
         <name>Redirect_Case</name>
         <label>Redirect Case</label>
-        <locationX>2866</locationX>
-        <locationY>1478</locationY>
+        <locationX>3130</locationX>
+        <locationY>1598</locationY>
         <connector>
             <targetReference>Redirection_Submission</targetReference>
         </connector>
@@ -1331,9 +1363,25 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Message_Screen</name>
+        <label>Message Screen</label>
+        <locationX>2866</locationX>
+        <locationY>1598</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Message</name>
+            <fieldText>&lt;p&gt;Cases can not redirect from Customer Claim to Liability.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Redirection_Submission</name>
         <label>Redirection Submission</label>
-        <locationX>2448</locationX>
+        <locationX>2514</locationX>
         <locationY>3830</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1383,7 +1431,7 @@
         <description>Input for making a request to another department</description>
         <name>To_Other_Department</name>
         <label>To Other Department</label>
-        <locationX>1645</locationX>
+        <locationX>1678</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2127,18 +2175,18 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>255</locationX>
+        <locationX>259</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetCurrentCaseInformation</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <description>Gets the care record type based on the Department and Team</description>
         <name>Get_Case_Record_Type</name>
         <label>Get Case Record Type</label>
-        <locationX>2448</locationX>
+        <locationX>2514</locationX>
         <locationY>1118</locationY>
         <connector>
             <targetReference>Redirection_Support_Or_Escalation</targetReference>
