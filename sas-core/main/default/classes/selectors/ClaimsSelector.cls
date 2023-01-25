@@ -71,6 +71,11 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     ' ' +
     CUTOFF_TIME
   );
+  public static final String UNHANDLED_EU261_STATUS = 'Unhandled';
+  public static final Set<String> EU261_CLAIM_TYPES = new Set<String>{
+    'Flight cancellation',
+    'Flight cancellation - compensation'
+  };
 
   public List<LIA_Claim__c> selectById(Set<Id> ids) {
     return (List<LIA_Claim__c>) selectSObjectsById(ids);
@@ -183,23 +188,19 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
   }
 
   public List<LIA_Claim__c> selectUnhandledClaimsToAutomate() {
-    String statusToUse = 'Unhandled';
-    String cat = 'Flight disruptions';
     return (List<LIA_Claim__c>) Database.query(
       newQueryFactory()
         .setCondition(
-          'EU261_Handling_Status__c = :statusToUse and Customer_Claim_Category__c = :cat AND CreatedDate < :CUTOFF_DATETIME'
+          'EU261_Handling_Status__c = :UNHANDLED_EU261_STATUS and Customer_Claim_Type__c IN :EU261_CLAIM_TYPES AND CreatedDate < :CUTOFF_DATETIME'
         )
         .toSOQL()
     );
   }
   public List<LIA_Claim__c> selectUnhandledClaimsToFetchBookingData() {
-    String statusToUse = 'Unhandled';
-    String cat = 'Flight disruptions';
     return (List<LIA_Claim__c>) Database.query(
       newQueryFactory()
         .setCondition(
-          'EU261_Handling_Status__c = :statusToUse and Customer_Claim_Category__c = :cat AND CreatedDate >= :CUTOFF_DATETIME'
+          'EU261_Handling_Status__c = :UNHANDLED_EU261_STATUS and Customer_Claim_Type__c IN :EU261_CLAIM_TYPES AND CreatedDate >= :CUTOFF_DATETIME'
         )
         .toSOQL()
     );
