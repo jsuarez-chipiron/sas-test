@@ -13,6 +13,8 @@ private class EU261Claim_Test {
   private static EU261Service.Config config = new EU261Service.Config(
     new EU261_Automation_Configuration__mdt(
       Automatic_Rejection__c = false,
+      Delay_Automation__c = true,
+      Cancellation_Automation__c = true,
       Automatic_Settlement__c = false,
       Claim_Expense_Max_Amount__c = 0,
       Expense_Limit_Accommodation__c = 0,

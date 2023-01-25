@@ -3,6 +3,14 @@
     <label>Default</label>
     <protected>false</protected>
     <values>
+        <field>Delay_Automation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Cancellation_Automation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Automatic_Rejection__c</field>
         <value xsi:type="xsd:boolean">false</value>
     </values>
