@@ -82,11 +82,18 @@ public without sharing class DateUtils {
     Datetime datetime1,
     Datetime datetime2
   ) {
+    return getMinutesBetween(datetime1, datetime2) / 60;
+  }
+
+  public static Integer getMinutesBetween(
+    Datetime datetime1,
+    Datetime datetime2
+  ) {
     Decimal millisecondDelta = Math.abs(
       datetime1.getTime() - datetime2.getTime()
     );
-    Decimal hourDelta = millisecondDelta / (3600000);
-    return hourDelta;
+    Decimal minuteDelta = millisecondDelta / 60000;
+    return minuteDelta.intValue();
   }
 
   /**
