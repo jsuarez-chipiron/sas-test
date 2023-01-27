@@ -941,7 +941,7 @@ public class EU261Claim {
         .arrivalDelayedMinutes.intValue();
     }
     Money reimbursement;
-    if (netDelay > 120) {
+    if (netDelay >= 120) {
       reimbursement = this.claimObj.submittedClaimExpenses.setScale(0);
     } else {
       reimbursement = new Money(0, Money.currencyCode.SEK);
