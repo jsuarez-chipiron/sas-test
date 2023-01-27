@@ -35,6 +35,47 @@ private class EU261Claim_Test {
     }
   }
 
+  private static BookingClaim getDefaultDelayBookingClaim() {
+    Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
+    List<Flight> flights = new List<Flight>{ f1 };
+
+    List<FlightIrregularity> fis = new List<FlightIrregularity>{
+      TestIrregularityFactory.createDefaultDelay(f1)
+    };
+    f1.irregularities = fis;
+    f1.arrivalDelayedMinutes = 180;
+    f1.actualArrivalTime = f1.scheduledArrivalTime.addMinutes(180);
+
+    ClaimCustomer cc = new ClaimCustomer();
+    cc.firstname = 'Test';
+    cc.lastName = 'Testsson';
+
+    Claim c = TestClaimFactory.create();
+    c.recordType = Claim.RecordType.CustomerClaim;
+    c.category = Claim.Category.FlightDisruptions;
+    c.type = Claim.Type.FlightDelay;
+    c.departureDate = departure.date();
+    c.customers = new List<ClaimCustomer>{ cc };
+    c.flightNumber = 'SK0001';
+    c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
+    Booking b = TestBookingFactory.createValidForClaim(c);
+    b.type = Booking.Type.OneWay;
+
+    TestSegmentFactory.SegmentsInfo sInfo1 = new TestSegmentFactory.SegmentsInfo(
+      f1,
+      departure.addDays(-60),
+      null
+    );
+
+    List<TestSegmentFactory.SegmentsInfo> segmentInfos = new List<TestSegmentFactory.SegmentsInfo>{
+      sInfo1
+    };
+
+    b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
+
+    return new BookingClaim(b, c);
+  }
+
   private static BookingClaim getDefaultCancellationBookingClaim() {
     Datetime newDeparture = departure.addHours(4);
     Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
@@ -63,7 +104,59 @@ private class EU261Claim_Test {
     c.customers = new List<ClaimCustomer>{ cc };
     c.flightNumber = 'SK0001';
     c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
+    Booking b = TestBookingFactory.createValidForClaim(c);
+    b.type = Booking.Type.OneWay;
 
+    TestSegmentFactory.SegmentsInfo sInfo1 = new TestSegmentFactory.SegmentsInfo(
+      f1,
+      departure.addDays(-60),
+      cancellationTime.addMinutes(20)
+    );
+    TestSegmentFactory.SegmentsInfo sInfo2 = new TestSegmentFactory.SegmentsInfo(
+      f2,
+      cancellationTime.addMinutes(20),
+      null,
+      TestSegmentFactory.History.DEFAULTREPLACEMENT
+    );
+
+    List<TestSegmentFactory.SegmentsInfo> segmentInfos = new List<TestSegmentFactory.SegmentsInfo>{
+      sInfo1,
+      sInfo2
+    };
+
+    b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
+
+    return new BookingClaim(b, c);
+  }
+
+  private static BookingClaim get2HoursDelayedCancellationBookingClaim() {
+    Datetime newDeparture = departure.addHours(2).addMinutes(1);
+    Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
+    f1.actualArrivalTime = null;
+    f1.actualDepartureTime = null;
+    Flight f2 = TestFlightFactory.create('SK0002', newDeparture, 'ARN', 'HEL');
+    List<Flight> flights = new List<Flight>{ f1, f2 };
+
+    List<FlightIrregularity> fis = new List<FlightIrregularity>{
+      TestIrregularityFactory.createCancellation(f1)
+    };
+
+    Datetime cancellationTime = departure.addDays(-10);
+    fis[0].cancellationTime = cancellationTime;
+    f1.irregularities = fis;
+
+    ClaimCustomer cc = new ClaimCustomer();
+    cc.firstname = 'Test';
+    cc.lastName = 'Testsson';
+
+    Claim c = TestClaimFactory.create();
+    c.recordType = Claim.RecordType.CustomerClaim;
+    c.category = Claim.Category.FlightDisruptions;
+    c.type = Claim.Type.FlightCancellation;
+    c.departureDate = departure.date();
+    c.customers = new List<ClaimCustomer>{ cc };
+    c.flightNumber = 'SK0001';
+    c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
     Booking b = TestBookingFactory.createValidForClaim(c);
     b.type = Booking.Type.OneWay;
 
@@ -267,6 +360,14 @@ private class EU261Claim_Test {
     b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
 
     return new BookingClaim(b, c);
+  }
+
+  private static List<ClaimExpense> getDefaultExpenses() {
+    ClaimExpense ce = new ClaimExpense();
+    ce.amount = 20;
+    ce.amountInSEK = 20;
+    ce.currencyOfAmount = Money.CurrencyCode.SEK;
+    return new List<ClaimExpense>{ ce };
   }
 
   @IsTest
@@ -568,11 +669,7 @@ private class EU261Claim_Test {
     BookingClaim bc = getDefaultCancellationBookingClaim();
 
     bc.c.submittedClaimExpenses = new Money(20, Money.CurrencyCode.SEK);
-    ClaimExpense ce = new ClaimExpense();
-    ce.amount = 20;
-    ce.amountInSEK = 20;
-    ce.currencyOfAmount = Money.CurrencyCode.SEK;
-    bc.c.expenses = new List<ClaimExpense>{ ce };
+    bc.c.expenses = getDefaultExpenses();
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,
@@ -587,6 +684,88 @@ private class EU261Claim_Test {
       Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
       result.verdict,
       'It should not be possible to automatically evaluate claims with expenses.'
+    );
+    System.assertEquals(1, result.caveats.size(), 'There should be one caveat');
+    System.assertEquals(
+      EU261Claim.SemiAutomationReason.HasHighClaimExpenses,
+      result.caveats[0],
+      'Caveat should be high expenses.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void claimsWhereCancellationOutsideSASControlWithExpensesShouldOnlyAllowExpenses() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0].flight.irregularities[0].code = 'WEAT';
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.No;
+
+    bc.c.submittedClaimExpenses = new Money(20, Money.CurrencyCode.SEK);
+    bc.c.expenses = getDefaultExpenses();
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.ReimbursementOnly,
+      result.verdict,
+      'Customer should be eligible for reimbursement but not compensation.'
+    );
+    System.assertEquals(1, result.caveats.size(), 'There should be one caveat');
+    System.assertEquals(
+      EU261Claim.SemiAutomationReason.HasHighClaimExpenses,
+      result.caveats[0],
+      'Caveat should be high expenses.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void claimsWithCancellationDelayBetween2And3HoursShouldAllowExpensesButNotCompensation() {
+    BookingClaim bc = get2HoursDelayedCancellationBookingClaim();
+
+    bc.c.submittedClaimExpenses = new Money(20, Money.CurrencyCode.SEK);
+    bc.c.expenses = getDefaultExpenses();
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.ReimbursementOnly,
+      result.verdict,
+      'Customer should be eligible for reimbursement but not compensation.'
+    );
+    System.assertEquals(
+      null,
+      result.compensationPerCustomerInEUR,
+      'There should be no compensation.'
+    );
+    System.assertEquals(
+      new Money(20, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'Reimbursement should be 20 SEK.'
     );
     System.assertEquals(1, result.caveats.size(), 'There should be one caveat');
     System.assertEquals(
@@ -759,6 +938,43 @@ private class EU261Claim_Test {
       new Money(0, Money.CurrencyCode.SEK),
       result.reimbursementAmountInSEK,
       'Reimbursement should be 0 euros.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void minimalClaimWithExpensesShouldBeEvaluatedCorrectly() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.c.submittedClaimExpenses = new Money(20, Money.CurrencyCode.SEK);
+    bc.c.expenses = getDefaultExpenses();
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
+      result.verdict,
+      'Handling status should be "Possibly eligible for compensation"'
+    );
+    System.assertEquals(
+      new Money(250, Money.CurrencyCode.EUR),
+      result.compensationPerCustomerInEUR.values()[0],
+      'Compensation should be 250 euros.'
+    );
+    System.assertEquals(
+      new Money(20, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'Reimbursement should be 20 SEK.'
     );
     try {
       System.debug(claimToEvaluate.protocol.getReport());
@@ -975,11 +1191,10 @@ private class EU261Claim_Test {
   @IsTest
   static void claimsWithTwoCancellationsShouldNotBeAutomated() {
     BookingClaim bc = getDefaultCancellationBookingClaim();
-    FlightIrregularity newIrreg = TestIrregularityFactory.createCancellation(
-      bc.b.segments[0].flight
-    );
+    Flight f = bc.b.segments[0].flight;
+    FlightIrregularity newIrreg = TestIrregularityFactory.createCancellation(f);
     newIrreg.code = 'TECH';
-    bc.b.segments[0].flight.irregularities.add(newIrreg);
+    f.irregularities.add(newIrreg);
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,
@@ -1112,7 +1327,7 @@ private class EU261Claim_Test {
   }
 
   @IsTest
-  static void claimsWithTwoFlightsANDOneCancellationButOnTimeShouldBeDenied() {
+  static void claimsWithTwoFlightsAndOneCancellationButOnTimeShouldBeDenied() {
     Datetime newDeparture = departure.addHours(4);
     Datetime nextFlightDeparture = departure.addHours(7);
 
@@ -1334,7 +1549,7 @@ private class EU261Claim_Test {
         se.newStatus = SegmentEvent.StatusCode.C_XX;
       }
       newEvents.add(se);
-    } // TODO: change to real codes
+    }
     bc.b.segments[0].events = newEvents;
 
     EU261Claim claimToEvaluate = new EU261Claim(
@@ -1381,7 +1596,7 @@ private class EU261Claim_Test {
         se.newStatus = SegmentEvent.StatusCode.C_XX;
       }
       newEvents.add(se);
-    } // TODO: change to real codes
+    }
     bc.b.segments[0].events = newEvents;
 
     EU261Claim claimToEvaluate = new EU261Claim(
@@ -1712,6 +1927,8 @@ private class EU261Claim_Test {
   @IsTest
   static void claimWithComplicatedHistoryNoReplacementShouldBeAutomated() {
     BookingClaim bc = getCancellationFullBookingHistoryNoReplacement();
+    bc.c.submittedClaimExpenses = new Money(20, Money.CurrencyCode.SEK);
+    bc.c.expenses = getDefaultExpenses();
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,
@@ -1723,7 +1940,7 @@ private class EU261Claim_Test {
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.EligibleForCompensation,
+      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
       result.verdict,
       'The minimal cancellation claim should be automated.'
     );
@@ -1731,6 +1948,11 @@ private class EU261Claim_Test {
       new Money(250, Money.CurrencyCode.EUR),
       result.compensationPerCustomerInEUR.values()[0],
       'We should pay out €250 for the minimal cancellation claim'
+    );
+    System.assertEquals(
+      new Money(20, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'We should pay out reimbursement for the minimal cancellation claim'
     );
 
     try {
@@ -1763,6 +1985,486 @@ private class EU261Claim_Test {
       'cannot get segment statuses',
       result.reasoning,
       'Reasoning should be "cannot get segment statuses"'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  // DELAY
+  @IsTest
+  static void minimalDelayClaimShouldBeEvaluatedCorrectly() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      result.verdict,
+      'Handling status should be "Eligible for compensation"'
+    );
+    System.assertEquals(
+      new Money(250, Money.CurrencyCode.EUR),
+      result.compensationPerCustomerInEUR.values()[0],
+      'Compensation should be 250 euros.'
+    );
+    System.assertEquals(
+      new Money(0, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'Reimbursement should be 0 euros.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void claimWithShortDelayShouldBeDenied() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    Flight f = bc.b.segments[0].flight;
+    f.irregularities[0].durationMinutes = 60;
+    f.arrivalDelayedMinutes = 60;
+    f.actualArrivalTime = bc.b.segments[0]
+      .flight.scheduledArrivalTime.addMinutes(60);
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      result.verdict,
+      'Handling status should be "Ineligible for compensation"'
+    );
+    System.assertEquals(
+      'delayed less than 180 minutes',
+      result.reasoning,
+      'Reasoning should be "delayed less than 180 minutes"'
+    );
+    System.assertEquals(
+      null,
+      result.compensationPerCustomerInEUR,
+      'Compensation should be 0 euros.'
+    );
+    System.assertEquals(
+      new Money(0, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'Reimbursement should be 0 euros.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void longDistanceDelayShouldAward600EUR() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    Flight f1 = bc.b.segments[0].flight;
+    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
+    f1.arrivalAirport = 'LAX';
+    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      result.verdict,
+      'Handling status should be "Eligible for compensation"'
+    );
+    System.assertEquals(
+      new Money(300, Money.CurrencyCode.EUR),
+      result.compensationPerCustomerInEUR.values()[0],
+      'Compensation should be 300 euros (halved).'
+    );
+    System.assertEquals(
+      new Money(0, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'Reimbursement should be 0 euros.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void delayWhereSASNotInControlShouldBeDenied() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    bc.b.segments[0].flight.irregularities[0].code = 'AF';
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.No;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      result.verdict,
+      'Claim with more than one booking cannot be evaluated.'
+    );
+    System.assertEquals(
+      'SAS is not responsible for 3 hours or more of the delay',
+      result.reasoning,
+      'Rejection reason should be "SAS is not responsible for 3 hours or more of the delay"'
+    );
+
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void delayWhereNotCertainIfSASInControlShouldNotBeHandled() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    bc.b.segments[0].flight.irregularities[0].code = 'QQ';
+    bc.b.segments[0].flight.irregularities[0].eligibleForEU261 = null;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      result.verdict,
+      'Claim with more than one booking cannot be evaluated.'
+    );
+    System.assertEquals(
+      'cannot handle tentative delays',
+      result.reasoning,
+      'Rejection reason should be "cannot handle tentative delays"'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void rotationDelaysShouldNotBeHandled() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    bc.b.segments[0].flight.irregularities[0].code = 'RA';
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.Tentative;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      result.verdict,
+      'Claim with more than one booking cannot be evaluated.'
+    );
+    System.assertEquals(
+      'cannot handle flights with delays caused by rotations',
+      result.reasoning,
+      'Rejection reason should be "cannot handle flights with delays caused by rotations"'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void tentativeDelaysShouldNotBeHandled() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    bc.b.segments[0].flight.irregularities[0].code = 'AX';
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.Tentative;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      result.verdict,
+      'Claim with more than one booking cannot be evaluated.'
+    );
+    System.assertEquals(
+      'cannot handle tentative delays',
+      result.reasoning,
+      'Rejection reason should be "cannot handle tentative delays"'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void delayBetween2And3HoursShouldOnlyBeAwardedReimbursement() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    bc.c.submittedClaimExpenses = new Money(20, Money.CurrencyCode.SEK);
+    bc.c.expenses = getDefaultExpenses();
+    Flight f = bc.b.segments[0].flight;
+    f.irregularities[0].durationMinutes = 121;
+    f.arrivalDelayedMinutes = 121;
+    f.actualArrivalTime = bc.b.segments[0]
+      .flight.scheduledArrivalTime.addMinutes(121);
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.ReimbursementOnly,
+      result.verdict,
+      'Handling status should be "ReimbursementOnly"'
+    );
+    System.assertEquals(
+      null,
+      result.compensationPerCustomerInEUR,
+      'Compensation should be 0 euros.'
+    );
+    System.assertEquals(
+      new Money(20, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'Reimbursement should be 20 euros.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void claimWithMultipleDelaysShouldBeEvaluated() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    Flight f = bc.b.segments[0].flight;
+    f.irregularities[0].durationMinutes = 60;
+    f.irregularities.add(TestIrregularityFactory.createDelay(f, 'CA', 120));
+    f.arrivalDelayedMinutes = 180;
+    f.actualArrivalTime = bc.b.segments[0]
+      .flight.scheduledArrivalTime.addMinutes(180);
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.EligibleForCompensation,
+      result.verdict,
+      'Handling status should be "Eligible for compensation"'
+    );
+    System.assertEquals(
+      new Money(250, Money.CurrencyCode.EUR),
+      result.compensationPerCustomerInEUR.values()[0],
+      'Compensation should be 250 euros.'
+    );
+    System.assertEquals(
+      new Money(0, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'Reimbursement should be 0 euros.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void claimWhereThereAreBothDelaysWithinSASControlAndNotWithinShouldBeEvaluated() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    Flight f = bc.b.segments[0].flight;
+    f.irregularities[0].durationMinutes = 60;
+    f.irregularities.add(TestIrregularityFactory.createDelay(f, 'AF', 120));
+    f.arrivalDelayedMinutes = 180;
+    f.actualArrivalTime = bc.b.segments[0]
+      .flight.scheduledArrivalTime.addMinutes(180);
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.IneligibleForCompensation,
+      result.verdict,
+      'Handling status should be "Ineligible for compensation"'
+    );
+    System.assertEquals(
+      'SAS is not responsible for 3 hours or more of the delay',
+      result.reasoning,
+      'Reasoning should be "SAS is not responsible for 3 hours or more of the delay"'
+    );
+    System.assertEquals(
+      null,
+      result.compensationPerCustomerInEUR,
+      'Compensation should be 0 euros.'
+    );
+    System.assertEquals(
+      new Money(0, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'Reimbursement should be 0 euros.'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void claimWhereNoFlightIsDelayedOrCancelledShouldBeDenied() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    Flight f = bc.b.segments[0].flight;
+    f.actualArrivalTime = bc.b.segments[0].flight.scheduledArrivalTime;
+    f.arrivalDelayedMinutes = 0;
+    f.irregularities = new List<FlightIrregularity>();
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      result.verdict,
+      'Claim where flight is not delayed or cancelled should be denied'
+    );
+    System.assertEquals(
+      'flight not cancelled and not delayed',
+      result.reasoning,
+      'Rejection reason should be "flight not cancelled and not delayed"'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void claimWhereClaimFlightIsCancelledButCustomerClaimedDelayShouldNotBeHandled() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.c.type = Claim.Type.FlightDelay;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      result.verdict,
+      'Claim where flight is cancelled but the customer claimed for delay should be unhandled.'
+    );
+    System.assertEquals(
+      'the flight is cancelled but the customer has claimed for a delay',
+      result.reasoning,
+      'Rejection reason should be "the flight is cancelled but the customer has claimed for a delay"'
+    );
+    try {
+      System.debug(claimToEvaluate.protocol.getReport());
+    } catch (Exception e) {
+      System.assert(false, 'Could not make automation report.');
+    }
+  }
+
+  @IsTest
+  static void claimWhereClaimFlightIsDelayedButCustomerClaimedCancellationShouldNotBeHandled() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    bc.c.type = Claim.Type.FlightCancellation;
+
+    EU261Claim claimToEvaluate = new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+
+    EU261Claim.Decision result = claimToEvaluate.evaluate();
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      result.verdict,
+      'Claim where flight is delayed but the cusomer claimed for cancellation should not be handled.'
+    );
+    System.assertEquals(
+      'the claim flight is not cancelled',
+      result.reasoning,
+      'Rejection reason should be "the claim flight is not cancelled"'
     );
     try {
       System.debug(claimToEvaluate.protocol.getReport());

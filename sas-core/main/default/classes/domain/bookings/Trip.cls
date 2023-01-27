@@ -141,6 +141,9 @@ public without sharing class Trip {
   }
 
   public Boolean equals(Object other) {
+    if (!(other instanceof Trip)) {
+      return false;
+    }
     Trip otherT = (Trip) other;
 
     if (this.sortedLegs.size() != otherT.sortedLegs.size()) {
@@ -232,11 +235,34 @@ public without sharing class Trip {
   // DELAY LOGIC
   public Datetime getFinalDestinationArrivalTime() {
     Flight lastFlight = getFlightToFinalDestination();
+    if (lastFlight.actualArrivalTime != null) {
+      return lastFlight.actualArrivalTime;
+    }
     return lastFlight.scheduledArrivalTime;
+  }
+
+  public Datetime getScheduledDeparture() {
+    return getFirstFlight().scheduledDepartureTime;
   }
 
   public Boolean isDelayedToDestination() {
     return getFlightToFinalDestination().arrivalDelayedMinutes > 0;
+  }
+
+  public Boolean allFlightsAreBoarded() {
+    for (Leg l : this.sortedLegs) {
+      for (Segment s : l.segments) {
+        if (s.isBoarded == null) {
+          throw new InsufficientDataException(
+            'there is no info about boarding status'
+          );
+        }
+        if (!s.isBoarded) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   // INITIALIZATION LOGIC
@@ -244,7 +270,7 @@ public without sharing class Trip {
    * Class used to combine different passengers' segments into one.
    */
   public class Leg {
-    transient List<Segment> segments;
+    public List<Segment> segments;
     public Flight flight;
 
     public Leg(List<Segment> segments) {
