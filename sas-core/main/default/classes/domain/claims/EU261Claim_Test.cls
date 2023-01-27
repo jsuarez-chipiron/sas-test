@@ -1927,6 +1927,8 @@ private class EU261Claim_Test {
   @IsTest
   static void claimWithComplicatedHistoryNoReplacementShouldBeAutomated() {
     BookingClaim bc = getCancellationFullBookingHistoryNoReplacement();
+    bc.c.submittedClaimExpenses = new Money(20, Money.CurrencyCode.SEK);
+    bc.c.expenses = getDefaultExpenses();
 
     EU261Claim claimToEvaluate = new EU261Claim(
       bc.c,
@@ -1938,7 +1940,7 @@ private class EU261Claim_Test {
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
     System.assertEquals(
-      Claim.EU261HandlingStatus.EligibleForCompensation,
+      Claim.EU261HandlingStatus.PossiblyEligibleForCompensation,
       result.verdict,
       'The minimal cancellation claim should be automated.'
     );
@@ -1946,6 +1948,11 @@ private class EU261Claim_Test {
       new Money(250, Money.CurrencyCode.EUR),
       result.compensationPerCustomerInEUR.values()[0],
       'We should pay out €250 for the minimal cancellation claim'
+    );
+    System.assertEquals(
+      new Money(20, Money.CurrencyCode.SEK),
+      result.reimbursementAmountInSEK,
+      'We should pay out reimbursement for the minimal cancellation claim'
     );
 
     try {

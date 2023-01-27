@@ -781,8 +781,9 @@ public class EU261Claim {
     Integer minutesEarlyOnDeparture;
     if (newTrip == null) {
       // No suggested rebooking => full EU261 (10h outside timeframe => full compensation, except if you were informed on time)
+      minutesLateOnArrival = 600;
       compensation = calculateCompensationCancellation(
-        600,
+        minutesLateOnArrival,
         0,
         flightDistanceInKmRounded,
         daysUntilFlightWhenInformedOfCancellation,
