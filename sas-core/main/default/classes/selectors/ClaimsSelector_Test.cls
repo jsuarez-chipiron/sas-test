@@ -312,12 +312,12 @@ private class ClaimsSelector_Test {
     LIA_Claim__c correctClaim1 = [
       SELECT Id
       FROM LIA_Claim__c
-      WHERE Flight_Number__c = 'SK1'
+      WHERE Flight_Number__c = 'SK0001'
     ][0];
     LIA_Claim__c correctClaim2 = [
       SELECT Id
       FROM LIA_Claim__c
-      WHERE Flight_Number__c = 'SK3'
+      WHERE Flight_Number__c = 'SK0003'
     ][0];
 
     // When
@@ -356,12 +356,12 @@ private class ClaimsSelector_Test {
     LIA_Claim__c correctClaim1 = [
       SELECT Id
       FROM LIA_Claim__c
-      WHERE Flight_Number__c = 'SK2'
+      WHERE Flight_Number__c = 'SK0002'
     ][0];
     LIA_Claim__c correctClaim2 = [
       SELECT Id
       FROM LIA_Claim__c
-      WHERE Flight_Number__c = 'SK3'
+      WHERE Flight_Number__c = 'SK0003'
     ][0];
 
     // When
@@ -400,7 +400,7 @@ private class ClaimsSelector_Test {
     LIA_Claim__c correctClaim = [
       SELECT Id
       FROM LIA_Claim__c
-      WHERE Flight_Number__c = 'SK3'
+      WHERE Flight_Number__c = 'SK0003'
     ][0];
 
     // When
