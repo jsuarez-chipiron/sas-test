@@ -13,10 +13,21 @@
     <groups>Claims - High Priority</groups>
     <groups>Claims - Other</groups>
     <groups>Control</groups>
+    <groups>Customer Claim</groups>
+    <groups>Liability</groups>
     <label>Customer Claim Supervisors</label>
     <loginAccess>false</loginAccess>
+    <permissionSets>Can_Edit_flightIrregularities_EU261_eligibility</permissionSets>
+    <permissionSets>SAS Claim Firms Editor</permissionSets>
+    <permissionSets>SAS Customer Claims</permissionSets>
+    <permissionSets>SAS Liability</permissionSets>
+    <permissionSets>SAS Proactivities Editor</permissionSets>
+    <permissionSets>SAS Settlements</permissionSets>
+    <permissionSets>Service Presences - Breaks</permissionSets>
+    <permissionSets>Service Presences - Customer Claims</permissionSets>
     <roles>Student Consulting</roles>
     <roles>Sutherland</roles>
     <roles>Sykes</roles>
     <roles>SAS</roles>
+    
 </DelegateGroup>

@@ -11,8 +11,12 @@
     <groups>Claims - High Care Costs</groups>
     <groups>Claims - High Priority</groups>
     <groups>Claims - Other</groups>
+    <groups>Customer Claim</groups>
+    <groups>Liability</groups>
     <label>Sutherland</label>
     <loginAccess>false</loginAccess>
+    <permissionSets>SAS Customer Claims</permissionSets>
+    <permissionSets>SAS Liability</permissionSets>
     <permissionSets>Service Presences - Breaks</permissionSets>
     <permissionSets>Service Presences - Customer Claims</permissionSets>
     <roles>Sutherland</roles>
