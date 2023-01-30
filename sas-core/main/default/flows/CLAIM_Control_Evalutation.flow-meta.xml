@@ -81,7 +81,7 @@
             <assignToReference>controlReasons</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>controlReasonOutputMessage</elementReference>
+                <elementReference>controlReason</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -426,6 +426,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>incomingRecord.Submitter__r.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>incomingRecord.Approver__r.Id</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>NeedsControl</targetReference>
             </connector>
@@ -437,6 +444,15 @@
         <name>chequeMessage</name>
         <dataType>String</dataType>
         <expression>IF({!incomingRecord.RecordType.Name} = &apos;Cheque&apos;, &quot;Cheques always go to Control&quot;, &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>controlReason</name>
+        <dataType>String</dataType>
+        <expression>if({!numberSettlementsMessage} == null ,&apos; &apos;, {!numberSettlementsMessage}&amp; BR()) +
+if({!highAmountMessage} == null , &apos; &apos; ,{!highAmountMessage} &amp; BR())+
+if({!inactiveAccountMessage} == null , &apos; &apos; , {!inactiveAccountMessage})+
+if({!chequeMessage} == null , &apos; &apos; , {!chequeMessage} &amp; BR())+
+{!sameSubmitterAndApproverMessage}</expression>
     </formulas>
     <formulas>
         <name>controlReasonDetail</name>
@@ -451,7 +467,7 @@
     <formulas>
         <name>inactiveAccountMessage</name>
         <dataType>String</dataType>
-        <expression>IF({!inactiveAccountFlag}, &quot;Settlement was sent to Control as the account connected to the Claim Firm is inactive&quot;, &quot;&quot;)</expression>
+        <expression>IF({!inactiveAccountFlag}, &quot;Settlement was sent to Control as the account connected to the Claim Firm is inactive&quot;,&quot;&quot;)</expression>
     </formulas>
     <formulas>
         <name>last12months</name>
@@ -461,7 +477,12 @@
     <formulas>
         <name>numberSettlementsMessage</name>
         <dataType>String</dataType>
-        <expression>IF({!numberOfSettlements} &gt;= 3 , {!controlReasonMessage} , &quot;&quot;)</expression>
+        <expression>IF({!numberOfSettlements} &gt;= 3 , {!controlReasonMessage},&quot;&quot; )</expression>
+    </formulas>
+    <formulas>
+        <name>sameSubmitterAndApproverMessage</name>
+        <dataType>String</dataType>
+        <expression>IF({!incomingRecord.Approver__r.Id} = {!incomingRecord.Submitter__r.Id},&quot;Submitter and Approver user are same&quot;, &quot;&quot;)</expression>
     </formulas>
     <interviewLabel>CLAIM Control Evalutation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Control Evalutation</label>
@@ -647,7 +668,7 @@
         <inputAssignments>
             <field>Control_Reason__c</field>
             <value>
-                <elementReference>controlReasonOutputMessage</elementReference>
+                <elementReference>controlReasons</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -705,7 +726,8 @@
         <text>{!numberSettlementsMessage}
 {!highAmountMessage}
 {!inactiveAccountMessage}
-{!chequeMessage}</text>
+{!chequeMessage}
+{!sameSubmitterAndApproverMessage}</text>
     </textTemplates>
     <variables>
         <name>controlNeeded</name>
