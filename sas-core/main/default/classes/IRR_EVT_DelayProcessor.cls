@@ -94,6 +94,9 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
        
         Map<String,List<String>> segmentIdToBoarding = new Map<String,List<String>>();
 
+        if(this.passengerInfos.size()>0){
+            
+       
         // binding segment id with boarding sequence number 
          for(IRR_MOD_PassengerInfo passenger :this.passengerInfos){
  
@@ -153,7 +156,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
              }
           }
          
-       
+        }
          
     }
    
@@ -210,7 +213,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
             insertDelayLog(uow);
             
         }
-        if ( delayInfo != null &&  System.Isbatch() == false && delayInfo.delayedMinutes >= 120)
+        if ( delayInfo != null &&  System.Isbatch() == false && delayInfo.delayedMinutes >= 120 && this.passengerInfos.size()>0)
             
         {
             insertEventLog(uow);

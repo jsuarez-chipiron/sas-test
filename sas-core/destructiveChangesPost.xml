@@ -2,27 +2,25 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 
     <!--INSTRUCTIONS FOR DESTRUCTIVE CHANGES
-    This file will remove the included components *AFTER* the deploy.
+    This file will remove the included components
+    *AFTER* the deploy.
 
-    For each destructive change, create a new block of changes and create a comment header
-    for the block including date, author and reason for change. Duplicates of type blocks can be
+    For each destructive change, create a new block of changes and create
+    a comment header
+    for the block including date, author and reason for change. Duplicates of
+    type blocks can be
     duplicated in the document. 
 
-    When it is confirmed that an included change has been deployed to relevant environments,
-    the block can be removed from this document.
+    When it is confirmed that an
+    included change has been deployed to relevant environments,
+    the block can be removed from
+    this document.
 -->
     <types>
 
-    <members>IRR_Icoupon_Station_Manager__mdt.sanjay.singhbisht@sas.dk</members>
-    
-    <name>CustomMetadata</name>
+        <members>IRR_Icoupon_Station_Manager__mdt.ARN</members>
 
- </types>
- <types>
-
-        <members>IRR_Icoupon_Station_Manger__mdt</members>
-
-        <name>CustomObject</name>
+        <name>CustomMetadata</name>
 
     </types>
 </Package>
