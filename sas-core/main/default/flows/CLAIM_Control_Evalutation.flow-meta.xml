@@ -416,7 +416,7 @@
                 <leftValueReference>numberOfSettlements</leftValueReference>
                 <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>3.0</numberValue>
+                    <numberValue>6.0</numberValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -450,7 +450,7 @@
         <dataType>String</dataType>
         <expression>if({!numberSettlementsMessage} == null ,&apos; &apos;, {!numberSettlementsMessage}&amp; BR()) +
 if({!highAmountMessage} == null , &apos; &apos; ,{!highAmountMessage} &amp; BR())+
-if({!inactiveAccountMessage} == null , &apos; &apos; , {!inactiveAccountMessage})+
+if({!inactiveAccountMessage} == null , &apos; &apos; , {!inactiveAccountMessage} &amp; BR())+
 if({!chequeMessage} == null , &apos; &apos; , {!chequeMessage} &amp; BR())+
 {!sameSubmitterAndApproverMessage}</expression>
     </formulas>
@@ -477,7 +477,7 @@ if({!chequeMessage} == null , &apos; &apos; , {!chequeMessage} &amp; BR())+
     <formulas>
         <name>numberSettlementsMessage</name>
         <dataType>String</dataType>
-        <expression>IF({!numberOfSettlements} &gt;= 3 , {!controlReasonMessage},&quot;&quot; )</expression>
+        <expression>IF({!numberOfSettlements} &gt;= 6 , {!controlReasonMessage},&quot;&quot; )</expression>
     </formulas>
     <formulas>
         <name>sameSubmitterAndApproverMessage</name>
