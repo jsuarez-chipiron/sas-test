@@ -65,6 +65,18 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     );
   }
 
+  public static final String CUTOFF_TIME = '23:00:00';
+  public static final Datetime CUTOFF_DATETIME = Datetime.valueOfGmt(
+    System.today().format() +
+    ' ' +
+    CUTOFF_TIME
+  );
+  public static final String UNHANDLED_EU261_STATUS = 'Unhandled';
+  public static final Set<String> EU261_CLAIM_TYPES = new Set<String>{
+    'Flight cancellation',
+    'Flight cancellation - compensation'
+  };
+
   public List<LIA_Claim__c> selectById(Set<Id> ids) {
     return (List<LIA_Claim__c>) selectSObjectsById(ids);
   }
@@ -173,6 +185,25 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       .addQueryFactorySubselect(claimsQF);
 
     return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
+  }
+
+  public List<LIA_Claim__c> selectUnhandledClaimsToAutomate() {
+    return (List<LIA_Claim__c>) Database.query(
+      newQueryFactory()
+        .setCondition(
+          'EU261_Handling_Status__c = :UNHANDLED_EU261_STATUS and Customer_Claim_Type__c IN :EU261_CLAIM_TYPES AND CreatedDate < :CUTOFF_DATETIME'
+        )
+        .toSOQL()
+    );
+  }
+  public List<LIA_Claim__c> selectUnhandledClaimsToFetchBookingData() {
+    return (List<LIA_Claim__c>) Database.query(
+      newQueryFactory()
+        .setCondition(
+          'EU261_Handling_Status__c = :UNHANDLED_EU261_STATUS and Customer_Claim_Type__c IN :EU261_CLAIM_TYPES AND CreatedDate >= :CUTOFF_DATETIME'
+        )
+        .toSOQL()
+    );
   }
 
   /**
@@ -397,7 +428,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     }
 
     if (!String.isBlank(bookingReference)) {
-      List<String> excludedPNRs = new list<String> {
+      List<String> excludedPNRs = new List<String>{
         '-----',
         'ABC12',
         'ABC123',
@@ -418,7 +449,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     if (
       !String.isBlank(email) && claim.Type_of_Customer__c == 'Private customer'
     ) {
-      List<String> excludedEmails = new List<String> {
+      List<String> excludedEmails = new List<String>{
         'claim@flyhjaelp.dk',
         'claims@danskrejsehjaelp.dk',
         'klient@flyforsinkelse.dk',
@@ -476,7 +507,15 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     }
 
     return (List<LIA_Claim__c>) Database.query(
-      newQueryFactory().setCondition(whereQuery).addOrdering('CreatedDate', fflib_QueryFactory.SortOrder.DESCENDING, true).setLimit(51).toSOQL()
+      newQueryFactory()
+        .setCondition(whereQuery)
+        .addOrdering(
+          'CreatedDate',
+          fflib_QueryFactory.SortOrder.DESCENDING,
+          true
+        )
+        .setLimit(51)
+        .toSOQL()
     );
   }
 

@@ -292,13 +292,44 @@ private class Trip_Test {
     b.setAirports(getAirports());
 
     Boolean isSupported = true;
+    List<Trip> trips;
     try {
-      List<Trip> trips = Trip.divideActiveSegmentsIntoTrips(b.segments);
+      trips = Trip.divideActiveSegmentsIntoTrips(b.segments);
     } catch (Trip.BookingTypeNotSupportedException e) {
       isSupported = false;
     }
 
-    System.assert(!isSupported, 'Dayreturn bookings should not be supported');
+    System.assert(isSupported, 'Dayreturn bookings should not be supported');
+
+    System.assertEquals(
+      2,
+      trips.size(),
+      'Should divide booking into two trips'
+    );
+
+    System.assertEquals(
+      trips[0].originAirport.tedsIdentifier,
+      'HEL',
+      'Origin airport of the first trip should be HEL'
+    );
+
+    System.assertEquals(
+      trips[0].destinationAirport.tedsIdentifier,
+      'ARN',
+      'Destination airport of the first trip should be ARN'
+    );
+
+    System.assertEquals(
+      trips[1].originAirport.tedsIdentifier,
+      'ARN',
+      'Origin airport of the second trip should be ARN'
+    );
+
+    System.assertEquals(
+      trips[1].destinationAirport.tedsIdentifier,
+      'HEL',
+      'Destination airport of the second trip should be HEL'
+    );
   }
 
   @IsTest

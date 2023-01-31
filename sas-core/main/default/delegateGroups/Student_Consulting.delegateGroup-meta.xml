@@ -11,8 +11,12 @@
     <groups>Claims - Care Expenses</groups>
     <groups>Claims - EU261 Semi-Automation</groups>
     <groups>Claims - Care Semi-Automation</groups>
+    <groups>Customer Claim</groups>
+    <groups>Liability</groups>
     <label>Student Consulting</label>
     <loginAccess>false</loginAccess>
+    <permissionSets>SAS Customer Claims</permissionSets>
+    <permissionSets>SAS Liability</permissionSets>
     <permissionSets>Service Presences - Breaks</permissionSets>
     <permissionSets>Service Presences - Customer Claims</permissionSets>
     <roles>Student Consulting</roles>

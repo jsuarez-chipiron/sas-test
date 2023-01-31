@@ -241,9 +241,14 @@ public without sharing class Claims extends ApplicationDomain {
         );
       }
       if (!String.isBlank(claim.Flight_Number__c)) {
-        claim.Flight_Number__c = StringUtils.removeWhitespace(
-          claim.Flight_Number__c.toUpperCase()
-        );
+        try {
+          claim.Flight_Number__c = Flight.normalizeFlightNumber(
+            StringUtils.removeWhitespace(claim.Flight_Number__c.toUpperCase())
+          );
+        } catch (Flight.FlightException e) {
+          // Should avoid empty catch blocks
+          // but in this case, we can ignore the exception
+        }
       }
     }
   }

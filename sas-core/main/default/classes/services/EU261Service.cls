@@ -39,6 +39,8 @@ public without sharing class EU261Service {
   public class Config {
     public Decimal percentageRequiringManualApproval;
 
+    public Boolean enabledCancellationAutomation;
+    public Boolean enabledDelayAutomation;
     public Boolean enabledSettlements;
     public Boolean enabledRejections;
     public Boolean enabledSemiAutomation;
@@ -54,6 +56,8 @@ public without sharing class EU261Service {
     public Config() {
       percentageRequiringManualApproval = 0;
 
+      enabledCancellationAutomation = false;
+      enabledDelayAutomation = false;
       enabledSettlements = false;
       enabledRejections = false;
       enabledSemiAutomation = false;
@@ -68,6 +72,11 @@ public without sharing class EU261Service {
     }
 
     public Config(EU261_Automation_Configuration__mdt config) {
+      this.enabledCancellationAutomation = U.getOr(
+        false,
+        config.Cancellation_Automation__c
+      );
+      this.enabledDelayAutomation = U.getOr(false, config.Delay_Automation__c);
       this.enabledRejections = U.getOr(false, config.Automatic_Rejection__c);
       this.enabledSettlements = U.getOr(false, config.Automatic_Settlement__c);
       this.enabledSemiAutomation = U.getOr(
@@ -113,6 +122,8 @@ public without sharing class EU261Service {
       SELECT
         Automatic_Rejection__c,
         Automatic_Settlement__c,
+        Delay_Automation__c,
+        Cancellation_Automation__c,
         Claim_Expense_Max_Amount__c,
         Claims_Per_Batch__c,
         Expense_Limit_Accommodation__c,
@@ -188,6 +199,8 @@ public without sharing class EU261Service {
 
     List<EU261Claim> claimsToAutomate = gatherAllNecessaryInformation(claimIds);
 
+    claimsToAutomate = filterClaimTypes(claimsToAutomate);
+
     for (EU261Claim c : claimsToAutomate) {
       c.evaluate();
     }
@@ -197,6 +210,32 @@ public without sharing class EU261Service {
     settleAndRejectClaims(claimsToAutomate);
 
     return claimsToAutomate;
+  }
+
+  /**
+   * Filters claims which are not enabled in the config.
+   */
+  private List<EU261Claim> filterClaimTypes(List<EU261Claim> claimsToAutomate) {
+    List<EU261Claim> filteredClaims = new List<EU261Claim>();
+    for (EU261Claim c : claimsToAutomate) {
+      if (
+        c.claimObj.type != Claim.Type.FlightCancellation &&
+        c.claimObj.type != Claim.Type.FlightDelay
+      ) {
+        throw new AutomationException('Unsupported claim type');
+      } else if (
+        c.claimObj.type == Claim.Type.FlightCancellation &&
+        this.config.enabledCancellationAutomation
+      ) {
+        filteredClaims.add(c);
+      } else if (
+        c.claimObj.type == Claim.Type.FlightDelay &&
+        this.config.enabledDelayAutomation
+      ) {
+        filteredClaims.add(c);
+      }
+    }
+    return filteredClaims;
   }
 
   /**
@@ -556,6 +595,9 @@ public without sharing class EU261Service {
           parentCasesForRejection.add(
             parentCasesById.get(c.claimObj.parentCaseId)
           );
+        }
+        when ReimbursementOnly {
+          // TODO. Currently we do nothing.
         }
       }
     }

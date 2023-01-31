@@ -362,6 +362,8 @@ private class EU261Service_Test {
     if (serviceConfig != null) {
       es.config = serviceConfig;
     } else {
+      es.config.enabledCancellationAutomation = true;
+      es.config.enabledDelayAutomation = true;
       es.config.enabledSettlements = true;
       es.config.enabledRejections = true;
       es.config.enabledSemiAutomation = true;
@@ -393,6 +395,8 @@ private class EU261Service_Test {
   @IsTest
   static void nothingShouldBeCreatedIfAutomationIsDisabled() {
     EU261Service.Config config = new EU261Service.Config();
+    config.enabledCancellationAutomation = true;
+    config.enabledDelayAutomation = true;
     config.enabledRejections = false;
     config.enabledSemiAutomation = false;
     config.enabledSettlements = false;
@@ -405,6 +409,45 @@ private class EU261Service_Test {
       0,
       res.settlements.size(),
       'No settlements should have been created when automation is disabled.'
+    );
+    System.assertEquals(
+      3,
+      res.claims.size(),
+      'Should have found the correct number of claims.'
+    );
+    System.assertEquals(
+      3,
+      res.cases.size(),
+      'Should have found the correct number of cases.'
+    );
+
+    for (Case c : res.cases) {
+      System.assertEquals(
+        Cases.STATUS_NEW,
+        c.Status,
+        'All cases should still be in new'
+      );
+    }
+  }
+
+  @IsTest
+  static void cancellationClaimsShouldNotBeAlteredIfCancellationAutomationIsDisabled() {
+    EU261Service.Config config = new EU261Service.Config();
+    config.enabledRejections = true;
+    config.enabledSemiAutomation = true;
+    config.enabledSettlements = true;
+    config.enabledCancellationAutomation = false;
+    config.enabledDelayAutomation = true;
+
+    Result res = runProcessingFor(
+      new List<String>{ '000001', '000002', '000003' },
+      config
+    );
+
+    System.assertEquals(
+      0,
+      res.settlements.size(),
+      'No settlements should have been created when cancellation automation is disabled.'
     );
     System.assertEquals(
       3,
@@ -831,6 +874,8 @@ private class EU261Service_Test {
     };
 
     EU261Service.Config config = new EU261Service.Config();
+    config.enabledCancellationAutomation = true;
+    config.enabledDelayAutomation = true;
     config.enabledRejections = true;
     config.enabledSemiAutomation = true;
     config.enabledSettlements = true;
@@ -1053,6 +1098,8 @@ private class EU261Service_Test {
   @IsTest
   static void eligibleClaimsCanEndUpInApproval() {
     EU261Service.Config config = new EU261Service.Config();
+    config.enabledCancellationAutomation = true;
+    config.enabledDelayAutomation = true;
     config.enabledRejections = true;
     config.enabledSemiAutomation = true;
     config.enabledSettlements = true;
@@ -1148,6 +1195,8 @@ private class EU261Service_Test {
     };
 
     EU261Service.Config config = new EU261Service.Config();
+    config.enabledCancellationAutomation = true;
+    config.enabledDelayAutomation = true;
     config.enabledRejections = true;
     config.enabledSemiAutomation = true;
     config.enabledSettlements = true;
@@ -1574,6 +1623,8 @@ private class EU261Service_Test {
     createCaseToBookings(new List<TestDataFactories.CasesClaims>{ testClaim });
 
     EU261Service.Config config = new EU261Service.Config();
+    config.enabledCancellationAutomation = true;
+    config.enabledDelayAutomation = true;
     config.enabledRejections = true;
     config.enabledSemiAutomation = true;
     config.enabledSettlements = true;

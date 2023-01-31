@@ -63,7 +63,9 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public String normalizedContactFullName {
     get {
       return Passenger.normalizeName(
-        this.contactFirstName + ' ' + this.contactLastName
+        this.contactFirstName +
+        ' ' +
+        this.contactLastName
       );
     }
   }
@@ -333,7 +335,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     EligibleForCompensation,
     IneligibleForCompensation,
     PossiblyEligibleForCompensation,
-    UnableToHandle
+    UnableToHandle,
+    ReimbursementOnly  
   }
 
   private static final Map<EU261HandlingStatus, String> EU261_STATUS_ENUM_TO_PICKLIST_VALUE = new Map<EU261HandlingStatus, String>{
@@ -341,7 +344,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     EU261HandlingStatus.EligibleForCompensation => 'Eligible for compensation',
     EU261HandlingStatus.IneligibleForCompensation => 'Ineligible for compensation',
     EU261HandlingStatus.PossiblyEligibleForCompensation => 'Possibly eligible for compensation',
-    EU261HandlingStatus.UnableToHandle => 'Unable to handle'
+    EU261HandlingStatus.UnableToHandle => 'Unable to handle',
+    EU261HandlingStatus.ReimbursementOnly => 'Ineligible for compensation but eligible for reimbursement'
   };
 
   private static final Map<String, EU261HandlingStatus> EU261_STATUS_PICKLIST_VALUE_TO_ENUM = new Map<String, EU261HandlingStatus>{
@@ -349,7 +353,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     'Eligible for compensation' => EU261HandlingStatus.EligibleForCompensation,
     'Ineligible for compensation' => EU261HandlingStatus.IneligibleForCompensation,
     'Possibly eligible for compensation' => EU261HandlingStatus.PossiblyEligibleForCompensation,
-    'Unable to handle' => EU261HandlingStatus.UnableToHandle
+    'Unable to handle' => EU261HandlingStatus.UnableToHandle,
+    'Ineligible for compensation but eligible for reimbursement' => EU261HandlingStatus.ReimbursementOnly
   };
 
   private static final Map<CompensationType, String> COMPENSATION_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<CompensationType, String>{

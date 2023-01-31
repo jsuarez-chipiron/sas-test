@@ -59,9 +59,6 @@ public without sharing class Trip {
   public class InsufficientDataException extends Exception {
   }
 
-  public class TripException extends Exception {
-  }
-
   public class InvalidException extends Exception {
   }
 
@@ -141,6 +138,9 @@ public without sharing class Trip {
   }
 
   public Boolean equals(Object other) {
+    if (!(other instanceof Trip)) {
+      return false;
+    }
     Trip otherT = (Trip) other;
 
     if (this.sortedLegs.size() != otherT.sortedLegs.size()) {
@@ -232,11 +232,34 @@ public without sharing class Trip {
   // DELAY LOGIC
   public Datetime getFinalDestinationArrivalTime() {
     Flight lastFlight = getFlightToFinalDestination();
+    if (lastFlight.actualArrivalTime != null) {
+      return lastFlight.actualArrivalTime;
+    }
     return lastFlight.scheduledArrivalTime;
+  }
+
+  public Datetime getScheduledDeparture() {
+    return getFirstFlight().scheduledDepartureTime;
   }
 
   public Boolean isDelayedToDestination() {
     return getFlightToFinalDestination().arrivalDelayedMinutes > 0;
+  }
+
+  public Boolean allFlightsAreBoarded() {
+    for (Leg l : this.sortedLegs) {
+      for (Segment s : l.segments) {
+        if (s.isBoarded == null) {
+          throw new InsufficientDataException(
+            'there is no info about boarding status'
+          );
+        }
+        if (!s.isBoarded) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   // INITIALIZATION LOGIC
@@ -244,7 +267,7 @@ public without sharing class Trip {
    * Class used to combine different passengers' segments into one.
    */
   public class Leg {
-    transient List<Segment> segments;
+    public List<Segment> segments;
     public Flight flight;
 
     public Leg(List<Segment> segments) {
@@ -368,6 +391,19 @@ public without sharing class Trip {
 
     tripsToReturn.add(new Trip(legsInCurrentTrip));
 
+    addAirports(tripsToReturn);
+
+    if (
+      tripsToReturn.size() == 1 &&
+      tripsToReturn[0].originAirport == tripsToReturn[0].destinationAirport
+    ) {
+      tripsToReturn = divideDayreturn(tripsToReturn);
+    }
+
+    return tripsToReturn;
+  }
+
+  private static void addAirports(List<Trip> tripsToReturn) {
     for (Trip t : tripsToReturn) {
       Flight firstFlight = t.sortedLegs[0].flight;
       Flight finalFlight = t.getFlightToFinalDestination();
@@ -375,17 +411,58 @@ public without sharing class Trip {
       t.originAirport = firstFlight.departureAirportObject;
       t.destinationAirport = finalFlight.arrivalAirportObject;
     }
+  }
 
-    if (
-      tripsToReturn.size() == 1 &&
-      tripsToReturn[0].originAirport == tripsToReturn[0].destinationAirport
-    ) {
-      throw new BookingTypeNotSupportedException(
-        'Booking type not yet supported (Dayreturn)'
-      );
+  /**
+   * Trips where there is no stop over 24 hours and the last flights destination airport
+   * is the same as the first flights origin ariport are considered dayreturn bookings.
+   * We divide these bookings into two, where we consider the destination to be the
+   * airport where the customer is scheduled to stay the longest.
+   */
+  public static List<Trip> divideDayreturn(List<Trip> dayreturnTrip) {
+    if (dayreturnTrip.size() != 1 || dayreturnTrip[0].sortedLegs.size() < 2) {
+      throw new InvalidException('Invalid dayreturn trip');
     }
 
-    return tripsToReturn;
+    Trip tripToDivide = dayreturnTrip[0];
+    Integer longestStopInMinutes = 0;
+    String longestStopAirport;
+    Datetime latestArrival;
+    for (Leg l : tripToDivide.sortedLegs) {
+      if (latestArrival != null) {
+        Integer stopInMinutes = Dateutils.getMinutesBetween(
+          latestArrival,
+          l.flight.scheduledDepartureTime
+        );
+        if (stopInMinutes > longestStopInMinutes) {
+          longestStopInMinutes = stopInMinutes;
+          longestStopAirport = l.flight.departureAirport;
+        }
+      }
+      latestArrival = l.flight.scheduledArrivalTime;
+    }
+
+    List<Leg> outBoundLegs = new List<Leg>();
+    List<Leg> inboundBoundLegs = new List<Leg>();
+    Boolean isOutBound = true;
+    for (Leg l : tripToDivide.sortedLegs) {
+      if (isOutBound) {
+        outBoundLegs.add(l);
+        if (l.flight.arrivalAirport == longestStopAirport) {
+          isOutBound = false;
+        }
+      } else {
+        inboundBoundLegs.add(l);
+      }
+    }
+
+    List<Trip> toReturn = new List<Trip>{
+      new Trip(outBoundLegs),
+      new Trip(inboundBoundLegs)
+    };
+    addAirports(toReturn);
+
+    return toReturn;
   }
 
   public Trip getOfferedRebooking(List<Segment> activeSegments) {
