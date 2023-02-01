@@ -37,19 +37,6 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     Unknown
   }
 
-  public class EDWBooking {
-    public Booking booking { get; private set; }
-    public Segments segments { get; private set; }
-    public Flights flights { get; private set; }
-    public Passengers passengers { get; private set; }
-    public EDWBooking(Booking b, Flights f, Segments s, Passengers p) {
-      this.booking = b;
-      this.segments = s;
-      this.flights = f;
-      this.passengers = p;
-    }
-  }
-
   @TestVisible
   private Booking() {
     this.underlyingSObject = new Booking__c();

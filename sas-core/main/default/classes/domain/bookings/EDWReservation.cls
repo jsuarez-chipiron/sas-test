@@ -15,14 +15,14 @@ public with sharing class EDWReservation extends Reservation {
       edwReservation.ticketInfoList.ticketInfo
     );
     this.booking = this.constructBookingFromSourceData(edwReservation);
-    this.passengers = this.constructPassengersFromSourceData(
-      edwReservation.passengerList.passenger
-    );
-    this.segments = this.constructSegmentsFromSourceData(
-      edwReservation.segmentList.segment
-    );
     this.flights = this.constructFlightsFromSourceData(
       edwReservation.irregularityList.irregularity
+    );
+    this.booking.passengers = this.constructPassengersFromSourceData(
+      edwReservation.passengerList.passenger
+    );
+    this.booking.segments = this.constructSegmentsFromSourceData(
+      edwReservation.segmentList.segment
     );
   }
 
@@ -44,7 +44,6 @@ public with sharing class EDWReservation extends Reservation {
       b.createdAtTravelOfficeId = bookingData.segmentList.segment[0].offCd;
       b.isStaffBooking = bookingData.segmentList.segment[0].staffPNR == 'Y';
     }
-    b.updateSObjectFields();
     return b;
   }
 
@@ -67,14 +66,14 @@ public with sharing class EDWReservation extends Reservation {
     return toReturn;
   }
 
-  public override Map<String, List<Segment>> constructSegmentsFromSourceData(
+  public override List<Segment> constructSegmentsFromSourceData(
     List<Object> sourceData
   ) {
     Map<String, List<Segment>> flightIdToSegments = new Map<String, List<Segment>>();
     Map<String, Map<String, List<SegmentEvent>>> segmentIdToEventsByPassenger = constructSegmentEventsFromSourceData(
       sourceData
     );
-    //List<Segment> toReturn = new List<Segment>();
+    List<Segment> toReturn = new List<Segment>();
     for (
       FetchEDWBookingResponse.Segment segment : (List<FetchEDWBookingResponse.Segment>) sourceData
     ) {
@@ -89,10 +88,7 @@ public with sharing class EDWReservation extends Reservation {
             segment.stnToCd
           }
         );
-        if (flightIdToSegments.get(segmentFlightId) == null) {
-          flightIdToSegments.put(segmentFlightId, new List<Segment>());
-        }
-        for (Passenger passenger : this.passengers) {
+        for (Passenger passenger : this.booking.passengers) {
           Segment s = new Segment(new Segment__c(Name = segmentFlightId));
           s.identifier = String.format(
             'ST{0}{1}',
@@ -101,6 +97,7 @@ public with sharing class EDWReservation extends Reservation {
           s.bookingClass = segment.oprBkgCl;
           s.segmentStatusCode = segment.segStatus;
           s.serviceClass = segment.oprSvcCl;
+          s.flight = this.flights.get(segmentFlightId);
           s.setEvents(
             segmentIdToEventsByPassenger.get(passenger.identifier)
               ?.get(segmentFlightId)
@@ -128,13 +125,11 @@ public with sharing class EDWReservation extends Reservation {
                   ticketForSegment.acceptanceSts
                 );
           }
-          s.updateSObjectFields();
-          //toReturn.add(s);
-          flightIdToSegments.get(segmentFlightId).add(s);
+          toReturn.add(s);
         }
       }
     }
-    return flightIdToSegments;
+    return toReturn;
   }
 
   private Map<String, Map<String, List<SegmentEvent>>> constructSegmentEventsFromSourceData(
@@ -155,7 +150,7 @@ public with sharing class EDWReservation extends Reservation {
           segment.stnToCd
         }
       );
-      for (Passenger passenger : this.passengers) {
+      for (Passenger passenger : this.booking.passengers) {
         if (segmentIdToEventsPerPassenger.get(passenger.identifier) == null) {
           segmentIdToEventsPerPassenger.put(
             passenger.identifier,
@@ -177,7 +172,6 @@ public with sharing class EDWReservation extends Reservation {
           ? null
           : Datetime.newInstance(segment.resUpdTms);
         se.updateNumber = segment.resUpdateNo;
-        se.updateSObjectFields();
         processedEvents.add(se);
         if (
           segmentIdToEventsPerPassenger.get(passenger.identifier)
@@ -212,7 +206,7 @@ public with sharing class EDWReservation extends Reservation {
     return segmentIdentifierToTicketInfo;
   }
 
-  public override List<Flight> constructFlightsFromSourceData(
+  public override Map<String, Flight> constructFlightsFromSourceData(
     List<Object> sourceData
   ) {
     Map<String, Flight> flightIdToRecord = new Map<String, Flight>();
@@ -306,13 +300,12 @@ public with sharing class EDWReservation extends Reservation {
       f.irregularities = flightIdToIrregularities.get(irrFlightId);
       flightIdToRecord.put(irrFlightId, f);
     }
-    return flightIdToRecord.values();
+    return flightIdToRecord;
   }
 
   public override Map<String, List<FlightIrregularity>> constructFlightIrregularitiesFromSourceData(
     List<Object> sourceData
   ) {
-    //List<FlightIrregularity> processedIrregularities = new List<FlightIrregularity>();
     Map<String, List<FlightIrregularity>> flightIdToIrregularities = new Map<String, List<FlightIrregularity>>();
     for (
       FetchEDWBookingResponse.Irregularity irr : (List<FetchEDWBookingResponse.Irregularity>) sourceData
@@ -344,8 +337,6 @@ public with sharing class EDWReservation extends Reservation {
       fi.nameC = '';
       fi.reason = irr.fltStatus == 'X' ? irr.cnlSpplInfo : irr.delayRsnText;
       fi.type = irr.status;
-      fi.updateSObjectFields();
-      //processedIrregularities.add(fi);
       if (flightIdToIrregularities.get(irrFlightId) == null) {
         flightIdToIrregularities.put(
           irrFlightId,

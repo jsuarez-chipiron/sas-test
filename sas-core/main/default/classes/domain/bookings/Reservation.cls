@@ -1,22 +1,10 @@
 public without sharing abstract class Reservation {
   public Booking booking { get; protected set; }
-  public List<Passenger> passengers { get; protected set; }
-  public Map<String, List<Segment>> segments { get; protected set; }
-  public List<Flight> flights { get; protected set; }
+  @TestVisible
+  protected Map<String, Flight> flights { get; protected set; }
 
   @SuppressWarnings('PMD.EmptyStatementBlock')
   protected Reservation() {
-  }
-  protected Reservation(
-    Booking b,
-    List<Passenger> p,
-    Map<String, List<Segment>> s,
-    List<Flight> f
-  ) {
-    this.booking = b;
-    this.passengers = p;
-    this.segments = s;
-    this.flights = f;
   }
 
   protected abstract Booking constructBookingFromSourceData(Object sourceData);
@@ -24,11 +12,11 @@ public without sharing abstract class Reservation {
     List<Object> sourceData
   );
 
-  protected abstract Map<String, List<Segment>> constructSegmentsFromSourceData(
+  protected abstract List<Segment> constructSegmentsFromSourceData(
     List<Object> sourceData
   );
 
-  protected abstract List<Flight> constructFlightsFromSourceData(
+  protected abstract Map<String, Flight> constructFlightsFromSourceData(
     List<Object> sourceData
   );
   protected abstract Map<String, List<FlightIrregularity>> constructFlightIrregularitiesFromSourceData(
@@ -42,6 +30,7 @@ public without sharing abstract class Reservation {
     toReturn.reservations = new List<Reservation>{ this };
     return toReturn;
   }
+
   /**
    * @param uowUpsert fflib UnitOfWork to handle the upserts of data
    * @param uowDelete fflib UnitOfWork to handle the deletion of data
@@ -59,7 +48,8 @@ public without sharing abstract class Reservation {
     List<SObject> toDelete = new List<SObject>();
     List<Flight> newFlights = new List<Flight>();
     List<Flight__c> existingFlights = FlightsSelector.newInstance()
-      .selectByTEDSId(this.segments.keySet());
+      .selectByTEDSId(this.flights.keySet());
+
     Map<String, Flight__c> existingFlightIdToRecord = new Map<String, Flight__c>();
     for (Flight__c fRecord : existingFlights) {
       existingFlightIdToRecord.put(fRecord.TEDS_Identifier__c, fRecord);
@@ -91,11 +81,11 @@ public without sharing abstract class Reservation {
       uowUpsert.registerNew(this.booking.underlyingSObject);
     }
 
-    for (Passenger p : this.passengers) {
+    for (Passenger p : this.booking.passengers) {
       p.updateSObjectFields();
       uowUpsert.registerNew(p.underlyingSObject);
     }
-    for (Flight f : this.flights) {
+    for (Flight f : this.flights.values()) {
       f.updateSObjectFields();
       if (existingFlightIdToRecord.get(f.tedsIdentifier) == null) {
         uowUpsert.registerNew(f.underlyingSObject);
@@ -112,11 +102,7 @@ public without sharing abstract class Reservation {
         uowUpsert.registerNew(fi.underlyingSObject);
       }
     }
-    List<Segment> allSegments = new List<Segment>();
-    for (List<Segment> segments : this.segments.values()) {
-      allSegments.addAll(segments);
-    }
-    for (Segment s : allSegments) {
+    for (Segment s : this.booking.segments) {
       s.updateSObjectFields();
       uowUpsert.registerNew(s.underlyingSObject);
       if (s.getEvents() == null) {
@@ -137,9 +123,7 @@ public without sharing abstract class Reservation {
    * @param uow THe UnitOfWork used for inserting/updating records
    */
   public Reservation resolveRelationships(fflib_ISObjectUnitOfWork uow) {
-    Map<String, Flight> flightIdToFlight = new Map<String, Flight>();
-
-    for (Passenger p : this.passengers) {
+    for (Passenger p : this.booking.passengers) {
       uow.registerRelationship(
         p.underlyingSObject,
         Passenger__c.Booking__c,
@@ -147,8 +131,7 @@ public without sharing abstract class Reservation {
       );
     }
 
-    for (Flight f : this.flights) {
-      flightIdToFlight.put(f.tedsIdentifier, f);
+    for (Flight f : this.flights.values()) {
       if (f.irregularities == null) {
         continue;
       }
@@ -160,21 +143,19 @@ public without sharing abstract class Reservation {
         );
       }
     }
-    List<Segment> allSegments = new List<Segment>();
-    for (List<Segment> segments : this.segments.values()) {
-      allSegments.addAll(segments);
-    }
-    for (Segment s : allSegments) {
+    for (Segment s : this.booking.segments) {
       uow.registerRelationship(
         s.underlyingSObject,
         Segment__c.Booking__c,
         this.booking.underlyingSObject
       );
-      uow.registerRelationship(
-        s.underlyingSObject,
-        Segment__c.Flight__c,
-        flightIdToFlight.get(s.name).underlyingSObject
-      );
+      if (this.flights.get(s.name) != null) {
+        uow.registerRelationship(
+          s.underlyingSObject,
+          Segment__c.Flight__c,
+          s.flight.underlyingSObject
+        );
+      }
       if (s.getEvents() == null) {
         continue;
       }

@@ -199,11 +199,11 @@ public with sharing class Bookings_IntegrationTest {
       '1 Booking should have been created'
     );
     System.assert(
-      edwBooking.flights.size() == 3,
+      edwBooking.flights.values().size() == 3,
       '3 Flights should have been created'
     );
     List<FlightIrregularity> allIrregularities = new List<FlightIrregularity>();
-    for (Flight f : edwBooking.flights) {
+    for (Flight f : edwBooking.flights.values()) {
       if (f.irregularities != null) {
         allIrregularities.addAll(f.irregularities);
       }
@@ -212,18 +212,15 @@ public with sharing class Bookings_IntegrationTest {
       allIrregularities.size() == 2,
       '3 Flight Irregularities should have been created'
     );
-    List<Segment> allSegments = new List<Segment>();
     List<SegmentEvent> allSegmentEvents = new List<SegmentEvent>();
-    for (List<Segment> segments : edwBooking.segments.values()) {
-      allSegments.addAll(segments);
-      for (Segment s : segments) {
-        if (s.getEvents() != null) {
-          allSegmentEvents.addAll(s.getEvents());
-        }
+    for (Segment s : edwBooking.booking.segments) {
+      if (s.getEvents() != null) {
+        allSegmentEvents.addAll(s.getEvents());
       }
     }
+
     System.assert(
-      allSegments.size() == 15,
+      edwBooking.booking.segments.size() == 15,
       '15 Segments should have been created'
     );
     System.assertEquals(
@@ -232,7 +229,7 @@ public with sharing class Bookings_IntegrationTest {
       '55 Segment Events should have been created'
     );
     System.assert(
-      edwBooking.passengers.size() == 5,
+      edwBooking.booking.passengers.size() == 5,
       '5 Passengers should have been created'
     );
   }
