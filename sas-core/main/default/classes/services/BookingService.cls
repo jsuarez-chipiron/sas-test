@@ -141,9 +141,16 @@ public without sharing class BookingService {
     if (data == null || data.reservationList.reservation.size() == 0) {
       return null;
     }
-    Bookings toReturn = Booking.createFromEDWData(
-      data.reservationList.reservation
+    Reservation newBooking = new EDWReservation(
+      data.reservationList.reservation[0]
     );
+    fflib_ISObjectUnitOfWork uowUpsert = SAS_Service_Application.UnitOfWork.newInstance();
+    fflib_ISObjectUnitOfWork uowDelete = SAS_Service_Application.UnitOfWork.newInstance();
+    newBooking.resolveRelationships(uowUpsert)
+      .registerUpsert(uowUpsert, uowDelete);
+    uowDelete.commitWork();
+    uowUpsert.commitWork();
+    Bookings toReturn = newBooking.createBookingsDomainInstance();
     return toReturn;
   }
 

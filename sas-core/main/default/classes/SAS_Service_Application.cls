@@ -97,6 +97,7 @@ public class SAS_Service_Application {
       Exchange_Rate__c.SObjectType,
       FeedItem.SObjectType,
       Flight__c.SObjectType,
+      FlightIrregularities__c.SObjectType,
       Airport__c.SObjectType,
       LIA_Claim__c.SObjectType,
       Claim_Expense__c.SObjectType,

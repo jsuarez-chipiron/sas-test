@@ -187,36 +187,85 @@ public with sharing class Bookings_IntegrationTest {
   public static void canInsertSingleEDWBooking() {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    List<Booking.EDWBooking> edwb = BookingService.fetchEDWBookingByBookingReference(
+    List<Reservation> edwb = BookingService.fetchEDWBookingByBookingReference(
         APIMMock.EDW_SINGLE_PNR
       )
-      .edwBookings;
+      .reservations;
     Test.stopTest();
     System.assert(edwb.size() != 0, 'Booking should have been created');
-    Booking.EDWBooking edwBooking = edwb[0];
+    EDWReservation edwBooking = (EDWReservation) edwb[0];
     System.assert(
       edwBooking.booking != null,
       '1 Booking should have been created'
     );
     System.assert(
-      edwBooking.flights.instanceRecords.size() == 3,
+      edwBooking.flights.size() == 3,
       '3 Flights should have been created'
     );
+    List<FlightIrregularity> allIrregularities = new List<FlightIrregularity>();
+    for (Flight f : edwBooking.flights) {
+      if (f.irregularities != null) {
+        allIrregularities.addAll(f.irregularities);
+      }
+    }
     System.assert(
-      edwBooking.flights.flightIrregularities.instanceRecords.size() == 2,
+      allIrregularities.size() == 2,
       '3 Flight Irregularities should have been created'
     );
+    List<Segment> allSegments = new List<Segment>();
+    List<SegmentEvent> allSegmentEvents = new List<SegmentEvent>();
+    for (List<Segment> segments : edwBooking.segments.values()) {
+      allSegments.addAll(segments);
+      for (Segment s : segments) {
+        if (s.getEvents() != null) {
+          allSegmentEvents.addAll(s.getEvents());
+        }
+      }
+    }
     System.assert(
-      edwBooking.segments.instanceRecords.size() == 15,
+      allSegments.size() == 15,
       '15 Segments should have been created'
     );
-    System.assert(
-      edwBooking.segments.segmentEvents.instanceRecords.size() == 55,
+    System.assertEquals(
+      55,
+      allSegmentEvents.size(),
       '55 Segment Events should have been created'
     );
     System.assert(
-      edwBooking.passengers.instanceRecords.size() == 5,
+      edwBooking.passengers.size() == 5,
       '5 Passengers should have been created'
+    );
+  }
+  @IsTest
+  public static void itIsPossibleToUpdateEDWBooking() {
+    Booking__c existingBooking = TestDataFactories.createBookings(
+      1,
+      APIMMock.EDW_SINGLE_PNR
+    )[0];
+    existingBooking.TEDS_Identifier__c = APIMMock.EDW_IDENTIFIER;
+    update existingBooking;
+
+    DateTime bookingLastModifiedBeforeFetch = [
+      SELECT LastModifiedDate
+      FROM Booking__c
+      WHERE Id = :existingBooking.Id
+    ][0]
+    .LastModifiedDate;
+    Test.setMock(HttpCalloutMock.class, new APIMMock());
+    Test.startTest();
+    BookingService.fetchEDWBookingByBookingReference(APIMMock.EDW_SINGLE_PNR);
+    Test.stopTest();
+    DateTime bookingLastModifiedAfterFetch = [
+      SELECT LastModifiedDate
+      FROM Booking__c
+      WHERE Id = :existingBooking.Id
+    ][0]
+    .LastModifiedDate;
+
+    System.assertNotEquals(
+      bookingLastModifiedBeforeFetch,
+      bookingLastModifiedAfterFetch,
+      'Booking should have been updated'
     );
   }
 }
