@@ -131,7 +131,9 @@ public without sharing class BookingService {
   }
 
   public static Bookings fetchEDWBookingByBookingReference(
-    String bookingReference
+    String bookingReference,
+    fflib_ISObjectUnitOfWork uowUpsert,
+    fflib_ISObjectUnitOfWork uowDelete
   ) {
     EDWIntegrationService.FetchEDWBookingsQuery query = new EDWIntegrationService.FetchEDWBookingsQuery();
     query.pnr = bookingReference;
@@ -144,13 +146,23 @@ public without sharing class BookingService {
     Reservation newBooking = new EDWReservation(
       data.reservationList.reservation[0]
     );
-    fflib_ISObjectUnitOfWork uowUpsert = SAS_Service_Application.UnitOfWork.newInstance();
-    fflib_ISObjectUnitOfWork uowDelete = SAS_Service_Application.UnitOfWork.newInstance();
     newBooking.resolveRelationships(uowUpsert)
       .registerUpsert(uowUpsert, uowDelete);
+    return newBooking.createBookingsDomainInstance();
+  }
+
+  public static Bookings fetchEDWBookingByBookingReference(
+    String bookingReference
+  ) {
+    fflib_ISObjectUnitOfWork uowUpsert = SAS_Service_Application.UnitOfWork.newInstance();
+    fflib_ISObjectUnitOfWork uowDelete = SAS_Service_Application.UnitOfWork.newInstance();
+    Bookings toReturn = fetchEDWBookingByBookingReference(
+      bookingReference,
+      uowUpsert,
+      uowDelete
+    );
     uowDelete.commitWork();
     uowUpsert.commitWork();
-    Bookings toReturn = newBooking.createBookingsDomainInstance();
     return toReturn;
   }
 
