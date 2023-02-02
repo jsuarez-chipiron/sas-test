@@ -259,9 +259,8 @@ public with sharing class Bookings_IntegrationTest {
     ][0]
     .LastModifiedDate;
 
-    System.assertNotEquals(
-      bookingLastModifiedBeforeFetch,
-      bookingLastModifiedAfterFetch,
+    System.assert(
+      bookingLastModifiedBeforeFetch < bookingLastModifiedAfterFetch,
       'Booking should have been updated'
     );
   }
