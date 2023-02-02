@@ -65,14 +65,16 @@ public without sharing abstract class Reservation {
       .selectByTEDSIdFull(new Set<String>{ this.booking.tedsIdentifier });
     Boolean shouldUpsertBooking = existingBookings.size() == 1;
     if (shouldUpsertBooking) {
-      toDelete.addAll(
-        PassengersSelector.newInstance()
-          .selectByBookingId(new Set<Id>{ existingBookings[0].Id })
-      );
-      toDelete.addAll(
-        SegmentsSelector.newInstance()
-          .selectByBookingId(new Set<Id>{ existingBookings[0].Id })
-      );
+      List<Passenger__c> passengersToDelete = new List<Passenger__c>();
+      List<Segment__c> segmentsToDelete = new List<Segment__c>();
+      for (Passenger__c existingPassenger : existingBookings[0].Passengers__r) {
+        passengersToDelete.add(existingPassenger);
+      }
+      for (Segment__c existingSegment : existingBookings[0].Segments__r) {
+        segmentsToDelete.add(existingSegment);
+      }
+      toDelete.addAll(passengersToDelete);
+      toDelete.addAll(segmentsToDelete);
       this.booking.updateSObjectFields();
       this.booking.underlyingSObject.id = existingBookings[0].Id;
       uowUpsert.registerDirty(this.booking.underlyingSObject);
