@@ -65,9 +65,10 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     );
   }
 
+  //Cutoff date for fetching eu261 claims for handling/data fetching is 23:00:00 the previous day
   public static final String CUTOFF_TIME = '23:00:00';
   public static final Datetime CUTOFF_DATETIME = Datetime.valueOfGmt(
-    System.today().format() +
+    System.today().addDays(-1).format() +
     ' ' +
     CUTOFF_TIME
   );
