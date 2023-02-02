@@ -332,6 +332,15 @@ public with sharing class EDWReservation extends Reservation {
         ? null
         : Datetime.newInstance(irr.cnlEventDts);
       fi.code = irr.fltStatus == 'X' ? irr.cnlRsnCd : irr.delayRsnCd;
+      FlightIrregularity.EU261Eligibility eligibleForEU261;
+      if (FlightIrregularity.codeToSASIsResponsible.get(fi.code) == null) {
+        eligibleForEU261 = FlightIrregularity.EU261Eligibility.Tentative;
+      } else if (FlightIrregularity.codeToSASIsResponsible.get(fi.code)) {
+        eligibleForEU261 = FlightIrregularity.EU261Eligibility.Yes;
+      } else {
+        eligibleForEU261 = FlightIrregularity.EU261Eligibility.No;
+      }
+      fi.eligibleForEU261 = eligibleForEU261;
       fi.description = irr.cnlSpplInfo;
       fi.durationMinutes = Decimal.valueOf(irr.duration);
       fi.nameC = '';
