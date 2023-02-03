@@ -52,26 +52,4 @@ public without sharing class Passenger extends AbstractSObjectWrapper {
       .replaceAll('-', '')
       .toLowerCase();
   }
-
-  /**
-   * Creates a new Passengers instance based on the response from EDW
-   * @param passengerData List of passengers from the parsed EDW data
-   */
-  public static Passengers createFromEDWData(
-    List<FetchEDWBookingResponse.Passenger> passengerData
-  ) {
-    List<Passenger__c> toReturn = new List<Passenger__c>();
-    for (FetchEDWBookingResponse.Passenger passenger : passengerData) {
-      Passenger p = new Passenger(new Passenger__c());
-      p.firstName = passenger.firstName;
-      p.lastName = passenger.surName;
-      p.euroBonusNumber = String.valueOf(passenger.ebNumber);
-      p.email = passenger.email;
-      p.phone = String.valueOf(passenger.mobile);
-      p.identifier = 'PT' + passenger.passengerTattoo;
-      p.updateSObjectFields();
-      toReturn.add(p.underlyingSObject);
-    }
-    return Passengers.newInstance(toReturn);
-  }
 }
