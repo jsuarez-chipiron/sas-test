@@ -234,22 +234,6 @@ public without sharing class CaseService {
     uow.registerDirty(parentCase);
   }
 
-  /**
-   * Finds all cases for a certain department that have been inactive for set amount of time and marks them as read-only
-   */
-  public static void setInactiveCasesReadOnly() {
-    fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    List<Case> allCases = new List<Case>();
-    for (String department : Cases.departmentToDaysInactive.keySet()) {
-      allCases.addAll(
-        CasesSelector.newInstance().selectInactiveByDepartment(department)
-      );
-    }
-    Cases cases = Cases.newInstance(allCases);
-    cases.markAsReadOnly(uow);
-    uow.commitWork();
-  }
-
   public class AssignPriorityAndRouteToQueueAsync implements Queueable, Database.AllowsCallouts {
     private Set<Id> caseIds;
     public AssignPriorityAndRouteToQueueAsync(Set<Id> caseIds) {
