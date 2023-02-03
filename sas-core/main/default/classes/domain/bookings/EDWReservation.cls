@@ -344,7 +344,13 @@ public with sharing class EDWReservation extends Reservation {
       fi.description = irr.cnlSpplInfo;
       fi.durationMinutes = Decimal.valueOf(irr.duration);
       fi.nameC = '';
-      fi.reason = irr.fltStatus == 'X' ? irr.cnlSpplInfo : irr.delayRsnText;
+      String reasonText = irr.fltStatus == 'X'
+        ? irr.cnlSpplInfo
+        : irr.delayRsnText;
+      if (reasonText?.length() > 2000) {
+        reasonText = reasonText.substring(0, 2000);
+      }
+      fi.reason = reasonText;
       fi.type = irr.status;
       if (flightIdToIrregularities.get(irrFlightId) == null) {
         flightIdToIrregularities.put(
