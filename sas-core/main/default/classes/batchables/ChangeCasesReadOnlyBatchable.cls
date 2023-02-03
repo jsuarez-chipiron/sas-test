@@ -22,7 +22,13 @@ public without sharing class ChangeCasesReadOnlyBatchable implements Database.Ba
       cases.markAsReadOnly(uow);
       uow.commitWork();
     } catch (Exception e) {
-      logs.add(new C_Log__c(Message__c = e.getMessage()));
+      C_Log__c l = C_Log.createLog(
+        'Error',
+        e.getMessage(),
+        e.getStackTraceString(),
+        'Case'
+      );
+      logs.add(l);
       throw e;
     }
   }
