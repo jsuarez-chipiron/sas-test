@@ -1061,7 +1061,7 @@ private class CaseFormTest {
           '    "passengerIrregularityReportNumber": "TEST13",' +
           //
           '    "expenses": [' +
-          '      { "expenseType": "food", "expenseCurrency": "SEK", "amount": 300, "receiptFileId": ["' +
+          '      { "expenseType": "food", "expenseCurrency": "SEK", "amount": 30000, "receiptFileId": ["' +
           receiptFile.Id +
           '"] }],' +
           '    "travelers": [' +
