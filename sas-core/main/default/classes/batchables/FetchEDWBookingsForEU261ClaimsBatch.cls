@@ -1,9 +1,10 @@
 public with sharing class FetchEDWBookingsForEU261ClaimsBatch implements Database.Batchable<LIA_Claim__c>, Database.Stateful, Database.AllowsCallouts {
   public Set<Id> successfulFetches;
-  public fflib_ISObjectUnitOfWork uow;
+  public fflib_ISObjectUnitOfWork uowUpsert;
   public Iterable<LIA_Claim__c> start(Database.BatchableContext jobId) {
     this.successfulFetches = new Set<Id>();
-    this.uow = SAS_Service_Application.UnitOfWork.newInstance();
+    this.uowUpsert = SAS_Service_Application.UnitOfWork.newInstance();
+    this.uowDelete = SAS_Service_Application.UnitOfWork.newInstance();
     return ClaimsSelector.newInstance().selectUnhandledClaimsToAutomate();
   }
 
@@ -13,11 +14,13 @@ public with sharing class FetchEDWBookingsForEU261ClaimsBatch implements Databas
   ) {
     for (LIA_Claim__c c : claimsToFetch) {
       Bookings b = BookingService.fetchEDWBookingByBookingReference(
-        c.Liability_PNR__c
+        c.Liability_PNR__c,
+        uowUpsert,
+        uowDelete
       );
       if (b == null) {
         c.EU261_Handling_Status__c = 'Unable to handle';
-        this.uow.registerDirty(c);
+        this.uowUpsert.registerDirty(c);
       } else {
         this.successfulFetches.add(c.Id);
       }
@@ -30,6 +33,7 @@ public with sharing class FetchEDWBookingsForEU261ClaimsBatch implements Databas
       new List<Object>{ successfulFetches.size(), successfulFetches.toString() }
     );
     C_Log.log(C_Log.Severity.Info, completionMessage, null, 'EDW', null);
-    this.uow.commitWork();
+    this.uowDelete.commitWork();
+    this.uowUpsert.commitWork();
   }
 }
