@@ -54,6 +54,13 @@
                 <stringValue>crimeprevention@sas.se</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>destinationEmail4</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>SK.OCC@sas.se</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Incident_Report</targetReference>
         </connector>
@@ -298,6 +305,12 @@
             <field>Destination_Email3__c</field>
             <value>
                 <elementReference>destinationEmail3</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Destination_Email4__c</field>
+            <value>
+                <elementReference>destinationEmail4</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1096,7 +1109,7 @@
     <textTemplates>
         <name>productionEmailsUsed</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;ul&gt;&lt;li&gt;{!destinationEmail}&lt;/li&gt;&lt;li&gt;{!destinationEmail2}&lt;/li&gt;&lt;li&gt;{!destinationEmail3}&lt;/li&gt;&lt;/ul&gt;</text>
+        <text>&lt;ul&gt;&lt;li&gt;{!destinationEmail}&lt;/li&gt;&lt;li&gt;{!destinationEmail2}&lt;/li&gt;&lt;li&gt;{!destinationEmail3}&lt;/li&gt;&lt;li&gt;{!destinationEmail4}&lt;/li&gt;&lt;/ul&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>sandboxEmailUsed</name>
@@ -1119,6 +1132,13 @@
     </variables>
     <variables>
         <name>destinationEmail3</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>destinationEmail4</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
