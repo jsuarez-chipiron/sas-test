@@ -1,6 +1,7 @@
 public with sharing class FetchEDWBookingsForEU261ClaimsBatch implements Database.Batchable<LIA_Claim__c>, Database.Stateful, Database.AllowsCallouts {
   public Set<Id> successfulFetches;
   public fflib_ISObjectUnitOfWork uowUpsert;
+  public fflib_ISObjectUnitOfWork uowDelete;
   public Iterable<LIA_Claim__c> start(Database.BatchableContext jobId) {
     this.successfulFetches = new Set<Id>();
     this.uowUpsert = SAS_Service_Application.UnitOfWork.newInstance();
@@ -15,8 +16,8 @@ public with sharing class FetchEDWBookingsForEU261ClaimsBatch implements Databas
     for (LIA_Claim__c c : claimsToFetch) {
       Bookings b = BookingService.fetchEDWBookingByBookingReference(
         c.Liability_PNR__c,
-        uowUpsert,
-        uowDelete
+        this.uowUpsert,
+        this.uowDelete
       );
       if (b == null) {
         c.EU261_Handling_Status__c = 'Unable to handle';
