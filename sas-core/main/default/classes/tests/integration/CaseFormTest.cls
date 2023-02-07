@@ -830,8 +830,8 @@ private class CaseFormTest {
       Account a = newAccounts[i];
       String EBLevel = EBLevels[i];
       String email = i + 'test@test.com';
-      String firstName = i + 'testFirst';
-      String lastName = i + 'testLast';
+      String firstName = 'testFirst';
+      String lastName = 'testLast';
       String phone = i + '0000000';
       String EBNumber = a.FCS_EBNumber__c;
       a.PersonEmail = email;
