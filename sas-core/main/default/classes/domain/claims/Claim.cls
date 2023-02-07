@@ -265,7 +265,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     FlightExperience,
     Other,
     PassengerIrregularities,
-    TravelExtras
+    TravelExtras,
+    CompensationCard
   }
 
   public enum Type {
@@ -336,7 +337,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     IneligibleForCompensation,
     PossiblyEligibleForCompensation,
     UnableToHandle,
-    ReimbursementOnly  
+    ReimbursementOnly
   }
 
   private static final Map<EU261HandlingStatus, String> EU261_STATUS_ENUM_TO_PICKLIST_VALUE = new Map<EU261HandlingStatus, String>{
@@ -404,7 +405,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     'Flight experience' => Category.FlightExperience,
     'Other' => Category.Other,
     'Passenger irregularities' => Category.PassengerIrregularities,
-    'Travel extras bought not rendered' => Category.TravelExtras
+    'Travel extras bought not rendered' => Category.TravelExtras,
+    'Compensation Card' => Category.CompensationCard
   };
 
   private static final Map<Category, String> CATEGORY_ENUM_TO_PICKLIST_VALUE = new Map<Category, String>{
@@ -416,7 +418,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     Category.FlightExperience => 'Flight experience',
     Category.Other => 'Other',
     Category.PassengerIrregularities => 'Passenger irregularities',
-    Category.TravelExtras => 'Travel extras bought not rendered'
+    Category.TravelExtras => 'Travel extras bought not rendered',
+    Category.CompensationCard => 'Compensation Card'
   };
 
   private static final Map<ContactType, String> CUSTOMER_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<ContactType, String>{

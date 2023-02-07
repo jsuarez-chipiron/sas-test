@@ -898,6 +898,7 @@ public without sharing class ClaimService {
     newClaim.preferredReimbursementMethod = r.compensationDetails.preferredReimbursementMethod;
     newClaim.recordType = Claim.RecordType.CompensationCard;
     newClaim.referenceNumber = r.compensationDetails.referenceNumber;
+    newClaim.category = Claim.Category.CompensationCard;
 
     newClaim.updateSObjectFields();
 
