@@ -141,7 +141,7 @@
                 <componentInstanceProperties>
                     <name>height</name>
                     <type>decorator</type>
-                    <value>980</value>
+                    <value>580</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>icon</name>
@@ -164,7 +164,7 @@
                     <value>740</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
-                <identifier>flowruntime_interview4</identifier>
+                <identifier>flowruntime_interview3</identifier>
             </componentInstance>
         </itemInstances>
         <name>utilityItems</name>
