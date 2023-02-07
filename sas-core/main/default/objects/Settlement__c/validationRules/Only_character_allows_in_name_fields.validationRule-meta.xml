@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Only_character_allows_in_name_fields</fullName>
-    <active>true</active>
-    <errorConditionFormula>OR(NOT(REGEX( Payee_First_Name__c   ,&quot;^[a-z  A-Z öÖåÅäÄøØ]*$&quot;)),
-NOT(REGEX( Payee_Last_Name__c   ,&quot;^[a-z  A-Z öÖåÅäÄøØ]*$&quot;)))</errorConditionFormula>
-    <errorMessage>Only characters allowed in name field</errorMessage>
-</ValidationRule>
