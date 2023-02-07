@@ -192,7 +192,7 @@ public without sharing class ClaimService {
       .selectById(new Set<Id>{ caseToCreate.Id })[0];
 
     claimToCreate.parentCaseId = insertedCase.Id;
-    claimToCreate.Name = insertedCase.CaseNumber;
+    claimToCreate.underlyingSObject.Name = insertedCase.CaseNumber;
     c.upsertToDB();
 
     List<Feature_Switch__mdt> automationSwitch = [
