@@ -372,6 +372,10 @@
         <apexClass>UsStateUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>ChangeCasesReadOnlyBatchable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>false</custom>
     <customPermissions>
         <enabled>true</enabled>
@@ -2799,6 +2803,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBS_ScheduledBatchRun__c.TimeSegment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Settlement__c.Date_of_Payment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
