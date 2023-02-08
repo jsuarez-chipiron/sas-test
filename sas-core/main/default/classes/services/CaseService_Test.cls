@@ -10,7 +10,8 @@ private class CaseService_Test {
     );
     insert c;
     Test.startTest();
-    CaseService.setInactiveCasesReadOnly();
+    ChangeCasesReadOnlyBatchable b = new ChangeCasesReadOnlyBatchable();
+    Database.executeBatch(b, 2000);
     Test.stopTest();
     Case caseAfterUpdate = [
       SELECT Id, IsReadOnly__c

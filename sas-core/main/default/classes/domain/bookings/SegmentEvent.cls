@@ -445,66 +445,6 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
     this.underlyingSObject.Update_Number__c = this.updateNumber;
   }
 
-  public static SegmentEvents createFromEDWData(
-    List<FetchEDWBookingResponse.Segment> segments,
-    List<Passenger__c> passengersInBooking
-  ) {
-    List<Segment_Event__c> processedEvents = new List<Segment_Event__c>();
-    Map<String, Map<String, List<Segment_Event__c>>> segmentIdToEventsPerPassenger = new Map<String, Map<String, List<Segment_Event__c>>>();
-    for (FetchEDWBookingResponse.Segment segment : segments) {
-      String segmentFlightId = String.format(
-        '{0}{1}-{2}-{3}-{4}',
-        new List<Object>{
-          segment.fltAirlCd.trim(),
-          segment.fltNm,
-          Datetime.newInstance(segment.depDte).format('yyyyMMdd'),
-          segment.stnFrCd,
-          segment.stnToCd
-        }
-      );
-      for (Passenger__c passenger : passengersInBooking) {
-        if (
-          segmentIdToEventsPerPassenger.get(passenger.Identifier__c) == null
-        ) {
-          segmentIdToEventsPerPassenger.put(
-            passenger.Identifier__c,
-            new Map<String, List<Segment_Event__c>>()
-          );
-        }
-        SegmentEvent se = new SegmentEvent(new Segment_Event__c());
-        se.operationType = SegmentEvent.getOperationTypeFromPicklistValue(
-          segment.recordOprType.replace('D', '').trim()
-        );
-        se.newStatus = SegmentEvent.getStatusCodeFromPicklistValue(
-          segment.actionCd?.trim()
-        );
-        se.previousStatus = SegmentEvent.getStatusCodeFromPicklistValue(
-          segment.prevActionCd?.trim()
-        );
-        se.officeCode = segment.officeUpdating;
-        se.updateDate = segment.resUpdTms == null
-          ? null
-          : Datetime.newInstance(segment.resUpdTms);
-        se.updateNumber = segment.resUpdateNo;
-        se.updateSObjectFields();
-        processedEvents.add(se.underlyingSObject);
-        if (
-          segmentIdToEventsPerPassenger.get(passenger.Identifier__c)
-            .get(segmentFlightId) == null
-        ) {
-          segmentIdToEventsPerPassenger.get(passenger.Identifier__c)
-            .put(segmentFlightId, new List<Segment_Event__c>());
-        }
-        segmentIdToEventsPerPassenger.get(passenger.Identifier__c)
-          .get(segmentFlightId)
-          .add(se.underlyingSObject);
-      }
-    }
-    SegmentEvents newSegmentEvents = SegmentEvents.newInstance(processedEvents);
-    newSegmentEvents.segmentIdToEventsPerPassenger = segmentIdToEventsPerPassenger;
-    return newSegmentEvents;
-  }
-
   public Boolean equals(Object other) {
     SegmentEvent otherSe = (SegmentEvent) other;
     if (

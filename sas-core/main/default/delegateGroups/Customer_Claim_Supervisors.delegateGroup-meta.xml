@@ -18,6 +18,7 @@
     <label>Customer Claim Supervisors</label>
     <loginAccess>false</loginAccess>
     <permissionSets>Can_Edit_flightIrregularities_EU261_eligibility</permissionSets>
+    <permissionSets>Manage Own List Views</permissionSets>
     <permissionSets>SAS Claim Firms Editor</permissionSets>
     <permissionSets>SAS Customer Claims</permissionSets>
     <permissionSets>SAS Liability</permissionSets>

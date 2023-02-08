@@ -3320,10 +3320,10 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-      <editable>true</editable>
-      <field>LIA_Claim__c.Purchase_Currency__c</field>
-      <readable>true</readable>
-  </fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Purchase_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Reason_for_Delay_Cancellation__c</field>
@@ -3472,6 +3472,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Threat_Incident__c.Department__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Destination_Email4__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

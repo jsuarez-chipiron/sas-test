@@ -54,6 +54,13 @@
                 <stringValue>crimeprevention@sas.se</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>destinationEmail4</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>SK.OCC@sas.se</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Incident_Report</targetReference>
         </connector>
@@ -298,6 +305,12 @@
             <field>Destination_Email3__c</field>
             <value>
                 <elementReference>destinationEmail3</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Destination_Email4__c</field>
+            <value>
+                <elementReference>destinationEmail4</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -570,7 +583,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>InstructionDetails</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;If you receive a threat of any kind towards SAS, please act accordingly:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;Call SAS Traffic Control and the Police with as many details as possible from the below report&lt;/strong&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;SAS Traffic control STOOP/OCC) +46 8 797 5114&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;The Police 112&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;After the call submit threat incident report by pressing &quot;Submit&quot;, it will be sent automatically to:&lt;/strong&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;SAS Duty Security Officer &lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;STOOP Duty Production Manager &lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Crime Prevention&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;If you receive a threat of any kind towards SAS, please act accordingly:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;Call SAS Traffic Control and the Police with as many details as possible from the below report&lt;/strong&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;SAS Traffic control STOOP/OCC) +46 8 797 5114&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;The Police 112&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;After the call submit threat incident report by pressing &quot;Submit&quot;, it will be sent automatically to:&lt;/strong&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;SAS Duty Security Officer &lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;STOOP Duty Production Manager &lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Crime Prevention&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;SAS OCC&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -1096,7 +1109,7 @@
     <textTemplates>
         <name>productionEmailsUsed</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;ul&gt;&lt;li&gt;{!destinationEmail}&lt;/li&gt;&lt;li&gt;{!destinationEmail2}&lt;/li&gt;&lt;li&gt;{!destinationEmail3}&lt;/li&gt;&lt;/ul&gt;</text>
+        <text>&lt;ul&gt;&lt;li&gt;{!destinationEmail}&lt;/li&gt;&lt;li&gt;{!destinationEmail2}&lt;/li&gt;&lt;li&gt;{!destinationEmail3}&lt;/li&gt;&lt;li&gt;{!destinationEmail4}&lt;/li&gt;&lt;/ul&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>sandboxEmailUsed</name>
@@ -1119,6 +1132,13 @@
     </variables>
     <variables>
         <name>destinationEmail3</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>destinationEmail4</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

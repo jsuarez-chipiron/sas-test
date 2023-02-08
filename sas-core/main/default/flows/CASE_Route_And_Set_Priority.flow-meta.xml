@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_Case_To_Update_List</name>
         <label>Add Case To Update List</label>
-        <locationX>1320</locationX>
+        <locationX>1188</locationX>
         <locationY>1502</locationY>
         <assignmentItems>
             <assignToReference>CasesToUpdate</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Route_To_Baggage</name>
         <label>Route To Baggage</label>
-        <locationX>1584</locationX>
+        <locationX>1320</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -36,7 +36,7 @@
     <assignments>
         <name>Route_To_Care_Expenses</name>
         <label>Route To Care Expenses</label>
-        <locationX>2112</locationX>
+        <locationX>1848</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -68,7 +68,7 @@
     <assignments>
         <name>Route_To_EU261</name>
         <label>Route To EU261</label>
-        <locationX>1320</locationX>
+        <locationX>1056</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -84,7 +84,7 @@
     <assignments>
         <name>Route_To_Flight_Disruptions</name>
         <label>Route To Flight Disruptions</label>
-        <locationX>1056</locationX>
+        <locationX>792</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -100,29 +100,13 @@
     <assignments>
         <name>Route_To_Flight_Disruptions_Expenses</name>
         <label>Route To Flight Disruptions Expenses</label>
-        <locationX>1848</locationX>
+        <locationX>1584</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Flight_Disruptions_Expenses_Queue.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Should_The_Case_Have_A_Special_Priority</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Route_To_High_Care_Costs</name>
-        <label>Route To High Care Costs</label>
-        <locationX>792</locationX>
-        <locationY>950</locationY>
-        <assignmentItems>
-            <assignToReference>Loop_Cases.OwnerId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>High_Care_Costs_Queue.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -148,7 +132,7 @@
     <assignments>
         <name>Route_To_Other</name>
         <label>Route To Other</label>
-        <locationX>2376</locationX>
+        <locationX>2112</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -276,7 +260,7 @@
     <assignments>
         <name>Set_high_priority</name>
         <label>Set priority to high</label>
-        <locationX>1320</locationX>
+        <locationX>1188</locationX>
         <locationY>1286</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.Priority</assignToReference>
@@ -324,7 +308,7 @@
     <assignments>
         <name>Set_Priority_To_High</name>
         <label>Set Priority To Medium</label>
-        <locationX>1056</locationX>
+        <locationX>924</locationX>
         <locationY>1286</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.Priority</assignToReference>
@@ -340,7 +324,7 @@
     <decisions>
         <name>Should_The_Case_Have_A_Special_Priority</name>
         <label>Should The Case Have A Special Priority?</label>
-        <locationX>1320</locationX>
+        <locationX>1188</locationX>
         <locationY>1166</locationY>
         <defaultConnector>
             <targetReference>Add_Case_To_Update_List</targetReference>
@@ -517,7 +501,7 @@
     <decisions>
         <name>What_Queue_Is_It_0</name>
         <label>What Queue Is It?</label>
-        <locationX>1320</locationX>
+        <locationX>1188</locationX>
         <locationY>830</locationY>
         <defaultConnector>
             <targetReference>Route_To_Other</targetReference>
@@ -552,21 +536,6 @@
                 <targetReference>Route_To_Compensation_Card</targetReference>
             </connector>
             <label>Compensation Card</label>
-        </rules>
-        <rules>
-            <name>High_Care_Costs_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_Cases.LIA_Claim__r.Submitted_Claim_Expenses_in_SEK__c</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>25000.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Route_To_High_Care_Costs</targetReference>
-            </connector>
-            <label>High Care Costs</label>
         </rules>
         <rules>
             <name>Flight_Disruptions_0</name>
@@ -650,7 +619,7 @@
         </rules>
         <rules>
             <name>Flight_Disruptions_Expenses_0</name>
-            <conditionLogic>(1 OR 2 OR 3 ) AND 4 AND 5</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3 ) AND 4</conditionLogic>
             <conditions>
                 <leftValueReference>Loop_Cases.LIA_Claim__r.Customer_Claim_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -677,13 +646,6 @@
                 <operator>GreaterThan</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Loop_Cases.LIA_Claim__r.Submitted_Claim_Expenses_in_SEK__c</leftValueReference>
-                <operator>LessThanOrEqualTo</operator>
-                <rightValue>
-                    <numberValue>25000.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>

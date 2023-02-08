@@ -13,6 +13,10 @@
             <type>email</type>
         </recipients>
         <recipients>
+            <field>Destination_Email4__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
             <field>Destination_Email__c</field>
             <type>email</type>
         </recipients>

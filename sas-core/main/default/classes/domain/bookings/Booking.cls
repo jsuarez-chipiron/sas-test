@@ -37,19 +37,6 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     Unknown
   }
 
-  public class EDWBooking {
-    public Booking booking { get; private set; }
-    public Segments segments { get; private set; }
-    public Flights flights { get; private set; }
-    public Passengers passengers { get; private set; }
-    public EDWBooking(Booking b, Flights f, Segments s, Passengers p) {
-      this.booking = b;
-      this.segments = s;
-      this.flights = f;
-      this.passengers = p;
-    }
-  }
-
   @TestVisible
   private Booking() {
     this.underlyingSObject = new Booking__c();
@@ -444,54 +431,5 @@ public without sharing class Booking extends AbstractSObjectWrapper {
     }
 
     return activeSegments;
-  }
-
-  public static Bookings createFromEDWData(
-    List<FetchEDWBookingResponse.Reservation> reservations
-  ) {
-    List<EDWBooking> edwBookings = new List<EDWBooking>();
-    List<Booking__c> createdBookings = new List<Booking__c>();
-    for (FetchEDWBookingResponse.Reservation reservation : reservations) {
-      String bookingIdentifier = String.format(
-        '{0}-{1}',
-        new List<Object>{
-          reservation.reservationNumber,
-          Datetime.newInstance(reservation.createdDate).format('yyyyMMdd')
-        }
-      );
-      //create booking
-      Booking b = new Booking(new Booking__c(Name = bookingIdentifier));
-      b.bookingReference = reservation.reservationNumber;
-      b.tedsIdentifier = bookingIdentifier;
-      //TODO Ask SEIP to fix the Json response to have these separately
-      if (reservation.segmentList?.segment.size() > 0) {
-        b.createdAtTravelOfficeId = reservation.segmentList.segment[0].offCd;
-        b.isStaffBooking = reservation.segmentList.segment[0].staffPNR == 'Y';
-      }
-      b.updateSObjectFields();
-      //create flights
-      Flights createdFlights = Flight.createFromEDWData(
-        reservation.irregularityList.irregularity
-      );
-      //create passengers
-      Passengers createdPassengers = Passenger.createFromEDWData(
-        reservation.passengerList.passenger
-      );
-      Segments createdSegments = Segment.createFromEDWData(
-        reservation.segmentList.segment,
-        createdPassengers.instanceRecords
-      );
-      createdSegments.addEDWTicketInformation(
-        reservation.ticketInfoList.ticketInfo
-      );
-      createdBookings.add(b.underlyingSObject);
-      edwBookings.add(
-        new EDWBooking(b, createdFlights, createdSegments, createdPassengers)
-      );
-    }
-    Bookings bookingsInstance = Bookings.newInstance(createdBookings);
-    bookingsInstance.edwBookings = edwBookings;
-    bookingsInstance.upsertEDWDataToDB();
-    return bookingsInstance;
   }
 }

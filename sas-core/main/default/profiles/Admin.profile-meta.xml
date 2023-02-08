@@ -372,6 +372,10 @@
         <apexClass>UsStateUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>ChangeCasesReadOnlyBatchable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>false</custom>
     <customPermissions>
         <enabled>true</enabled>
@@ -2332,9 +2336,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-      <editable>true</editable>
-      <field>LIA_Claim__c.Purchase_Currency__c</field>
-      <readable>true</readable>
+        <editable>true</editable>
+        <field>LIA_Claim__c.Purchase_Currency__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -2802,6 +2806,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Settlement__c.Date_of_Payment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SocialPost.FCS_AnswerTime__c</field>
         <readable>true</readable>
@@ -3069,6 +3078,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Threat_Incident__c.Department__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Threat_Incident__c.Destination_Email4__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

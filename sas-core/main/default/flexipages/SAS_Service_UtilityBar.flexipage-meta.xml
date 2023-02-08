@@ -223,7 +223,7 @@
                 <componentInstanceProperties>
                     <name>height</name>
                     <type>decorator</type>
-                    <value>980</value>
+                    <value>580</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>icon</name>

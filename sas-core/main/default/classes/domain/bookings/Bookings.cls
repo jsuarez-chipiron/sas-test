@@ -17,9 +17,7 @@ public without sharing class Bookings extends ApplicationDomain {
   // fullRecords exist only when an instance has been created from TEDS
   // response data.
   public List<FullBookingData> fullRecords;
-  // edwBookings exist only when an instance has been created from EDW
-  // response data.
-  public List<Booking.EDWBooking> edwBookings;
+  public List<Reservation> reservations;
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> records) {
@@ -204,33 +202,6 @@ public without sharing class Bookings extends ApplicationDomain {
     newBookingObject.fullRecords = toReturn;
 
     return newBookingObject;
-  }
-
-  public Bookings upsertEDWDataToDB() {
-    for (Booking.EDWBooking edwb : edwBookings) {
-      upsert edwb.booking.underlyingSObject TEDS_Identifier__c;
-      edwb.flights.upsertToDB();
-      for (Passenger__c p : edwb.passengers.instanceRecords) {
-        p.Booking__c = edwb.booking.underlyingSObject.Id;
-      }
-      List<Passenger__c> existingPassengers = PassengersSelector.newInstance()
-        .selectByBookingId(new Set<Id>{ edwb.booking.underlyingSObject.Id });
-      List<Segment__c> existingSegments = SegmentsSelector.newInstance()
-        .selectByBookingId(new Set<Id>{ edwb.booking.underlyingSObject.Id });
-      List<SObject> toDelete = new List<SObject>();
-      if (existingPassengers.size() > 0) {
-        toDelete.addAll(existingPassengers);
-      }
-      if (existingSegments.size() > 0) {
-        toDelete.addAll(existingSegments);
-      }
-      delete toDelete;
-      insert edwb.passengers.instanceRecords;
-      edwb.segments.addBookingReference(edwb.booking.underlyingSObject.Id)
-        .addFlightReferences(edwb.flights.instanceRecords)
-        .upsertToDB(edwb.passengers.instanceRecords);
-    }
-    return this;
   }
 
   /**
