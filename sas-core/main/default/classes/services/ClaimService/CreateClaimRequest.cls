@@ -74,7 +74,7 @@ public without sharing class CreateClaimRequest {
   };
 
   private static final Map<String, Claim.Type> JSON_TO_CLAIM_TYPE = new Map<String, Claim.Type>{
-    'baggage-damaged' => Claim.Type.BaggageDamaged,
+    'damaged-baggage' => Claim.Type.BaggageDamaged,
     'baggage-delayed' => Claim.Type.BaggageDelayedLost,
     'booking-error' => Claim.Type.BookingError,
     'cabin-environment' => Claim.Type.CabinEnvironment,
@@ -91,12 +91,14 @@ public without sharing class CreateClaimRequest {
     'gate-issues' => Claim.Type.GateIssues,
     'in-flight-meal' => Claim.Type.InFlightMeal,
     'in-flight-service' => Claim.Type.InFlightService,
+    'less-than-21-days' => Claim.Type.LessThan21Days,
     'lounge' => Claim.Type.Lounge,
     'meals-drinks' => Claim.Type.MealsDrinks,
     'missed-connection' => Claim.Type.MissedConnection,
     'missed-connection-compensation' => Claim.Type.MissedConnectionCompensation,
     'missed-connection-expenses' => Claim.Type.MissedConnectionExpenses,
-    'missing-items' => Claim.Type.MissingItemsFromBaggage,
+    'items-missing' => Claim.Type.MissingItemsFromBaggage,
+    'more-than-21-days' => Claim.Type.MoreThan21Days,
     'personal-injury' => Claim.Type.PersonalInjury,
     'prepaid-seat' => Claim.Type.PrepaidSeat,
     'special-assistance' => Claim.Type.SpecialAssistance,
