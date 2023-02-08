@@ -11,6 +11,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>CHF</fullName>
+                <default>false</default>
+                <label>CHF</label>
+            </value>
+            <value>
                 <fullName>EUR</fullName>
                 <default>true</default>
                 <label>EUR</label>
