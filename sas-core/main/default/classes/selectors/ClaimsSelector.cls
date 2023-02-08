@@ -74,8 +74,9 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
   );
   public static final String UNHANDLED_EU261_STATUS = 'Unhandled';
   public static final Set<String> EU261_CLAIM_TYPES = new Set<String>{
-    'Flight cancellation',
-    'Flight cancellation - compensation'
+    'Flight cancellation - compensation',
+    'Flight delay - compensation',
+    'Missed connection - compensation'
   };
 
   public List<LIA_Claim__c> selectById(Set<Id> ids) {
