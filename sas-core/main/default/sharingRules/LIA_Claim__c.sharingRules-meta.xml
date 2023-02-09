@@ -39,7 +39,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>CustomerClaim</value>
+            <value>CustomerClaim,CompensationCard</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
