@@ -19,14 +19,36 @@
 -->
     <types>
 
-        <members>IRR_Icoupon_Station_Manager__mdt.ARN</members>
+        <members>IRR_Icoupon_Voucher__mdt.GVA_Delay_2_3_Y</members>
+        <members>IRR_Icoupon_Voucher__mdt.BLQ_Delay_3_4_Y</members>
+        <members>IRR_Icoupon_Voucher__mdt.GVA_Delay_2_3_C</members>
+        <members>IRR_Icoupon_Voucher__mdt.ZRH_Delay_2_3_C </members>
+        <members>IRR_Icoupon_Voucher__mdt.ZRH_Delay_2_3_Y</members>
+        <members>IRR_Icoupon_Voucher__mdt.ZRH_Delay_Over_4_M</members>
+        <members>IRR_Icoupon_Voucher__mdt.BLQ_Delay_2_3_C</members>
+        <members>IRR_Icoupon_Voucher__mdt.BLQ_Delay_3_4_C</members>
+        <members>IRR_Icoupon_Voucher__mdt.BLQ_Delay_Over_4_C</members>
+        <members>IRR_Icoupon_Voucher__mdt.GVA_Delay_Over_4_C</members>
+        <members>IRR_Icoupon_Voucher__mdt.ZRH_Delay_Over_4_C</members>
+        <members>IRR_Icoupon_Voucher__mdt.BLQ_Delay_Over_4_Y</members>
+        <members>IRR_Icoupon_Voucher__mdt.GVA_Delay_3_4_C</members>
+        <members>IRR_Icoupon_Voucher__mdt.ZRH_Delay_3_4_Y</members>
+        <members>IRR_Icoupon_Voucher__mdt.GVA_Delay_2_3_M</members>
+        <members>IRR_Icoupon_Voucher__mdt.BLQ_Delay_Over_4_M</members>
+        <members>IRR_Icoupon_Voucher__mdt.BLQ_Delay_2_3_M</members>
+        <members>IRR_Icoupon_Voucher__mdt.ZRH_Delay_Over_4_Y</members>
+        <members>IRR_Icoupon_Voucher__mdt.GVA_Delay_3_4_Y</members>
+        <members>IRR_Icoupon_Voucher__mdt.ZRH_Delay_2_3_M</members>
+        <members>IRR_Icoupon_Voucher__mdt.ZRH_Delay_3_4_C</members>
+        <members>IRR_Icoupon_Voucher__mdt.BLQ_Delay_2_3_Y</members>
+        <members>IRR_Icoupon_Voucher__mdt.ZRH_Delay_3_4_M</members>
+        <members>IRR_Icoupon_Voucher__mdt.GVA_Delay_3_4_M</members>
+        <members>IRR_Icoupon_Voucher__mdt.BLQ_Delay_3_4_M</members>
+        <members>IRR_Icoupon_Voucher__mdt.GVA_Delay_Over_4_Y</members>
+        <members>IRR_Icoupon_Voucher__mdt.GVA_Delay_Over_4_M</members>
+
 
         <name>CustomMetadata</name>
 
-    </types>
-
-    <types>
-        <members>IRR_Icoupon_Station_Manger__mdt</members>
-        <name>CustomObject</name>
     </types>
 </Package>
