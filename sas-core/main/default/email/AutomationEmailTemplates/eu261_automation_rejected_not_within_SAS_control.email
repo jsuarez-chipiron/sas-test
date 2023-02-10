@@ -1,0 +1,18 @@
+<html title="Email Preview" lang="en-US">
+  <head>
+    <title></title>
+  </head>
+  <body style="height: 100px; min-height: auto; margin: 0px; direction: ltr">
+    |||flightNumber||| from |||departureAirport||| to |||arrivalAirport||| was
+    cancelled because of |||cancellationReason||| on |||flightDate|||.<br />
+    <br />
+    This is an event outside of SAS control, which exempts the airline from its
+    obligation to pay flate rate compensation according to article 7 in EU
+    regulation 261/2004.<br />
+    <br />
+    If you have had any extra expenses during the delay time (hotel,
+    transportation, food, phone calls), please use our form to upload your
+    receipts (Insert link). &nbsp;<br />
+    &nbsp;
+  </body>
+</html>

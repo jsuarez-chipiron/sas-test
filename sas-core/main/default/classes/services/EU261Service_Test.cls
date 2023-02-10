@@ -28,7 +28,14 @@ private class EU261Service_Test {
     TestDataFactories.insertEmailTemplates(
       new Set<String>{
         EU261Service.AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME,
-        EU261Service.AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME
+        EU261Service.AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME,
+        EU261Service.AUTOMATION_REJECTED_NOT_OUTSIDE_TIMEFRAME_EMAIL_TEMPLATE_NAME,
+        EU261Service.AUTOMATION_REJECTED_NOT_FILED_ON_TIME_EMAIL_TEMPLATE_NAME,
+        EU261Service.AUTOMATION_REJECTED_CANCELLED_WELL_IN_TIME_EMAIL_TEMPLATE_NAME,
+        EU261Service.AUTOMATION_REJECTED_CUSTOMER_CANCELLED_EMAIL_TEMPLATE_NAME,
+        EU261Service.AUTOMATION_REJECTED_NOT_WITHIN_SAS_CONTROL_EMAIL_TEMPLATE_NAME,
+        EU261Service.AUTOMATION_APPROVED_HALVED_LATE_ARRIVAL_EMAIL_TEMPLATE_NAME,
+        EU261Service.AUTOMATION_APPROVED_HALVED_EARLY_DEPARTURE_EMAIL_TEMPLATE_NAME
       }
     );
 
@@ -559,7 +566,18 @@ private class EU261Service_Test {
     createCaseToBookings(allClaims);
     Cases.bypassTrigger = false;
 
-    Result res = runProcessingFor(testPnrs);
+    // TODO: test emails
+    EU261Service.Config config = new EU261Service.Config();
+    config.enabledCancellationAutomation = true;
+    config.enabledRejections = true;
+    config.enabledSemiAutomation = true;
+    config.enabledSettlements = true;
+    config.expenseLimitFood = new Money(100, Money.CurrencyCode.SEK);
+    config.expenseLimitTransportation = new Money(1000, Money.CurrencyCode.SEK);
+    config.expenseLimitTotal = new Money(10000, Money.CurrencyCode.SEK);
+    config.percentageRequiringManualApproval = 0;
+
+    Result res = runProcessingFor(testPnrs, config);
 
     System.assertEquals(
       0,
@@ -1682,6 +1700,76 @@ private class EU261Service_Test {
       '55000',
       EU261Service.getSettlementAmount(s3),
       'Should always round down.'
+    );
+  }
+
+  @IsTest
+  static void rejectionEmailGetsCreatedCorrectly() {
+    EU261Claim claim0 = EU261Claim_Test.getClaimWhereCustomerCancelledTheFlight();
+    EU261Claim claim1 = EU261Claim_Test.getClaimWhereFlightWasCancelled14DaysOrMoreBeforeDeparture();
+    EU261Claim claim2 = EU261Claim_Test.getClaimWhereCustomerClaimedTooLate();
+    EU261Claim claim3 = EU261Claim_Test.getClaimWithCancellationsOutsideSASControl();
+    EU261Claim claim4 = EU261Claim_Test.getClaimWithTwoFlightsAndOneCancellationButOnTime();
+
+    List<Case> dummyCases = new List<Case>{
+      new Case(),
+      new Case(),
+      new Case(),
+      new Case(),
+      new Case()
+    };
+
+    insert dummyCases;
+
+    List<EU261Claim> claimsToReject = new List<EU261Claim>{
+      claim0,
+      claim1,
+      claim2,
+      claim3,
+      claim4
+    };
+
+    EU261Service theEU261Service = EU261Service.newInstance();
+
+    // For the service to attach the email to
+    for (Integer i = 0; i < dummyCases.size(); i++) {
+      Case c = dummyCases[i];
+      claimsToReject[i].claimObj.parentCaseId = c.Id;
+      claimsToReject[i].claimObj.Id = c.Id; // Hack
+      theEU261Service.parentCasesById.put(c.Id, c);
+    }
+
+    for (EU261Claim c : claimsToReject) {
+      c.evaluate();
+    }
+
+    Map<Id, Messaging.SingleEmailMessage> idToEmail;
+    try {
+      idToEmail = theEU261Service.createRejectionEmails(claimsToReject);
+    } catch (System.NullPointerException e) {
+      System.assert(
+        false,
+        'Could not create rejection emails (NullPointerException)'
+      );
+    } catch (EU261Service.EmailTemplateException e) {
+      System.assert(
+        false,
+        'Could not create rejection emails (EmailTemplateException)'
+      );
+    }
+
+    for (Messaging.SingleEmailMessage emailMessage : idToEmail.values()) {
+      System.debug(emailMessage.getHtmlBody());
+      System.assert(
+        emailMessage.getHtmlBody().length() > 250,
+        'An email was not correctly created'
+      ); // Make sure there is a real email
+    }
+
+    System.assertEquals(
+      5,
+      idToEmail.size(),
+      'Was not able to create all emails'
     );
   }
 }

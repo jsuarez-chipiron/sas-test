@@ -2,6 +2,33 @@
  * Utility class which handles dates
  */
 public without sharing class DateUtils {
+  private static final Map<String, Integer> COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS = new Map<String, Integer>{
+    'BE' => 12,
+    'DK' => 3 * 12,
+    'FI' => 3 * 12,
+    'FR' => 5 * 12,
+    'DE' => 3 * 12, // TODO: Change to 2 years + time until end of year 3 (e.g. 25 months 2022-12 -> 2024-12-31)
+    'IT' => 2 * 12,
+    'NL' => 5 * 12,
+    'NO' => 3 * 12,
+    'PL' => 12,
+    'ES' => 5 * 12,
+    'SE' => 2,
+    'UK' => 6 * 12,
+    'IE' => 6 * 12,
+    'LV' => 6,
+    'default' => 6 * 12
+  };
+
+  // TODO: maybe set default here if the country does not have a specified code.
+  public static Integer getClaimTimeLimitInMonths(String countryCode) {
+    Integer monthTimeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
+      countryCode
+    );
+
+    return monthTimeLimit;
+  }
+
   public class DurationTooLongException extends Exception {
   }
 

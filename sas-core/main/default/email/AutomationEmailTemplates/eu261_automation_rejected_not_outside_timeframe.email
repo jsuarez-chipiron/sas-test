@@ -1,0 +1,25 @@
+<html title="Email Preview" lang="en-US">
+  <head>
+    <title></title>
+  </head>
+  <body style="height: 100px; min-height: auto; margin: 0px; direction: ltr">
+    |||flightNumber||| from |||departureAirport||| to |||arrivalAirport||| was
+    cancelled on |||cancellationDate|||.<br />
+    <br />
+    |||flightPlan|||<br />
+    <br />
+    <br />
+    Right to compensation?<br />
+    <br />
+    No<br />
+    <br />
+    The offered rebooking is within the timeframe stipulated in article 5.1 c)
+    iii) in EU Regulation 261/2004.<br />
+    <br />
+    As you were advised of the cancellation
+    |||daysBetweenInformedAndDeparture||| days before the departure of the
+    flight. The timeframe permitted by the EU261 regulation is
+    |||timeFrame|||.<br />
+    &nbsp;
+  </body>
+</html>

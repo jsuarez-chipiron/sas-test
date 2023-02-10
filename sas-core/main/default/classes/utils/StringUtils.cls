@@ -61,4 +61,26 @@ public without sharing class StringUtils {
     String day = String.valueOf(d.day()).leftPad(2, '0');
     return year + month + day;
   }
+
+  public static String dateToReadable(Date theDate) {
+    if (theDate == null) {
+      return '-';
+    }
+    String toReturn =
+      String.valueOf(theDate.year()) +
+      '-' +
+      String.valueOf(theDate.month()) +
+      '-' +
+      String.valueOf(theDate.day());
+    return toReturn;
+  }
+
+  public static String dateTimeToReadable(Datetime theDateTime) {
+    if (theDateTime == null) {
+      return '-';
+    }
+    String theDate = theDateTime.format('yyyy-MM-dd');
+    String theTime = theDateTime.format('HH:mm');
+    return theDate + ' at ' + theTime;
+  }
 }

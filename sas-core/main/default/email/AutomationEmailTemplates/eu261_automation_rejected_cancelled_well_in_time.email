@@ -1,0 +1,18 @@
+<html title="Email Preview" lang="en-US">
+  <head>
+    <title></title>
+  </head>
+  <body style="height: 100px; min-height: auto; margin: 0px; direction: ltr">
+    |||flightNumber||| from |||departureAirport||| to |||arrivalAirport||| was
+    cancelled on |||cancellationDate|||.<br />
+    <br />
+    Information of the cancelled flight was sent out 14 days, or more, in
+    advance.<br />
+    In accordance with the EU261 regulation, the passenger(s) is/are therefore
+    not eligible for compensation.<br />
+    <br />
+    Original time of departure: |||departureTime|||<br />
+    <br />
+    Time of cancellation Sent out: |||cancellationTime|||
+  </body>
+</html>
