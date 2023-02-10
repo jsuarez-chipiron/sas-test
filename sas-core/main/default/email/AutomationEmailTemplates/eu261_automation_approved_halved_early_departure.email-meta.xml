@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>eu261_automation_approved_halved_early_departure</name>
+    <style>none</style>
+    <subject>eu261_automation_approved_halved_early_departure</subject>
+    <type>custom</type>
+    <uiType>SFX</uiType>
+</EmailTemplate>

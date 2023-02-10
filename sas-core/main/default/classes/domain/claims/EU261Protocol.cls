@@ -441,7 +441,7 @@ public without sharing class EU261Protocol {
 
     List<String> totalFlightPlan = new List<String>();
     for (Trip.Leg l : t.sortedLegs) {
-      String flightPlan = '';
+      String flightPlan = 'Flight plan:\n';
       String actualDeparture = '';
       String actualArrival = '';
       Flight f = l.flight;

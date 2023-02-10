@@ -105,6 +105,9 @@ private class EU261Claim_Test {
     c.customers = new List<ClaimCustomer>{ cc };
     c.flightNumber = 'SK0001';
     c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
+    c.preferredCompensationMethod = Claim.CompensationType.Monetary;
+    c.preferredCurrency = Money.CurrencyCode.EUR;
+    c.bankCountry = 'Sweden';
     Booking b = TestBookingFactory.createValidForClaim(c);
     b.type = Booking.Type.OneWay;
 
@@ -350,6 +353,26 @@ private class EU261Claim_Test {
   }
 
   @TestVisible
+  private static EU261Claim getLongDistanceHalvedCompensationClaim() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    Flight f1 = bc.b.segments[0].flight;
+    Flight f2 = bc.b.segments[1].flight;
+    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
+    f1.arrivalAirport = 'LAX';
+    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
+    f2.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
+    f2.arrivalAirport = 'LAX';
+    f2.tedsIdentifier = f2.tedsIdentifier.substringBefore('HEL') + 'LAX';
+
+    return new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+  }
+
+  @TestVisible
   private static EU261Claim getClaimWithTwoFlightsAndOneCancellationButOnTime() {
     Datetime newDeparture = departure.addHours(4);
     Datetime nextFlightDeparture = departure.addHours(7);
@@ -422,6 +445,17 @@ private class EU261Claim_Test {
     f.arrivalDelayedMinutes = 60;
     f.actualArrivalTime = bc.b.segments[0]
       .flight.scheduledArrivalTime.addMinutes(60);
+
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
+  }
+
+  @TestVisible
+  private static EU261Claim getLongDistanceClaim() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    Flight f1 = bc.b.segments[0].flight;
+    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
+    f1.arrivalAirport = 'LAX';
+    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
 
     return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
   }
@@ -1150,22 +1184,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void minimalClaimOutsideTheEUShouldBeEvaluatedCorrectly() {
-    BookingClaim bc = getDefaultCancellationBookingClaim();
-    Flight f1 = bc.b.segments[0].flight;
-    Flight f2 = bc.b.segments[1].flight;
-    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
-    f1.arrivalAirport = 'LAX';
-    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
-    f2.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
-    f2.arrivalAirport = 'LAX';
-    f2.tedsIdentifier = f2.tedsIdentifier.substringBefore('HEL') + 'LAX';
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getLongDistanceHalvedCompensationClaim();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -2099,18 +2118,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void longDistanceDelayShouldAward600EUR() {
-    BookingClaim bc = getDefaultDelayBookingClaim();
-    Flight f1 = bc.b.segments[0].flight;
-    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
-    f1.arrivalAirport = 'LAX';
-    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getLongDistanceClaim();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 

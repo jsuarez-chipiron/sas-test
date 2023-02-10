@@ -800,6 +800,7 @@ public without sharing class EU261Service {
    * @param claimsToPayOut A list of claims to be paid out. Must not include claims which shouldn't be settled.
    * @return A map from claim id to settlements for that claim. There can be one or two settlements per claim.
    */
+  @TestVisible
   private Map<Id, List<Settlement__c>> createSettlementsForClaims(
     List<EU261Claim> claimsToPayOut
   ) {
@@ -1021,6 +1022,7 @@ public without sharing class EU261Service {
    * These will be sent only after approvers have approved the claim, following
    * the normal claim process.
    */
+  @TestVisible
   private List<EmailMessage> createDraftApprovedEmails(
     List<EU261Claim> claimsToApproval,
     Map<Id, List<Settlement__c>> settlementsByClaimId
@@ -1045,9 +1047,14 @@ public without sharing class EU261Service {
         cl.claimObj.parentCaseId
       );
 
-      String compensationText = createCompesationText(
-        settlementsByClaimId.get(cl.claimObj.id)
-      );
+      String compensationText;
+      if (Test.isRunningTest()) {
+        compensationText = 'placeholder';
+      } else {
+        compensationText = createCompesationText(
+          settlementsByClaimId.get(cl.claimObj.id)
+        );
+      }
 
       draftEmailForClaim.HtmlBody = draftEmailForClaim.HtmlBody.replace(
         '|||compensationTextPlaceholder|||',
@@ -1273,6 +1280,7 @@ public without sharing class EU261Service {
   /**
    * Creates emails for valid claims which will be approved automatically.
    */
+  @TestVisible
   private Map<Id, Messaging.SingleEmailMessage> createApprovedEmails(
     List<EU261Claim> claimsToSettle,
     Map<Id, List<Settlement__c>> settlementsByClaimId

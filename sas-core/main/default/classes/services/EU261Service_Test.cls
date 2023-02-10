@@ -1704,7 +1704,7 @@ private class EU261Service_Test {
   }
 
   @IsTest
-  static void rejectionEmailGetsCreatedCorrectly() {
+  static void rejectionEmailsGetCreatedCorrectly() {
     EU261Claim claim0 = EU261Claim_Test.getClaimWhereCustomerCancelledTheFlight();
     EU261Claim claim1 = EU261Claim_Test.getClaimWhereFlightWasCancelled14DaysOrMoreBeforeDeparture();
     EU261Claim claim2 = EU261Claim_Test.getClaimWhereCustomerClaimedTooLate();
@@ -1759,7 +1759,7 @@ private class EU261Service_Test {
     }
 
     for (Messaging.SingleEmailMessage emailMessage : idToEmail.values()) {
-      System.debug(emailMessage.getHtmlBody());
+      // System.debug(emailMessage.getHtmlBody());
       System.assert(
         emailMessage.getHtmlBody().length() > 250,
         'An email was not correctly created'
@@ -1769,6 +1769,73 @@ private class EU261Service_Test {
     System.assertEquals(
       5,
       idToEmail.size(),
+      'Was not able to create all emails'
+    );
+  }
+
+  @IsTest
+  static void halvedCompensationEmailsGetCreatedCorrectly() {
+    EU261Claim claim0 = EU261Claim_Test.getLongDistanceHalvedCompensationClaim();
+
+    List<Case> dummyCases = new List<Case>{ new Case() };
+
+    insert dummyCases;
+
+    List<EU261Claim> claimsToApprove = new List<EU261Claim>{ claim0 };
+
+    EU261Service theEU261Service = EU261Service.newInstance();
+
+    // For the service to attach the email and settlement t
+    for (Integer i = 0; i < dummyCases.size(); i++) {
+      Case c = dummyCases[i];
+      claimsToApprove[i].claimObj.parentCaseId = c.Id;
+      claimsToApprove[i].claimObj.Id = c.Id; // Hack
+      theEU261Service.parentCasesById.put(c.Id, c);
+      claimsToApprove[i].claimObj.underlyingSObject.Bank_Country__c = 'Sweden';
+    }
+
+    insert claimsToApprove[0].claimObj.underlyingSObject;
+
+    for (EU261Claim c : claimsToApprove) {
+      c.evaluate();
+    }
+
+    List<EmailMessage> approvedEmails;
+    try {
+      approvedEmails = theEU261Service.createDraftApprovedEmails(
+        claimsToApprove,
+        new Map<Id, List<Settlement__c>>{
+          claimsToApprove[0].claimObj.Id => new List<Settlement__c>{
+            new Settlement__c()
+          }
+        }
+      );
+    } catch (System.NullPointerException e) {
+      if (true) {
+        throw e;
+      }
+      System.assert(
+        false,
+        'Could not create rejection emails (NullPointerException)'
+      );
+    } catch (EU261Service.EmailTemplateException e) {
+      System.assert(
+        false,
+        'Could not create rejection emails (EmailTemplateException)'
+      );
+    }
+
+    for (EmailMessage emailMessage : approvedEmails) {
+      // System.debug(emailMessage.HtmlBody);
+      System.assert(
+        emailMessage.HtmlBody.length() > 250,
+        'An email was not correctly created'
+      ); // Make sure there is a real email
+    }
+
+    System.assertEquals(
+      1,
+      approvedEmails.size(),
       'Was not able to create all emails'
     );
   }
