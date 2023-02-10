@@ -1,8 +1,6 @@
 global with sharing class EU261ClaimPNRResponse {
-  global Integer numberOfRecords;
   global List<EU261ClaimInfo> pnrList;
   public EU261ClaimPNRResponse(List<LIA_Claim__c> toReturn) {
-    this.numberOfRecords = toReturn.size();
     this.pnrList = new List<EU261ClaimInfo>();
     for (LIA_Claim__c cl : toReturn) {
       this.pnrList.add(new EU261ClaimInfo(cl));

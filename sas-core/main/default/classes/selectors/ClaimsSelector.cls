@@ -65,8 +65,13 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     );
   }
 
-  //Cutoff date for fetching eu261 claims for handling/data fetching is 23:00:00 the previous day
-  public static final String CUTOFF_TIME = '23:00:00';
+  //Cutoff date for fetching eu261 claims for handling/data fetching
+  public static final String CUTOFF_TIME = EU261_Automation_Configuration__mdt.getInstance(
+      'Default'
+    ) == null
+    ? null
+    : EU261_Automation_Configuration__mdt.getInstance('Default')
+        .Scheduled_Runtime__c;
   public static final Datetime CUTOFF_DATETIME = Datetime.valueOfGmt(
     System.today().addDays(-1).format() +
     ' ' +
@@ -198,7 +203,7 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
         .toSOQL()
     );
   }
-  public List<LIA_Claim__c> selectUnhandledClaimsToFetchBookingData() {
+  public List<LIA_Claim__c> selectNewUnhandledEU261Claims() {
     return (List<LIA_Claim__c>) Database.query(
       newQueryFactory()
         .setCondition(

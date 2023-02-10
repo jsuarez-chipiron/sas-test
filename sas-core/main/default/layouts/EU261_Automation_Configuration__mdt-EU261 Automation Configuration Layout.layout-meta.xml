@@ -58,6 +58,10 @@
                 <behavior>Edit</behavior>
                 <field>Claims_Per_Batch__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Scheduled_Runtime__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
