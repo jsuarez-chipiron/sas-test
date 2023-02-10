@@ -29,6 +29,8 @@ public without sharing class CreateClaimRequest {
   public Boolean personWithReducedMobility { get; private set; }
   public Boolean unaccompaniedMinor { get; private set; }
 
+  public String compensationCardNumber { get; private set; }
+
   public class InvalidDataException extends Exception {
   }
 
@@ -330,103 +332,124 @@ public without sharing class CreateClaimRequest {
   }
 
   public CreateClaimRequest(CaseFormJSONV2 jsonData) {
-    switch on JSON_TO_RECORD_TYPE.get(jsonData.formData.type) {
-      when CustomerClaim {
-        this.recordType = Claim.RecordType.CustomerClaim;
-        this.category = JSON_TO_CLAIM_CATEGORY.get(
-          jsonData.formData.claim.category
+    if (!String.isBlank(jsonData.formData.compensationCardNumber)) {
+      system.debug('testing YEEEES');
+      String origin = MARKET_TO_ORIGIN.get(jsonData.metaData.market);
+      this.origin = origin != null ? origin : MARKET_TO_ORIGIN.get('default');
+
+      contact = new Contact(jsonData.formData.contact);
+      compensationDetails = new CompensationDetails(
+        jsonData.formData.compensationDetails
+      );
+
+      if (!Booking.isValidBookingReference(jsonData.formData.bookingReference)) {
+        throw new InvalidDataException(
+          'Invalid booking reference: ' + jsonData.formData.bookingReference
         );
-        this.type = JSON_TO_CLAIM_TYPE.get(jsonData.formdata.claim.type);
-        String origin = MARKET_TO_ORIGIN.get(jsonData.metaData.market);
-        this.origin = origin != null ? origin : MARKET_TO_ORIGIN.get('default');
       }
-      when else {
-        throw new InvalidDataException('Invalid case type for claim creation.');
-      }
-    }
-    contact = new Contact(jsonData.formData.contact);
-    compensationDetails = new CompensationDetails(
-      jsonData.formData.compensationDetails
-    );
 
-    List<Expense> expensesToCreate = new List<Expense>();
-    if (jsonData.formData.claim.expenses != null) {
-      for (CaseFormJSONV2.Expense expense : jsonData.formData.claim.expenses) {
-        expensesToCreate.add(new Expense(expense));
+      bookingReference = jsonData.formData.bookingReference;
+      compensationCardNumber = jsonData.formData.compensationCardNumber;
+    } else {
+      switch on JSON_TO_RECORD_TYPE.get(jsonData.formData.type) {
+        when CustomerClaim {
+          this.recordType = Claim.RecordType.CustomerClaim;
+          this.category = JSON_TO_CLAIM_CATEGORY.get(
+            jsonData.formData.claim.category
+          );
+          this.type = JSON_TO_CLAIM_TYPE.get(jsonData.formdata.claim.type);
+          String origin = MARKET_TO_ORIGIN.get(jsonData.metaData.market);
+          this.origin = origin != null ? origin : MARKET_TO_ORIGIN.get('default');
+        }
+        when else {
+          throw new InvalidDataException('Invalid case type for claim creation.');
+        }
       }
-    }
-    expenses = expensesToCreate;
 
-    List<RebookedFlight> rebookedFlightsToCreate = new List<RebookedFlight>();
-    if (jsonData.formData.claim.rebookedFlights != null) {
-      for (
-        CaseFormJSONV2.Flight rebookedFlight : jsonData.formData.claim.rebookedFlights
+      contact = new Contact(jsonData.formData.contact);
+      compensationDetails = new CompensationDetails(
+        jsonData.formData.compensationDetails
+      );
+
+      List<Expense> expensesToCreate = new List<Expense>();
+      if (jsonData.formData.claim.expenses != null) {
+        for (CaseFormJSONV2.Expense expense : jsonData.formData.claim.expenses) {
+          expensesToCreate.add(new Expense(expense));
+        }
+      }
+      expenses = expensesToCreate;
+
+      List<RebookedFlight> rebookedFlightsToCreate = new List<RebookedFlight>();
+      if (jsonData.formData.claim.rebookedFlights != null) {
+        for (
+          CaseFormJSONV2.Flight rebookedFlight : jsonData.formData.claim.rebookedFlights
+        ) {
+          rebookedFlightsToCreate.add(new RebookedFlight(rebookedFlight));
+        }
+      }
+      rebookedFlights = rebookedFlightsToCreate;
+
+      List<Traveler> travelersToCreate = new List<Traveler>();
+      if (jsonData.formData.claim.travelers != null) {
+        for (CaseFormJSONV2.Traveler t : jsonData.formData.claim.travelers) {
+          travelersToCreate.add(new Traveler(t));
+        }
+      }
+      travelers = travelersToCreate;
+
+      if (
+        jsonData.formData.claim.bookingReference != null &&
+        !Booking.isValidBookingReference(jsonData.formData.claim.bookingReference)
       ) {
-        rebookedFlightsToCreate.add(new RebookedFlight(rebookedFlight));
+        throw new InvalidDataException(
+          'Invalid booking reference: ' + jsonData.formData.claim.bookingReference
+        );
       }
-    }
-    rebookedFlights = rebookedFlightsToCreate;
 
-    List<Traveler> travelersToCreate = new List<Traveler>();
-    if (jsonData.formData.claim.travelers != null) {
-      for (CaseFormJSONV2.Traveler t : jsonData.formData.claim.travelers) {
-        travelersToCreate.add(new Traveler(t));
+      try {
+        flightNumber = Flight.normalizeFlightNumber(
+          jsonData.formData.claim.flightNumber
+        );
+      } catch (Exception e) {
+        throw new InvalidDataException(
+          'Invalid flight number: ' + jsonData.formData.claim.flightNumber
+        );
       }
-    }
-    travelers = travelersToCreate;
 
-    if (
-      jsonData.formData.claim.bookingReference != null &&
-      !Booking.isValidBookingReference(jsonData.formData.claim.bookingReference)
-    ) {
-      throw new InvalidDataException(
-        'Invalid booking reference: ' + jsonData.formData.claim.bookingReference
-      );
-    }
-
-    try {
-      flightNumber = Flight.normalizeFlightNumber(
-        jsonData.formData.claim.flightNumber
-      );
-    } catch (Exception e) {
-      throw new InvalidDataException(
-        'Invalid flight number: ' + jsonData.formData.claim.flightNumber
-      );
-    }
-
-    Set<Id> fileIds = new Set<Id>();
-    if (jsonData.formData.contentVersionIds != null) {
-      for (String s : jsonData.formData.contentVersionIds) {
-        fileIds.add(Id.valueOf(s));
+      Set<Id> fileIds = new Set<Id>();
+      if (jsonData.formData.contentVersionIds != null) {
+        for (String s : jsonData.formData.contentVersionIds) {
+          fileIds.add(Id.valueOf(s));
+        }
       }
+      filesToLink = fileIds;
+
+      bookingReference = jsonData.formData.claim.bookingReference;
+      travelAgentBookingReference = jsonData.formData.claim.travelAgentBookingReference;
+      passengerIrregularityReportNumber = jsonData.formData.claim.passengerIrregularityReportNumber;
+      ticketNumber = jsonData.formData.claim.ticketNumber;
+      baggagePurchaseYear = jsonData.formData.claim.baggagePurchaseYear;
+      baggagePurchasePrice = jsonData.formData.claim.baggagePurchasePrice;
+      baggagePurchaseCurrency = jsonData.formData.claim.baggagePurchaseCurrency;
+      comment = jsonData.formData.claim.comment;
+
+      delayLength = JSON_TO_DELAY_LENGTH.get(jsonData.formData.claim.delayLength);
+      baggageDelayLength = JSON_TO_BAGGAGE_DELAY_LENGTH.get(
+        jsonData.formData.claim.baggageDelayTime
+      );
+
+      departureDate = String.isBlank(jsonData.formData.claim.departureDate)
+        ? null
+        : Date.valueOf(jsonData.formData.claim.departureDate);
+
+      unaccompaniedMinor = jsonData.formData.claim.unaccompaniedMinor == null
+        ? false
+        : jsonData.formData.claim.unaccompaniedMinor;
+
+      personWithReducedMobility = jsonData.formData.claim.personWithReducedMobility ==
+        null
+        ? false
+        : jsonData.formData.claim.personWithReducedMobility;
     }
-    filesToLink = fileIds;
-
-    bookingReference = jsonData.formData.claim.bookingReference;
-    travelAgentBookingReference = jsonData.formData.claim.travelAgentBookingReference;
-    passengerIrregularityReportNumber = jsonData.formData.claim.passengerIrregularityReportNumber;
-    ticketNumber = jsonData.formData.claim.ticketNumber;
-    baggagePurchaseYear = jsonData.formData.claim.baggagePurchaseYear;
-    baggagePurchasePrice = jsonData.formData.claim.baggagePurchasePrice;
-    baggagePurchaseCurrency = jsonData.formData.claim.baggagePurchaseCurrency;
-    comment = jsonData.formData.claim.comment;
-
-    delayLength = JSON_TO_DELAY_LENGTH.get(jsonData.formData.claim.delayLength);
-    baggageDelayLength = JSON_TO_BAGGAGE_DELAY_LENGTH.get(
-      jsonData.formData.claim.baggageDelayTime
-    );
-
-    departureDate = String.isBlank(jsonData.formData.claim.departureDate)
-      ? null
-      : Date.valueOf(jsonData.formData.claim.departureDate);
-
-    unaccompaniedMinor = jsonData.formData.claim.unaccompaniedMinor == null
-      ? false
-      : jsonData.formData.claim.unaccompaniedMinor;
-
-    personWithReducedMobility = jsonData.formData.claim.personWithReducedMobility ==
-      null
-      ? false
-      : jsonData.formData.claim.personWithReducedMobility;
   }
 }

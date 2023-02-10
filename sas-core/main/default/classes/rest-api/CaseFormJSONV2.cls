@@ -84,6 +84,8 @@ global class CaseFormJSONV2 {
     global List<String> contentVersionIds;
 
     global CompensationDetails compensationDetails;
+    global String compensationCardNumber;
+    global String bookingReference;
   }
 
   global class MetaData {

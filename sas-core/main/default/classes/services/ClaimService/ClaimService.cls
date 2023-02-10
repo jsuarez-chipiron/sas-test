@@ -159,6 +159,56 @@ public without sharing class ClaimService {
     return insertedCase.CaseNumber;
   }
 
+  public static String createCompensationCardClaim(CreateClaimRequest request) {
+    Claims c = Claims.createFromClaims(
+      new List<Claim>{ createDeniedBoardingClaimRecord(request) }
+    );
+    c.upsertToDB();
+
+    Claim claimToCreate = c.objects[0];
+
+    ClaimCustomer cust = new ClaimCustomer(claimToCreate);
+    cust.firstName = request.contact.firstName == null
+      ? ' '
+      : request.contact.firstName;
+    cust.lastName = request.contact.lastName == null
+      ? ' '
+      : request.contact.lastName;
+    cust.updateSObjectFields();
+    insert cust.underlyingSObject;
+
+    Case caseToCreate = createCaseRecord(request, claimToCreate);
+    // Auto-response emails are not triggered by default for cases created
+    // through Apex. Setting the triggerAutoResponseEmail header forces
+    // them to be sent.
+    Database.DMLOptions DMLOptions = new Database.DMLOptions();
+    DMLOptions.EmailHeader.triggerAutoResponseEmail = true;
+
+    database.insert(caseToCreate, DMLOptions);
+
+    Case insertedCase = CasesSelector.newInstance()
+      .selectById(new Set<Id>{ caseToCreate.Id })[0];
+
+    claimToCreate.parentCaseId = insertedCase.Id;
+    claimToCreate.underlyingSObject.Name = insertedCase.CaseNumber;
+    c.upsertToDB();
+
+    List<Feature_Switch__mdt> automationSwitch = [
+      SELECT Active__c
+      FROM Feature_Switch__mdt
+      WHERE QualifiedApiName = 'Process_Compensation_Cards_Automatically'
+    ];
+
+    if (
+      automationSwitch == null ||
+      automationSwitch.size() > 0 && automationSwitch[0].Active__c
+    ) {
+      System.enqueueJob(new RedeemCompensationCardClaim(claimToCreate.id));
+    }
+
+    return insertedCase.CaseNumber;
+  }
+  
   public static String createCompensationCardClaim(
     RedeemCompensationCardRequest request
   ) {
@@ -871,6 +921,38 @@ public without sharing class ClaimService {
       RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
       Subject = 'Claim, PNR: ' + request.bookingReference
     );
+  }
+
+  private static Claim createDeniedBoardingClaimRecord(CreateClaimRequest r) {
+    Claim newClaim = new Claim();
+
+    newClaim.bankAccountHolderName = r.compensationDetails.bankAccountHolderName;
+    newClaim.bankName = r.compensationDetails.bankName;
+    newClaim.bankBicSwift = r.compensationDetails.bankBic;
+    newClaim.bankCountry = r.compensationDetails.bankCountry;
+    newClaim.bookingReference = r.bookingReference;
+    newClaim.compensationCardNumber = r.compensationCardNumber;
+    newClaim.contactAddressLine1 = r.contact.addressLine1;
+    newClaim.contactAddressLine2 = r.contact.addressLine2;
+    newClaim.contactCountry = r.contact.country;
+    newClaim.contactCity = r.contact.city;
+    newClaim.contactEmail = r.contact.email;
+    newClaim.contactFirstName = r.contact.firstName;
+    newClaim.contactLastName = r.contact.lastName;
+    newClaim.contactPhone = r.contact.phone;
+    newClaim.contactPostalCode = r.contact.postalCode;
+    newClaim.contactType = Claim.ContactType.PrivateCustomer;
+    newClaim.euroBonusNumber = r.contact.euroBonusNumber;
+    newClaim.preferredCurrency = r.compensationDetails.preferredCurrency;
+    newClaim.preferredCompensationMethod = r.compensationDetails.preferredCompensationMethod;
+    newClaim.preferredReimbursementMethod = r.compensationDetails.preferredReimbursementMethod;
+    newClaim.recordType = Claim.RecordType.CompensationCard;
+    newClaim.referenceNumber = r.compensationDetails.referenceNumber;
+    newClaim.category = Claim.Category.CompensationCard;
+
+    newClaim.updateSObjectFields();
+
+    return newClaim;
   }
 
   private static Claim createClaimRecord(RedeemCompensationCardRequest r) {

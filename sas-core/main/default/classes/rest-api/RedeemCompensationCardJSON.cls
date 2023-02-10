@@ -30,6 +30,8 @@ global class RedeemCompensationCardJSON {
   }
 
   global class FormData {
+    global String type;
+
     global String compensationCardNumber;
     global String bookingReference;
 
