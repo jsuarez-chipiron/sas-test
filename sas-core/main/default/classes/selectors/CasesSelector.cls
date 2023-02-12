@@ -15,6 +15,7 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       Case.Status,
       Case.SuppliedEmail,
       Case.Department__c,
+      Case.Customer_Claim_Type__c,
       Case.Team__c,
       Case.Origin,
       Case.FCS_CaseType__c,

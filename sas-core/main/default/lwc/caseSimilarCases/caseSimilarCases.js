@@ -21,6 +21,15 @@ export default class CaseSimilarCases extends NavigationMixin(
     { label: "Owner", fieldName: "owner" },
     { label: "Created", fieldName: "date", type: "date" },
     {
+      label: "Customer Claim Type",
+      fieldName: "customerClaimType",
+      cellAttributes: {
+        class: {
+          fieldName: "classNameCustomerClaimType"
+        }
+      }
+    },
+    {
       label: "PNR",
       fieldName: "bookingReference",
       cellAttributes: {
@@ -136,7 +145,8 @@ export default class CaseSimilarCases extends NavigationMixin(
         "email",
         "pir",
         "bookingReference",
-        "department"
+        "department",
+        "customerClaimType"
       ];
 
       const getNumMatches = (caseData) =>
@@ -180,7 +190,8 @@ export default class CaseSimilarCases extends NavigationMixin(
             owner: caseWithClaim.Owner.Name,
             pir: caseWithClaim.Claims__r[0].PIR__c,
             status: caseWithClaim.Status,
-            department: caseWithClaim.Department__c
+            department: caseWithClaim.Department__c,
+            customerClaimType: caseWithClaim.Customer_Claim_Type__c
           };
         }
       });
@@ -198,6 +209,7 @@ export default class CaseSimilarCases extends NavigationMixin(
           classNamePir: getClassName(parsedCase, "pir"),
           classNamePnr: getClassName(parsedCase, "bookingReference"),
           classNameDepartment: getClassName(parsedCase, "department"),
+          classNameCustomerClaimType: getClassName(parsedCase, "customerClaimType"),
           numberOfMatches: getNumMatches(parsedCase),
           matchingFields: getMatchingFields(parsedCase)
         }));

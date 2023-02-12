@@ -331,7 +331,7 @@
     <formulas>
         <name>emailValidation</name>
         <dataType>Boolean</dataType>
-        <expression>REGEX ( UPPER ( {!providedEmail} ) ,&quot;^[A-Z0-9._%+-/!#$%&amp;&apos;*=?^_`{|}~]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$&quot;)</expression>
+        <expression>REGEX ( UPPER ( {!providedEmail} ) ,&quot;^[A-Z0-9._%+-/!#$%&amp;&apos;*=?^_`{|}~]+@[A-Z0-9.-]+\\.[A-Z]{2,5}$&quot;)</expression>
     </formulas>
     <formulas>
         <name>FullCustomerName</name>
@@ -733,6 +733,21 @@
             <name>GeneralInfo</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/b&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Customer Claim General Information&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>instructionsDifferentExpensesAndCompesation</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(255, 153, 0);&quot;&gt;﻿﻿Select &lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 153, 0);&quot;&gt;Customer Claim Type &lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 153, 0);&quot;&gt;ending in&lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 153, 0);&quot;&gt; &quot;- compensation”&lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 153, 0);&quot;&gt; when a passenger is asking for flat rate compensation in accordance with &lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 153, 0);&quot;&gt;EU261/2004 &lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 153, 0); background-color: rgb(255, 255, 255);&quot;&gt;due to a delayed or cancelled flight or missed connection.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 153, 0); background-color: rgb(255, 255, 255);&quot;&gt;﻿&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(255, 153, 0);&quot;&gt;Select&lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 153, 0);&quot;&gt; Customer Claim Type &lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 153, 0);&quot;&gt;ending in &lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 153, 0);&quot;&gt;&quot;- expenses&quot; &lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 153, 0);&quot;&gt;when a passenger is asking to be &lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 153, 0);&quot;&gt;reimbursed for expenses &lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 153, 0);&quot;&gt;that occurred due to a delayed or cancelled flight or missed connection.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Flight disruptions</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>CustomerClaimCategoryType</name>
@@ -1555,6 +1570,12 @@
                 <name>placeholder</name>
                 <value>
                     <stringValue>you@example.com</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <elementReference>providedEmail</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
