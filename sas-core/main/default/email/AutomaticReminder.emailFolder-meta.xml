@@ -2,8 +2,8 @@
 <EmailTemplateFolder xmlns="http://soap.sforce.com/2006/04/metadata">
     <folderShares>
         <accessLevel>Manage</accessLevel>
-        <sharedTo>test-rihdc8rymuer@example.com</sharedTo>
-        <sharedToType>User</sharedToType>
+        <sharedTo>SAS</sharedTo>
+        <sharedToType>Group</sharedToType>
     </folderShares>
     <name>Automatic Reminder</name>
 </EmailTemplateFolder>
