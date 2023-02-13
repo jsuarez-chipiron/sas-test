@@ -61,17 +61,7 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <formulas>
-        <name>Date_15_days_prior</name>
-        <dataType>Date</dataType>
-        <expression>Today()-15</expression>
-    </formulas>
-    <formulas>
-        <name>Date_20_days_prior</name>
-        <dataType>Date</dataType>
-        <expression>Today()-20</expression>
-    </formulas>
-    <interviewLabel>Case Action For Awaiting Response Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>CASE Action About Awaiting Response Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CASE Action About Awaiting Response Case</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -115,6 +105,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Awaiting Customer Response</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Department__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Customer Claim</stringValue>
             </value>
         </filters>
         <object>Case</object>
