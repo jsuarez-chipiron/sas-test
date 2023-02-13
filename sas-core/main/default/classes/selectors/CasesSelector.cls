@@ -173,10 +173,8 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
 
   public List<Case> selectInactiveByDepartment(String department) {
     String statusToFetch = Cases.STATUS_CLOSED;
-    Datetime lastUpdatedCutoff = System.Test.isRunningTest()
-      ? System.now().addDays(1)
-      : System.now()
-          .addDays(Cases.departmentToDaysInactive.get(department) * -1);
+    Datetime lastUpdatedCutoff = System.now()
+          .addDays(Integer.valueOf(Cases.allReadOnlyConfigs.get(department).Retention_Days__c) * -1);
 
     fflib_QueryFactory casesQF = newQueryFactory()
       .setCondition(

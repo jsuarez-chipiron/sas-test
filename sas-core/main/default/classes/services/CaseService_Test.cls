@@ -8,7 +8,10 @@ private class CaseService_Test {
       Team__c = 'Claims',
       Status = Cases.STATUS_CLOSED
     );
-    insert c;
+    c.LastModifiedDate = System.now().addDays(-100);
+    String caseString = JSON.serialize(c);
+    Case deserializedCase = (Case) JSON.deserialize(caseString, Case.class);
+    insert deserializedCase;
     Test.startTest();
     ChangeCasesReadOnlyBatchable b = new ChangeCasesReadOnlyBatchable();
     Database.executeBatch(b, 2000);
