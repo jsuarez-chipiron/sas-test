@@ -3,9 +3,9 @@ public with sharing class SendEmailForReadOnlyCase {
   public static void sendEmail(List<Id> caseIds) {
     List<Case> allCases = CasesSelector.newInstance()
       .selectById(new Set<Id>{ caseIds[0] });
-    String closedCasePermanentlyTemplate = EmailMessages.departmentToTemplateName.get(
+    String closedCasePermanentlyTemplate = Cases.allReadOnlyConfigs.get(
       allCases[0].Department__c
-    );
+    ).Email_Template_Name__c;
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
     Messaging.SingleEmailMessage msg = EmailMessages.createSingleEmailMessageFromTemplate(
       closedCasePermanentlyTemplate,
