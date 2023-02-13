@@ -23,7 +23,7 @@ steps:
     secureFile: 'ci_cert_new.key'
 
 - script: |
-    sudo npm install sfdx-cli --global
+    sudo npm install sfdx-cli@7.119.3 --global
     sfdx --version
     sfdx plugins --core
   displayName: 'Install SFDX'
