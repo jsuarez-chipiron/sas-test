@@ -1491,6 +1491,10 @@
                     <fieldText>Bank Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Bank Name cannot be longer that 60 characters&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Bank_Name}) &lt;= 60</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>BankCountryCurrency</name>
