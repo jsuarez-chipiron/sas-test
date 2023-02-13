@@ -333,7 +333,6 @@ public without sharing class CreateClaimRequest {
 
   public CreateClaimRequest(CaseFormJSONV2 jsonData) {
     if (!String.isBlank(jsonData.formData.compensationCardNumber)) {
-      system.debug('testing YEEEES');
       String origin = MARKET_TO_ORIGIN.get(jsonData.metaData.market);
       this.origin = origin != null ? origin : MARKET_TO_ORIGIN.get('default');
 
