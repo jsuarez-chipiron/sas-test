@@ -324,6 +324,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>caseSimilarCases</componentName>
+                <identifier>c_caseSimilarCases</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-a918cca2-d01c-4576-8318-d3838aafba83</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
@@ -374,6 +384,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>relatedListsTab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-a918cca2-d01c-4576-8318-d3838aafba83</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Similar Cases</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ef70b060-3b43-4a47-8a2d-98da6781215c</name>
@@ -445,12 +469,6 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer3</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>caseSimilarCases</componentName>
-                <identifier>caseSimilarCases</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
