@@ -20,7 +20,7 @@ private class CaseService_Test {
     Case caseAfterUpdate = [
       SELECT Id, IsReadOnly__c
       FROM Case
-      WHERE Id = :c.Id
+      WHERE Id = :deserializedCase.Id
     ][0];
     System.assert(
       caseAfterUpdate.IsReadOnly__c,
