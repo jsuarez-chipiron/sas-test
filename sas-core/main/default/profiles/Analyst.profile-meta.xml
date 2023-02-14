@@ -240,7 +240,7 @@
         <apexClass>FCS_ConsoleAutomationController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-	<classAccesses>
+    <classAccesses>
         <apexClass>FCS_MassRedirection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -264,7 +264,7 @@
         <apexClass>GetRandomNumber</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-        <classAccesses>
+    <classAccesses>
         <apexClass>GetUsState</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -396,7 +396,7 @@
         <apexClass>UnlockRecords</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-        <classAccesses>
+    <classAccesses>
         <apexClass>UsStateUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -429,7 +429,7 @@
         <enabled>false</enabled>
         <externalDataSource>SAS_External_Systems</externalDataSource>
     </externalDataSourceAccesses>
-       <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Booking__c.Booking_Reference__c</field>
         <readable>true</readable>
@@ -694,32 +694,32 @@
         <field>Airport__c.TEDS_Identifier__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.C_o_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.City__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Country__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.First_Name__c</field>
         <readable>true</readable>
@@ -729,22 +729,22 @@
         <field>Group_Travel_Request__c.Full_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Last_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Postal_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Group_Travel_Request__c.Alternate_Departure_date__c</field>
         <readable>true</readable>
@@ -1349,7 +1349,7 @@
         <field>Case.FCS_CaseReason__c</field>
         <readable>false</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.FCS_CaseResolutionDetails__c</field>
         <readable>true</readable>
@@ -1369,9 +1369,9 @@
         <field>Case.FCS_CaseTags__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
-	 <field>Case.FCS_CaseType__c</field>
+        <field>Case.FCS_CaseType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1469,7 +1469,7 @@
         <field>Case.GSB_Flight_Length__c</field>
         <readable>true</readable>
     </fieldPermissions>
-      <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Flight_Info_Missing_Points_X1__c</field>
         <readable>true</readable>
@@ -1529,9 +1529,14 @@
         <field>Case.Group_Outbound_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.Group_Travel_Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.InactiveCaseOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1604,7 +1609,7 @@
         <field>Case.Refund_Request_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Special_Service_Request__c</field>
         <readable>true</readable>
@@ -1644,7 +1649,7 @@
         <field>Refund_Request__c.Last_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Refund_Request__c.Booked_Via__c</field>
         <readable>true</readable>
@@ -1784,12 +1789,12 @@
         <field>LIA_Claim__c.Interest_Paid__c</field>
         <readable>false</readable>
     </fieldPermissions>
-     <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Has_been_sent_to_settle__c</field>
         <readable>false</readable>
     </fieldPermissions>
-     <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>LIA_Claim__c.Judicial_Body__c</field>
         <readable>false</readable>
@@ -1825,9 +1830,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-      <editable>false</editable>
-      <field>LIA_Claim__c.Purchase_Currency__c</field>
-      <readable>true</readable>
+        <editable>false</editable>
+        <field>LIA_Claim__c.Purchase_Currency__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2624,7 +2629,7 @@
         <field>Special_Service_Request__c.PNR__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Special_Service_Request__c.Brings_Own_Mobility_Device__c</field>
         <readable>true</readable>
@@ -2767,7 +2772,7 @@
     <layoutAssignments>
         <layout>Airport__c-Airport Layout</layout>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>Group_Travel_Request__c-Group Travel Request Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -2791,11 +2796,11 @@
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>Account-B2B - Customer</layout>
         <recordType>Account.Business</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>Account-B2B - Partner</layout>
         <recordType>Account.Partner</recordType>
     </layoutAssignments>
@@ -2824,7 +2829,7 @@
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Channel</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Chat</recordType>
     </layoutAssignments>
@@ -2868,7 +2873,7 @@
     <layoutAssignments>
         <layout>GDPRExtractObjectSetting__mdt-GDPR Extract Object Setting Layout</layout>
     </layoutAssignments>
-   <layoutAssignments>
+    <layoutAssignments>
         <layout>Insurance_Detail__c-Insurance Detail Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -3009,7 +3014,7 @@
         <object>Airport__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -3036,7 +3041,7 @@
         <object>Segment__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -3045,7 +3050,7 @@
         <object>Special_Service_Request__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -3054,7 +3059,7 @@
         <object>Account</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -3063,7 +3068,7 @@
         <object>Contact</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3072,7 +3077,7 @@
         <object>Case</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3090,7 +3095,7 @@
         <object>FCS_CaseTag__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3099,7 +3104,7 @@
         <object>LiveChatTranscript</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3108,7 +3113,7 @@
         <object>LiveChatVisitor</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3117,7 +3122,7 @@
         <object>LiveAgentSession</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3126,7 +3131,7 @@
         <object>MessagingSession</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3144,7 +3149,7 @@
         <object>Refund_Request__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3153,7 +3158,7 @@
         <object>SocialPost</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	 <objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -3172,7 +3177,7 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-	    <allowCreate>false</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -3180,8 +3185,8 @@
         <object>SurveyResponse</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-	<objectPermissions>
-	    <allowCreate>false</allowCreate>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -3201,12 +3206,12 @@
         <apexPage>FCS_SocialPostTakeOwnershipButton</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Channel</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Chat</recordType>
         <visible>true</visible>
@@ -3216,12 +3221,12 @@
         <recordType>Case.Emergency</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Business</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Partner</recordType>
         <visible>true</visible>
@@ -3305,7 +3310,7 @@
         <tab>FCS_Passenger__x</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
-        <tabVisibilities>
+    <tabVisibilities>
         <tab>Group_Travel_Request__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -3326,7 +3331,7 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
-	<userPermissions>
+    <userPermissions>
         <enabled>true</enabled>
         <name>ActivitiesAccess</name>
     </userPermissions>
@@ -3406,4 +3411,4 @@
         <enabled>true</enabled>
         <name>ViewRoles</name>
     </userPermissions>
-   </Profile>
+</Profile>

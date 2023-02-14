@@ -268,6 +268,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>caseSimilarCases</componentName>
+                <identifier>c_caseSimilarCases</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-e5fa51fe-08ae-420a-aaae-c4a84bf5145a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
@@ -320,10 +330,45 @@
                 <identifier>relatedListsTab</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-e5fa51fe-08ae-420a-aaae-c4a84bf5145a</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Similar Cases</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-ef70b060-3b43-4a47-8a2d-98da6781215c</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;The current case owner is &lt;/span&gt;&lt;strong style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;inactive&lt;/strong&gt;&lt;span style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;. The case needs to be reassigned to an active agent for it to be handled and for someone to receive a potential ﻿post/comment.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.InactiveCaseOwner__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -363,12 +408,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>caseSimilarCases</componentName>
-                <identifier>caseSimilarCases</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>

@@ -407,6 +407,27 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;The current case owner is &lt;/span&gt;&lt;strong style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;inactive&lt;/strong&gt;&lt;span style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;. The case needs to be reassigned to an active agent for it to be handled and for someone to receive a potential &lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;post/comment.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.InactiveCaseOwner__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>flowArguments</name>
                     <value>[{&quot;label&quot;:&quot;recordId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
                 </componentInstanceProperties>
