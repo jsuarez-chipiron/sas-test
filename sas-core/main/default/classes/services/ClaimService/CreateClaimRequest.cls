@@ -332,7 +332,7 @@ public without sharing class CreateClaimRequest {
   }
 
   public CreateClaimRequest(CaseFormJSONV2 jsonData) {
-    if (!String.isBlank(jsonData.formData.compensationCardNumber)) {
+    if (!String.isBlank(jsonData.formData.claim.compensationCardNumber)) {
       String origin = MARKET_TO_ORIGIN.get(jsonData.metaData.market);
       this.origin = origin != null ? origin : MARKET_TO_ORIGIN.get('default');
 
@@ -341,14 +341,14 @@ public without sharing class CreateClaimRequest {
         jsonData.formData.compensationDetails
       );
 
-      if (!Booking.isValidBookingReference(jsonData.formData.bookingReference)) {
+      if (!Booking.isValidBookingReference(jsonData.formData.claim.bookingReference)) {
         throw new InvalidDataException(
-          'Invalid booking reference: ' + jsonData.formData.bookingReference
+          'Invalid booking reference: ' + jsonData.formData.claim.bookingReference
         );
       }
 
-      bookingReference = jsonData.formData.bookingReference;
-      compensationCardNumber = jsonData.formData.compensationCardNumber;
+      bookingReference = jsonData.formData.claim.bookingReference;
+      compensationCardNumber = jsonData.formData.claim.compensationCardNumber;
     } else {
       switch on JSON_TO_RECORD_TYPE.get(jsonData.formData.type) {
         when CustomerClaim {

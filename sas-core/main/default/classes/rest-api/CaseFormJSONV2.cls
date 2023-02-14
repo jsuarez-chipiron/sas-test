@@ -30,6 +30,8 @@ global class CaseFormJSONV2 {
     global String flightNumber; // SK1234
     global String ticketNumber;
     global String passengerIrregularityReportNumber;
+    global String compensationCardNumber;
+
 
     global String comment; // free text field
 
@@ -84,8 +86,6 @@ global class CaseFormJSONV2 {
     global List<String> contentVersionIds;
 
     global CompensationDetails compensationDetails;
-    global String compensationCardNumber;
-    global String bookingReference;
   }
 
   global class MetaData {
