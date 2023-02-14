@@ -10,4 +10,4 @@
         <field>To_Address__c</field>
         <value xsi:type="xsd:string">gva.dopax@dnata.ch,gva.pax@dnata.ch,dagmar.primicerio@sas.dk,emanuela.zinnari@sas.dk,alberto.bertazzoli@sas.dk,passengerrecoverycenter@sas.se</value>
     </values>
-</CustomMetadata>
+</CustomMetadata> 

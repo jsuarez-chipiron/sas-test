@@ -10,4 +10,4 @@
         <field>To_Address__c</field>
         <value xsi:type="xsd:string">giulia.festuccia@aviapartner.aero,blq.handling.pax@aviapartner.aero,chiara.montanari@aviapartner.aero,pamela.keci@aviapartner.aero,dagmar.primicerio@sas.dk,emanuela.zinnari@sas.dk,alberto.bertazzoli@sas.dk,passengerrecoverycenter@sas.se</value>
     </values>
-</CustomMetadata>
+</CustomMetadata> 
