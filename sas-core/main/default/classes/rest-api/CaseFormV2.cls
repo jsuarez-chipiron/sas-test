@@ -20,6 +20,17 @@ global with sharing class CaseFormV2 {
             ClaimService.createClaim(validatedRequest)
           );
         }
+        when 'denied-boarding' {
+          CreateClaimRequest validatedRequest = null;
+          try {
+            validatedRequest = new CreateClaimRequest(form);
+          } catch (Exception e) {
+            throw new ValidationException(e.getMessage());
+          }
+          return new CaseFormResponse(
+            ClaimService.createCompensationCardClaim(validatedRequest)
+          );
+        }
         when else {
           return new CaseFormResponse('1');
           /*TODO: Implement

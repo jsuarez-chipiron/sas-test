@@ -265,7 +265,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     FlightExperience,
     Other,
     PassengerIrregularities,
-    TravelExtras
+    TravelExtras,
+    CompensationCard
   }
 
   public enum Type {
@@ -287,11 +288,13 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     InFlightMeal,
     InFlightService,
     MissingItemsFromBaggage,
+    LessThan21Days,
     Lounge,
     MealsDrinks,
     MissedConnection,
     MissedConnectionCompensation,
     MissedConnectionExpenses,
+    MoreThan21Days,
     PersonalInjury,
     PrepaidSeat,
     SpecialAssistance,
@@ -336,7 +339,7 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     IneligibleForCompensation,
     PossiblyEligibleForCompensation,
     UnableToHandle,
-    ReimbursementOnly  
+    ReimbursementOnly
   }
 
   private static final Map<EU261HandlingStatus, String> EU261_STATUS_ENUM_TO_PICKLIST_VALUE = new Map<EU261HandlingStatus, String>{
@@ -404,7 +407,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     'Flight experience' => Category.FlightExperience,
     'Other' => Category.Other,
     'Passenger irregularities' => Category.PassengerIrregularities,
-    'Travel extras bought not rendered' => Category.TravelExtras
+    'Travel extras bought not rendered' => Category.TravelExtras,
+    'Compensation Card' => Category.CompensationCard
   };
 
   private static final Map<Category, String> CATEGORY_ENUM_TO_PICKLIST_VALUE = new Map<Category, String>{
@@ -416,7 +420,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     Category.FlightExperience => 'Flight experience',
     Category.Other => 'Other',
     Category.PassengerIrregularities => 'Passenger irregularities',
-    Category.TravelExtras => 'Travel extras bought not rendered'
+    Category.TravelExtras => 'Travel extras bought not rendered',
+    Category.CompensationCard => 'Compensation Card'
   };
 
   private static final Map<ContactType, String> CUSTOMER_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<ContactType, String>{
@@ -451,6 +456,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     'Gate issues' => Type.GateIssues,
     'In-flight meal' => Type.InFlightMeal,
     'In-flight service' => Type.InFlightService,
+    'Baggage delayed/lost' => Type.LessThan21Days,
+    'Baggage delayed/lost' => Type.MoreThan21Days,
     'Items missing from checked-in baggage' => Type.MissingItemsFromBaggage,
     'Lounge' => Type.Lounge,
     'Meals/Drinks' => Type.MealsDrinks,
@@ -487,12 +494,14 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     Type.GateIssues => 'Gate issues',
     Type.InFlightMeal => 'In-flight meal',
     Type.InFlightService => 'In-flight service',
+    Type.LessThan21Days => 'Baggage delayed/lost',
     Type.MissingItemsFromBaggage => 'Items missing from checked-in baggage',
     Type.Lounge => 'Lounge',
     Type.MealsDrinks => 'Meals/Drinks',
     Type.MissedConnection => 'Missed connection',
     Type.MissedConnectionCompensation => 'Missed connection - compensation',
     Type.MissedConnectionExpenses => 'Missed connection - expenses',
+    Type.MoreThan21Days => 'Baggage delayed/lost',
     Type.PersonalInjury => 'Personal injury',
     Type.PrepaidSeat => 'Prepaid seat',
     Type.SpecialAssistance => 'Special assistance',
