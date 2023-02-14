@@ -1,6 +1,6 @@
 @IsTest
 public with sharing class TestAirportFixture {
-  public static Map<String, Airport> codeToAirport = new Map<String, Airport>{
+  public static final Map<String, Airport> codeToAirport = new Map<String, Airport>{
     'HEL' => new Airport(
       new Airport__c(
         City__c = 'Helsinki',

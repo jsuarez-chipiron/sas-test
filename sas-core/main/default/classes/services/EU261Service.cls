@@ -18,18 +18,17 @@ public without sharing class EU261Service {
   private static final String AUTOMATION_APPROVED_HALVED_LATE_ARRIVAL_EMAIL_TEMPLATE_NAME = 'eu261_automation_approved_halved_late_arrival';
   @TestVisible
   private static final String AUTOMATION_APPROVED_HALVED_EARLY_DEPARTURE_EMAIL_TEMPLATE_NAME = 'eu261_automation_approved_halved_early_departure';
+
   @TestVisible
-  private static final String AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected'; // Deprecated
-  @TestVisible
-  private static final String AUTOMATION_REJECTED_NOT_OUTSIDE_TIMEFRAME_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected_not_outside_timeframe';
-  @TestVisible
-  private static final String AUTOMATION_REJECTED_NOT_FILED_ON_TIME_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected_not_filed_on_time';
-  @TestVisible
-  private static final String AUTOMATION_REJECTED_CANCELLED_WELL_IN_TIME_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected_cancelled_well_in_time';
-  @TestVisible
-  private static final String AUTOMATION_REJECTED_CUSTOMER_CANCELLED_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected_cusomter_cancelled';
-  @TestVisible
-  private static final String AUTOMATION_REJECTED_NOT_WITHIN_SAS_CONTROL_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected_not_within_SAS_control';
+  private static final Map<EU261Protocol.DenialReason, String> DENIAL_REASON_TO_EMAIL_TEMPLATE_NAME = new Map<EU261Protocol.DenialReason, String>{
+    EU261Protocol.DenialReason.NOTOUTSIDETIMEFRAME => 'eu261_automation_rejected_not_outside_timeframe',
+    EU261Protocol.DenialReason.NOTFILEDONTIME => 'eu261_automation_rejected_not_filed_on_time',
+    EU261Protocol.DenialReason.CANCELLEDWELLINTIME => 'eu261_automation_rejected_cancelled_well_in_time',
+    EU261Protocol.DenialReason.CUSTOMERCANCELLED => 'eu261_automation_rejected_cusomter_cancelled',
+    EU261Protocol.DenialReason.NOTWITHINSASCONTROL => 'eu261_automation_rejected_not_within_SAS_control'
+    // EU261Protocol.DenialReason.DELAYTOOSMALL => null,
+    // EU261Protocol.DenialReason.NODELAYORCANCELLATION => null
+  }; // TODO: make delay templates (will increase the denial emails by ~3-6)
 
   private static final String AUTOMATION_REPLY_TO_ADDRESS = 'customercare@sas.se';
 
@@ -166,6 +165,7 @@ public without sharing class EU261Service {
   public class EmailTemplateException extends Exception {
   }
 
+  //Separera?
   public void batchProcessEU261Claims(Set<Id> claimIds) {
     Integer limitPerBatchRun = 40;
     List<Id> claimIdsOdered = new List<Id>(claimIds);
@@ -1223,38 +1223,14 @@ public without sharing class EU261Service {
     for (EU261Claim c : claimsToReject) {
       List<EmailMessage> toReturn = new List<EmailMessage>();
 
-      String templateName;
-      switch on c.protocol.denialReason {
-        when CANCELLEDWELLINTIME {
-          templateName = AUTOMATION_REJECTED_CANCELLED_WELL_IN_TIME_EMAIL_TEMPLATE_NAME;
-        }
-        when NOTWITHINSASCONTROL {
-          templateName = AUTOMATION_REJECTED_NOT_WITHIN_SAS_CONTROL_EMAIL_TEMPLATE_NAME;
-        }
-        when NOTFILEDONTIME {
-          templateName = AUTOMATION_REJECTED_NOT_FILED_ON_TIME_EMAIL_TEMPLATE_NAME;
-        }
-        when CUSTOMERCANCELLED {
-          templateName = AUTOMATION_REJECTED_CUSTOMER_CANCELLED_EMAIL_TEMPLATE_NAME;
-        }
-        when NOTOUTSIDETIMEFRAME {
-          templateName = AUTOMATION_REJECTED_NOT_OUTSIDE_TIMEFRAME_EMAIL_TEMPLATE_NAME;
-        }
-        when DELAYTOOSMALL {
-          throw new EmailMessages.EmailTemplateNameException(
-            'Denial reason does not have an email template'
-          ); // TODO: implement
-        }
-        when NODELAYORCANCELLATION {
-          throw new EmailMessages.EmailTemplateNameException(
-            'Denial reason does not have an email template'
-          ); // TODO: implement
-        }
-        when else {
-          throw new EmailMessages.EmailTemplateNameException(
-            'Denial reason does not have an email template'
-          );
-        }
+      String templateName = DENIAL_REASON_TO_EMAIL_TEMPLATE_NAME.get(
+        c.protocol.denialReason
+      );
+
+      if (templateName == null) {
+        throw new EmailMessages.EmailTemplateNameException(
+          'Denial reason does not have an email template'
+        );
       }
 
       Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(

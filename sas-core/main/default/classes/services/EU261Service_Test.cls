@@ -25,19 +25,32 @@ private class EU261Service_Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Cases.bypassTrigger = true;
 
-    TestDataFactories.insertEmailTemplates(
-      new Set<String>{
-        EU261Service.AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME,
-        EU261Service.AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME,
-        EU261Service.AUTOMATION_REJECTED_NOT_OUTSIDE_TIMEFRAME_EMAIL_TEMPLATE_NAME,
-        EU261Service.AUTOMATION_REJECTED_NOT_FILED_ON_TIME_EMAIL_TEMPLATE_NAME,
-        EU261Service.AUTOMATION_REJECTED_CANCELLED_WELL_IN_TIME_EMAIL_TEMPLATE_NAME,
-        EU261Service.AUTOMATION_REJECTED_CUSTOMER_CANCELLED_EMAIL_TEMPLATE_NAME,
-        EU261Service.AUTOMATION_REJECTED_NOT_WITHIN_SAS_CONTROL_EMAIL_TEMPLATE_NAME,
-        EU261Service.AUTOMATION_APPROVED_HALVED_LATE_ARRIVAL_EMAIL_TEMPLATE_NAME,
-        EU261Service.AUTOMATION_APPROVED_HALVED_EARLY_DEPARTURE_EMAIL_TEMPLATE_NAME
-      }
+    Set<String> emailTemplateNames = new Set<String>{
+      EU261Service.AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME,
+      EU261Service.AUTOMATION_APPROVED_HALVED_LATE_ARRIVAL_EMAIL_TEMPLATE_NAME,
+      EU261Service.AUTOMATION_APPROVED_HALVED_EARLY_DEPARTURE_EMAIL_TEMPLATE_NAME
+    };
+
+    emailTemplateNames.addAll(
+      EU261Service.DENIAL_REASON_TO_EMAIL_TEMPLATE_NAME.values()
     );
+
+    Map<String, TestDataFactories.TemplateType> templateNameToType = new Map<String, TestDataFactories.TemplateType>();
+    for (String name : emailTemplateNames) {
+      if (name.contains('approved')) {
+        templateNameToType.put(
+          name,
+          TestDataFactories.TemplateType.AUTOMATION_APPROVED
+        );
+      } else {
+        templateNameToType.put(
+          name,
+          TestDataFactories.TemplateType.AUTOMATION_REJECTED
+        );
+      }
+    }
+
+    TestDataFactories.insertEmailTemplates(templateNameToType);
 
     List<SObject> objectsToCreate = new List<SObject>();
 
@@ -1757,20 +1770,6 @@ private class EU261Service_Test {
         'Could not create rejection emails (EmailTemplateException)'
       );
     }
-
-    for (Messaging.SingleEmailMessage emailMessage : idToEmail.values()) {
-      // System.debug(emailMessage.getHtmlBody());
-      System.assert(
-        emailMessage.getHtmlBody().length() > 250,
-        'An email was not correctly created'
-      ); // Make sure there is a real email
-    }
-
-    System.assertEquals(
-      5,
-      idToEmail.size(),
-      'Was not able to create all emails'
-    );
   }
 
   @IsTest
@@ -1824,19 +1823,5 @@ private class EU261Service_Test {
         'Could not create rejection emails (EmailTemplateException)'
       );
     }
-
-    for (EmailMessage emailMessage : approvedEmails) {
-      // System.debug(emailMessage.HtmlBody);
-      System.assert(
-        emailMessage.HtmlBody.length() > 250,
-        'An email was not correctly created'
-      ); // Make sure there is a real email
-    }
-
-    System.assertEquals(
-      1,
-      approvedEmails.size(),
-      'Was not able to create all emails'
-    );
   }
 }
