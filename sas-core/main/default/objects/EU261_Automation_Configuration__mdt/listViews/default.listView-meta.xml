@@ -7,7 +7,6 @@
     <columns>Automatic_Rejection__c</columns>
     <columns>Semi_Automation_Enabled__c</columns>
     <columns>Percentage_Sent_to_Control__c</columns>
-    <columns>Scheduled_Runtime__c</columns>
     <columns>Claims_Per_Batch__c</columns>
     <columns>Claim_Expense_Max_Amount__c</columns>
     <columns>Expense_Limit_Accommodation__c</columns>
