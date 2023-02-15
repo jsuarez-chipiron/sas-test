@@ -44,6 +44,10 @@
                 <behavior>Edit</behavior>
                 <field>Refund_Request__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>InactiveCaseOwner__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
