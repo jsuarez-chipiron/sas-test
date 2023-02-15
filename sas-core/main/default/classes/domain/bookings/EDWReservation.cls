@@ -117,13 +117,13 @@ public with sharing class EDWReservation extends Reservation {
             s.baggageQuantity = ticketForSegment.bagCnt;
             s.fareBasis = ticketForSegment.fareBasis;
             s.isBoarded = ticketForSegment.boardingInd == 'Y';
-            s.checkInStatus = ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.get(
+            s.checkInStatus = ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.containsKey(
                 ticketForSegment.acceptanceSts
-              ) == null
-              ? null
-              : ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.get(
+              )
+              ? ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.get(
                   ticketForSegment.acceptanceSts
-                );
+                )
+              : null;
           }
           toReturn.add(s);
         }
@@ -151,7 +151,7 @@ public with sharing class EDWReservation extends Reservation {
         }
       );
       for (Passenger passenger : this.booking.passengers) {
-        if (segmentIdToEventsPerPassenger.get(passenger.identifier) == null) {
+        if (!segmentIdToEventsPerPassenger.containsKey(passenger.identifier)) {
           segmentIdToEventsPerPassenger.put(
             passenger.identifier,
             new Map<String, List<SegmentEvent>>()
@@ -174,8 +174,8 @@ public with sharing class EDWReservation extends Reservation {
         se.updateNumber = segment.resUpdateNo;
         processedEvents.add(se);
         if (
-          segmentIdToEventsPerPassenger.get(passenger.identifier)
-            .get(segmentFlightId) == null
+          !segmentIdToEventsPerPassenger.get(passenger.identifier)
+            .containsKey(segmentFlightId)
         ) {
           segmentIdToEventsPerPassenger.get(passenger.identifier)
             .put(segmentFlightId, new List<SegmentEvent>());
@@ -199,7 +199,7 @@ public with sharing class EDWReservation extends Reservation {
         'ST{0}PT{1}',
         new List<Object>{ ticket.segTattoo, ticket.passengerTattoo }
       );
-      if (segmentIdentifierToTicketInfo.get(ticketIdentifier) == null) {
+      if (!segmentIdentifierToTicketInfo.containsKey(ticketIdentifier)) {
         segmentIdentifierToTicketInfo.put(ticketIdentifier, ticket);
       }
     }
@@ -333,7 +333,7 @@ public with sharing class EDWReservation extends Reservation {
         : Datetime.newInstance(irr.cnlEventDts);
       fi.code = irr.fltStatus == 'X' ? irr.cnlRsnCd : irr.delayRsnCd;
       FlightIrregularity.EU261Eligibility eligibleForEU261;
-      if (FlightIrregularity.codeToSASIsResponsible.get(fi.code) == null) {
+      if (!FlightIrregularity.codeToSASIsResponsible.containsKey(fi.code)) {
         eligibleForEU261 = FlightIrregularity.EU261Eligibility.Tentative;
       } else if (FlightIrregularity.codeToSASIsResponsible.get(fi.code)) {
         eligibleForEU261 = FlightIrregularity.EU261Eligibility.Yes;
@@ -352,7 +352,7 @@ public with sharing class EDWReservation extends Reservation {
       }
       fi.reason = reasonText;
       fi.type = irr.status;
-      if (flightIdToIrregularities.get(irrFlightId) == null) {
+      if (!flightIdToIrregularities.containsKey(irrFlightId)) {
         flightIdToIrregularities.put(
           irrFlightId,
           new List<FlightIrregularity>()
