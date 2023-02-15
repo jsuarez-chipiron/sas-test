@@ -1,40 +1,39 @@
-public with sharing class FetchEDWBookingsForEU261ClaimsBatch implements Database.Batchable<LIA_Claim__c>, Database.Stateful, Database.AllowsCallouts {
-  public Set<Id> successfulFetches;
-  public fflib_ISObjectUnitOfWork uowUpsert;
-  public fflib_ISObjectUnitOfWork uowDelete;
+public with sharing class FetchEDWBookingsForEU261ClaimsBatch implements Database.Batchable<LIA_Claim__c>, Database.AllowsCallouts {
+  private static final Decimal MAX_RETRIEVE_COUNT = 3.0;
+
   public Iterable<LIA_Claim__c> start(Database.BatchableContext jobId) {
-    this.successfulFetches = new Set<Id>();
-    this.uowUpsert = SAS_Service_Application.UnitOfWork.newInstance();
-    this.uowDelete = SAS_Service_Application.UnitOfWork.newInstance();
-    return ClaimsSelector.newInstance().selectUnhandledClaimsToAutomate();
+    return ClaimsSelector.newInstance()
+      .selectUnhandledEU261ClaimsByDataStatus('In Progress');
   }
 
   public void execute(
     Database.BatchableContext bc,
     List<LIA_Claim__c> claimsToFetch
   ) {
+    fflib_ISObjectUnitOfWork uowUpsert = SAS_Service_Application.UnitOfWork.newInstance();
+    fflib_ISObjectUnitOfWork uowDelete = SAS_Service_Application.UnitOfWork.newInstance();
     for (LIA_Claim__c c : claimsToFetch) {
       Bookings b = BookingService.fetchEDWBookingByBookingReference(
         c.Liability_PNR__c,
-        this.uowUpsert,
-        this.uowDelete
+        uowUpsert,
+        uowDelete
       );
+      Decimal newRetrieveCount = c.External_Data_Retrieve_Count__c + 1;
       if (b == null) {
-        c.EU261_Handling_Status__c = 'Unable to handle';
-        this.uowUpsert.registerDirty(c);
+        if (newRetrieveCount > MAX_RETRIEVE_COUNT) {
+          c.EU261_Handling_Status__c = 'Unable to handle';
+          c.External_Data_Status__c = 'Unavailable';
+        }
       } else {
-        this.successfulFetches.add(c.Id);
+        c.External_Data_Status__c = 'Completed';
       }
+      c.External_Data_Retrieve_Count__c = newRetrieveCount;
+      uowUpsert.registerDirty(c);
     }
+    uowDelete.commitWork();
+    uowUpsert.commitWork();
   }
 
   public void finish(Database.BatchableContext jobId) {
-    String completionMessage = String.format(
-      'Finished processing {0} records. \nList of records: {1}',
-      new List<Object>{ successfulFetches.size(), successfulFetches.toString() }
-    );
-    C_Log.log(C_Log.Severity.Info, completionMessage, null, 'EDW', null);
-    this.uowDelete.commitWork();
-    this.uowUpsert.commitWork();
   }
 }

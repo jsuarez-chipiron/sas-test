@@ -2228,6 +2228,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>External_Data_Status__c</picklist>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Started</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Unavailable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Judicial_Body__c</picklist>
         <values>
             <fullName>ADR</fullName>

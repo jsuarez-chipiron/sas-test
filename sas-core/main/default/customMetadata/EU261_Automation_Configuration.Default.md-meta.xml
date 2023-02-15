@@ -49,10 +49,6 @@
         <value xsi:type="xsd:double">20.0</value>
     </values>
     <values>
-        <field>Scheduled_Runtime__c</field>
-        <value xsi:type="xsd:string">23:00:00</value>
-    </values>
-    <values>
         <field>Semi_Automation_Enabled__c</field>
         <value xsi:type="xsd:boolean">false</value>
     </values>
