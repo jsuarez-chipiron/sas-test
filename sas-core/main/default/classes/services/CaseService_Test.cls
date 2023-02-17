@@ -9,7 +9,7 @@ private class CaseService_Test {
       Status = Cases.STATUS_CLOSED
     );
     c.CreatedDate = System.now().addDays(-101);
-    c.LastModifiedDate = System.now().addDays(-100);
+    c.ClosedDate = System.now().addDays(-100);
     String caseString = JSON.serialize(c);
     Case deserializedCase = (Case) JSON.deserialize(caseString, Case.class);
     insert deserializedCase;
