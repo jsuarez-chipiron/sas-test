@@ -32,11 +32,13 @@ public without sharing class Cases extends ApplicationDomain {
     CustomerClaim,
     InternalBackoffice
   }
-
-  public static Map<String, Integer> departmentToDaysInactive = new Map<String, Integer>{
-    'Customer Claim' => 90,
-    'Liability' => 90
-  };
+  
+  public static final Map<String, Read_Only_Config__mdt> allReadOnlyConfigs = new Map<String, Read_Only_Config__mdt>();
+  static {
+    for ( Read_Only_Config__mdt config: Read_Only_Config__mdt.getAll().values()){
+      allReadOnlyConfigs.put(config.Department__c, config);
+    } 
+  }
 
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
     RecordType.Channel => 'Channel',

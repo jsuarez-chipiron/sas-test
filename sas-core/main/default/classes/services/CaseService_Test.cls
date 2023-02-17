@@ -8,7 +8,11 @@ private class CaseService_Test {
       Team__c = 'Claims',
       Status = Cases.STATUS_CLOSED
     );
-    insert c;
+    c.CreatedDate = System.now().addDays(-101);
+    c.ClosedDate = System.now().addDays(-100);
+    String caseString = JSON.serialize(c);
+    Case deserializedCase = (Case) JSON.deserialize(caseString, Case.class);
+    insert deserializedCase;
     Test.startTest();
     ChangeCasesReadOnlyBatchable b = new ChangeCasesReadOnlyBatchable();
     Database.executeBatch(b, 2000);
@@ -16,7 +20,7 @@ private class CaseService_Test {
     Case caseAfterUpdate = [
       SELECT Id, IsReadOnly__c
       FROM Case
-      WHERE Id = :c.Id
+      WHERE Id = :deserializedCase.Id
     ][0];
     System.assert(
       caseAfterUpdate.IsReadOnly__c,

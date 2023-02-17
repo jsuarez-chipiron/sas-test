@@ -34,11 +34,6 @@ public without sharing class EmailMessages extends ApplicationDomain {
   public class EmailTemplateNameException extends Exception {
   }
 
-  public static Map<String, String> departmentToTemplateName = new Map<String, String>{
-    'Customer Claim' => 'permanent-case-closure-cc',
-    'Liability' => 'permanent-case-closure-lia'
-  };
-
   /**
    * Used to call the trigger in the before insert context
    */
