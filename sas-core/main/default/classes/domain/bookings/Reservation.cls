@@ -86,10 +86,15 @@ public without sharing abstract class Reservation {
     for (Passenger p : this.booking.passengers) {
       p.updateSObjectFields();
       uowUpsert.registerNew(p.underlyingSObject);
+      uowUpsert.registerRelationship(
+        p.underlyingSObject,
+        Passenger__c.Booking__c,
+        this.booking.underlyingSObject
+      );
     }
     for (Flight f : this.flights.values()) {
       f.updateSObjectFields();
-      if (existingFlightIdToRecord.get(f.tedsIdentifier) == null) {
+      if (!existingFlightIdToRecord.containsKey(f.tedsIdentifier)) {
         uowUpsert.registerNew(f.underlyingSObject);
       } else {
         f.underlyingSObject.id = existingFlightIdToRecord.get(f.tedsIdentifier)
@@ -102,43 +107,7 @@ public without sharing abstract class Reservation {
       for (FlightIrregularity fi : f.irregularities) {
         fi.updateSObjectFields();
         uowUpsert.registerNew(fi.underlyingSObject);
-      }
-    }
-    for (Segment s : this.booking.segments) {
-      s.updateSObjectFields();
-      uowUpsert.registerNew(s.underlyingSObject);
-      if (s.getEvents() == null) {
-        continue;
-      }
-      for (SegmentEvent se : s.getEvents()) {
-        se.updateSObjectFields();
-        uowUpsert.registerNew(se.underlyingSObject);
-      }
-    }
-    uowDelete.registerDeleted(toDelete);
-
-    return this;
-  }
-
-  /**
-   * Handles the creation of relationships between record prior to upserting.
-   * @param uow THe UnitOfWork used for inserting/updating records
-   */
-  public Reservation resolveRelationships(fflib_ISObjectUnitOfWork uow) {
-    for (Passenger p : this.booking.passengers) {
-      uow.registerRelationship(
-        p.underlyingSObject,
-        Passenger__c.Booking__c,
-        this.booking.underlyingSObject
-      );
-    }
-
-    for (Flight f : this.flights.values()) {
-      if (f.irregularities == null) {
-        continue;
-      }
-      for (FlightIrregularity fi : f.irregularities) {
-        uow.registerRelationship(
+        uowUpsert.registerRelationship(
           fi.underlyingSObject,
           FlightIrregularities__c.Flight__c,
           f.underlyingSObject
@@ -146,13 +115,15 @@ public without sharing abstract class Reservation {
       }
     }
     for (Segment s : this.booking.segments) {
-      uow.registerRelationship(
+      s.updateSObjectFields();
+      uowUpsert.registerNew(s.underlyingSObject);
+      uowUpsert.registerRelationship(
         s.underlyingSObject,
         Segment__c.Booking__c,
         this.booking.underlyingSObject
       );
-      if (this.flights.get(s.name) != null) {
-        uow.registerRelationship(
+      if (this.flights.containsKey(s.name)) {
+        uowUpsert.registerRelationship(
           s.underlyingSObject,
           Segment__c.Flight__c,
           s.flight.underlyingSObject
@@ -162,13 +133,17 @@ public without sharing abstract class Reservation {
         continue;
       }
       for (SegmentEvent se : s.getEvents()) {
-        uow.registerRelationship(
+        se.updateSObjectFields();
+        uowUpsert.registerNew(se.underlyingSObject);
+        uowUpsert.registerRelationship(
           se.underlyingSObject,
           Segment_Event__c.Segment__c,
           s.underlyingSObject
         );
       }
     }
+    uowDelete.registerDeleted(toDelete);
+
     return this;
   }
 }
