@@ -1,5 +1,5 @@
 @RestResource(urlMapping='/get-eu261claim-pnr/')
-global with sharing class GetUnhandledEU261PNR {
+global without sharing class GetUnhandledEU261PNR {
   @HttpGet
   global static EU261ClaimPNRResponse getPnrs() {
     List<LIA_Claim__c> eu261Claims = ClaimsSelector.newInstance()
