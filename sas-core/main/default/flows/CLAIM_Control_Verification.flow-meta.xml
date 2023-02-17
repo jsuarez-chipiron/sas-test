@@ -218,7 +218,7 @@
     <formulas>
         <name>siteTeamLead</name>
         <dataType>String</dataType>
-        <expression>if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &apos;Sutherland&apos;, &apos;Danish Qureshi&apos; , if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;Student Consulting&quot;, &quot;Josephine Forsberg&quot;, if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;SAS&quot;, &quot;Markus Jonsson&quot;, null)))</expression>
+        <expression>if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &apos;Sutherland&apos;, &apos;Danish Qureshi&apos; , if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;Student Consulting&quot;, &quot;Josephine Forsberg&quot;, if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;SAS&quot;, &quot;Markus Jonsson&quot;, if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;Sykes&quot;, &quot;Markus Jonsson&quot;,null))))</expression>
     </formulas>
     <formulas>
         <name>status</name>
@@ -720,7 +720,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>error_message</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;*﻿&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Case can not be controlled because approval submitter &lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FirstName} {!Get_Case_related_to_Settlement.Approval_Submitter__r.LastName} &lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;from &apos;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c} Vendor&apos; and &apos;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Site__c} Site&apos; is inactive.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;em style=&quot;font-size: 14px;&quot;&gt;Please assign user to &lt;/em&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;&lt;em&gt;{!siteTeamLead}&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;font-size: 14px;&quot;&gt; and write chatter post. &quot;Inactive user please recall the case and assign it to an active agent that should submit the case for approval again.&quot;&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;*﻿&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Case can not be controlled because approval submitter &lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FirstName} {!Get_Case_related_to_Settlement.Approval_Submitter__r.LastName} &lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;from &apos;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c} Vendor&apos; and &apos;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Site__c} Site&apos; is inactive.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;em style=&quot;font-size: 14px;&quot;&gt;Please assign case to &lt;/em&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;&lt;em&gt;{!siteTeamLead}&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;font-size: 14px;&quot;&gt; and write chatter post. &quot;Inactive user please recall the case and assign it to an active agent that should submit the case for approval again.&quot;&lt;/em&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -765,7 +765,7 @@
             <targetReference>Get_Settlement_Information</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Approve_Case</name>
         <label>Approve Case</label>
