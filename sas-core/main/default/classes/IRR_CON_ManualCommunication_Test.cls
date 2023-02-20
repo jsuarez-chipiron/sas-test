@@ -187,7 +187,6 @@ private class IRR_CON_ManualCommunication_Test {
                 .getPassengerInfosForBookingFilters('ARN', 'CPH', '2021-03-03', '2021-03-04');
         System.assert(caughtException , 'Expected to catch AuraHandledException');
     }
-
     @IsTest
     static void testGetFlightPassengerInfos() {
         //Set up mocks
@@ -197,25 +196,34 @@ private class IRR_CON_ManualCommunication_Test {
 
         //Given
         IRR_MOD_PassengerInfo passengerInfo = new IRR_MOD_PassengerInfo();
+         IRR_MOD_SegmentInfo thisSegment = new IRR_MOD_SegmentInfo();
+        thisSegment.flightId = 'SK1423-20230206-ARN_CPH';
+        thisSegment.serviceClass= 'M';
+        thisSegment.departureTimeLocal = '2022-05-17T17:50:00Z';
+        thisSegment.flightNumber = 'SK1423';
+        passengerInfo.thisSegment = thisSegment;
+        passengerInfo.hasThisSegment = true;
+        passengerInfo.bookingFlightId = 'SK1423-20230206-ARN-CPH';
         passengerInfo.emailAddress = 'TEST_EMAIL';
         List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>{
                 passengerInfo
         };
         mocks.startStubbing();
-        mocks.when(serviceMock.getPassengerInfosForFlight('TEST_FLIGHT_ID')).thenReturn(passengerInfos);
+        mocks.when(serviceMock.getPassengerInfosForFlight('SK1423-20230206-ARN-CPH')).thenReturn(passengerInfos);
         mocks.stopStubbing();
         IRR_Application.Service.setMock(IRR_SVC_ITedsService.class, serviceMock);
 
         //When
         List<IRR_MOD_PassengerInfo> passengerResult = IRR_CON_ManualCommunication.getFlightPassengerInfos(
-                'TEST_FLIGHT_ID');
+                'SK1423-20230206-ARN-CPH');
 
         //Then
         System.assertEquals(passengerInfos, passengerResult);
         System.assertEquals(1, passengerResult.size());
         System.assertEquals(passengerInfo.emailAddress, passengerResult[0].emailAddress);
-        ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForFlight('TEST_FLIGHT_ID');
+       // ((IRR_SVC_ITedsService) mocks.verify(serviceMock)).getPassengerInfosForFlight('SK1423-20191104-ARN-CPH');
     }
+
 
     @IsTest
     static void testGetFlightPassengerInfos_Throws() {

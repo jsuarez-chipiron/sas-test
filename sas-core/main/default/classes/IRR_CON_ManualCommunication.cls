@@ -8,6 +8,7 @@
 public class IRR_CON_ManualCommunication {
 
     private static final String EVENT_TYPE = 'manualCommunication';
+    private static final String AIRLINE = 'SK';
 
     @AuraEnabled
     public static List<IRR_MOD_PassengerInfo> getBookingPassengerInfos(String bookings) {
@@ -57,24 +58,61 @@ public class IRR_CON_ManualCommunication {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled    
     public static List<IRR_MOD_PassengerInfo> getFlightPassengerInfos(String flightIds) {
-        String currentFlightId;
-        try {
+    String currentFlightId;   
+    try { 
             List<String> splitFlightIds = flightIds.split(',');
             List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
             for (String flightId : splitFlightIds) {
-                currentFlightId = flightId;
-                passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForFlight(flightId));
-            }
-            return passengerInfos;
-        }
-        catch (Exception e) {
-            AuraHandledException ahe = new AuraHandledException(currentFlightId + ' - ' + e.getMessage());
-            ahe.setMessage(currentFlightId + ' - ' + e.getMessage());
-            throw ahe;
-        }
+            List<IRR_MOD_PassengerInfo> passengerList = IRR_SVC_TedsService.getPassengerInfosForFlight(flightId); 
+            if(passengerList.size()>0){ 
+            String flightDateStr = flightid.SubString(7,15); 
+            String flightYear = flightDateStr.SubString(0,4);
+            String flightMonth = flightDateStr.SubString(4,6);
+            String flightDay = flightDateStr.SubString(6,8);
+            Date flightDate = Date.valueOf(flightYear + '-' + flightMonth+'-' + flightDay);
+            Date passengerLocalDateCurrentFlight = Date.valueOf(passengerList[0].thisSegment.departureTimeLocal); 
+
+    if(flightDate.daysBetween(passengerLocalDateCurrentFlight) == -1){ 
+            String newDate = flightYear + '' + flightMonth + '' + String.valueOf((Integer.valueOf(flightDay) + 1)).leftPad(2, '0') ; 
+            String updatedFlightId = flightId.replace(flightDateStr, newDate);
+            List<IRR_MOD_PassengerInfo> passengerInfoList = IRR_SVC_TedsService.getPassengerInfosForFlight(updatedFlightId);
+            
+    if(passengerInfoList.size()>0){
+                    Date passengerLocalDate = Date.valueOf(passengerInfoList[0].thisSegment.departureTimeLocal);    
+                    if(flightDate.daysBetween(passengerLocalDate) == 0){
+                        passengerInfos.addAll(passengerInfoList);
+                        } 
+                    }
     }
+
+    else if(flightDate.daysBetween(passengerLocalDateCurrentFlight) == 1){ 
+            String newDate = flightYear + '' + flightMonth + '' + String.valueOf((Integer.valueOf(flightDay) - 1)).leftPad(2, '0') ;  
+            String updatedFlightId = flightId.replace(flightDateStr, newDate);
+            List<IRR_MOD_PassengerInfo> passengerInfoList = IRR_SVC_TedsService.getPassengerInfosForFlight(updatedFlightId);
+    
+    if(passengerInfoList.size()>0){
+                    Date passengerLocalDate = Date.valueOf(passengerInfoList[0].thisSegment.departureTimeLocal);    
+                    if(flightDate.daysBetween(passengerLocalDate) == 0){
+                        passengerInfos.addAll(passengerInfoList);
+                        } 
+                    }
+    
+    } 
+    else {
+            passengerInfos.addAll(IRR_SVC_TedsService.getPassengerInfosForFlight(flightId)); 
+    }
+    }
+    } 
+    return passengerInfos; 
+    }
+    catch (Exception e) {
+            AuraHandledException ahe = new AuraHandledException(currentFlightId + ' - ' + e.getMessage());
+            ahe.setMessage(currentFlightId + ' - ' + e.getMessage()); 
+            throw ahe;
+     } 
+}
 
     @AuraEnabled
     public static void sendManualCommunication(IRR_MOD_ManualRequest manualRequest) {
