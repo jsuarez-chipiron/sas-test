@@ -6,7 +6,7 @@
     <errorConditionFormula>AND(
 AND(
     $RecordType.Name = &quot;Claim&quot;,
-    OR(
+    AND(
         ISCHANGED(IsClosed),
         ISPICKVAL(Status, &quot;Closed&quot;)
     ), OR(ISPICKVAL(LIA_Claim__r.Result__c,&quot;&quot;),ISPICKVAL(LIA_Claim__r.Result__c,&quot;Pending&quot;))
