@@ -9,7 +9,7 @@
     <relationshipName>Cases</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
 	<complianceGroup>Lookup</complianceGroup>
     <type>Lookup</type>
