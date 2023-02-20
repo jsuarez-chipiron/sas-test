@@ -8,6 +8,7 @@
 public class IRR_CON_ManualCommunication {
 
     private static final String EVENT_TYPE = 'manualCommunication';
+    private static final String AIRLINE = 'SK';
 
     @AuraEnabled
     public static List<IRR_MOD_PassengerInfo> getBookingPassengerInfos(String bookings) {
@@ -64,14 +65,14 @@ public class IRR_CON_ManualCommunication {
             List<String> splitFlightIds = flightIds.split(',');
             List<IRR_MOD_PassengerInfo> passengerInfos = new List<IRR_MOD_PassengerInfo>();
             for (String flightId : splitFlightIds) {
-            List<IRR_MOD_PassengerInfo> passList = IRR_SVC_TedsService.getPassengerInfosForFlight(flightId); 
-            if(passList.size()>0){ 
+            List<IRR_MOD_PassengerInfo> passengerList = IRR_SVC_TedsService.getPassengerInfosForFlight(flightId); 
+            if(passengerList.size()>0){ 
             String flightDateStr = flightid.SubString(7,15); 
             String flightYear = flightDateStr.SubString(0,4);
             String flightMonth = flightDateStr.SubString(4,6);
             String flightDay = flightDateStr.SubString(6,8);
             Date flightDate = Date.valueOf(flightYear + '-' + flightMonth+'-' + flightDay);
-            Date passengerLocalDateCurrentFlight = Date.valueOf(passList[0].thisSegment.departureTimeLocal); 
+            Date passengerLocalDateCurrentFlight = Date.valueOf(passengerList[0].thisSegment.departureTimeLocal); 
 
     if(flightDate.daysBetween(passengerLocalDateCurrentFlight) == -1){ 
             String newDate = flightYear + '' + flightMonth + '' + String.valueOf((Integer.valueOf(flightDay) + 1)).leftPad(2, '0') ; 
