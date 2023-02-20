@@ -104,22 +104,6 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.Reopen_Case</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.IsReadOnly__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Closed</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Case.Recall_Case</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
