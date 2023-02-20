@@ -345,6 +345,7 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Department_Error</name>
         <label>Department Error</label>
