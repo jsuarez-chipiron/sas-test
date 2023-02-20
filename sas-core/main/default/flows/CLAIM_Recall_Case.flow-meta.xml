@@ -30,7 +30,7 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
-            <conditionLogic>(1 OR 2) AND (3 OR (4 AND 7) OR (5 AND 7) OR (6 AND 7))</conditionLogic>
+            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case_Information.Status</leftValueReference>
                 <operator>EqualTo</operator>
@@ -50,27 +50,6 @@
                 <operator>StartsWith</operator>
                 <rightValue>
                     <stringValue>00G</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>UserId</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>0052p000009UZLeAAO</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>UserId</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>0052p000008i0BxAAI</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>UserId</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>0052p000008i2LGAAY</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
