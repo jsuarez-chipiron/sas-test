@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Unlock_Settlement</name>
         <label>Unlock Settlement</label>
-        <locationX>1018</locationX>
+        <locationX>1282</locationX>
         <locationY>1718</locationY>
         <actionName>UnlockRecords</actionName>
         <actionType>apex</actionType>
@@ -38,7 +38,7 @@
     <decisions>
         <name>Is_Control_finished</name>
         <label>Is Control finished</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1718</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -72,7 +72,7 @@
     <decisions>
         <name>Is_it_approved</name>
         <label>Is it approved?</label>
-        <locationX>622</locationX>
+        <locationX>886</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Rejected_request</targetReference>
@@ -97,7 +97,7 @@
     <decisions>
         <name>Settlement_status_is_valid</name>
         <label>Settlement status is valid</label>
-        <locationX>1040</locationX>
+        <locationX>1304</locationX>
         <locationY>998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -134,12 +134,48 @@
     <decisions>
         <name>Who_is_reviewing_the_settlement</name>
         <label>Who is reviewing the settlement?</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Waiting</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Submitter_User_is_inactive</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_related_to_Settlement.Approval_Submitter__r.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$User.Username</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Case_related_to_Settlement.Owner:User.Username</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_related_to_Settlement.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Control</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Group_Member_record_for_user_and_control_group</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>error_screen</targetReference>
+            </connector>
+            <label>Submitter User is inactive</label>
+        </rules>
         <rules>
             <name>Control_User</name>
             <conditionLogic>and</conditionLogic>
@@ -178,6 +214,12 @@
         <picklistField>Rejection_Reason__c</picklistField>
         <picklistObject>Approval_Request__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>siteTeamLead</name>
+        <dataType>String</dataType>
+        <expression>if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &apos;Sutherland&apos;, &apos;Danish Qureshi&apos; , if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;Student Consulting&quot;, &quot;Josephine Forsberg&quot;, if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;SAS&quot;, &quot;Markus Jonsson&quot;, if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;Sykes&quot;, &quot;Markus Jonsson&quot;,null))))</expression>
+    </formulas>
     <formulas>
         <name>status</name>
         <dataType>String</dataType>
@@ -188,7 +230,7 @@
     <loops>
         <name>Unlock_all_related_Settlements</name>
         <label>Unlock all related Settlements</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>1598</locationY>
         <collectionReference>Get_related_Settlements</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -221,7 +263,7 @@
     <recordCreates>
         <name>Approverequest</name>
         <label>Approve request</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1358</locationY>
         <connector>
             <targetReference>Update_Settlement_Status_Approved</targetReference>
@@ -262,7 +304,7 @@
     <recordCreates>
         <name>Rejected_request</name>
         <label>Rejected request</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>1358</locationY>
         <connector>
             <targetReference>Get_related_Settlements</targetReference>
@@ -315,7 +357,7 @@
     <recordLookups>
         <name>Get_Case_related_to_Settlement</name>
         <label>Get Case related to Settlement</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -336,7 +378,7 @@
     <recordLookups>
         <name>Get_Control_public_group_id</name>
         <label>Get Control public group id</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -364,7 +406,7 @@
     <recordLookups>
         <name>Get_Group_Member_record_for_user_and_control_group</name>
         <label>Get Group Member record for user and control group</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -392,7 +434,7 @@
     <recordLookups>
         <name>Get_related_Settlements</name>
         <label>Get related Settlements</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>1478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -427,7 +469,7 @@
     <recordLookups>
         <name>Get_Settlement_Information</name>
         <label>Get Settlement Information</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -448,7 +490,7 @@
     <recordLookups>
         <name>Get_updated_Settlement_Information</name>
         <label>Get updated Settlement Information</label>
-        <locationX>1040</locationX>
+        <locationX>1304</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -469,7 +511,7 @@
     <recordUpdates>
         <name>Update_control_verified_in_settlement</name>
         <label>Update control verified in settlement</label>
-        <locationX>622</locationX>
+        <locationX>886</locationX>
         <locationY>1118</locationY>
         <connector>
             <targetReference>Is_it_approved</targetReference>
@@ -493,7 +535,7 @@
     <recordUpdates>
         <name>Update_other_Settlements</name>
         <label>Update other Settlements</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>2054</locationY>
         <connector>
             <targetReference>Send_Case_Rejection_Notification</targetReference>
@@ -538,7 +580,7 @@
     <recordUpdates>
         <name>Update_Settlement_Status_Approved</name>
         <label>Update Settlement Status - Approved</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1478</locationY>
         <connector>
             <targetReference>Have_all_Settlements_for_this_Claim_been_controlled</targetReference>
@@ -554,7 +596,7 @@
         <inputAssignments>
             <field>Control_Reason__c</field>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -574,7 +616,7 @@
     <recordUpdates>
         <name>Update_Settlement_Status_Denied</name>
         <label>Update Settlement Status - Denied</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>1934</locationY>
         <connector>
             <targetReference>Update_other_Settlements</targetReference>
@@ -590,7 +632,7 @@
         <inputAssignments>
             <field>Control_Reason__c</field>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -605,7 +647,7 @@
     <screens>
         <name>Control_Request</name>
         <label>Control Request</label>
-        <locationX>1040</locationX>
+        <locationX>1304</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -624,7 +666,7 @@
             <choiceReferences>rejectedChoice</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
-                <stringValue/>
+                <stringValue></stringValue>
             </defaultValue>
             <fieldText>Control Status</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -669,9 +711,25 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>error_screen</name>
+        <label>error screen</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error_message</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;*﻿&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Case can not be controlled because approval submitter &lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FirstName} {!Get_Case_related_to_Settlement.Approval_Submitter__r.LastName} &lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;from &apos;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c} Vendor&apos; and &apos;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Site__c} Site&apos; is inactive.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;em style=&quot;font-size: 14px;&quot;&gt;Please assign case to &lt;/em&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;&lt;em&gt;{!siteTeamLead}&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;font-size: 14px;&quot;&gt; and write chatter post. &quot;Inactive user please recall the case and assign it to an active agent that should submit the case for approval again.&quot;&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Invalid_Settlement_Status</name>
         <label>Invalid Settlement Status</label>
-        <locationX>1194</locationX>
+        <locationX>1458</locationX>
         <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -687,7 +745,7 @@
     <screens>
         <name>Waiting</name>
         <label>Waiting</label>
-        <locationX>1722</locationX>
+        <locationX>1986</locationX>
         <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -701,7 +759,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1255</locationX>
+        <locationX>892</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Settlement_Information</targetReference>
@@ -711,7 +769,7 @@
     <subflows>
         <name>Approve_Case</name>
         <label>Approve Case</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>1838</locationY>
         <flowName>CLAIM_Settlement_Approved</flowName>
         <inputAssignments>
@@ -724,7 +782,7 @@
     <subflows>
         <name>Have_all_Settlements_for_this_Claim_been_controlled</name>
         <label>Have all Settlements for this Claim been controlled</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1598</locationY>
         <connector>
             <targetReference>Is_Control_finished</targetReference>
@@ -750,7 +808,7 @@
     <subflows>
         <name>Send_Case_Rejection_Notification</name>
         <label>Send Case Rejection Notification</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>2174</locationY>
         <flowName>CLAIM_Case_Rejected</flowName>
         <inputAssignments>
