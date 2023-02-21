@@ -6,7 +6,7 @@ public without sharing class ChangeCasesReadOnlyBatchable implements Database.Ba
 
   public Iterable<Case> start(Database.BatchableContext bc) {
     List<Case> allCases = new List<Case>();
-    for (String department : Cases.departmentToDaysInactive.keySet()) {
+    for (String department : Cases.allReadOnlyConfigs.keySet()) {
       allCases.addAll(
         CasesSelector.newInstance().selectInactiveByDepartment(department)
       );

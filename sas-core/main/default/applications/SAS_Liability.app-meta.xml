@@ -715,7 +715,7 @@
         <type>Flexipage</type>
         <profile>Business User</profile>
     </profileActionOverrides>
-       <profileActionOverrides>
+    <profileActionOverrides>
         <actionName>View</actionName>
         <content>SAS_Customer_Claim_Record_Page</content>
         <formFactor>Small</formFactor>

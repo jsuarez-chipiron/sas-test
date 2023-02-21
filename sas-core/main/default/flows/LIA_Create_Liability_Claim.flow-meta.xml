@@ -307,7 +307,7 @@
     <formulas>
         <name>emailValidation</name>
         <dataType>Boolean</dataType>
-        <expression>REGEX ( UPPER ( {!providedEmail} ) ,&quot;^[A-Z0-9._%+-/!#$%&amp;&apos;*=?^_`{|}~]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$&quot;)</expression>
+        <expression>REGEX ( UPPER ( {!providedEmail} ) ,&quot;^[A-Z0-9._%+-/!#$%&amp;&apos;*=?^_`{|}~]+@[A-Z0-9.-]+\\.[A-Z]{2,5}$&quot;)</expression>
     </formulas>
     <formulas>
         <name>flightDate</name>
@@ -1335,6 +1335,10 @@
                     <fieldText>EuroBonus Number</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;There are 9 numbers in a EuroBonus Number&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!EuroBonus_Number}) = 9</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Phone</name>
@@ -1487,6 +1491,10 @@
                     <fieldText>Bank Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Bank Name cannot be longer that 60 characters&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Bank_Name}) &lt;= 60</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>BankCountryCurrency</name>

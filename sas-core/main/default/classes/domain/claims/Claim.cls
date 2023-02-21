@@ -24,6 +24,9 @@ public without sharing class Claim extends AbstractSObjectWrapper {
   public String eu261HandlingNote;
   public EU261HandlingStatus eu261HandlingStatus;
 
+  public ExternalDataStatus externalDataStatus;
+  public Decimal externalDataRetrieveCount;
+
   public CompensationType preferredCompensationMethod;
   public CompensationType preferredReimbursementMethod;
   public String bankAccountHolderName;
@@ -116,6 +119,10 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.underlyingSObject.EU261_Handling_Status__c = EU261_STATUS_ENUM_TO_PICKLIST_VALUE.get(
       this.eu261HandlingStatus
     );
+    this.underlyingSObject.External_Data_Status__c = EXTERNAL_DATA_STATUS_ENUM_TO_PICKLIST_VALUE.get(
+      this.externalDataStatus
+    );
+    this.underlyingSObject.External_Data_Retrieve_Count__c = this.externalDataRetrieveCount;
     this.underlyingSObject.EuroBonus_Number__c = this.euroBonusNumber;
     this.underlyingSObject.Flight_Date__c = this.departureDate;
     this.underlyingSObject.Flight_Number__c = this.flightNumber;
@@ -192,6 +199,10 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     this.eu261HandlingStatus = EU261_STATUS_PICKLIST_VALUE_TO_ENUM.get(
       c.EU261_Handling_Status__c
     );
+    this.externalDataStatus = EXTERNAL_DATA_STATUS_PICKLIST_VALUE_TO_ENUM.get(
+      c.External_Data_Status__c
+    );
+    this.externalDataRetrieveCount = c.External_Data_Retrieve_Count__c;
     this.euroBonusNumber = c.EuroBonus_Number__c;
     this.departureDate = c.Flight_Date__c;
     this.flightNumber = c.Flight_Number__c;
@@ -265,7 +276,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     FlightExperience,
     Other,
     PassengerIrregularities,
-    TravelExtras
+    TravelExtras,
+    CompensationCard
   }
 
   public enum Type {
@@ -287,11 +299,13 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     InFlightMeal,
     InFlightService,
     MissingItemsFromBaggage,
+    LessThan21Days,
     Lounge,
     MealsDrinks,
     MissedConnection,
     MissedConnectionCompensation,
     MissedConnectionExpenses,
+    MoreThan21Days,
     PersonalInjury,
     PrepaidSeat,
     SpecialAssistance,
@@ -336,8 +350,29 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     IneligibleForCompensation,
     PossiblyEligibleForCompensation,
     UnableToHandle,
-    ReimbursementOnly  
+    ReimbursementOnly
   }
+
+  public enum ExternalDataStatus {
+    NotStarted,
+    InProgress,
+    Completed,
+    Unavailable
+  }
+
+  private static final Map<ExternalDataStatus, String> EXTERNAL_DATA_STATUS_ENUM_TO_PICKLIST_VALUE = new Map<ExternalDataStatus, String>{
+    externalDataStatus.NotStarted => 'Not Started',
+    externalDataStatus.InProgress => 'In Progress',
+    externalDataStatus.Completed => 'Completed',
+    externalDataStatus.Unavailable => 'Unavailable'
+  };
+
+  private static final Map<String, ExternalDataStatus> EXTERNAL_DATA_STATUS_PICKLIST_VALUE_TO_ENUM = new Map<String, ExternalDataStatus>{
+    'Not Started' => ExternalDataStatus.NotStarted,
+    'In Progress' => ExternalDataStatus.InProgress,
+    'Completed' => ExternalDataStatus.Completed,
+    'Unavailable' => ExternalDataStatus.Unavailable
+  };
 
   private static final Map<EU261HandlingStatus, String> EU261_STATUS_ENUM_TO_PICKLIST_VALUE = new Map<EU261HandlingStatus, String>{
     EU261HandlingStatus.Unhandled => 'Unhandled',
@@ -404,7 +439,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     'Flight experience' => Category.FlightExperience,
     'Other' => Category.Other,
     'Passenger irregularities' => Category.PassengerIrregularities,
-    'Travel extras bought not rendered' => Category.TravelExtras
+    'Travel extras bought not rendered' => Category.TravelExtras,
+    'Compensation Card' => Category.CompensationCard
   };
 
   private static final Map<Category, String> CATEGORY_ENUM_TO_PICKLIST_VALUE = new Map<Category, String>{
@@ -416,7 +452,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     Category.FlightExperience => 'Flight experience',
     Category.Other => 'Other',
     Category.PassengerIrregularities => 'Passenger irregularities',
-    Category.TravelExtras => 'Travel extras bought not rendered'
+    Category.TravelExtras => 'Travel extras bought not rendered',
+    Category.CompensationCard => 'Compensation Card'
   };
 
   private static final Map<ContactType, String> CUSTOMER_TYPE_ENUM_TO_PICKLIST_VALUE = new Map<ContactType, String>{
@@ -451,6 +488,8 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     'Gate issues' => Type.GateIssues,
     'In-flight meal' => Type.InFlightMeal,
     'In-flight service' => Type.InFlightService,
+    'Baggage delayed/lost' => Type.LessThan21Days,
+    'Baggage delayed/lost' => Type.MoreThan21Days,
     'Items missing from checked-in baggage' => Type.MissingItemsFromBaggage,
     'Lounge' => Type.Lounge,
     'Meals/Drinks' => Type.MealsDrinks,
@@ -487,12 +526,14 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     Type.GateIssues => 'Gate issues',
     Type.InFlightMeal => 'In-flight meal',
     Type.InFlightService => 'In-flight service',
+    Type.LessThan21Days => 'Baggage delayed/lost',
     Type.MissingItemsFromBaggage => 'Items missing from checked-in baggage',
     Type.Lounge => 'Lounge',
     Type.MealsDrinks => 'Meals/Drinks',
     Type.MissedConnection => 'Missed connection',
     Type.MissedConnectionCompensation => 'Missed connection - compensation',
     Type.MissedConnectionExpenses => 'Missed connection - expenses',
+    Type.MoreThan21Days => 'Baggage delayed/lost',
     Type.PersonalInjury => 'Personal injury',
     Type.PrepaidSeat => 'Prepaid seat',
     Type.SpecialAssistance => 'Special assistance',

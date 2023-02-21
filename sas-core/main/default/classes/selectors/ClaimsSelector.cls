@@ -33,6 +33,8 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
       LIA_Claim__c.Delay_Length__c,
       LIA_Claim__c.EU261_Handling_Note__c,
       LIA_Claim__c.EU261_Handling_Status__c,
+      LIA_Claim__c.External_Data_Status__c,
+      LIA_Claim__c.External_Data_Retrieve_Count__c,
       LIA_Claim__c.Full_Name__c,
       LIA_Claim__c.EuroBonus_Number__c,
       LIA_Claim__c.Flight_Date__c,
@@ -65,13 +67,6 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     );
   }
 
-  //Cutoff date for fetching eu261 claims for handling/data fetching is 23:00:00 the previous day
-  public static final String CUTOFF_TIME = '23:00:00';
-  public static final Datetime CUTOFF_DATETIME = Datetime.valueOfGmt(
-    System.today().addDays(-1).format() +
-    ' ' +
-    CUTOFF_TIME
-  );
   public static final String UNHANDLED_EU261_STATUS = 'Unhandled';
   public static final Set<String> EU261_CLAIM_TYPES = new Set<String>{
     'Flight cancellation - compensation',
@@ -189,20 +184,13 @@ public inherited sharing class ClaimsSelector extends fflib_SObjectSelector {
     return (List<LIA_Claim__c>) Database.query(claimsQF.toSOQL());
   }
 
-  public List<LIA_Claim__c> selectUnhandledClaimsToAutomate() {
+  public List<LIA_Claim__c> selectUnhandledEU261ClaimsByDataStatus(
+    String externalDataStatus
+  ) {
     return (List<LIA_Claim__c>) Database.query(
       newQueryFactory()
         .setCondition(
-          'EU261_Handling_Status__c = :UNHANDLED_EU261_STATUS and Customer_Claim_Type__c IN :EU261_CLAIM_TYPES AND CreatedDate < :CUTOFF_DATETIME'
-        )
-        .toSOQL()
-    );
-  }
-  public List<LIA_Claim__c> selectUnhandledClaimsToFetchBookingData() {
-    return (List<LIA_Claim__c>) Database.query(
-      newQueryFactory()
-        .setCondition(
-          'EU261_Handling_Status__c = :UNHANDLED_EU261_STATUS and Customer_Claim_Type__c IN :EU261_CLAIM_TYPES AND CreatedDate >= :CUTOFF_DATETIME'
+          'EU261_Handling_Status__c = :UNHANDLED_EU261_STATUS and Customer_Claim_Type__c IN :EU261_CLAIM_TYPES AND External_Data_Status__c = :externalDataStatus'
         )
         .toSOQL()
     );

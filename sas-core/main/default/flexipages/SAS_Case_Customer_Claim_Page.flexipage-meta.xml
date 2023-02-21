@@ -19,7 +19,7 @@
                         <valueListItems>
                             <value>Case.Update_Status</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8) AND 9</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
@@ -60,6 +60,11 @@
                                     <operator>EQUAL</operator>
                                     <rightValue>Closed</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.IsReadOnly__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
@@ -95,22 +100,6 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>New Response</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Case.Reopen_Case</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.IsReadOnly__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Closed</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -324,6 +313,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>caseSimilarCases</componentName>
+                <identifier>c_caseSimilarCases</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-a918cca2-d01c-4576-8318-d3838aafba83</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
@@ -376,10 +375,66 @@
                 <identifier>relatedListsTab</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-a918cca2-d01c-4576-8318-d3838aafba83</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Similar Cases</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-ef70b060-3b43-4a47-8a2d-98da6781215c</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;This case is &lt;/span&gt;&lt;strong style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;ready only&lt;/strong&gt;&lt;span style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;. It has been permanently close due inactivity. &lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;DO NOT SEND EMAILS &lt;/strong&gt;&lt;span style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;from this case to the customer.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;For more or new actions, a new case is needed.&lt;/strong&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsReadOnly__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;The current case owner is &lt;/span&gt;&lt;strong style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;inactive&lt;/strong&gt;&lt;span style=&quot;color: rgb(244, 2, 35); font-size: 18px;&quot;&gt;. The case needs to be reassigned to an active agent for it to be handled and for someone to receive a potential &lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;post/comment.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.InactiveCaseOwner__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -445,12 +500,6 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer3</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>caseSimilarCases</componentName>
-                <identifier>caseSimilarCases</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>

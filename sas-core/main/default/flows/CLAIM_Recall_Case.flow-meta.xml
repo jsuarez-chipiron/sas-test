@@ -30,7 +30,7 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case_Information.Status</leftValueReference>
                 <operator>EqualTo</operator>
@@ -50,6 +50,13 @@
                 <operator>StartsWith</operator>
                 <rightValue>
                     <stringValue>00G</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>UserId</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -83,6 +90,12 @@
             <label>Yes recall</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>UserId</name>
+        <dataType>String</dataType>
+        <expression>CASESAFEID({!$User.Id})</expression>
+    </formulas>
     <interviewLabel>CLAIM Recall Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Recall Case</label>
     <loops>
