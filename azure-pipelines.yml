@@ -28,7 +28,8 @@ steps:
       #wget -qO- $CLIURL | tar xJ -C $(Agent.BuildDirectory)/sfdx --strip-components 1
       #sudo $(Agent.BuildDirectory)/sfdx/install
       #export PATH=$(Agent.BuildDirectory)/sfdx/:$PATH
-      sudo npm install sfdx-cli --global
+      #sudo npm install sfdx-cli --global
+      sudo npm install sfdx-cli@7.119.3 --global
       sfdx --version
       sfdx plugins --core
     displayName: "Install SFDX"
