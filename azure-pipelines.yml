@@ -29,7 +29,7 @@ steps:
       #sudo $(Agent.BuildDirectory)/sfdx/install
       #export PATH=$(Agent.BuildDirectory)/sfdx/:$PATH
       #sudo npm install sfdx-cli --global
-      sudo npm install sfdx-cli@7.119.3 --global
+      sudo npm install sfdx-cli@7.186.2 --global
       sfdx --version
       sfdx plugins --core
     displayName: "Install SFDX"
