@@ -219,17 +219,17 @@ public without sharing class EU261Service {
     List<EU261Claim> filteredClaims = new List<EU261Claim>();
     for (EU261Claim c : claimsToAutomate) {
       if (
-        c.claimObj.type != Claim.Type.FlightCancellation &&
-        c.claimObj.type != Claim.Type.FlightDelay
+        !EU261Claim.DELAY_CLAIM_TYPES.contains(c.claimObj.type) &&
+        !EU261Claim.CANCELLATION_CLAIM_TYPES.contains(c.claimObj.type)
       ) {
         throw new AutomationException('Unsupported claim type');
       } else if (
-        c.claimObj.type == Claim.Type.FlightCancellation &&
+        EU261Claim.CANCELLATION_CLAIM_TYPES.contains(c.claimObj.type) &&
         this.config.enabledCancellationAutomation
       ) {
         filteredClaims.add(c);
       } else if (
-        c.claimObj.type == Claim.Type.FlightDelay &&
+        EU261Claim.DELAY_CLAIM_TYPES.contains(c.claimObj.type) &&
         this.config.enabledDelayAutomation
       ) {
         filteredClaims.add(c);

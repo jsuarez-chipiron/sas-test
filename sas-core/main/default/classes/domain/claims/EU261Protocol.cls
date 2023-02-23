@@ -93,10 +93,10 @@ public without sharing class EU261Protocol {
   private List<String> getEligibilityExplanation() {
     List<String> toReturn = new List<String>();
 
-    if (claimObj.type == Claim.Type.FlightCancellation) {
+    if (EU261Claim.CANCELLATION_CLAIM_TYPES.contains(claimObj.type)) {
       toReturn.add(getCancellationInfo());
       toReturn.addAll(getDetailedExplanation());
-    } else if (claimObj.type == Claim.Type.FlightDelay) {
+    } else if (EU261Claim.DELAY_CLAIM_TYPES.contains(claimObj.type)) {
       toReturn.addAll(getDelayInfo());
       toReturn.addAll(getDetailedExplanationDelay());
     }
@@ -106,10 +106,10 @@ public without sharing class EU261Protocol {
 
   private List<String> getIneligibilityExplanation() {
     List<String> toReturn = new List<String>();
-    if (claimObj.type == Claim.Type.FlightCancellation) {
+    if (EU261Claim.CANCELLATION_CLAIM_TYPES.contains(claimObj.type)) {
       toReturn.add(getCancellationInfo());
     }
-    if (claimObj.type == Claim.Type.FlightCancellation) {
+    if (EU261Claim.CANCELLATION_CLAIM_TYPES.contains(claimObj.type)) {
       toReturn.addAll(getDelayInfo());
     }
 
