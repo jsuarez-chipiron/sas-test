@@ -519,9 +519,6 @@ public without sharing class ClaimService {
       new AddBookingForRequest(caseToInsert.Id, certificateRequest.Id)
     );
 
-    system.debug('testing process delay certificate');
-    system.debug(caseToInsert);
-
     return '';
   }
 
