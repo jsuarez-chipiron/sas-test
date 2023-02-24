@@ -63,7 +63,6 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   public static final Map<String, Boolean> codeToSASIsResponsible = new Map<String, Boolean>{
     'WEAT' => false,
     'TECH' => true,
-    'INDU' => true,
     'FA' => true,
     'CA' => true,
     'AF' => false
