@@ -31,7 +31,7 @@ private class IRR_SEL_EventLogsSelector_Test {
         //Given
         List<IRR_EventLog__c> eventLogs = new List<IRR_EventLog__c>{
             new IRR_EventLog__c(IRR_FlightId__c='TEST_FLIGHT',IRR_Event_Type__c='ICOUPON',Is_Communication_Send__c=false,
-                                IRR_ScheduleTime__c=System.Now().addHours(1))
+                                IRR_ScheduleTime__c=System.Now().addMinutes(30))
         };
 
         insert eventLogs;
