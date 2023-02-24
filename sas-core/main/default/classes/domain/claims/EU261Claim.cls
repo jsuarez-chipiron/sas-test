@@ -807,12 +807,10 @@ public class EU261Claim {
       }
 
       // Compare the original rebooking against the suggested rebooking and calculate compensation
-      departureDifference = Integer.valueOf(
-        DateUtils.getHoursBetween(newDeparture, originalDeparture) * 60
-      );
-      arrivalDifference = Integer.valueOf(
-        DateUtils.getHoursBetween(newArrival, originalArrival) * 60
-      );
+      departureDifference =
+        DateUtils.getMinutesBetween(newDeparture, originalDeparture) + 1; // Add 1 minute to make sure we don't round down
+      arrivalDifference =
+        DateUtils.getMinutesBetween(newArrival, originalArrival) + 1;
 
       if (newArrival > originalArrival) {
         minutesLateOnArrival = arrivalDifference;
