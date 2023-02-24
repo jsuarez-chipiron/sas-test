@@ -53,7 +53,18 @@ public without sharing class Trip {
         );
       }
     }
-    return divideActiveSegmentsIntoTrips(b.getActiveSegmentsAtTime(theTime));
+
+    List<Trip> toReturn = divideActiveSegmentsIntoTrips(
+      b.getActiveSegmentsAtTime(theTime)
+    );
+
+    for (Trip t : toReturn) {
+      if (!t.isValid()) {
+        throw new InvalidException('One or more of the trips are invalid');
+      }
+    }
+
+    return toReturn;
   }
 
   public class InsufficientDataException extends Exception {
@@ -229,13 +240,20 @@ public without sharing class Trip {
     }
   }
 
-  // DELAY LOGIC
   public Datetime getFinalDestinationArrivalTime() {
     Flight lastFlight = getFlightToFinalDestination();
     if (lastFlight.actualArrivalTime != null) {
       return lastFlight.actualArrivalTime;
     }
     return lastFlight.scheduledArrivalTime;
+  }
+
+  public Datetime getDeparture() {
+    Flight firstFlight = getFirstFlight();
+    if (firstFlight.actualDepartureTime != null) {
+      return firstFlight.actualDepartureTime;
+    }
+    return firstFlight.scheduledDepartureTime;
   }
 
   public Datetime getScheduledDeparture() {
@@ -562,17 +580,22 @@ public without sharing class Trip {
     };
   }
 
+  private Boolean arrivesBeforeDeparture() {
+    return getDeparture() > getFinalDestinationArrivalTime();
+  }
+
+  public Boolean isValid() {
+    return !arrivesBeforeDeparture() && hasRouteFromOriginToDestination();
+  }
+
   public static void checkIfValidReplacement(Trip t, Trip replacement) {
     if (t == null || replacement == null) {
       throw new InvalidException('The trip and/or its replacement is null');
     }
 
-    if (
-      !t.hasRouteFromOriginToDestination() ||
-      !replacement.hasRouteFromOriginToDestination()
-    ) {
+    if (!t.isValid() || !replacement.isValid()) {
       throw new InvalidException(
-        'The trip and/or its replacement do not have a route from origin to destination'
+        'The trip and/or its replacement are not valid'
       );
     } else if (
       t.originAirport != replacement.originAirport ||

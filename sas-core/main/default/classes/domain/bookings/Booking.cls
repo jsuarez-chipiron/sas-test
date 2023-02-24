@@ -363,23 +363,7 @@ public without sharing class Booking extends AbstractSObjectWrapper {
   }
 
   public Trip getTripWithFlight(Flight f) {
-    List<Trip> trips = getTrips();
-
-    Trip withFlight;
-    for (Trip t : trips) {
-      if (t.containsFlight(f)) {
-        withFlight = t;
-        break;
-      }
-    }
-
-    if (!withFlight.hasRouteFromOriginToDestination()) {
-      throw new Trip.InvalidException(
-        'Trip with flight does not have a route from origin to destination'
-      );
-    }
-
-    return withFlight;
+    return Trip.getTripWithFlight(getTrips(), f);
   }
 
   public Boolean hasReinstated(Flight f) {
