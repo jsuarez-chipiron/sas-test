@@ -273,30 +273,30 @@ public with sharing class EDWReservation extends Reservation {
       f.departureAirport = irr.stnFrCd;
       f.departureDelayedMinutes = irr.depDelayMins;
       f.departureStatus = Flight.getStatusFromPicklistValue(departureStatus);
-      f.actualArrivalTime = irr.ataTms == null ||
-        irr.ataTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.ataTms);
-      f.actualDepartureTime = irr.atdTms == null ||
-        irr.atdTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.atdTms);
-      f.estimatedArrivalTime = irr.etaTms == null ||
-        irr.etaTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.etaTms);
-      f.estimatedDepartureTime = irr.etdTms == null ||
-        irr.etdTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.etdTms);
-      f.scheduledArrivalTime = irr.staTms == null ||
-        irr.staTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.staTms);
-      f.scheduledDepartureTime = irr.stdTms == null ||
-        irr.stdTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.stdTms);
+      f.actualArrivalTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.ataTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.actualDepartureTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.atdTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.estimatedArrivalTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.etaTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.estimatedDepartureTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.etdTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.scheduledArrivalTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.staTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.scheduledDepartureTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.stdTms),
+        EDW_NULL_TIMESTAMP
+      );
       f.irregularities = flightIdToIrregularities.get(irrFlightId);
       flightIdToRecord.put(irrFlightId, f);
     }

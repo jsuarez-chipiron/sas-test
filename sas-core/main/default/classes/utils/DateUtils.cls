@@ -182,4 +182,42 @@ public without sharing class DateUtils {
   public static Datetime isoDatetimeToApexDateTime(String isoDateTime) {
     return (Datetime) json.deserialize('"' + isoDateTime + '"', Datetime.class);
   }
+
+  public static Datetime verifyDatetime(Datetime toVerify) {
+    //1970-01-01
+    Datetime toCompare = Datetime.newInstance(0);
+    return verifyDatetime(toVerify, toCompare);
+  }
+
+  /**
+   * Verifies if a specific Datetime falls after a certain comparison Datetime
+   * @param toVerify The Datetime to verify
+   * @param toCompare The Datetime that should be used as a reference
+   */
+  public static Datetime verifyDatetime(Datetime toVerify, Datetime toCompare) {
+    U.verifyNotNull(toVerify);
+    U.verifyNotNull(toCompare);
+    Boolean isReasonable = toVerify.getTime() > toCompare.getTime();
+    return isReasonable ? toVerify : null;
+  }
+
+  public static Datetime convertTimestampToDatetime(Long toVerify) {
+    //1970-01-01
+    Long toCompare = 0L;
+    return convertTimestampToDatetime(toVerify, toCompare);
+  }
+  /**
+   * Verifies if a specific Unix timestamp falls after a certain comparison timestamp
+   * @param toVerify The Unix timestamp to verify
+   * @param toCompare The Unix timestamp that should be used as a reference
+   */
+  public static Datetime convertTimestampToDatetime(
+    Long toVerify,
+    Long toCompare
+  ) {
+    U.verifyNotNull(toVerify);
+    U.verifyNotNull(toCompare);
+    Boolean isReasonable = toVerify > toCompare;
+    return isReasonable ? Datetime.newInstance(toVerify) : null;
+  }
 }

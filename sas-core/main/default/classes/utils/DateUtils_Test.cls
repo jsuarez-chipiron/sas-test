@@ -73,4 +73,79 @@ private class DateUtils_Test {
     Boolean invalidFormat = DateUtils.isValidIsoDatetime(invalidDatestring);
     System.assert(!invalidFormat, 'Datetime validation should have failed');
   }
+
+  @IsTest
+  public static void validDatesShouldBeReturned() {
+    Datetime validDatetime = Datetime.newInstance(1);
+    Datetime referenceDatetime = Datetime.newInstance(0);
+
+    Long validTimestamp = 1L;
+    Long referenceTimestamp = 0L;
+
+    System.assertEquals(
+      validDatetime,
+      DateUtils.verifyDatetime(validDatetime, referenceDatetime),
+      'validDatetime should have been returned'
+    );
+    System.assertEquals(
+      Datetime.newInstance(validTimestamp),
+      DateUtils.convertTimestampToDatetime(validTimestamp, referenceTimestamp),
+      'validTimestamp should have been returned'
+    );
+  }
+  @IsTest
+  public static void invalidDatesShouldReturnNull() {
+    Datetime invalidDatetime = Datetime.newInstance(0);
+    Datetime referenceDatetime = Datetime.newInstance(1);
+
+    Long invalidTimestamp = 0L;
+    Long referenceTimestamp = 1L;
+
+    System.assertEquals(
+      null,
+      DateUtils.verifyDatetime(invalidDatetime, referenceDatetime),
+      'null should have been returned'
+    );
+    System.assertEquals(
+      null,
+      DateUtils.convertTimestampToDatetime(
+        invalidTimestamp,
+        referenceTimestamp
+      ),
+      'null should have been returned'
+    );
+    System.assertEquals(
+      null,
+      DateUtils.verifyDatetime(referenceDatetime, referenceDatetime),
+      'null should have been returned'
+    );
+    System.assertEquals(
+      null,
+      DateUtils.convertTimestampToDatetime(
+        referenceTimestamp,
+        referenceTimestamp
+      ),
+      'null should have been returned'
+    );
+  }
+  @IsTest
+  public static void nullArgementThrowsException() {
+    Boolean caughtDatetime = false;
+    Boolean caughtTimestamp = false;
+    try {
+      DateUtils.verifyDatetime(null);
+    } catch (U.InvalidArgumentException e) {
+      caughtDatetime = true;
+    }
+    try {
+      DateUtils.convertTimestampToDatetime(null);
+    } catch (U.InvalidArgumentException e) {
+      caughtTimestamp = true;
+    }
+    System.assert(caughtDatetime, 'null Datetime should have thrown exception');
+    System.assert(
+      caughtTimestamp,
+      'null Timestamp should have thrown exception'
+    );
+  }
 }
