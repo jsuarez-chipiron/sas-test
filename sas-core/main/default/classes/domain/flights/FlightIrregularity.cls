@@ -145,6 +145,10 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     return this.type.substringBefore(' ') == 'Cancellation';
   }
 
+  public Boolean isDelay() {
+    return this.type.substringBefore(' ') == 'Delay';
+  }
+
   public Boolean isNA0Delay() {
     Boolean codeIsEmpty =
       this.code == 'N/A' ||
@@ -153,7 +157,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     Boolean durationIsEmpty =
       this.durationMinutes == 0 ||
       this.durationMinutes == null;
-    return codeIsEmpty && durationIsEmpty;
+    return codeIsEmpty && durationIsEmpty && isDelay();
   }
 
   public Boolean isArrivalCancellation() {
