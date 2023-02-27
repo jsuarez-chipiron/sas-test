@@ -22,12 +22,14 @@ public with sharing class EU261Scheduling_Test {
 
     Test.startTest();
     fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-    System.enqueueJob(
-      new Claims.UpdateExternalDataStatusAsync(
-        claimsSel.selectUnhandledEU261ClaimsByDataStatus('Not Started'),
-        Claim.ExternalDataStatus.InProgress
-      )
+    Claims claimsDomain = Claims.newInstance(
+      claimsSel.selectUnhandledEU261ClaimsByDataStatus('Not Started')
     );
+    claimsDomain.updateExternalDataStatus(
+      Claim.ExternalDataStatus.InProgress,
+      uow
+    );
+    uow.commitWork();
     Test.stopTest();
     Set<Id> claimIds = new Map<Id, LIA_Claim__c>(casesWithClaims.claims)
       .keySet();
