@@ -37,6 +37,8 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     );
   }
 
+  public static final Integer SF_QUERY_MAX_CASES = 50000;
+
   private static ClaimsSelector claims = ClaimsSelector.newInstance();
 
   public List<Case> selectById(Set<Id> ids) {
@@ -170,8 +172,6 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
 
     return selectByIdWithClaim(caseIds);
   }
-
-  public static final Integer SF_QUERY_MAX_CASES = 50000;
 
   public List<Case> selectInactiveByDepartment(String department) {
     String statusToFetch = Cases.STATUS_CLOSED;
