@@ -1,16 +1,16 @@
-@RestResource(urlMapping='/eu261claim-pnr/')
-global without sharing class GetUnhandledEU261PNR {
+@RestResource(urlMapping='/claim/eu261')
+global without sharing class UnhandledEU261PNR {
   private static ClaimsSelector claimsSel = ClaimsSelector.newInstance();
 
   @HttpGet
-  global static EU261ClaimPNRResponse getPnrs() {
+  global static EU261ClaimPNRResponse doGet() {
     List<LIA_Claim__c> eu261Claims = claimsSel
       .selectUnhandledEU261ClaimsByDataStatus('Not Started');
     return new EU261ClaimPNRResponse(eu261Claims);
   }
 
   @HttpPut
-  global static void updatePnrs(List<String> processedClaimIds) {
+  global static void doPut(List<String> processedClaimIds) {
     RestResponse res = RestContext.response;
     Set<Id> claimIds = new Set<Id>((List<Id>) processedClaimIds);
     List<LIA_Claim__c> eu261Claims = claimsSel.selectById(claimIds);
