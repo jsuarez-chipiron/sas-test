@@ -171,9 +171,11 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
     return selectByIdWithClaim(caseIds);
   }
 
+  public static final Integer SF_QUERY_MAX_CASES = 50000;
+
   public List<Case> selectInactiveByDepartment(String department) {
     String statusToFetch = Cases.STATUS_CLOSED;
-    Integer queryLimit = 50000/(Cases.allReadOnlyConfigs.keySet().size());
+    Integer queryLimit = SF_QUERY_MAX_CASES/(Cases.allReadOnlyConfigs.keySet().size());
     Datetime lastUpdatedCutoff = System.now()
           .addDays(Integer.valueOf(Cases.allReadOnlyConfigs.get(department).Retention_Days__c) * -1);
 
