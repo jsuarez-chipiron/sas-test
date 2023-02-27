@@ -173,6 +173,7 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
 
   public List<Case> selectInactiveByDepartment(String department) {
     String statusToFetch = Cases.STATUS_CLOSED;
+    Integer queryLimit = 50000/(Cases.allReadOnlyConfigs.keySet().size());
     Datetime lastUpdatedCutoff = System.now()
           .addDays(Integer.valueOf(Cases.allReadOnlyConfigs.get(department).Retention_Days__c) * -1);
 
@@ -180,7 +181,7 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       .setCondition(
         'Status = :statusToFetch AND ClosedDate <= :lastUpdatedCutoff AND Department__c = :department'
       )
-      .setLimit(10000);
+      .setLimit(queryLimit);
     return (List<Case>) Database.query(casesQF.toSOQL());
   }
 
