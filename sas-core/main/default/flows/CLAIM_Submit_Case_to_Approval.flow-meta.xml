@@ -227,6 +227,13 @@
                     <stringValue>Default judgement</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Settled in Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Case_has_Settlements_to_approve</targetReference>
             </connector>

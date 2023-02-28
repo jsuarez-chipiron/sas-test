@@ -12,7 +12,7 @@
         <controllingField>Jurisdiction__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Agencia Estatal de Seguridad Aerea (AESA, Spain)</fullName>
                 <default>false</default>
@@ -179,6 +179,11 @@
                 <label>Federal Office of Civil Aviation (FOCA, Switzerland)</label>
             </value>
             <value>
+                <fullName>Forbrugerklagenævnet</fullName>
+                <default>false</default>
+                <label>Forbrugerklagenævnet</label>
+            </value>
+            <value>
                 <fullName>Forliksrådet i Norge (Norway)</fullName>
                 <default>false</default>
                 <label>Forliksrådet i Norge (Norway)</label>
@@ -244,9 +249,19 @@
                 <label>Letter Before Action (LBA)</label>
             </value>
             <value>
+                <fullName>Lietuvos transporto saugos administracija</fullName>
+                <default>false</default>
+                <label>Lietuvos transporto saugos administracija</label>
+            </value>
+            <value>
                 <fullName>Luleå tingsrätt (Sweden)</fullName>
                 <default>false</default>
                 <label>Luleå tingsrätt (Sweden)</label>
+            </value>
+            <value>
+                <fullName>Mæglingsteamet for Forbrugerklager</fullName>
+                <default>false</default>
+                <label>Mæglingsteamet for Forbrugerklager</label>
             </value>
             <value>
                 <fullName>Organisme national de contrôle luxembourgeois National Enforcement Body (NEB) Luxembourg</fullName>
@@ -259,6 +274,11 @@
                 <label>Other</label>
             </value>
             <value>
+                <fullName>Pärnu Maakohtu (Estonia)</fullName>
+                <default>false</default>
+                <label>Pärnu Maakohtu (Estonia)</label>
+            </value>
+            <value>
                 <fullName>Polish Court</fullName>
                 <default>false</default>
                 <label>Polish Court</label>
@@ -267,11 +287,6 @@
                 <fullName>Polish NEB</fullName>
                 <default>false</default>
                 <label>Polish NEB</label>
-            </value>
-            <value>
-                <fullName>Pärnu Maakohtu (Estonia)</fullName>
-                <default>false</default>
-                <label>Pärnu Maakohtu (Estonia)</label>
             </value>
             <value>
                 <fullName>Samgöngustofa (Icelandic Trasnport Authority)</fullName>
@@ -289,9 +304,19 @@
                 <label>Small claims court</label>
             </value>
             <value>
+                <fullName>Södertörns tingsrätt (Sweden)</fullName>
+                <default>false</default>
+                <label>Södertörns tingsrätt (Sweden)</label>
+            </value>
+            <value>
                 <fullName>Solna tingsrätt (Sweden)</fullName>
                 <default>false</default>
                 <label>Solna tingsrätt (Sweden)</label>
+            </value>
+            <value>
+                <fullName>SÖP (NEB, Germany)</fullName>
+                <default>false</default>
+                <label>SÖP (NEB, Germany)</label>
             </value>
             <value>
                 <fullName>Stockholms tingsrätt (Sweden)</fullName>
@@ -304,19 +329,14 @@
                 <label>Svea Hovrätt (Sweden)</label>
             </value>
             <value>
-                <fullName>Södertörns tingsrätt (Sweden)</fullName>
-                <default>false</default>
-                <label>Södertörns tingsrätt (Sweden)</label>
-            </value>
-            <value>
-                <fullName>SÖP (NEB, Germany)</fullName>
-                <default>false</default>
-                <label>SÖP (NEB, Germany)</label>
-            </value>
-            <value>
                 <fullName>Tarbijakaitseamet (Estonia)</fullName>
                 <default>false</default>
                 <label>Tarbijakaitseamet (Estonia)</label>
+            </value>
+            <value>
+                <fullName>To be added to Salesforce</fullName>
+                <default>false</default>
+                <label>To be added to Salesforce</label>
             </value>
             <value>
                 <fullName>Traficom (Finland)</fullName>
@@ -349,27 +369,28 @@
                 <label>Úřad pro civilní letectví (Czech CAA)</label>
             </value>
             <value>
-                <fullName>To be added to Salesforce</fullName>
-                <default>false</default>
-                <label>To be added to Salesforce</label>
-            </value>
-            <value>
                 <fullName>Västmanlands Tingsrätt (Sweden)</fullName>
                 <default>false</default>
                 <label>Västmanlands Tingsrätt (Sweden)</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Norway</controllingFieldValue>
-            <valueName>Forliksrådet i Norge (Norway)</valueName>
+            <controllingFieldValue>Netherlands</controllingFieldValue>
+            <valueName>De Inspectie Leefomgeving en Transport  (ILT, Netherlands)</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Netherlands</controllingFieldValue>
+            <valueName>District Court of Netherland (Netherland)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Netherlands</controllingFieldValue>
             <controllingFieldValue>Norway</controllingFieldValue>
             <controllingFieldValue>Poland</controllingFieldValue>
             <controllingFieldValue>Portugal</controllingFieldValue>
             <controllingFieldValue>Spain</controllingFieldValue>
             <controllingFieldValue>Sweden</controllingFieldValue>
             <controllingFieldValue>Switzerland</controllingFieldValue>
+            <controllingFieldValue>Finland</controllingFieldValue>
             <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
             <controllingFieldValue>France</controllingFieldValue>
             <controllingFieldValue>United States</controllingFieldValue>
@@ -380,16 +401,18 @@
             <controllingFieldValue>Italy</controllingFieldValue>
             <controllingFieldValue>Latvia</controllingFieldValue>
             <controllingFieldValue>Lithuania</controllingFieldValue>
-            <controllingFieldValue>Luxembourg</controllingFieldValue>
             <controllingFieldValue>Austria</controllingFieldValue>
             <controllingFieldValue>Belgium</controllingFieldValue>
             <controllingFieldValue>Croatia</controllingFieldValue>
             <controllingFieldValue>Czech Republic</controllingFieldValue>
             <controllingFieldValue>Denmark</controllingFieldValue>
             <controllingFieldValue>Estonia</controllingFieldValue>
-            <controllingFieldValue>Finland</controllingFieldValue>
-            <controllingFieldValue>Netherlands</controllingFieldValue>
+            <controllingFieldValue>Luxembourg</controllingFieldValue>
             <valueName>Letter Before Action (LBA)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Norway</controllingFieldValue>
+            <valueName>Forliksrådet i Norge (Norway)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Norway</controllingFieldValue>
@@ -459,6 +482,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sweden</controllingFieldValue>
+            <valueName>Södertörns tingsrätt (Sweden)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sweden</controllingFieldValue>
             <valueName>Solna tingsrätt (Sweden)</valueName>
         </valueSettings>
         <valueSettings>
@@ -471,10 +498,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sweden</controllingFieldValue>
-            <valueName>Södertörns tingsrätt (Sweden)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sweden</controllingFieldValue>
             <valueName>Umeå Tingsrätt</valueName>
         </valueSettings>
         <valueSettings>
@@ -484,6 +507,14 @@
         <valueSettings>
             <controllingFieldValue>Switzerland</controllingFieldValue>
             <valueName>Federal Office of Civil Aviation (FOCA, Switzerland)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Finland</controllingFieldValue>
+            <valueName>Kuluttajariitalautakunta (KRIL, Finland)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Finland</controllingFieldValue>
+            <valueName>Traficom (Finland)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>United Kingdom (UK)</controllingFieldValue>
@@ -546,10 +577,6 @@
             <valueName>Hellenic Republic Ministry of Infrastructure and Transport Civil Aciation Authority/HCAA (Greece)</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Canada</controllingFieldValue>
-            <valueName>Canadian Transportation Agency (CTA)</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Iceland</controllingFieldValue>
             <valueName>Samgöngustofa (Icelandic Trasnport Authority)</valueName>
         </valueSettings>
@@ -578,8 +605,8 @@
             <valueName>Civilinés Aviacijos Administracia (Lithuania)</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Luxembourg</controllingFieldValue>
-            <valueName>Organisme national de contrôle luxembourgeois National Enforcement Body (NEB) Luxembourg</valueName>
+            <controllingFieldValue>Lithuania</controllingFieldValue>
+            <valueName>Lietuvos transporto saugos administracija</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Austria</controllingFieldValue>
@@ -592,6 +619,10 @@
         <valueSettings>
             <controllingFieldValue>Belgium</controllingFieldValue>
             <valueName>Service Public Fédéral Mobilté &amp; Transport (Belgium)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canada</controllingFieldValue>
+            <valueName>Canadian Transportation Agency (CTA)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Croatia</controllingFieldValue>
@@ -623,6 +654,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Denmark</controllingFieldValue>
+            <valueName>Forbrugerklagenævnet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denmark</controllingFieldValue>
+            <valueName>Mæglingsteamet for Forbrugerklager</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denmark</controllingFieldValue>
             <valueName>Trafikstyrelsen (Denmark)</valueName>
         </valueSettings>
         <valueSettings>
@@ -638,20 +677,8 @@
             <valueName>Tarbijakaitseamet (Estonia)</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Finland</controllingFieldValue>
-            <valueName>Kuluttajariitalautakunta (KRIL, Finland)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Finland</controllingFieldValue>
-            <valueName>Traficom (Finland)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Netherlands</controllingFieldValue>
-            <valueName>De Inspectie Leefomgeving en Transport  (ILT, Netherlands)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Netherlands</controllingFieldValue>
-            <valueName>District Court of Netherland (Netherland)</valueName>
+            <controllingFieldValue>Luxembourg</controllingFieldValue>
+            <valueName>Organisme national de contrôle luxembourgeois National Enforcement Body (NEB) Luxembourg</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

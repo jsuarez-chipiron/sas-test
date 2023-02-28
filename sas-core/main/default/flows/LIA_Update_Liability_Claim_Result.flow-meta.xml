@@ -5,8 +5,8 @@
         <description>Assigns the capture values for compensations</description>
         <name>Assign_Compensation_Variables</name>
         <label>Assign Compensation Variables</label>
-        <locationX>515</locationX>
-        <locationY>503</locationY>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>OutputVoucherCompesation</assignToReference>
             <operator>Assign</operator>
@@ -35,8 +35,8 @@
     <assignments>
         <name>Monetary_Compensation_to_0</name>
         <label>Monetary Compensation to 0</label>
-        <locationX>515</locationX>
-        <locationY>874</locationY>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>OutputFeesPaid</assignToReference>
             <operator>Assign</operator>
@@ -66,8 +66,8 @@
         <description>Sets all the the compensation checkboxes to false</description>
         <name>Set_Compensations_to_False</name>
         <label>Set Compensations to False</label>
-        <locationX>283</locationX>
-        <locationY>662</locationY>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>OutputVoucherCompesation</assignToReference>
             <operator>Assign</operator>
@@ -97,8 +97,8 @@
         <description>Sets the value capture by the user</description>
         <name>Set_Input_Settlement_Reason_To_Settlement_Reason</name>
         <label>Set Input Settlement Reason To Settlement Reason</label>
-        <locationX>860</locationX>
-        <locationY>517</locationY>
+        <locationX>50</locationX>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>OutputSettlementReason</assignToReference>
             <operator>Assign</operator>
@@ -114,8 +114,8 @@
         <description>Set the captured amounts as the paid amounts for output variables</description>
         <name>Set_Paid_Amounts</name>
         <label>Set Paid Amounts</label>
-        <locationX>756</locationX>
-        <locationY>655</locationY>
+        <locationX>50</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>OutputFeesPaid</assignToReference>
             <operator>Assign</operator>
@@ -145,8 +145,8 @@
         <description>Sets settlement reason to N/A</description>
         <name>Set_Settlement_Reason_to_N_A</name>
         <label>Set Settlement Reason to N/A</label>
-        <locationX>858</locationX>
-        <locationY>1024</locationY>
+        <locationX>314</locationX>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>OutputSettlementReason</assignToReference>
             <operator>Assign</operator>
@@ -169,8 +169,8 @@
     <decisions>
         <name>Is_Compensation_need</name>
         <label>Is Compensation need?</label>
-        <locationX>269</locationX>
-        <locationY>360</locationY>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Set_Compensations_to_False</targetReference>
         </defaultConnector>
@@ -206,6 +206,13 @@
                     <stringValue>Default judgement</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Result</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Settled in Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Paid_Amounts_Update</targetReference>
             </connector>
@@ -215,8 +222,8 @@
     <decisions>
         <name>Is_Settlement_Reason_Applicable</name>
         <label>Is Settlement Reason Applicable?</label>
-        <locationX>854</locationX>
-        <locationY>787</locationY>
+        <locationX>182</locationX>
+        <locationY>1190</locationY>
         <defaultConnector>
             <targetReference>Set_Settlement_Reason_to_N_A</targetReference>
         </defaultConnector>
@@ -240,8 +247,8 @@
     <decisions>
         <name>Is_there_Monetary_Compensation</name>
         <label>Is there monetary compesation?</label>
-        <locationX>504</locationX>
-        <locationY>664</locationY>
+        <locationX>182</locationX>
+        <locationY>854</locationY>
         <defaultConnector>
             <targetReference>Monetary_Compensation_to_0</targetReference>
         </defaultConnector>
@@ -302,7 +309,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -316,8 +323,8 @@
         <description>Gets all the information in the claim</description>
         <name>Get_Current_Claim_Information</name>
         <label>Get Current Claim Information</label>
-        <locationX>176</locationX>
-        <locationY>186</locationY>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Liability_Claim_Result</targetReference>
@@ -338,8 +345,8 @@
         <description>Updates the Liability based on the user&apos;s input</description>
         <name>Update_Liability_Claim</name>
         <label>Update Liability Claim</label>
-        <locationX>1179</locationX>
-        <locationY>789</locationY>
+        <locationX>182</locationX>
+        <locationY>1526</locationY>
         <connector>
             <targetReference>Liability_Claim_Updated</targetReference>
         </connector>
@@ -430,8 +437,8 @@
         <description>Shows the user that liability claim has been updated</description>
         <name>Liability_Claim_Updated</name>
         <label>Liability Claim Updated</label>
-        <locationX>1379</locationX>
-        <locationY>787</locationY>
+        <locationX>182</locationX>
+        <locationY>1646</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -447,8 +454,8 @@
         <description>Allows the user to capture the paid  amounts</description>
         <name>Paid_Amounts_Update</name>
         <label>Paid Amounts Update</label>
-        <locationX>524</locationX>
-        <locationY>359</locationY>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -591,8 +598,8 @@
     <screens>
         <name>Update_Liability_Claim_Result</name>
         <label>Update Liability Claim Result</label>
-        <locationX>176</locationX>
-        <locationY>362</locationY>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -689,8 +696,8 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Current_Claim_Information</targetReference>
         </connector>

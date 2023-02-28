@@ -32,6 +32,11 @@
                 <label>Settlement</label>
             </value>
             <value>
+                <fullName>Settled in Customer Claim</fullName>
+                <default>false</default>
+                <label>Settled in Customer Claim</label>
+            </value>
+            <value>
                 <fullName>Partly</fullName>
                 <default>false</default>
                 <label>Partly</label>
