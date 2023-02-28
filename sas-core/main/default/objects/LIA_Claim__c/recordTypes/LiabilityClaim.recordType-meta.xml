@@ -2645,6 +2645,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Forbrugerklagenævnet</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Forliksrådet i Norge %28Norway%29</fullName>
             <default>false</default>
         </values>
@@ -2697,7 +2701,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Lietuvos transporto saugos administracija</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Luleå tingsrätt %28Sweden%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mæglingsteamet for Forbrugerklager</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2977,6 +2989,10 @@
         </values>
         <values>
             <fullName>Positive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Settled in Customer Claim</fullName>
             <default>false</default>
         </values>
         <values>
