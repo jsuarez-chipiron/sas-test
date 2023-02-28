@@ -168,9 +168,10 @@ public with sharing class EDWReservation extends Reservation {
           segment.prevActionCd?.trim()
         );
         se.officeCode = segment.officeUpdating;
-        se.updateDate = segment.resUpdTms == null
-          ? null
-          : Datetime.newInstance(segment.resUpdTms);
+        se.updateDate = DateUtils.convertTimestampToDatetime(
+          U.getOr(EDW_NULL_TIMESTAMP, segment.resUpdTms),
+          EDW_NULL_TIMESTAMP
+        );
         se.updateNumber = segment.resUpdateNo;
         processedEvents.add(se);
         if (
@@ -328,9 +329,10 @@ public with sharing class EDWReservation extends Reservation {
       FlightIrregularity fi = new FlightIrregularity(
         new FlightIrregularities__c()
       );
-      fi.cancellationTime = irr.cnlEventDts == null
-        ? null
-        : Datetime.newInstance(irr.cnlEventDts);
+      fi.cancellationTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.cnlEventDts),
+        EDW_NULL_TIMESTAMP
+      );
       fi.code = irr.fltStatus == 'X' ? irr.cnlRsnCd : irr.delayRsnCd;
       FlightIrregularity.EU261Eligibility eligibleForEU261;
       if (!FlightIrregularity.codeToSASIsResponsible.containsKey(fi.code)) {
