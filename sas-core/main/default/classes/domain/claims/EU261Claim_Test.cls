@@ -77,7 +77,7 @@ private class EU261Claim_Test {
   }
 
   private static BookingClaim getDefaultCancellationBookingClaim() {
-    Datetime newDeparture = departure.addHours(4);
+    Datetime newDeparture = departure.addHours(3);
     Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
     f1.actualArrivalTime = null;
     f1.actualDepartureTime = null;

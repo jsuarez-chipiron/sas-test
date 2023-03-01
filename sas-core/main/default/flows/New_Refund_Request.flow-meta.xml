@@ -13,7 +13,7 @@
     <assignments>
         <name>Assign_email_to_validate</name>
         <label>Assign email to validate</label>
-        <locationX>3680</locationX>
+        <locationX>3944</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
@@ -29,7 +29,7 @@
     <assignments>
         <name>Assign_email_to_validate_0</name>
         <label>Assign email to validate</label>
-        <locationX>4802</locationX>
+        <locationX>5330</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>providedEmail</assignToReference>
@@ -318,7 +318,7 @@
     <decisions>
         <name>Is_the_email_valid</name>
         <label>Is the email valid?</label>
-        <locationX>3680</locationX>
+        <locationX>3944</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -748,6 +748,9 @@
         <connector>
             <targetReference>Get_Created_Refund_Request</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Refund_Request_Error</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Country_of_Purchase__c</field>
             <value>
@@ -807,6 +810,9 @@
         <connector>
             <targetReference>Success</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Refund_Case_Error</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Department__c</field>
             <value>
@@ -902,7 +908,7 @@
     <recordLookups>
         <name>GetRefundsQueueId</name>
         <label>Get Refunds Queue Id</label>
-        <locationX>3680</locationX>
+        <locationX>3944</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -945,7 +951,7 @@
     <screens>
         <name>Invalid_Input</name>
         <label>Invalid Input</label>
-        <locationX>4802</locationX>
+        <locationX>5330</locationX>
         <locationY>638</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -984,7 +990,7 @@
     <screens>
         <name>NewRefundRequest</name>
         <label>New Refund Request</label>
-        <locationX>3680</locationX>
+        <locationX>3944</locationX>
         <locationY>158</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1153,6 +1159,38 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Refund_Case_Error</name>
+        <label>Refund Case Error</label>
+        <locationX>4802</locationX>
+        <locationY>1454</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>faultMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-family: &amp;quot;Segoe UI VSS (Regular)&amp;quot;, &amp;quot;Segoe UI&amp;quot;, -apple-system, &amp;quot;system-ui&amp;quot;, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Ubuntu, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Case cannot be created. There has been the below error:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Please click on &quot;previous&quot; to correct the error and try again.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;If you cannot correct the error, please report the error using the Functional Product Support button.​&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Refund_Request_Error</name>
+        <label>Refund Request Error</label>
+        <locationX>5066</locationX>
+        <locationY>1214</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Fault_Message</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-family: &amp;quot;Segoe UI VSS (Regular)&amp;quot;, &amp;quot;Segoe UI&amp;quot;, -apple-system, &amp;quot;system-ui&amp;quot;, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Ubuntu, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Request cannot be created. There has been the below error:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Please click on &quot;previous&quot; to correct the error and try again.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;If you cannot correct the error, please report the error using the Functional Product Support button.​&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Success</name>
         <label>Success</label>
         <locationX>2294</locationX>
@@ -1172,7 +1210,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>3554</locationX>
+        <locationX>3818</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>NewRefundRequest</targetReference>

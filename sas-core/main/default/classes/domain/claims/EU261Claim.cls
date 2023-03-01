@@ -32,6 +32,15 @@ public class EU261Claim {
     InvalidSettlementDetails
   }
 
+  public static final Set<Claim.Type> DELAY_CLAIM_TYPES = new Set<Claim.Type>{
+    Claim.Type.FlightDelay,
+    Claim.Type.FlightDelayCompensation
+  };
+  public static final Set<Claim.Type> CANCELLATION_CLAIM_TYPES = new Set<Claim.Type>{
+    Claim.Type.FlightCancellation,
+    Claim.Type.FlightCancellationCompensation
+  };
+
   /**
    * Evaluates the claim according to the EU261 rules and returns the decision
    * made on whether the claim should be paid out.
@@ -798,12 +807,10 @@ public class EU261Claim {
       }
 
       // Compare the original rebooking against the suggested rebooking and calculate compensation
-      departureDifference = Integer.valueOf(
-        DateUtils.getHoursBetween(newDeparture, originalDeparture) * 60
-      );
-      arrivalDifference = Integer.valueOf(
-        DateUtils.getHoursBetween(newArrival, originalArrival) * 60
-      );
+      departureDifference =
+        DateUtils.getMinutesBetween(newDeparture, originalDeparture) + 1; // Add 1 minute to make sure we don't round down
+      arrivalDifference =
+        DateUtils.getMinutesBetween(newArrival, originalArrival) + 1;
 
       if (newArrival > originalArrival) {
         minutesLateOnArrival = arrivalDifference;
@@ -920,21 +927,21 @@ public class EU261Claim {
       return new Money(0, Money.currencyCode.SEK);
     }
     Boolean flightCancelledWellInTime =
-      this.claimObj.type == Claim.Type.FlightCancellation &&
+      CANCELLATION_CLAIM_TYPES.contains(this.claimObj.type) &&
       flightCancelledWellInTime();
     if (flightCancelledWellInTime) {
       return new Money(0, Money.currencyCode.SEK);
     }
 
     Boolean customerCancelled =
-      this.claimObj.type == Claim.Type.FlightCancellation &&
+      CANCELLATION_CLAIM_TYPES.contains(this.claimObj.type) &&
       this.tripWithClaimFlight.customerCancelled();
     if (customerCancelled) {
       return new Money(0, Money.currencyCode.SEK);
     }
 
     Integer netDelay;
-    if (this.claimObj.type == Claim.Type.FlightCancellation) {
+    if (CANCELLATION_CLAIM_TYPES.contains(this.claimObj.type)) {
       netDelay = this.netDelayInMinutes;
     } else {
       netDelay = this.tripWithClaimFlight.getFlightToFinalDestination()
