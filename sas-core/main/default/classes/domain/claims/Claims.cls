@@ -291,22 +291,4 @@ public without sharing class Claims extends ApplicationDomain {
     }
     return this;
   }
-
-  public class UpdateExternalDataStatusAsync implements Queueable {
-    List<LIA_Claim__c> toUpdate;
-    Claim.ExternalDataStatus newStatus;
-    public UpdateExternalDataStatusAsync(
-      List<LIA_Claim__c> claimsToUpdate,
-      Claim.ExternalDataStatus newStatus
-    ) {
-      this.toUpdate = claimsToUpdate;
-      this.newStatus = newStatus;
-    }
-    public void execute(QueueableContext jobId) {
-      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
-      Claims claimsDomain = Claims.newInstance(this.toUpdate);
-      claimsDomain.updateExternalDataStatus(newStatus, uow);
-      uow.commitWork();
-    }
-  }
 }
