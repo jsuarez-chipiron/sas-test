@@ -756,7 +756,7 @@ private class CaseFormTest {
     Map<Id, String> accountToPriority = new Map<Id, String>{
       newAccountsWithCorrectEBLevel[0].Id => 'Medium',
       newAccountsWithCorrectEBLevel[1].Id => 'Medium', //EBG/EBD priority for now
-      newAccountsWithCorrectEBLevel[2].Id => 'Medium',
+      newAccountsWithCorrectEBLevel[2].Id => 'High', // EBP priority shoul be high
       newAccountsWithCorrectEBLevel[3].Id => 'Medium',
       newAccountsWithCorrectEBLevel[4].Id => 'High' //Priority for Disabled
     };
@@ -790,7 +790,7 @@ private class CaseFormTest {
           newCase = c;
         }
       }
-
+      System.debug('logLevel,' + a.FCS_EBLevel__c);
       System.assertEquals(
         accountToPriority.get(a.Id),
         newCase.Priority,
@@ -906,14 +906,13 @@ private class CaseFormTest {
       'Claims - Flight Disruptions',
       'Claims - Baggage',
       'Claims - Other',
-      'Claims - High Priority'
+      'Claims - Flight Disruptions'
     };
     List<Group> groups = [SELECT Id, Name FROM Group WHERE Name IN :groupNames];
 
     Group disruptionGroup;
     Group baggageGroup;
     Group otherGroup;
-    Group highPriorityGroup;
 
     for (Group g : groups) {
       switch on groupNames.indexOf(g.Name) {
@@ -927,7 +926,7 @@ private class CaseFormTest {
           otherGroup = g;
         }
         when 3 {
-          highPriorityGroup = g;
+          disruptionGroup = g;
         }
         when else {
           System.debug(
@@ -941,7 +940,7 @@ private class CaseFormTest {
       newAccounts[0].Id => disruptionGroup.Name,
       newAccounts[1].Id => baggageGroup.Name,
       newAccounts[2].Id => otherGroup.Name,
-      newAccounts[3].Id => highPriorityGroup.Name
+      newAccounts[3].Id => disruptionGroup.Name
     };
 
     // Then
