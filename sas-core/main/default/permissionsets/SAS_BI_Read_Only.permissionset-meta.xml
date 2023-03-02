@@ -3,6 +3,11 @@
     <description>Permission set for read access to: Case, Claim, Settlement, Settlement Item, Refund Request, Case History, Case Milestone, Chat Transcripts, Claim Expense</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.FCS_EBNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Approval_Request__c.Control_Reason__c</field>
         <readable>true</readable>
     </fieldPermissions>
