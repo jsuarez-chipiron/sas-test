@@ -518,10 +518,10 @@
             <name>SAS_Automation</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Loop_Cases.Customer_Claim_Category__c</leftValueReference>
+                <leftValueReference>Loop_Cases.LIA_Claim__r.Customer_Claim_Category__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Flight Disruptions</stringValue>
+                    <stringValue>Flight disruptions</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -763,7 +763,7 @@
             <targetReference>Set_Group_Variables</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>Baggage_Queue</name>
         <dataType>SObject</dataType>
