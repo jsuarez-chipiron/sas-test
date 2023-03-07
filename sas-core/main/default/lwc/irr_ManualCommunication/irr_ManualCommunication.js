@@ -247,15 +247,6 @@ export default class IRR_ManualCommunication extends LightningElement {
         let filteredList = tableUtil.filterData(this.passengerResult, this.filterParameters);
         tableUtil.sortData(filteredList, this.sortBy, this.sortDirection);
         this.hasResults = filteredList.length > 0;
-        for(let passengerInfo of filteredList){
-            if(passengerInfo['thisSegment.flightId'] !== null && passengerInfo['thisSegment.departureTimeLocal'] != null){
-            let currentFlightId = passengerInfo['thisSegment.flightId'];
-            let departureTimeLocal = passengerInfo['thisSegment.departureTimeLocal'];
-            let localDate =  departureTimeLocal.substring(8, 10);
-            let newFlightId = currentFlightId.substring(0, 13) + localDate + currentFlightId.substring(15, 25);
-            passengerInfo['thisSegment.flightId'] = newFlightId;
-            }
-        }
         this.processedTable = filteredList;
     }
 
