@@ -691,13 +691,13 @@ public class EU261Claim {
     if (this.isStaffBooking()) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'id and staff tickets are not eligible'
+        'Id and staff tickets are not eligible'
       );
     } else if (this.hasCancellation && flightCancelledWellInTime()) {
       protocol.denialReason = EU261Protocol.DenialReason.CANCELLEDWELLINTIME;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'flight was cancelled 14 or more days in advance'
+        'Flight was cancelled 14 or more days in advance'
       );
     } else if (
       this.hasCancellation && !this.cancellationCodeIsWithinSASControl()
@@ -708,18 +708,18 @@ public class EU261Claim {
       protocol.denialReason = EU261Protocol.DenialReason.NOTWITHINSASCONTROL;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'cancellation code not within SAS control'
+        'Cancellation code not within SAS control'
       );
     } else if (!this.isWithinEU261Jurisdiction()) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'not covered by EU261'
+        'Not covered by EU261'
       );
     } else if (!this.isFiledOnTime()) {
       protocol.denialReason = EU261Protocol.DenialReason.NOTFILEDONTIME;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'not filed on time'
+        'Claim was not filed on on time'
       );
     } else if (
       this.hasCancellation && this.tripWithClaimFlight.customerCancelled()
@@ -728,7 +728,7 @@ public class EU261Claim {
       this.calculateCompensationForCancellation(); // For protocol reasons
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'customer cancelled the flight'
+        'The customer cancelled the flight'
       );
     } else if (this.hasCancellation) {
       // If the claim flight was cancelled the customer should receive compensation according to the cancellation logic
@@ -839,14 +839,14 @@ public class EU261Claim {
     if (eligiblePassengers.size() == 0) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'there are no passengers which are eligible for compensation'
+        'There are no passengers which are eligible for compensation'
       );
     }
 
     if (compensation == new Money(0, Money.CurrencyCode.EUR)) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'the offered rebooking is not outside the timeframe allowed by EU261'
+        'The offered rebooking is not outside the timeframe allowed by EU261'
       );
     }
 
@@ -1119,7 +1119,7 @@ public class EU261Claim {
     if (passengersEligibleForCompensation.size() == 0) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'no passenger in this claim has a revenue ticket.'
+        'No passenger in this claim has a revenue ticket.'
       );
     }
 
@@ -1139,7 +1139,7 @@ public class EU261Claim {
       } else {
         return new Decision(
           Claim.EU261HandlingStatus.IneligibleForCompensation,
-          'delayed less than 180 minutes'
+          'Delayed less than 180 minutes'
         );
       }
     }
