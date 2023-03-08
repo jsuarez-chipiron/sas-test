@@ -1,4 +1,5 @@
 // Tests for EU261Claim.evaluate()
+@TestVisible
 @IsTest
 private class EU261Claim_Test {
   private static Datetime departure = DateTime.newInstance(
@@ -104,6 +105,9 @@ private class EU261Claim_Test {
     c.customers = new List<ClaimCustomer>{ cc };
     c.flightNumber = 'SK0001';
     c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
+    c.preferredCompensationMethod = Claim.CompensationType.Monetary;
+    c.preferredCurrency = Money.CurrencyCode.EUR;
+    c.bankCountry = 'Sweden';
     Booking b = TestBookingFactory.createValidForClaim(c);
     b.type = Booking.Type.OneWay;
 
@@ -295,6 +299,187 @@ private class EU261Claim_Test {
     b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
 
     return new BookingClaim(b, c);
+  }
+
+  @TestVisible
+  private static EU261Claim getClaimWhereCustomerCancelledTheFlight() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime = bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime.addDays(1);
+    List<SegmentEvent> newEvents = new List<SegmentEvent>();
+    for (SegmentEvent se : bc.b.segments[0].getEvents()) {
+      se.officeCode = 'STOSK08RV';
+      if (se.newStatus == SegmentEvent.StatusCode.C_UN) {
+        se.operationType = SegmentEvent.OperationType.C_X;
+        se.newStatus = SegmentEvent.StatusCode.C_XX;
+      }
+      newEvents.add(se);
+    }
+    bc.b.segments[0].events = newEvents;
+
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
+  }
+
+  @TestVisible
+  private static EU261Claim getClaimWhereFlightWasCancelled14DaysOrMoreBeforeDeparture() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .cancellationTime = departure.addDays(-14);
+
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
+  }
+
+  @TestVisible
+  private static EU261Claim getClaimWhereCustomerClaimedTooLate() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.c.createdDate = DateTime.newInstance(2030, 1, 1);
+
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
+  }
+
+  @TestVisible
+  private static EU261Claim getClaimWithCancellationsOutsideSASControl() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    bc.b.segments[0].flight.irregularities[0].code = 'WEAT';
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.No;
+
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
+  }
+
+  @TestVisible
+  private static EU261Claim getLongDistanceHalvedCompensationClaim() {
+    BookingClaim bc = getDefaultCancellationBookingClaim();
+    Flight f1 = bc.b.segments[0].flight;
+    Flight f2 = bc.b.segments[1].flight;
+    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
+    f1.arrivalAirport = 'LAX';
+    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
+    f2.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
+    f2.arrivalAirport = 'LAX';
+    f2.tedsIdentifier = f2.tedsIdentifier.substringBefore('HEL') + 'LAX';
+
+    return new EU261Claim(
+      bc.c,
+      new List<Booking>{ bc.b },
+      false,
+      config
+    );
+  }
+
+  @TestVisible
+  private static EU261Claim getClaimWithTwoFlightsAndOneCancellationButOnTime() {
+    Datetime newDeparture = departure.addHours(4);
+    Datetime nextFlightDeparture = departure.addHours(7);
+
+    Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
+    Flight f2 = TestFlightFactory.create('SK0002', newDeparture, 'ARN', 'HEL');
+    Flight f3 = TestFlightFactory.create(
+      'SK0003',
+      nextFlightDeparture,
+      'HEL',
+      'CPH'
+    );
+
+    List<FlightIrregularity> fis = new List<FlightIrregularity>{
+      TestIrregularityFactory.createCancellation(f1)
+    };
+
+    Datetime cancellationTime = departure.addDays(-1);
+    fis[0].cancellationTime = cancellationTime;
+    f1.irregularities = fis;
+
+    TestSegmentFactory.SegmentsInfo sInfo1 = new TestSegmentFactory.SegmentsInfo(
+      f1,
+      departure.addDays(-60),
+      cancellationTime.addMinutes(20)
+    );
+    TestSegmentFactory.SegmentsInfo sInfo2 = new TestSegmentFactory.SegmentsInfo(
+      f2,
+      cancellationTime.addMinutes(20),
+      null
+    );
+    TestSegmentFactory.SegmentsInfo sInfo3 = new TestSegmentFactory.SegmentsInfo(
+      f3,
+      departure.addDays(-60),
+      null
+    );
+
+    List<TestSegmentFactory.SegmentsInfo> segmentInfos = new List<TestSegmentFactory.SegmentsInfo>{
+      sInfo1,
+      sInfo2,
+      sInfo3
+    };
+
+    ClaimCustomer cc = new ClaimCustomer();
+    cc.firstname = 'Test';
+    cc.lastName = 'Testsson';
+
+    Claim c = TestClaimFactory.create();
+    c.recordType = Claim.RecordType.CustomerClaim;
+    c.category = Claim.Category.FlightDisruptions;
+    c.type = Claim.Type.FlightCancellation;
+    c.departureDate = departure.date();
+    c.customers = new List<ClaimCustomer>{ cc };
+    c.flightNumber = 'SK0001';
+    c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
+
+    Booking b = TestBookingFactory.createValidForClaim(c);
+    b.type = Booking.Type.OneWay;
+
+    b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
+
+    return new EU261Claim(c, new List<Booking>{ b }, false, config);
+  }
+
+  @TestVisible
+  private static EU261Claim getClaimWithShortDelay() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    Flight f = bc.b.segments[0].flight;
+    f.irregularities[0].durationMinutes = 60;
+    f.arrivalDelayedMinutes = 60;
+    f.actualArrivalTime = bc.b.segments[0]
+      .flight.scheduledArrivalTime.addMinutes(60);
+
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
+  }
+
+  @TestVisible
+  private static EU261Claim getLongDistanceClaim() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    Flight f1 = bc.b.segments[0].flight;
+    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
+    f1.arrivalAirport = 'LAX';
+    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
+
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
+  }
+
+  @TestVisible
+  private static EU261Claim getClaimWithDelayWhereSASNotInControl() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    bc.b.segments[0].flight.irregularities[0].code = 'AF';
+    bc.b.segments[0]
+      .flight.irregularities[0]
+      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.No;
+
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
+  }
+
+  @TestVisible
+  private static EU261Claim getClaimWhereNoFlightIsDelayedOrCancelled() {
+    BookingClaim bc = getDefaultDelayBookingClaim();
+    Flight f = bc.b.segments[0].flight;
+    f.actualArrivalTime = bc.b.segments[0].flight.scheduledArrivalTime;
+    f.arrivalDelayedMinutes = 0;
+    f.irregularities = new List<FlightIrregularity>();
+
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
   }
 
   /** 
@@ -632,17 +817,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void claimsWhereFlightWasCancelled14DaysOrMoreBeforeDepartureShouldBeDenied() {
-    BookingClaim bc = getDefaultCancellationBookingClaim();
-    bc.b.segments[0]
-      .flight.irregularities[0]
-      .cancellationTime = departure.addDays(-14);
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getClaimWhereFlightWasCancelled14DaysOrMoreBeforeDeparture();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -985,15 +1160,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void claimWhereCustomerClaimedTooLateShouldBeDenied() {
-    BookingClaim bc = getDefaultCancellationBookingClaim();
-    bc.c.createdDate = DateTime.newInstance(2030, 1, 1);
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getClaimWhereCustomerClaimedTooLate();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -1017,22 +1184,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void minimalClaimOutsideTheEUShouldBeEvaluatedCorrectly() {
-    BookingClaim bc = getDefaultCancellationBookingClaim();
-    Flight f1 = bc.b.segments[0].flight;
-    Flight f2 = bc.b.segments[1].flight;
-    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
-    f1.arrivalAirport = 'LAX';
-    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
-    f2.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
-    f2.arrivalAirport = 'LAX';
-    f2.tedsIdentifier = f2.tedsIdentifier.substringBefore('HEL') + 'LAX';
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getLongDistanceHalvedCompensationClaim();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -1127,18 +1279,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void minimalCancellationClaimsWithCancellationsOutsideSASControlShouldBeDenied() {
-    BookingClaim bc = getDefaultCancellationBookingClaim();
-    bc.b.segments[0].flight.irregularities[0].code = 'WEAT';
-    bc.b.segments[0]
-      .flight.irregularities[0]
-      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.No;
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getClaimWithCancellationsOutsideSASControl();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -1328,72 +1469,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void claimsWithTwoFlightsAndOneCancellationButOnTimeShouldBeDenied() {
-    Datetime newDeparture = departure.addHours(4);
-    Datetime nextFlightDeparture = departure.addHours(7);
-
-    Flight f1 = TestFlightFactory.create('SK0001', departure, 'ARN', 'HEL');
-    Flight f2 = TestFlightFactory.create('SK0002', newDeparture, 'ARN', 'HEL');
-    Flight f3 = TestFlightFactory.create(
-      'SK0003',
-      nextFlightDeparture,
-      'HEL',
-      'CPH'
-    );
-
-    List<FlightIrregularity> fis = new List<FlightIrregularity>{
-      TestIrregularityFactory.createCancellation(f1)
-    };
-
-    Datetime cancellationTime = departure.addDays(-1);
-    fis[0].cancellationTime = cancellationTime;
-    f1.irregularities = fis;
-
-    TestSegmentFactory.SegmentsInfo sInfo1 = new TestSegmentFactory.SegmentsInfo(
-      f1,
-      departure.addDays(-60),
-      cancellationTime.addMinutes(20)
-    );
-    TestSegmentFactory.SegmentsInfo sInfo2 = new TestSegmentFactory.SegmentsInfo(
-      f2,
-      cancellationTime.addMinutes(20),
-      null
-    );
-    TestSegmentFactory.SegmentsInfo sInfo3 = new TestSegmentFactory.SegmentsInfo(
-      f3,
-      departure.addDays(-60),
-      null
-    );
-
-    List<TestSegmentFactory.SegmentsInfo> segmentInfos = new List<TestSegmentFactory.SegmentsInfo>{
-      sInfo1,
-      sInfo2,
-      sInfo3
-    };
-
-    ClaimCustomer cc = new ClaimCustomer();
-    cc.firstname = 'Test';
-    cc.lastName = 'Testsson';
-
-    Claim c = TestClaimFactory.create();
-    c.recordType = Claim.RecordType.CustomerClaim;
-    c.category = Claim.Category.FlightDisruptions;
-    c.type = Claim.Type.FlightCancellation;
-    c.departureDate = departure.date();
-    c.customers = new List<ClaimCustomer>{ cc };
-    c.flightNumber = 'SK0001';
-    c.submittedClaimExpenses = new Money(0, Money.CurrencyCode.SEK);
-
-    Booking b = TestBookingFactory.createValidForClaim(c);
-    b.type = Booking.Type.OneWay;
-
-    b.segments = TestSegmentFactory.createFromBookingFlights(b, segmentInfos);
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      c,
-      new List<Booking>{ b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getClaimWithTwoFlightsAndOneCancellationButOnTime();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -1535,29 +1611,7 @@ private class EU261Claim_Test {
   @IsTest
   static void claimWhereTheCustomerCancelledTheFlightShouldBeDenied() {
     // A rebooked flight which arrives 4h later than the original flight.
-    BookingClaim bc = getDefaultCancellationBookingClaim();
-    bc.b.segments[0]
-      .flight.irregularities[0]
-      .cancellationTime = bc.b.segments[0]
-      .flight.irregularities[0]
-      .cancellationTime.addDays(1);
-    List<SegmentEvent> newEvents = new List<SegmentEvent>();
-    for (SegmentEvent se : bc.b.segments[0].getEvents()) {
-      se.officeCode = 'STOSK08RV';
-      if (se.newStatus == SegmentEvent.StatusCode.C_UN) {
-        se.operationType = SegmentEvent.OperationType.C_X;
-        se.newStatus = SegmentEvent.StatusCode.C_XX;
-      }
-      newEvents.add(se);
-    }
-    bc.b.segments[0].events = newEvents;
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getClaimWhereCustomerCancelledTheFlight();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -2031,19 +2085,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void claimWithShortDelayShouldBeDenied() {
-    BookingClaim bc = getDefaultDelayBookingClaim();
-    Flight f = bc.b.segments[0].flight;
-    f.irregularities[0].durationMinutes = 60;
-    f.arrivalDelayedMinutes = 60;
-    f.actualArrivalTime = bc.b.segments[0]
-      .flight.scheduledArrivalTime.addMinutes(60);
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getClaimWithShortDelay();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -2076,18 +2118,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void longDistanceDelayShouldAward600EUR() {
-    BookingClaim bc = getDefaultDelayBookingClaim();
-    Flight f1 = bc.b.segments[0].flight;
-    f1.arrivalAirportObject = TestAirportFixture.codeToAirport.get('LAX');
-    f1.arrivalAirport = 'LAX';
-    f1.tedsIdentifier = f1.tedsIdentifier.substringBefore('HEL') + 'LAX';
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getLongDistanceClaim();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -2115,18 +2146,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void delayWhereSASNotInControlShouldBeDenied() {
-    BookingClaim bc = getDefaultDelayBookingClaim();
-    bc.b.segments[0].flight.irregularities[0].code = 'AF';
-    bc.b.segments[0]
-      .flight.irregularities[0]
-      .eligibleForEU261 = FlightIrregularity.EU261Eligibility.No;
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getClaimWithDelayWhereSASNotInControl();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 
@@ -2379,18 +2399,7 @@ private class EU261Claim_Test {
 
   @IsTest
   static void claimWhereNoFlightIsDelayedOrCancelledShouldBeDenied() {
-    BookingClaim bc = getDefaultDelayBookingClaim();
-    Flight f = bc.b.segments[0].flight;
-    f.actualArrivalTime = bc.b.segments[0].flight.scheduledArrivalTime;
-    f.arrivalDelayedMinutes = 0;
-    f.irregularities = new List<FlightIrregularity>();
-
-    EU261Claim claimToEvaluate = new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    EU261Claim claimToEvaluate = getClaimWhereNoFlightIsDelayedOrCancelled();
 
     EU261Claim.Decision result = claimToEvaluate.evaluate();
 

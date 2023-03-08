@@ -7,24 +7,6 @@
  * See EU261Service and Confluence for more details.
  */
 public class EU261Claim {
-  private static final Map<String, Integer> COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS = new Map<String, Integer>{
-    'BE' => 12,
-    'DK' => 3 * 12,
-    'FI' => 3 * 12,
-    'FR' => 5 * 12,
-    'DE' => 3 * 12, // TODO: Change to 2 years + time until end of year 3 (e.g. 25 months 2022-12 -> 2024-12-31)
-    'IT' => 2 * 12,
-    'NL' => 5 * 12,
-    'NO' => 3 * 12,
-    'PL' => 12,
-    'ES' => 5 * 12,
-    'SE' => 2,
-    'UK' => 6 * 12,
-    'IE' => 6 * 12,
-    'LV' => 6,
-    'default' => 6 * 12
-  };
-
   public enum SemiAutomationReason {
     RequiresPowerOfAttorney,
     HasPotentialDuplicates,
@@ -650,23 +632,35 @@ public class EU261Claim {
    * The time limit for filing a claim is different in different jurisdictions.
    * We pick the longest of arrival and departure countries' filing limit, so
    * to the benefit of the customer.
+   *
+   * TODO: double check this, rule probably changes if we fly from intra EU or
+   * globally.
    */
   private Boolean isFiledOnTime() {
     Claim c = this.claimObj;
     Datetime tripDate = this.tripWithClaimFlight.getFinalDestinationArrivalTime();
 
-    Integer limitInDepartureCountry = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
+    Integer timelimit = getClaimFilingTimeLimitInMonths();
+    protocol.claimFilingTimeLimit = timeLimit; // TODO: remove
+
+    // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
+    Boolean filedWithinTimelimit =
+      Math.abs(c.createdDate.date().monthsBetween(tripDate.date())) <=
+      timeLimit;
+
+    return filedWithinTimelimit;
+  }
+
+  public Integer getClaimFilingTimeLimitInMonths() {
+    Integer limitInDepartureCountry = DateUtils.getClaimTimeLimitInMonths(
       this.tripWithClaimFlight.originAirport.countryCode
     );
-    Integer limitInArrivalCountry = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
+    Integer limitInArrivalCountry = DateUtils.getClaimTimeLimitInMonths(
       this.tripWithClaimFlight.destinationAirport.countryCode
     );
 
     Integer timeLimit;
-    Integer defaultTimeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
-      'default'
-    );
-
+    Integer defaultTimeLimit = DateUtils.getClaimTimeLimitInMonths('default');
     if (limitInDepartureCountry != null && limitInArrivalCountry != null) {
       timeLimit = Math.max(limitInDepartureCountry, limitInArrivalCountry);
     } else if (limitInDepartureCountry != null) {
@@ -677,14 +671,7 @@ public class EU261Claim {
       timeLimit = defaultTimeLimit;
     }
 
-    protocol.claimFilingTimeLimit = timeLimit;
-
-    // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
-    Boolean filedWithinTimelimit =
-      Math.abs(c.createdDate.date().monthsBetween(tripDate.date())) <=
-      timeLimit;
-
-    return filedWithinTimelimit;
+    return timeLimit;
   }
 
   private Decision determineEligibilityAndCalculateCompensation() {

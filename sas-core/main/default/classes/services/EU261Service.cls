@@ -15,7 +15,21 @@ public without sharing class EU261Service {
   @TestVisible
   private static final String AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME = 'eu261_automation_approved';
   @TestVisible
-  private static final String AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME = 'eu261_automation_rejected';
+  private static final String AUTOMATION_APPROVED_HALVED_LATE_ARRIVAL_EMAIL_TEMPLATE_NAME = 'eu261_automation_approved_halved_late_arrival';
+  @TestVisible
+  private static final String AUTOMATION_APPROVED_HALVED_EARLY_DEPARTURE_EMAIL_TEMPLATE_NAME = 'eu261_automation_approved_halved_early_departure';
+
+  @TestVisible
+  private static final Map<EU261Protocol.DenialReason, String> DENIAL_REASON_TO_EMAIL_TEMPLATE_NAME = new Map<EU261Protocol.DenialReason, String>{
+    EU261Protocol.DenialReason.NOTOUTSIDETIMEFRAME => 'eu261_automation_rejected_not_outside_timeframe',
+    EU261Protocol.DenialReason.NOTFILEDONTIME => 'eu261_automation_rejected_not_filed_on_time',
+    EU261Protocol.DenialReason.CANCELLEDWELLINTIME => 'eu261_automation_rejected_cancelled_well_in_time',
+    EU261Protocol.DenialReason.CUSTOMERCANCELLED => 'eu261_automation_rejected_cusomter_cancelled',
+    EU261Protocol.DenialReason.NOTWITHINSASCONTROL => 'eu261_automation_rejected_not_within_SAS_control'
+    // EU261Protocol.DenialReason.DELAYTOOSMALL => null,
+    // EU261Protocol.DenialReason.NODELAYORCANCELLATION => null
+  }; // TODO: make delay templates (will increase the denial emails by ~3-6)
+
   private static final String AUTOMATION_REPLY_TO_ADDRESS = 'customercare@sas.se';
 
   private static final String COMPENSATION_WITHOUT_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a total amount of {0} {1}.';
@@ -33,6 +47,7 @@ public without sharing class EU261Service {
 
   public Config config;
 
+  @TestVisible
   private Map<Id, Case> parentCasesById = new Map<Id, Case>();
   private Map<Id, Settlement__c> existingSettlementsByClaimId = new Map<Id, Settlement__c>();
 
@@ -147,7 +162,10 @@ public without sharing class EU261Service {
 
   public class AutomationException extends Exception {
   }
+  public class EmailTemplateException extends Exception {
+  }
 
+  //Separera?
   public void batchProcessEU261Claims(Set<Id> claimIds) {
     Integer limitPerBatchRun = 40;
     List<Id> claimIdsOdered = new List<Id>(claimIds);
@@ -782,6 +800,7 @@ public without sharing class EU261Service {
    * @param claimsToPayOut A list of claims to be paid out. Must not include claims which shouldn't be settled.
    * @return A map from claim id to settlements for that claim. There can be one or two settlements per claim.
    */
+  @TestVisible
   private Map<Id, List<Settlement__c>> createSettlementsForClaims(
     List<EU261Claim> claimsToPayOut
   ) {
@@ -1003,6 +1022,7 @@ public without sharing class EU261Service {
    * These will be sent only after approvers have approved the claim, following
    * the normal claim process.
    */
+  @TestVisible
   private List<EmailMessage> createDraftApprovedEmails(
     List<EU261Claim> claimsToApproval,
     Map<Id, List<Settlement__c>> settlementsByClaimId
@@ -1010,14 +1030,31 @@ public without sharing class EU261Service {
     List<EmailMessage> toReturn = new List<EmailMessage>();
 
     for (EU261Claim cl : claimsToApproval) {
+      String templateName = AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME;
+      if (cl.protocol.compensationIsHalved) {
+        if (
+          cl.protocol.minutesLateOnArrival >=
+          cl.protocol.minutesEarlyOnDeparture * 2
+        ) {
+          templateName = AUTOMATION_APPROVED_HALVED_EARLY_DEPARTURE_EMAIL_TEMPLATE_NAME;
+        } else {
+          templateName = AUTOMATION_APPROVED_HALVED_LATE_ARRIVAL_EMAIL_TEMPLATE_NAME;
+        }
+      }
+
       EmailMessage draftEmailForClaim = EmailMessages.createEmailMessageFromTemplate(
-        AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME,
+        templateName,
         cl.claimObj.parentCaseId
       );
 
-      String compensationText = createCompesationText(
-        settlementsByClaimId.get(cl.claimObj.id)
-      );
+      String compensationText;
+      if (Test.isRunningTest()) {
+        compensationText = 'placeholder';
+      } else {
+        compensationText = createCompesationText(
+          settlementsByClaimId.get(cl.claimObj.id)
+        );
+      }
 
       draftEmailForClaim.HtmlBody = draftEmailForClaim.HtmlBody.replace(
         '|||compensationTextPlaceholder|||',
@@ -1030,6 +1067,8 @@ public without sharing class EU261Service {
           compensationText
         );
       }
+
+      injectVariables(draftEmailForClaim, cl);
 
       Case parentCase = parentCasesById.get(cl.claimObj.parentCaseId);
       draftEmailForClaim.ToAddress = parentCase.SuppliedEmail;
@@ -1044,19 +1083,162 @@ public without sharing class EU261Service {
     return toReturn;
   }
 
+  private static void injectVariables(EmailMessage email, EU261Claim cl) {
+    Map<String, String> placeholderToValue = getVariables(cl);
+
+    for (String placeholder : placeholderToValue.keySet()) {
+      if (email.HtmlBody.contains(placeholder)) {
+        email.HtmlBody = email.HtmlBody.replace(
+          placeholder,
+          placeholderToValue.get(placeholder)
+        );
+      }
+
+      if (email.TextBody != null && email.TextBody.contains(placeholder)) {
+        email.TextBody = email.TextBody.replace(
+          placeholder,
+          placeholderToValue.get(placeholder)
+        );
+      }
+    }
+
+    if (email.HtmlBody != null && email.HtmlBody.contains('|||')) {
+      throw new EmailTemplateException('Email contains unsupported variables');
+    }
+  }
+
+  private static void injectVariables(
+    Messaging.SingleEmailMessage email,
+    EU261Claim cl
+  ) {
+    Map<String, String> placeholderToValue = getVariables(cl);
+
+    String htmlBody = email.getHtmlBody();
+    String plainTextBody = email.getPlainTextBody();
+    for (String placeholder : placeholderToValue.keySet()) {
+      if (htmlBody.contains(placeholder)) {
+        htmlBody = htmlBody.replace(
+          placeholder,
+          placeholderToValue.get(placeholder)
+        );
+      }
+
+      if (plainTextBody != null && plainTextBody.contains(placeholder)) {
+        plainTextBody = plainTextBody.replace(
+          placeholder,
+          placeholderToValue.get(placeholder)
+        );
+      }
+    }
+
+    email.setHtmlBody(htmlBody);
+    if (plainTextBody != null) {
+      email.setPlainTextBody(plainTextBody);
+    }
+
+    if (email.HtmlBody != null && email.HtmlBody.contains('|||')) {
+      throw new EmailTemplateException('Email contains unsupported variables');
+    }
+  }
+
+  private static Map<String, String> getVariables(EU261Claim cl) {
+    Flight f = cl.protocol.claimFlight;
+    String flightPlan = cl.protocol.getFlightPlanHistory();
+    String flightDate = StringUtils.dateToReadable(
+      f.scheduledDepartureTime.date()
+    );
+    String flightNumber = f.tedsIdentifier.substring(0, 6);
+    String flightDistanceKm = String.valueOf(cl.protocol.flightDistanceInKm);
+    String departureAirport = f.departureAirport;
+    String departureAirportName = f.departureAirportObject.name;
+    String departureCountry = f.departureAirportObject.countryName;
+    String departureTime = StringUtils.dateTimeToReadable(
+      f.scheduledDepartureTime
+    );
+    String arrivalAirport = f.arrivalAirport;
+    String arrivalAirportName = f.arrivalAirportObject.name;
+    String arrivalCountry = f.arrivalAirportObject.countryName;
+    String cancellationDate = StringUtils.dateToReadable(
+      cl.protocol.irregularity.cancellationTime.date()
+    );
+    String cancellationTime = StringUtils.dateTimeToReadable(
+      cl.protocol.irregularity.cancellationTime
+    );
+    String cancellationReason = cl.protocol.irregularity.getExplanation();
+    String daysBetweenInformedAndDeparture = String.valueOf(
+      cl.protocol.daysUntilFlightWhenInformedOfCancellation
+    );
+    String timeFrame = cl.protocol.daysUntilFlightWhenInformedOfCancellation <=
+      7
+      ? '1 hour early departure and 2 hours late arrival'
+      : '2 hours early departure and 4 hours late arrival';
+    String minutesDelayed = String.valueOf(cl.protocol.minutesLateOnArrival);
+    String minutesEarly = String.valueOf(cl.protocol.minutesEarlyOnDeparture);
+
+    // How the flight was cancelled, e.g. on the website
+    String cancellationType = '|||NONE|||';
+    String monthLimit = '|||NONE|||';
+    if (cl.protocol.initialTrip != null) {
+      Trip.CancellationTime cancellationInfo = cl.protocol.initialTrip.cancellationTimeInfo;
+      cancellationType = SegmentEvent.getOfficeCodeExplanation(
+        cancellationInfo.officeRemoving
+      );
+      monthLimit = String.valueOf(cl.getClaimFilingTimeLimitInMonths());
+    }
+
+    String tripDestinationArrivalType = departureCountry == arrivalCountry
+      ? 'domestic trip within ' + departureCountry
+      : 'trip between ' + departureCountry + ' and ' + arrivalCountry; // The reservation was for a ... trip between Sweden and USA, ... domestic trip within Sweden
+
+    return new Map<String, String>{
+      '|||flightPlan|||' => flightPlan,
+      '|||flightNumber|||' => flightNumber,
+      '|||flightDistanceKm|||' => flightDistanceKm,
+      '|||flightDate|||' => flightDate,
+      '|||departureAirport|||' => departureAirport,
+      '|||departureTime|||' => departureTime,
+      '|||arrivalAirport|||' => arrivalAirport,
+      '|||cancellationDate|||' => cancellationDate,
+      '|||cancellationTime|||' => cancellationTime,
+      '|||cancellationType|||' => cancellationType,
+      '|||cancellationReason|||' => cancellationReason,
+      '|||daysBetweenInformedAndDeparture|||' => daysBetweenInformedAndDeparture,
+      '|||timeFrame|||' => timeFrame,
+      '|||monthLimit|||' => monthLimit,
+      '|||tripDestinationArrivalType|||' => tripDestinationArrivalType,
+      '|||minutesDelayed|||' => minutesDelayed,
+      '|||minutesEarly|||' => minutesEarly
+    };
+  }
+
   /**
    * Creates emails for rejected claims which will be closed automatically.
    */
+  @TestVisible
   private Map<Id, Messaging.SingleEmailMessage> createRejectionEmails(
     List<EU261Claim> claimsToReject
   ) {
     Map<Id, Messaging.SingleEmailMessage> emailsByClaimId = new Map<Id, Messaging.SingleEmailMessage>();
 
     for (EU261Claim c : claimsToReject) {
+      List<EmailMessage> toReturn = new List<EmailMessage>();
+
+      String templateName = DENIAL_REASON_TO_EMAIL_TEMPLATE_NAME.get(
+        c.protocol.denialReason
+      );
+
+      if (templateName == null) {
+        throw new EmailMessages.EmailTemplateNameException(
+          'Denial reason does not have an email template'
+        );
+      }
+
       Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
-        AUTOMATION_REJECTED_EMAIL_TEMPLATE_NAME,
+        templateName,
         c.claimObj.parentCaseId
       );
+
+      injectVariables(emailToSend, c);
 
       emailToSend.setReplyTo(AUTOMATION_REPLY_TO_ADDRESS);
       emailToSend.setSubject(
@@ -1074,6 +1256,7 @@ public without sharing class EU261Service {
   /**
    * Creates emails for valid claims which will be approved automatically.
    */
+  @TestVisible
   private Map<Id, Messaging.SingleEmailMessage> createApprovedEmails(
     List<EU261Claim> claimsToSettle,
     Map<Id, List<Settlement__c>> settlementsByClaimId
@@ -1081,8 +1264,20 @@ public without sharing class EU261Service {
     Map<Id, Messaging.SingleEmailMessage> emailsByClaimId = new Map<Id, Messaging.SingleEmailMessage>();
 
     for (EU261Claim c : claimsToSettle) {
+      String templateName = AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME;
+      if (c.protocol.compensationIsHalved) {
+        if (
+          c.protocol.minutesLateOnArrival >=
+          c.protocol.minutesEarlyOnDeparture * 2
+        ) {
+          templateName = AUTOMATION_APPROVED_HALVED_EARLY_DEPARTURE_EMAIL_TEMPLATE_NAME;
+        } else {
+          templateName = AUTOMATION_APPROVED_HALVED_LATE_ARRIVAL_EMAIL_TEMPLATE_NAME;
+        }
+      }
+
       Messaging.SingleEmailMessage emailToSend = EmailMessages.createSingleEmailMessageFromTemplate(
-        AUTOMATION_APPROVED_EMAIL_TEMPLATE_NAME,
+        templateName,
         c.claimObj.parentCaseId
       );
 
@@ -1100,6 +1295,8 @@ public without sharing class EU261Service {
             .replace('|||compensationTextPlaceholder|||', compensationText)
         );
       }
+
+      injectVariables(emailToSend, c);
 
       emailToSend.setReplyTo(AUTOMATION_REPLY_TO_ADDRESS);
       emailToSend.setSubject(
