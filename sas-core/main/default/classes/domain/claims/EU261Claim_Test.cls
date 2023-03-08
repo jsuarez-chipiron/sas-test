@@ -652,9 +652,9 @@ private class EU261Claim_Test {
       'Claim with more than one booking cannot be evaluated.'
     );
     System.assertEquals(
-      'flight was cancelled 14 or more days in advance',
+      'Flight was cancelled 14 or more days in advance',
       result.reasoning,
-      'Rejection reason should be "flight was cancelled 14 or more days in advance"'
+      'Rejection reason should be "Flight was cancelled 14 or more days in advance"'
     );
 
     try {
@@ -1003,9 +1003,9 @@ private class EU261Claim_Test {
       'A claim where the customer filed too late should be denied'
     );
     System.assertEquals(
-      'not filed on time',
+      'Claim was not filed on on time',
       result.reasoning,
-      'Reasoning should be "not filed on time"'
+      'Reasoning should be "Claim was not filed on on time"'
     );
 
     try {
@@ -1403,7 +1403,7 @@ private class EU261Claim_Test {
       'If a cancelled flight does not affect the final arrival time the customer should not be compensated (two flights).'
     );
     System.assertEquals(
-      'the offered rebooking is not outside the timeframe allowed by EU261',
+      'The offered rebooking is not outside the timeframe allowed by EU261',
       result.reasoning,
       'If a cancelled flight does not affect the final arrival time the customer should not be compensated (two flights).'
     );
@@ -1567,9 +1567,9 @@ private class EU261Claim_Test {
       'A claim where the customer cancelled the flight should not be automated'
     );
     System.assertEquals(
-      'customer cancelled the flight',
+      'The customer cancelled the flight',
       result.reasoning,
-      'Reasoning should be "customer cancelled the flight"'
+      'Reasoning should be "The customer cancelled the flight"'
     );
 
     try {
@@ -2053,9 +2053,9 @@ private class EU261Claim_Test {
       'Handling status should be "Ineligible for compensation"'
     );
     System.assertEquals(
-      'delayed less than 180 minutes',
+      'Delayed less than 180 minutes',
       result.reasoning,
-      'Reasoning should be "delayed less than 180 minutes"'
+      'Reasoning should be "Delayed less than 180 minutes"'
     );
     System.assertEquals(
       null,

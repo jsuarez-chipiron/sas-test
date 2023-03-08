@@ -511,18 +511,18 @@ public without sharing class EU261Service {
         ac.decision.verdict == Claim.EU261HandlingStatus.EligibleForCompensation
       ) {
         c.eu261HandlingNote =
-          'C: ' +
+          'Compensation: ' +
           ac.decision.compensationPerCustomerInEUR.values() +
-          ' | R: ' +
+          ' | Reimbursement: ' +
           ac.decision.reimbursementAmountInSEK;
       } else if (
         ac.decision.verdict ==
         Claim.EU261HandlingStatus.PossiblyEligibleForCompensation
       ) {
         c.eu261HandlingNote =
-          'C: ' +
+          'Compensation: ' +
           ac.decision.compensationPerCustomerInEUR.values() +
-          ' | R: ' +
+          ' | Reimbursement: ' +
           ac.decision.reimbursementAmountInSEK +
           ' ' +
           ac.decision.caveats;
