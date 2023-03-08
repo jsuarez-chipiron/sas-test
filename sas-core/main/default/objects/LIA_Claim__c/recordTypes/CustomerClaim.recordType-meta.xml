@@ -2277,7 +2277,7 @@
         </values>
         <values>
             <fullName>Unhandled</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -2292,7 +2292,7 @@
         </values>
         <values>
             <fullName>Not Started</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Unavailable</fullName>
