@@ -281,19 +281,22 @@ public without sharing class EU261Protocol {
   }
 
   private String getCompensationExplanation() {
-    String explanation = 'As the flight distance was ';
-    explanation += String.valueOf(flightDistanceInKm) + 'km. ';
-    explanation += 'The passenger';
+    List<String> explanation = new List<String>{
+      'As the flight distance was',
+      String.valueOf(flightDistanceInKm) + 'km.'
+    };
+    String passengerInfo = 'The passenger';
     Set<ClaimCustomer> customers = this.decision.compensationPerCustomerInEUR.keySet();
     if (customers.size() == 1) {
-      explanation += ' is ';
+      passengerInfo += ' is';
     } else {
-      explanation += 's are ';
+      passengerInfo += 's are';
     }
-    explanation += 'entitled to the following:\n';
+    explanation.add(passengerInfo);
+    explanation.add('entitled to the following:\n');
     for (ClaimCustomer cc : customers) {
       Money m = this.decision.compensationPerCustomerInEUR.get(cc);
-      explanation +=
+      String compensationInfo =
         cc.firstName +
         ' ' +
         cc.lastName +
@@ -302,25 +305,27 @@ public without sharing class EU261Protocol {
         ' ' +
         m.currencyCode +
         '.\n';
+        explanation.add(compensationInfo);
     }
 
-    explanation += 'In accordance with the EU261 regulation.';
+    explanation.add('In accordance with the EU261 regulation.');
 
-    return explanation;
+    return String.join(explanation, ' ');
   }
 
   public String getFlightPlanHistory() {
-    String toReturn = '';
-    toReturn += buildFlightPlan(this.initialTrip);
+    List<String> toReturn = new List<String>{
+      buildFlightPlan(this.initialTrip)
+    };
 
     if (this.replacementTrip == null) {
-      toReturn += '\nThere was no replacement flight plan.\n';
+      toReturn.add('There was no replacement flight plan.');
     } else {
-      toReturn += '\nThe offered replacement for this trip was:\n';
-      toReturn += buildFlightPlan(this.replacementTrip);
+      toReturn.add('The offered replacement for this trip was:');
+      toReturn.add(buildFlightPlan(this.replacementTrip));
     }
 
-    return toReturn;
+    return String.join(toReturn, '\n');
   }
 
   private List<String> getDetailedExplanation() {
@@ -377,20 +382,20 @@ public without sharing class EU261Protocol {
   }
 
   private String getCancellationInfo() {
-    String cancellationInfo = '\n';
-    cancellationInfo += this.claimFlight.tedsIdentifier.substringBefore('-');
-    cancellationInfo +=
-      ' from ' +
-      this.claimFlight.departureAirport +
-      ' to ' +
-      this.claimFlight.arrivalAirport;
-    cancellationInfo +=
-      ' was cancelled because of ' +
-      irregularity.getExplanation() +
-      ' the ' +
-      StringUtils.dateTimeToReadable(irregularity.cancellationTime) +
-      '.\n';
-    return cancellationInfo;
+    List<String> cancellationInfoList = new List<String>{
+      '\n',
+      this.claimFlight.tedsIdentifier.substringBefore('-'),
+      'from',
+      this.claimFlight.departureAirport,
+      'to',
+      this.claimFlight.arrivalAirport,
+      'was cancelled because of',
+      irregularity.getExplanation(),
+      'the',
+      StringUtils.dateTimeToReadable(irregularity.cancellationTime),
+      '.\n'
+    };
+    return String.join(cancellationInfoList, ' ');
   }
 
   // TODO
@@ -439,9 +444,10 @@ public without sharing class EU261Protocol {
       return 'No flights';
     }
 
-    List<String> totalFlightPlan = new List<String>();
+    List<String> totalFlightPlan = new List<String>{
+      'Flight plan:'
+    };
     for (Trip.Leg l : t.sortedLegs) {
-      String flightPlan = 'Flight plan:\n';
       String actualDeparture = '';
       String actualArrival = '';
       Flight f = l.flight;
@@ -459,7 +465,7 @@ public without sharing class EU261Protocol {
         f.scheduledArrivalTime
       );
 
-      flightPlan +=
+      String flightPlan =
         f.tedsIdentifier.substringBefore('-') +
         ' ' +
         f.departureAirport +
