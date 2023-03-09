@@ -6,7 +6,8 @@ public with sharing class Settlements_IntegrationTest {
     Racer_Integration_Counter__c counter = new Racer_Integration_Counter__c(
       Accounting_Verification_Number__c = 10000,
       Currency__c = 'SEK',
-      Payment_Run_Id__c = 1000
+      Payment_Run_Id__c = 1000,
+      Accounting_Run_Id__c = 200
     );
     Settlement__c settlement1 = new Settlement__c(
       Address_line_1__c = 'Frösundaviks allé 1',
@@ -159,6 +160,7 @@ public with sharing class Settlements_IntegrationTest {
     SettlementService.createAccountingFile(
       AccountingFileBuilder.PaymentCurrency.SEK
     );
+
     Test.stopTest();
 
     //Then
@@ -203,6 +205,7 @@ public with sharing class Settlements_IntegrationTest {
       String.valueOf(Date.today().dayOfYear()).leftPad(3, '0') +
       '0' +
       Datetime.now().format('yyyyMMdd') +
+      counter.Accounting_Run_Id__c +
       '.sfsek';
 
     System.assertEquals(
@@ -304,7 +307,11 @@ public with sharing class Settlements_IntegrationTest {
     );
 
     Racer_Integration_Counter__c counterAfterwards = [
-      SELECT Id, Accounting_Verification_Number__c, Payment_Run_Id__c
+      SELECT
+        Id,
+        Accounting_Verification_Number__c,
+        Payment_Run_Id__c,
+        Accounting_Run_Id__c
       FROM Racer_Integration_Counter__c
       WHERE Id = :counter.Id
     ];
@@ -319,6 +326,18 @@ public with sharing class Settlements_IntegrationTest {
       counterAfterwards.Payment_Run_Id__c,
       'Run Id should not be incremented after file creation.'
     );
+
+    System.debug('test ' + counterAfterwards.Accounting_Run_Id__c);
+    System.assertEquals(
+      201,
+      counterAfterwards.Accounting_Run_Id__c,
+      'Account Run Id should be incremented after file creation.'
+    );
+
+    SettlementService.createAccountingFile(
+      AccountingFileBuilder.PaymentCurrency.SEK
+    );
+    System.debug('test 1' + counterAfterwards.Accounting_Run_Id__c);
   }
 
   @IsTest

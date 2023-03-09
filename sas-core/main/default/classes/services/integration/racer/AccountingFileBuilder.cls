@@ -38,7 +38,8 @@ public class AccountingFileBuilder {
   public static Id create(
     List<AccountingEntry> accountingEntries,
     PaymentCurrency fileCurrency,
-    Decimal verificationNumber
+    Decimal verificationNumber,
+    Decimal accountingrunId
   ) {
     if (fileCurrency == null || accountingEntries == null) {
       throw new CreateFileException(
@@ -97,6 +98,7 @@ public class AccountingFileBuilder {
       dayOfYear +
       '0' +
       todaysDate +
+      String.valueOf(accountingrunId) +
       '.sf' +
       fileCurrency.name().toLowerCase();
 

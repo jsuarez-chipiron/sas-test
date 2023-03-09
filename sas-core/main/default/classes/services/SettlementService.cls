@@ -135,7 +135,8 @@ public without sharing class SettlementService {
     Id textFileHandle = AccountingFileBuilder.create(
       accountingEntries,
       fileCurrency,
-      counter.Accounting_Verification_Number__c
+      counter.Accounting_Verification_Number__c,
+      counter.Accounting_Run_Id__c
     );
 
     ContentVersion accountingFile = contentVersions.selectById(
@@ -148,6 +149,8 @@ public without sharing class SettlementService {
       .markAsSentToRacer(accountingFile.Title, uow);
 
     counter.Accounting_Verification_Number__c += 1;
+    counter.Accounting_Run_Id__c += 1;
+
     uow.registerDirty(counter);
     uow.commitWork();
 
