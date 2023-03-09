@@ -485,22 +485,12 @@ private class Cases_Test {
   }
   @IsTest
   static void caseThreadIdShouldBeCorrect() {
-    // Hardcoding Ids because there is no way to get a threadId in a scratch org
-    // We are interested in getting these working for UAT/PROD specifically
-    String prodId = '00D2p0000013dWz';
-    String uatId = '00D9E000000930s';
     String caseId = '5007T00000K1YJMQA3';
-    String uatThreadId = Cases.getThreadId(caseId, uatId);
-    String prodThreadId = Cases.getThreadId(caseId, prodId);
+    String threadId = Cases.getThreadId(caseId);
 
     System.assertEquals(
-      'ref:_00D2p13dWz._5007TK1YJM:ref',
-      prodThreadId,
-      'Ref Id should match'
-    );
-    System.assertEquals(
-      'ref:_00D9E930s._5007TK1YJM:ref',
-      uatThreadId,
+      'ref:_TESTID1234._5007TK1YJM:ref',
+      threadId,
       'Ref Id should match'
     );
   }

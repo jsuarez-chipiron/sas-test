@@ -42,6 +42,10 @@ public without sharing class Cases extends ApplicationDomain {
     }
   }
 
+  private static final String ORGANIZATION_ID = Test.isRunningTest()
+    ? 'TESTID1234'
+    : C_Settings.getSettings('ORG').get('INSTANCE_ID');
+
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
     RecordType.Channel => 'Channel',
     RecordType.CustomerClaim => 'Customer Claim',
@@ -1017,15 +1021,8 @@ public without sharing class Cases extends ApplicationDomain {
   }
 
   public static String getThreadId(String caseId) {
-    return getThreadId(caseId, UserInfo.getOrganizationId());
-  }
-
-  public static String getThreadId(String caseId, String organizationId) {
-    String orgPrefix = organizationId.left(5);
-    String orgSuffix = organizationId.right(10);
     return 'ref:_' +
-      orgPrefix +
-      orgSuffix.replaceFirst('^0+', '') +
+      ORGANIZATION_ID +
       '._' +
       caseId.left(5) +
       caseId.mid(10, 5) +
