@@ -148,6 +148,7 @@ public without sharing class SettlementService {
       .markAsSentToRacer(accountingFile.Title, uow);
 
     counter.Accounting_Verification_Number__c += 1;
+
     uow.registerDirty(counter);
     uow.commitWork();
 
