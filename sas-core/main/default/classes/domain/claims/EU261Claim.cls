@@ -244,7 +244,7 @@ public class EU261Claim {
   private Boolean claimFlightHasMoreThanOneCancellation() {
     Integer count = 0;
     for (FlightIrregularity fi : claimFlight.irregularities) {
-      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+      if (fi.isCancellation()) {
         // We can ignore arrival cancellation in here because there's always
         // one if the departure is cancelled.
         count += 1;
@@ -1015,7 +1015,7 @@ public class EU261Claim {
     List<FlightIrregularity> claimIrregularities = new List<FlightIrregularity>();
 
     for (FlightIrregularity fi : this.claimFlight.irregularities) {
-      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+      if (fi.isCancellation()) {
         claimIrregularities.add(fi);
       }
     }

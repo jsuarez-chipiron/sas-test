@@ -418,7 +418,7 @@ public without sharing class EU261Service {
         );
       }
 
-      if (!newFi.isNA0Delay()) {
+      if (!newFi.isInvalid()) {
         flightIdToIrregularities.get(newFi.flightId).add(newFi);
       }
     }

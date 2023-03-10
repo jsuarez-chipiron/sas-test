@@ -58,7 +58,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   public enum CODE {
   } // TODO
 
-  public enum IRR_TYPE {
+  public enum IrregularityType {
     CANCELLATION,
     DELAY,
     INVALID
@@ -328,18 +328,18 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   }
 
   public Boolean isCancellation() {
-    return getType() == IRR_TYPE.CANCELLATION;
+    return getType() == IrregularityType.CANCELLATION;
   }
 
   public Boolean isDelay() {
-    return getType() == IRR_TYPE.DELAY;
+    return getType() == IrregularityType.DELAY;
   }
 
   public Boolean isInvalid() {
-    return getType() == IRR_TYPE.INVALID;
+    return getType() == IrregularityType.INVALID;
   }
 
-  private IRR_TYPE getType() {
+  private IrregularityType getType() {
     Boolean hasCancellationCode = CANCELLATION_CODES.contains(this.code);
     Boolean hasDelayCode = DELAY_CODES.contains(this.code);
     if (this.code.length() == 4 && this.code.substring(2, 4).isNumeric()) {
@@ -347,9 +347,9 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     }
 
     if (hasDelayCode) {
-      return IRR_TYPE.DELAY;
+      return IrregularityType.DELAY;
     } else if (hasCancellationCode) {
-      return IRR_TYPE.CANCELLATION;
+      return IrregularityType.CANCELLATION;
     }
 
     if (this.code == 'N/A' || this.code == null || this.code == '') {
@@ -358,12 +358,12 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
         this.cancellationTime > DateTime.newInstance(1950, 1, 1)
       ) {
         // If the cancellationtime exist and is not invalid, it is a kind of valid cancellation
-        return IRR_TYPE.CANCELLATION;
+        return IrregularityType.CANCELLATION;
       } else if (this.durationMinutes != null && this.durationMinutes > 0) {
         // If the duration exisits and is more than 0, it is a kind of valid delay
-        return IRR_TYPE.DELAY;
+        return IrregularityType.DELAY;
       } else {
-        return IRR_TYPE.INVALID; // Cancellation N/A with no cancellation time get here, is that ok?
+        return IrregularityType.INVALID; // Cancellation N/A with no cancellation time get here, is that ok? Should we throw an error instead? Maybe only sort out the delays?
       }
     }
 
@@ -374,21 +374,6 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
       this.id +
       ')'
     );
-  }
-
-  public Boolean isNA0Delay() {
-    Boolean codeIsEmpty =
-      this.code == 'N/A' ||
-      this.code == null ||
-      this.code == '';
-    Boolean durationIsEmpty =
-      this.durationMinutes == 0 ||
-      this.durationMinutes == null;
-    return codeIsEmpty && durationIsEmpty && isDelay();
-  }
-
-  public Boolean isArrivalCancellation() {
-    return this.type == 'Cancellation (arrival)';
   }
 
   public Boolean isWithinSASControl() {
@@ -438,6 +423,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
    * delay on arrival [1],
    * delay on departure within SAS' control [2],
    * delay on arrival within SAS' control [3].
+   * TODO: refactor to use getType() instead of substringBefore/After (see over whole application)
    */
   public static List<Decimal> getTotalDelayInMinutesDivided(
     List<FlightIrregularity> irregularities

@@ -2171,7 +2171,7 @@ private class EU261Claim_Test {
   @IsTest
   static void delayWhereNotCertainIfSASInControlShouldNotBeHandled() {
     BookingClaim bc = getDefaultDelayBookingClaim();
-    bc.b.segments[0].flight.irregularities[0].code = 'QQ';
+    bc.b.segments[0].flight.irregularities[0].code = 'ED';
     bc.b.segments[0].flight.irregularities[0].eligibleForEU261 = null;
 
     EU261Claim claimToEvaluate = new EU261Claim(
