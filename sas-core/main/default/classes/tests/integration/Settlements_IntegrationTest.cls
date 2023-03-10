@@ -320,10 +320,6 @@ public with sharing class Settlements_IntegrationTest {
       counterAfterwards.Payment_Run_Id__c,
       'Run Id should not be incremented after file creation.'
     );
-
-    SettlementService.createAccountingFile(
-      AccountingFileBuilder.PaymentCurrency.SEK
-    );
   }
 
   @IsTest
