@@ -58,6 +58,12 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   public enum CODE {
   } // TODO
 
+  public enum IRR_TYPE {
+    CANCELLATION,
+    DELAY,
+    INVALID
+  }
+
   // This should likely be stored in CancellationCode.globalValueSet. However, db calls makes that very annoying.
   // TODO: Populate, get help from liability: https://docs.google.com/spreadsheets/d/1lo-pu7Ew-f-5z18Ke51962j_VZkI9FfA8kYiKTFUw5o/edit#gid=801456937
   public static final Map<String, Boolean> codeToSASIsResponsible = new Map<String, Boolean>{
@@ -69,16 +75,197 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   };
 
   private static final Set<String> ROTATION_CODES = new Set<String>{
-    'RA (93)',
     'RA',
     '93',
-    'RC (95)',
     'RC',
     '95',
-    'RS (94)',
     'RS',
     '94'
   };
+
+  private static final Set<String> CANCELLATION_CODES = new Set<String>{
+    'AIRS',
+    'ARPT',
+    'AUTH',
+    'COMM',
+    'CREW',
+    'DAMA',
+    'EQUI',
+    'FUEL',
+    'HDLG',
+    'HOLI',
+    'INDU',
+    'NODE',
+    'OPCO',
+    'OPER',
+    'PERF',
+    'POLI',
+    'REPO',
+    'RTNS',
+    'RUNW',
+    'TECH',
+    'WEAT'
+  };
+
+  private static final Set<String> DELAY_CODES = new Set<String>{
+    'AE',
+    '83',
+    'AF',
+    '87',
+    'AG',
+    '86',
+    'AM',
+    '89',
+    'AS',
+    '85',
+    'AT',
+    '81',
+    'AW',
+    '84',
+    'AX',
+    '82',
+    'CA',
+    '29',
+    'CC',
+    '23',
+    'CD',
+    '21',
+    'CE',
+    '27',
+    'CI',
+    '24',
+    'CL',
+    '28',
+    'CO',
+    '25',
+    'CP',
+    '22',
+    'CU',
+    '26',
+    'D',
+    'DF',
+    '51',
+    'DG',
+    '52',
+    'EC',
+    '56',
+    'ED',
+    '55',
+    'EF',
+    '57',
+    'EO',
+    '58',
+    'FA',
+    '68',
+    'FB',
+    '69',
+    'FC',
+    '67',
+    'FF',
+    '62',
+    'FL',
+    '66',
+    'FP',
+    '61',
+    'FR',
+    '65',
+    'FS',
+    '64',
+    'FT',
+    '63',
+    'GB',
+    '37',
+    'GC',
+    '35',
+    'GD',
+    '31',
+    'GE',
+    '33',
+    'GF',
+    '36',
+    'GL',
+    '32',
+    'GS',
+    '34',
+    'GT',
+    '39',
+    'GU',
+    '38',
+    'HL',
+    '02',
+    'MI',
+    '97',
+    'MO',
+    '98',
+    'MX',
+    '99',
+    'OA',
+    '06',
+    'PB',
+    '18',
+    'PC',
+    '17',
+    'PD',
+    '11',
+    'PE',
+    '13',
+    'PF',
+    '03',
+    'PH',
+    '15',
+    'PL',
+    '12',
+    'PO',
+    '14',
+    'PS',
+    '16',
+    'PW',
+    '19',
+    'RA',
+    '93',
+    'RC',
+    '95',
+    'RL',
+    '91',
+    'RO',
+    '96',
+    'RS',
+    '94',
+    'RT',
+    '92',
+    'RX',
+    '04',
+    'SK',
+    '01',
+    'TA',
+    '45',
+    'TC',
+    '46',
+    'TD',
+    '41',
+    'TL',
+    '47',
+    'TM',
+    '42',
+    'TN',
+    '43',
+    'TS',
+    '44',
+    'TV',
+    '48',
+    'WG',
+    '77',
+    'WI',
+    '75',
+    'WO',
+    '71',
+    'WR',
+    '73',
+    'WS',
+    '76',
+    'WT',
+    '72'
+  }; // Note! Does not contain subcode, e.g. WI01, TV02 etc.
 
   private static final Map<String, String> codeToExplanation = new Map<String, String>{
     'AIRS' => 'airspace restrictions',
@@ -141,11 +328,52 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   }
 
   public Boolean isCancellation() {
-    return this.type.substringBefore(' ') == 'Cancellation';
+    return getType() == IRR_TYPE.CANCELLATION;
   }
 
   public Boolean isDelay() {
-    return this.type.substringBefore(' ') == 'Delay';
+    return getType() == IRR_TYPE.DELAY;
+  }
+
+  public Boolean isInvalid() {
+    return getType() == IRR_TYPE.INVALID;
+  }
+
+  private IRR_TYPE getType() {
+    Boolean hasCancellationCode = CANCELLATION_CODES.contains(this.code);
+    Boolean hasDelayCode = DELAY_CODES.contains(this.code);
+    if (this.code.length() == 4 && this.code.substring(2, 4).isNumeric()) {
+      hasDelayCode = DELAY_CODES.contains(this.code.substring(2, 4));
+    }
+
+    if (hasDelayCode) {
+      return IRR_TYPE.DELAY;
+    } else if (hasCancellationCode) {
+      return IRR_TYPE.CANCELLATION;
+    }
+
+    if (this.code == 'N/A' || this.code == null || this.code == '') {
+      if (
+        this.cancellationTime != null &&
+        this.cancellationTime > DateTime.newInstance(1950, 1, 1)
+      ) {
+        // If the cancellationtime exist and is not invalid, it is a kind of valid cancellation
+        return IRR_TYPE.CANCELLATION;
+      } else if (this.durationMinutes != null && this.durationMinutes > 0) {
+        // If the duration exisits and is more than 0, it is a kind of valid delay
+        return IRR_TYPE.DELAY;
+      } else {
+        return IRR_TYPE.INVALID; // Cancellation N/A with no cancellation time get here, is that ok?
+      }
+    }
+
+    throw new IrregularityException(
+      'Unknown irregularity: ' +
+      this.code +
+      '(' +
+      this.id +
+      ')'
+    );
   }
 
   public Boolean isNA0Delay() {
