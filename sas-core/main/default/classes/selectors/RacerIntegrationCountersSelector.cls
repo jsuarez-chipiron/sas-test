@@ -4,8 +4,7 @@ public inherited sharing class RacerIntegrationCountersSelector extends fflib_SO
       Racer_Integration_Counter__c.Id,
       Racer_Integration_Counter__c.Accounting_Verification_Number__c,
       Racer_Integration_Counter__c.Currency__c,
-      Racer_Integration_Counter__c.Payment_Run_Id__c,
-      Racer_Integration_Counter__c.Accounting_Run_Id__c
+      Racer_Integration_Counter__c.Payment_Run_Id__c
     };
   }
 
