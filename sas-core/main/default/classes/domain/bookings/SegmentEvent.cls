@@ -28,9 +28,9 @@ public without sharing class SegmentEvent extends AbstractSObjectWrapper impleme
   }; // TODO extend, potentially: 08TC => true. Talk with process owner.
 
   private static final Map<String, String> OFFICE_CODE_TO_EXPLANATION = new Map<String, String>{
-    'SK08RV' => 'the customer cancelled the trip on the website (regular tickets)',
-    'SK08MB' => 'the customer cancelled the trip on a mobile phone',
-    'SK08VB' => 'the customer cancelled the trip on the website (eurobonus tickets)',
+    'SK08RV' => 'The customer cancelled the trip on the website (regular tickets)',
+    'SK08MB' => 'The customer cancelled the trip on a mobile phone',
+    'SK08VB' => 'The customer cancelled the trip on the website (eurobonus tickets)',
     'SK0001' => 'SAS cancelled the trip'
   }; // TODO extend
 

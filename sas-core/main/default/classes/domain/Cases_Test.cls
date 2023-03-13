@@ -483,4 +483,15 @@ private class Cases_Test {
     Case caseAfterUpdate = [SELECT Status FROM Case WHERE Id = :c.Id];
     System.assertEquals(Cases.STATUS_CLOSED, caseAfterUpdate.Status);
   }
+  @IsTest
+  static void caseThreadIdShouldBeCorrect() {
+    String caseId = '5007T00000K1YJMQA3';
+    String threadId = Cases.getThreadId(caseId);
+
+    System.assertEquals(
+      'ref:_TESTID1234._5007TK1YJM:ref',
+      threadId,
+      'Ref Id should match'
+    );
+  }
 }

@@ -7,24 +7,6 @@
  * See EU261Service and Confluence for more details.
  */
 public class EU261Claim {
-  private static final Map<String, Integer> COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS = new Map<String, Integer>{
-    'BE' => 12,
-    'DK' => 3 * 12,
-    'FI' => 3 * 12,
-    'FR' => 5 * 12,
-    'DE' => 3 * 12, // TODO: Change to 2 years + time until end of year 3 (e.g. 25 months 2022-12 -> 2024-12-31)
-    'IT' => 2 * 12,
-    'NL' => 5 * 12,
-    'NO' => 3 * 12,
-    'PL' => 12,
-    'ES' => 5 * 12,
-    'SE' => 2,
-    'UK' => 6 * 12,
-    'IE' => 6 * 12,
-    'LV' => 6,
-    'default' => 6 * 12
-  };
-
   public enum SemiAutomationReason {
     RequiresPowerOfAttorney,
     HasPotentialDuplicates,
@@ -650,23 +632,35 @@ public class EU261Claim {
    * The time limit for filing a claim is different in different jurisdictions.
    * We pick the longest of arrival and departure countries' filing limit, so
    * to the benefit of the customer.
+   *
+   * TODO: double check this, rule probably changes if we fly from intra EU or
+   * globally.
    */
   private Boolean isFiledOnTime() {
     Claim c = this.claimObj;
     Datetime tripDate = this.tripWithClaimFlight.getFinalDestinationArrivalTime();
 
-    Integer limitInDepartureCountry = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
+    Integer timelimit = getClaimFilingTimeLimitInMonths();
+    protocol.claimFilingTimeLimit = timeLimit; // TODO: remove
+
+    // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
+    Boolean filedWithinTimelimit =
+      Math.abs(c.createdDate.date().monthsBetween(tripDate.date())) <=
+      timeLimit;
+
+    return filedWithinTimelimit;
+  }
+
+  public Integer getClaimFilingTimeLimitInMonths() {
+    Integer limitInDepartureCountry = DateUtils.getClaimTimeLimitInMonths(
       this.tripWithClaimFlight.originAirport.countryCode
     );
-    Integer limitInArrivalCountry = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
+    Integer limitInArrivalCountry = DateUtils.getClaimTimeLimitInMonths(
       this.tripWithClaimFlight.destinationAirport.countryCode
     );
 
     Integer timeLimit;
-    Integer defaultTimeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
-      'default'
-    );
-
+    Integer defaultTimeLimit = DateUtils.getClaimTimeLimitInMonths('default');
     if (limitInDepartureCountry != null && limitInArrivalCountry != null) {
       timeLimit = Math.max(limitInDepartureCountry, limitInArrivalCountry);
     } else if (limitInDepartureCountry != null) {
@@ -677,27 +671,20 @@ public class EU261Claim {
       timeLimit = defaultTimeLimit;
     }
 
-    protocol.claimFilingTimeLimit = timeLimit;
-
-    // TODO: Determine if this is enough or we need closer to the exact date. This checks only on month level and ignores the days.
-    Boolean filedWithinTimelimit =
-      Math.abs(c.createdDate.date().monthsBetween(tripDate.date())) <=
-      timeLimit;
-
-    return filedWithinTimelimit;
+    return timeLimit;
   }
 
   private Decision determineEligibilityAndCalculateCompensation() {
     if (this.isStaffBooking()) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'id and staff tickets are not eligible'
+        'Id and staff tickets are not eligible'
       );
     } else if (this.hasCancellation && flightCancelledWellInTime()) {
       protocol.denialReason = EU261Protocol.DenialReason.CANCELLEDWELLINTIME;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'flight was cancelled 14 or more days in advance'
+        'Flight was cancelled 14 or more days in advance'
       );
     } else if (
       this.hasCancellation && !this.cancellationCodeIsWithinSASControl()
@@ -708,18 +695,18 @@ public class EU261Claim {
       protocol.denialReason = EU261Protocol.DenialReason.NOTWITHINSASCONTROL;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'cancellation code not within SAS control'
+        'Cancellation code not within SAS control'
       );
     } else if (!this.isWithinEU261Jurisdiction()) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'not covered by EU261'
+        'Not covered by EU261'
       );
     } else if (!this.isFiledOnTime()) {
       protocol.denialReason = EU261Protocol.DenialReason.NOTFILEDONTIME;
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'not filed on time'
+        'Claim was not filed on on time'
       );
     } else if (
       this.hasCancellation && this.tripWithClaimFlight.customerCancelled()
@@ -728,7 +715,7 @@ public class EU261Claim {
       this.calculateCompensationForCancellation(); // For protocol reasons
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'customer cancelled the flight'
+        'The customer cancelled the flight'
       );
     } else if (this.hasCancellation) {
       // If the claim flight was cancelled the customer should receive compensation according to the cancellation logic
@@ -839,14 +826,14 @@ public class EU261Claim {
     if (eligiblePassengers.size() == 0) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'there are no passengers which are eligible for compensation'
+        'There are no passengers which are eligible for compensation'
       );
     }
 
     if (compensation == new Money(0, Money.CurrencyCode.EUR)) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'the offered rebooking is not outside the timeframe allowed by EU261'
+        'The offered rebooking is not outside the timeframe allowed by EU261'
       );
     }
 
@@ -1119,7 +1106,7 @@ public class EU261Claim {
     if (passengersEligibleForCompensation.size() == 0) {
       return new Decision(
         Claim.EU261HandlingStatus.IneligibleForCompensation,
-        'no passenger in this claim has a revenue ticket.'
+        'No passenger in this claim has a revenue ticket.'
       );
     }
 
@@ -1139,7 +1126,7 @@ public class EU261Claim {
       } else {
         return new Decision(
           Claim.EU261HandlingStatus.IneligibleForCompensation,
-          'delayed less than 180 minutes'
+          'Delayed less than 180 minutes'
         );
       }
     }

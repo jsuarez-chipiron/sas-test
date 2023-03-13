@@ -163,9 +163,11 @@ public without sharing class EU261Protocol {
       'The flight was cancelled 14 days, or more, in advance. In accordance with the EU261 regulation, the passenger(s) is/are therefore not eligible for compensation.\n'
     );
     toReturn.add('Time of departure for the first flight in the trip: ');
-    toReturn.add(dateTimeToReadable(departureTime) + '\n');
+    toReturn.add(StringUtils.dateTimeToReadable(departureTime) + '\n');
     toReturn.add('Time of cancellation:');
-    toReturn.add(dateTimeToReadable(irregularity.cancellationTime) + '\n');
+    toReturn.add(
+      StringUtils.dateTimeToReadable(irregularity.cancellationTime) + '\n'
+    );
     toReturn.add('Days between cancellation and departure: ');
     Decimal hoursBetween = DateUtils.getHoursBetween(
       departureTime,
@@ -223,10 +225,10 @@ public without sharing class EU261Protocol {
     String meansOfCancellation = SegmentEvent.getOfficeCodeExplanation(
       cancellationInfo.officeRemoving
     );
-    String customerCancellationTime = dateTimeToReadable(
+    String customerCancellationTime = StringUtils.dateTimeToReadable(
       cancellationInfo.removed
     );
-    String flightCancellationTime = dateTimeToReadable(
+    String flightCancellationTime = StringUtils.dateTimeToReadable(
       irregularity.cancellationTime
     );
 
@@ -279,19 +281,22 @@ public without sharing class EU261Protocol {
   }
 
   private String getCompensationExplanation() {
-    String explanation = 'As the flight distance was ';
-    explanation += String.valueOf(flightDistanceInKm) + 'km. ';
-    explanation += 'The passenger';
+    List<String> explanation = new List<String>{
+      'As the flight distance was',
+      String.valueOf(flightDistanceInKm) + 'km.'
+    };
+    String passengerInfo = 'The passenger';
     Set<ClaimCustomer> customers = this.decision.compensationPerCustomerInEUR.keySet();
     if (customers.size() == 1) {
-      explanation += ' is ';
+      passengerInfo += ' is';
     } else {
-      explanation += 's are ';
+      passengerInfo += 's are';
     }
-    explanation += 'entitled to the following:\n';
+    explanation.add(passengerInfo);
+    explanation.add('entitled to the following:\n');
     for (ClaimCustomer cc : customers) {
       Money m = this.decision.compensationPerCustomerInEUR.get(cc);
-      explanation +=
+      String compensationInfo =
         cc.firstName +
         ' ' +
         cc.lastName +
@@ -300,11 +305,27 @@ public without sharing class EU261Protocol {
         ' ' +
         m.currencyCode +
         '.\n';
+        explanation.add(compensationInfo);
     }
 
-    explanation += 'In accordance with the EU261 regulation.';
+    explanation.add('In accordance with the EU261 regulation.');
 
-    return explanation;
+    return String.join(explanation, ' ');
+  }
+
+  public String getFlightPlanHistory() {
+    List<String> toReturn = new List<String>{
+      buildFlightPlan(this.initialTrip)
+    };
+
+    if (this.replacementTrip == null) {
+      toReturn.add('There was no replacement flight plan.');
+    } else {
+      toReturn.add('The offered replacement for this trip was:');
+      toReturn.add(buildFlightPlan(this.replacementTrip));
+    }
+
+    return String.join(toReturn, '\n');
   }
 
   private List<String> getDetailedExplanation() {
@@ -361,20 +382,20 @@ public without sharing class EU261Protocol {
   }
 
   private String getCancellationInfo() {
-    String cancellationInfo = '\n';
-    cancellationInfo += this.claimFlight.tedsIdentifier.substringBefore('-');
-    cancellationInfo +=
-      ' from ' +
-      this.claimFlight.departureAirport +
-      ' to ' +
-      this.claimFlight.arrivalAirport;
-    cancellationInfo +=
-      ' was cancelled because of ' +
-      irregularity.getExplanation() +
-      ' the ' +
-      dateTimeToReadable(irregularity.cancellationTime) +
-      '.\n';
-    return cancellationInfo;
+    List<String> cancellationInfoList = new List<String>{
+      '\n',
+      this.claimFlight.tedsIdentifier.substringBefore('-'),
+      'from',
+      this.claimFlight.departureAirport,
+      'to',
+      this.claimFlight.arrivalAirport,
+      'was cancelled because of',
+      irregularity.getExplanation(),
+      'the',
+      StringUtils.dateTimeToReadable(irregularity.cancellationTime),
+      '.\n'
+    };
+    return String.join(cancellationInfoList, ' ');
   }
 
   // TODO
@@ -423,52 +444,51 @@ public without sharing class EU261Protocol {
       return 'No flights';
     }
 
-    List<String> totalFlightPlan = new List<String>();
+    List<String> totalFlightPlan = new List<String>{
+      'Flight plan:'
+    };
     for (Trip.Leg l : t.sortedLegs) {
-      String flightPlan = '';
       String actualDeparture = '';
       String actualArrival = '';
       Flight f = l.flight;
       if (f.actualDepartureTime != null) {
-        actualDeparture =
-          ', actual departure: ' + dateTimeToReadable(f.actualDepartureTime);
+        actualDeparture = StringUtils.dateTimeToReadable(f.actualDepartureTime);
       }
       if (f.actualArrivalTime != null) {
-        actualArrival =
-          ', actual arrival: ' + dateTimeToReadable(f.actualArrivalTime);
+        actualArrival = StringUtils.dateTimeToReadable(f.actualArrivalTime);
       }
 
-      String departureTime =
-        'scheduled: ' + dateTimeToReadable(f.scheduledDepartureTime);
-      String arrivalTime =
-        'scheduled: ' + dateTimeToReadable(f.scheduledArrivalTime);
+      String departureTime = StringUtils.dateTimeToReadable(
+        f.scheduledDepartureTime
+      );
+      String arrivalTime = StringUtils.dateTimeToReadable(
+        f.scheduledArrivalTime
+      );
 
-      flightPlan +=
+      String flightPlan =
         f.tedsIdentifier.substringBefore('-') +
-        ' from ' +
+        ' ' +
         f.departureAirport +
-        ' (' +
-        departureTime +
-        actualDeparture +
-        ') to ' +
+        '-' +
         f.arrivalAirport +
-        ' (' +
-        arrivalTime +
-        actualArrival +
-        ')';
+        ' (scheduled: ' +
+        departureTime +
+        ' to ' +
+        arrivalTime;
+
+      if (actualDeparture != '' && actualArrival != '') {
+        flightPlan +=
+          ', actual: ' +
+          actualDeparture +
+          ' to ' +
+          actualArrival +
+          ')';
+      } else {
+        flightPlan += ')';
+      }
       totalFlightPlan.add(flightPlan);
     }
 
     return String.join(totalFlightPlan, '\n');
-  }
-
-  // Move to string utils
-  private static String dateTimeToReadable(Datetime theDateTime) {
-    if (theDateTime == null) {
-      return '-';
-    }
-    String theDate = theDateTime.format('yyyy-MM-dd');
-    String theTime = theDateTime.format('HH:mm');
-    return theDate + ' at ' + theTime;
   }
 }

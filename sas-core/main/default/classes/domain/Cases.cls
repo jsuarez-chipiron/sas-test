@@ -32,13 +32,19 @@ public without sharing class Cases extends ApplicationDomain {
     CustomerClaim,
     InternalBackoffice
   }
-  
+
   public static final Map<String, Read_Only_Config__mdt> allReadOnlyConfigs = new Map<String, Read_Only_Config__mdt>();
   static {
-    for ( Read_Only_Config__mdt config: Read_Only_Config__mdt.getAll().values()){
+    for (
+      Read_Only_Config__mdt config : Read_Only_Config__mdt.getAll().values()
+    ) {
       allReadOnlyConfigs.put(config.Department__c, config);
-    } 
+    }
   }
+
+  private static final String ORGANIZATION_ID = Test.isRunningTest()
+    ? 'TESTID1234'
+    : C_Settings.getSettings('ORG').get('INSTANCE_ID');
 
   public static Map<RecordType, String> recordTypeToDeveloperName = new Map<RecordType, String>{
     RecordType.Channel => 'Channel',
@@ -1016,8 +1022,7 @@ public without sharing class Cases extends ApplicationDomain {
 
   public static String getThreadId(String caseId) {
     return 'ref:_' +
-      UserInfo.getOrganizationId().left(5) +
-      UserInfo.getOrganizationId().mid(11, 4) +
+      ORGANIZATION_ID +
       '._' +
       caseId.left(5) +
       caseId.mid(10, 5) +
