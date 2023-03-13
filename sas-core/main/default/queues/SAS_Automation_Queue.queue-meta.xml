@@ -2,11 +2,6 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>SAS Automation Queue</name>
-    <queueMembers>
-        <publicGroups>
-            <publicGroup>SAS_Automation</publicGroup>
-        </publicGroups>
-    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

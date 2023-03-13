@@ -60,8 +60,8 @@ public without sharing class ClaimService {
   public static final String COMPENSATION_CARD_OMNI_QUEUE_NAME = 'Claims_Compensation_Card'; //TODO: Switch to compensation card
   public static final String APPROVAL_QUEUE_NAME = 'Approvers';
   public static final String FLIGHT_DISRUPTION = 'Flight disruptions';
-  public static final String EXTERNAL_DATA_STATUS = 'Not Started';
-  public static final String EU261_HANDLING_STATUS = 'Unhandled';
+  public static final String EXTERNAL_DATA_STATUS_NOT_STARTED = 'Not Started';
+  public static final String EU261_HANDLING_STATUS_UNHANDLED = 'Unhandled';
 
   public static ClaimService newInstance() {
     return (ClaimService) SAS_Service_Application.Service.newInstance(
@@ -545,8 +545,8 @@ public without sharing class ClaimService {
     );
 
     if (claimToCreate.Customer_Claim_Category__c == FLIGHT_DISRUPTION) {
-      claimToCreate.External_Data_Status__c = EXTERNAL_DATA_STATUS;
-      claimToCreate.EU261_Handling_Status__c = EU261_HANDLING_STATUS;
+      claimToCreate.External_Data_Status__c = EXTERNAL_DATA_STATUS_NOT_STARTED;
+      claimToCreate.EU261_Handling_Status__c = EU261_HANDLING_STATUS_UNHANDLED;
     } else {
       claimToCreate.External_Data_Status__c = null;
       claimToCreate.EU261_Handling_Status__c = null;
