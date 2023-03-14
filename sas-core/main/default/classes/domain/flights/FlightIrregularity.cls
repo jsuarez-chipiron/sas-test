@@ -14,6 +14,12 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   public class IrregularityException extends Exception {
   }
 
+  public class IrregularityTypeException extends Exception {
+  }
+
+  public class CommercialCancellationException extends Exception {
+  }
+
   public override void updateSObjectFields() {
     this.underlyingSObject.Cancellation_Time__c = this.cancellationTime;
     this.underlyingSObject.Code__c = this.code;
@@ -339,10 +345,15 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     return getType() == IrregularityType.INVALID;
   }
 
+  @TestVisible
   private IrregularityType getType() {
     Boolean hasCancellationCode = CANCELLATION_CODES.contains(this.code);
     Boolean hasDelayCode = DELAY_CODES.contains(this.code);
-    if (this.code.length() == 4 && this.code.substring(2, 4).isNumeric()) {
+    if (
+      this.code != null &&
+      this.code.length() == 4 &&
+      this.code.substring(2, 4).isNumeric()
+    ) {
       hasDelayCode = DELAY_CODES.contains(this.code.substring(2, 4));
     }
 
@@ -362,12 +373,23 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
       } else if (this.durationMinutes != null && this.durationMinutes > 0) {
         // If the duration exisits and is more than 0, it is a kind of valid delay
         return IrregularityType.DELAY;
+      } else if (
+        (this.type.toLowerCase().contains('cancellation') ||
+        this.type.toLowerCase().contains('cancelled')) &&
+        !this.type.toLowerCase().contains('arrival')
+      ) {
+        // Special case, cancellation departure with no code or cancellation time
+        throw new CommercialCancellationException(
+          'Potential irregularity due to commercial reasons'
+        );
       } else {
-        return IrregularityType.INVALID; // Cancellation N/A with no cancellation time get here, is that ok? Should we throw an error instead? Maybe only sort out the delays?
+        // Cancellation N/A "arrival" with no cancellation time and delays without
+        // a code or duration minutes get here.
+        return IrregularityType.INVALID;
       }
     }
 
-    throw new IrregularityException(
+    throw new IrregularityTypeException(
       'Unknown irregularity: ' +
       this.code +
       '(' +

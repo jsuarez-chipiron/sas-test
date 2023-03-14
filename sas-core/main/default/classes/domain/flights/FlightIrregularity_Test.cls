@@ -17,6 +17,7 @@ public with sharing class FlightIrregularity_Test {
       'An irregularity which is not normally within SAS control with Eligible_For_EU261__c = "YES" should be in SAS control.'
     );
   }
+
   @IsTest
   public static void WEATwithEUTentativeShouldNotBeEligible() {
     FlightIrregularities__c EUTentativeWEAT = new FlightIrregularities__c(
@@ -88,6 +89,226 @@ public with sharing class FlightIrregularity_Test {
     System.assert(
       isWithinSASControl,
       'A CREW irregularity from a hub should be within sas control'
+    );
+  }
+
+  @IsTest
+  public static void cancellationTypesShouldBeAnalyzedCorrectly() {
+    Datetime standardTime = DateTime.newInstance(2022, 8, 18, 0, 1, 0);
+    Datetime invalidTime = DateTime.newInstanceGmt(1900, 1, 1, 0, 0, 0);
+
+    // Regular cancellation
+    FlightIrregularities__c regularCancellation = new FlightIrregularities__c(
+      Name__c = 'regularCancellation',
+      Code__c = 'WEAT',
+      Cancellation_Time__c = standardTime,
+      Type__c = 'Cancellation (departure)',
+      Duration_Minutes__c = null
+    );
+    FlightIrregularities__c regularCancellationNewType = regularCancellation.clone();
+    regularCancellationNewType.Name__c = 'regularCancellationNewType';
+    regularCancellationNewType.Type__c = 'CANCELLED';
+
+    // Cancellation no code
+    FlightIrregularities__c noCodeCancellation = regularCancellation.clone();
+    noCodeCancellation.Name__c = 'noCodeCancellation';
+    noCodeCancellation.Code__c = 'N/A';
+
+    // Cancellation null code
+    FlightIrregularities__c nullCodeCancellation = regularCancellation.clone();
+    nullCodeCancellation.Name__c = 'nullCodeCancellation';
+    nullCodeCancellation.Code__c = null;
+
+    // Cancellation invalid time
+    FlightIrregularities__c invalidTimeCancellation = regularCancellation.clone();
+    invalidTimeCancellation.Name__c = 'invalidTimeCancellation';
+    invalidTimeCancellation.Cancellation_Time__c = invalidTime;
+
+    // Cancellation invalid time no code
+    FlightIrregularities__c invalidTimeCancellationNoCode = invalidTimeCancellation.clone();
+    invalidTimeCancellationNoCode.Code__c = 'N/A';
+
+    // Cancellation arrival
+    FlightIrregularities__c arrivalCancellation = new FlightIrregularities__c(
+      Name__c = 'arrivalCancellation',
+      Code__c = 'N/A',
+      Type__c = 'Cancellation (arrival)',
+      Cancellation_Time__c = null,
+      Duration_Minutes__c = null
+    );
+
+    FlightIrregularities__c arrivalCancellationInvalidTime = arrivalCancellation.clone();
+    arrivalCancellationInvalidTime.Name__c = 'arrivalCancellationInvalidTime';
+    arrivalCancellationInvalidTime.Code__c = 'N/A';
+    arrivalCancellationInvalidTime.Cancellation_Time__c = invalidTime;
+
+    FlightIrregularities__c arrivalCancellationDifferentType = arrivalCancellation.clone();
+    arrivalCancellationDifferentType.Name__c = 'arrivalCancellationDifferentType';
+    arrivalCancellationDifferentType.Code__c = 'N/A';
+    arrivalCancellationDifferentType.Type__c = 'CANCELLED';
+
+    // Regular delay
+    FlightIrregularities__c regularDelay = new FlightIrregularities__c(
+      Name__c = 'regularDelay',
+      Code__c = 'RA',
+      Type__c = 'Delay (departure)',
+      Duration_Minutes__c = 120,
+      Cancellation_Time__c = null
+    );
+    FlightIrregularities__c arrivalDelay = regularDelay.clone();
+    arrivalDelay.Name__c = 'arrivalDelay';
+    arrivalDelay.Type__c = 'Delay (arrival)';
+    FlightIrregularities__c arrivalDelayNewType = regularDelay.clone();
+    arrivalDelayNewType.Name__c = 'arrivalDelayNewType';
+    arrivalDelayNewType.Type__c = 'ARRIVAL DELAYED';
+    FlightIrregularities__c arrivalAndDepartureDelayNewType = regularDelay.clone();
+    arrivalAndDepartureDelayNewType.Name__c = 'arrivalAndDepartureDelayNewType';
+    arrivalAndDepartureDelayNewType.Type__c = 'DEPARTUE AND ARRIVAL DELAYED';
+
+    // Delay without code but with duration
+    FlightIrregularities__c delayWithoutCode = regularDelay.clone();
+    delayWithoutCode.Name__c = 'delayWithoutCode';
+    delayWithoutCode.Code__c = 'N/A';
+    FlightIrregularities__c delayWithNullCode = regularDelay.clone();
+    delayWithNullCode.Name__c = 'delayWithNullCode';
+    delayWithNullCode.Code__c = null;
+
+    // Delay without duration
+    FlightIrregularities__c delayWithoutDuration = regularDelay.clone();
+    delayWithoutDuration.Name__c = 'delayWithoutDuration';
+    delayWithoutDuration.Duration_Minutes__c = null;
+
+    // Delay without code or duration
+    FlightIrregularities__c delayWithoutCodeOrDuration = regularDelay.clone();
+    delayWithoutCodeOrDuration.Name__c = 'delayWithoutCodeOrDuration';
+    delayWithoutCodeOrDuration.Code__c = 'N/A';
+    delayWithoutCodeOrDuration.Duration_Minutes__c = null;
+    FlightIrregularities__c delayWithNullCodeOrDuration = delayWithoutCodeOrDuration.clone();
+    delayWithNullCodeOrDuration.Name__c = 'delayWithNullCodeOrDuration';
+    delayWithNullCodeOrDuration.Code__c = null;
+
+    // Unknown code
+    FlightIrregularities__c unknownCodeIrregularity = regularDelay.clone();
+    unknownCodeIrregularity.Name__c = 'unknownCodeIrregularity';
+    unknownCodeIrregularity.Code__c = 'QQ';
+
+    Map<FlightIrregularity, FlightIrregularity.IrregularityType> irregularityToCorrectType = new Map<FlightIrregularity, FlightIrregularity.IrregularityType>{
+      new FlightIrregularity(
+        regularCancellation
+      ) => FlightIrregularity.IrregularityType.CANCELLATION,
+      new FlightIrregularity(
+        regularCancellationNewType
+      ) => FlightIrregularity.IrregularityType.CANCELLATION,
+      new FlightIrregularity(
+        noCodeCancellation
+      ) => FlightIrregularity.IrregularityType.CANCELLATION,
+      new FlightIrregularity(
+        nullCodeCancellation
+      ) => FlightIrregularity.IrregularityType.CANCELLATION,
+      new FlightIrregularity(
+        invalidTimeCancellation
+      ) => FlightIrregularity.IrregularityType.CANCELLATION,
+      new FlightIrregularity(invalidTimeCancellationNoCode) => null,
+      new FlightIrregularity(
+        arrivalCancellation
+      ) => FlightIrregularity.IrregularityType.INVALID,
+      new FlightIrregularity(
+        arrivalCancellationInvalidTime
+      ) => FlightIrregularity.IrregularityType.INVALID,
+      new FlightIrregularity(arrivalCancellationDifferentType) => null,
+      new FlightIrregularity(
+        regularDelay
+      ) => FlightIrregularity.IrregularityType.DELAY,
+      new FlightIrregularity(
+        arrivalDelay
+      ) => FlightIrregularity.IrregularityType.DELAY,
+      new FlightIrregularity(
+        arrivalDelayNewType
+      ) => FlightIrregularity.IrregularityType.DELAY,
+      new FlightIrregularity(
+        arrivalAndDepartureDelayNewType
+      ) => FlightIrregularity.IrregularityType.DELAY,
+      new FlightIrregularity(
+        delayWithoutCode
+      ) => FlightIrregularity.IrregularityType.DELAY,
+      new FlightIrregularity(
+        delayWithNullCode
+      ) => FlightIrregularity.IrregularityType.DELAY,
+      new FlightIrregularity(
+        delayWithoutDuration
+      ) => FlightIrregularity.IrregularityType.DELAY, // CHANGE?
+      new FlightIrregularity(
+        delayWithoutCodeOrDuration
+      ) => FlightIrregularity.IrregularityType.INVALID,
+      new FlightIrregularity(
+        delayWithNullCodeOrDuration
+      ) => FlightIrregularity.IrregularityType.INVALID,
+      new FlightIrregularity(unknownCodeIrregularity) => null
+    };
+
+    List<FlightIrregularities__c> potentialCommercialIrregularities = new List<FlightIrregularities__c>{
+      invalidTimeCancellationNoCode,
+      arrivalCancellationDifferentType
+    };
+
+    Integer noCommercialCancellationIdentified = 0;
+    Boolean unknownCodeIdentified = false;
+    for (FlightIrregularity irregularity : irregularityToCorrectType.keySet()) {
+      FlightIrregularity.IrregularityType correctType = irregularityToCorrectType.get(
+        irregularity
+      );
+      FlightIrregularity.IrregularityType irregularityType;
+
+      try {
+        irregularityType = irregularity.getType();
+      } catch (FlightIrregularity.CommercialCancellationException e) {
+        if (
+          potentialCommercialIrregularities.contains(
+            irregularity.underlyingSObject
+          )
+        ) {
+          noCommercialCancellationIdentified += 1;
+        } else {
+          System.assert(
+            false,
+            'Non commercial irregularity should not be misidentified (' +
+            irregularity.nameC +
+            ')'
+          );
+        }
+      } catch (FlightIrregularity.IrregularityTypeException e) {
+        System.assertEquals(
+          unknownCodeIrregularity,
+          irregularity.underlyingSObject,
+          'Irregularity should only be identified as unknown for a single irregularity (' +
+          irregularity.nameC +
+          ')'
+        );
+
+        unknownCodeIdentified = true;
+      }
+
+      System.assertEquals(
+        correctType,
+        irregularityType,
+        'Irregularity type should be ' +
+        correctType +
+        ' but was ' +
+        irregularityType +
+        ' (' +
+        irregularity.nameC +
+        ')'
+      );
+    }
+
+    System.assertEquals(
+      2,
+      noCommercialCancellationIdentified,
+      'Commercial cancellations should have been identified'
+    ); // TODO: Maybe change
+    System.assert(
+      unknownCodeIdentified,
+      'Unknown code should have been identified'
     );
   }
 }

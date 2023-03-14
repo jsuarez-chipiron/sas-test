@@ -418,7 +418,11 @@ public without sharing class EU261Service {
         );
       }
 
-      if (!newFi.isInvalid()) {
+      try {
+        if (!newFi.isInvalid()) {
+          flightIdToIrregularities.get(newFi.flightId).add(newFi);
+        }
+      } catch (FlightIrregularity.CommercialCancellationException e) {
         flightIdToIrregularities.get(newFi.flightId).add(newFi);
       }
     }
