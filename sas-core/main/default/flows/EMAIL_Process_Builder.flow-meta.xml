@@ -90,7 +90,7 @@
     <assignments>
         <name>Set_New_Status_and_Owner</name>
         <label>Set New Status and Owner</label>
-        <locationX>2052</locationX>
+        <locationX>2096</locationX>
         <locationY>1427</locationY>
         <assignmentItems>
             <assignToReference>newStatus</assignToReference>
@@ -129,7 +129,7 @@
     <decisions>
         <name>Case_Status</name>
         <label>Case Status</label>
-        <locationX>1282</locationX>
+        <locationX>1326</locationX>
         <locationY>575</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -259,7 +259,7 @@
     <decisions>
         <name>Email_Direction</name>
         <label>Email Direction</label>
-        <locationX>2162</locationX>
+        <locationX>2228</locationX>
         <locationY>335</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -453,7 +453,7 @@
     <decisions>
         <name>Owner_Type</name>
         <label>Owner Type</label>
-        <locationX>2052</locationX>
+        <locationX>2096</locationX>
         <locationY>695</locationY>
         <defaultConnector>
             <targetReference>Set_New_Status_and_Owner</targetReference>
@@ -485,7 +485,8 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_New_Status_and_Owner</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Get_Group_Id</targetReference>
             </connector>
             <label>Owner - Queue</label>
         </rules>
@@ -611,7 +612,7 @@
     <recordUpdates>
         <name>Update_number_of_emails_received</name>
         <label>Update number of emails received</label>
-        <locationX>1282</locationX>
+        <locationX>1326</locationX>
         <locationY>455</locationY>
         <connector>
             <targetReference>Case_Status</targetReference>
@@ -647,7 +648,7 @@
     <recordUpdates>
         <name>Update_number_of_emails_sent</name>
         <label>Update number of emails sent</label>
-        <locationX>2778</locationX>
+        <locationX>2866</locationX>
         <locationY>455</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -668,7 +669,7 @@
     <recordUpdates>
         <name>Update_Parent_Case</name>
         <label>Update Parent Case</label>
-        <locationX>1282</locationX>
+        <locationX>1326</locationX>
         <locationY>2159</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -735,7 +736,7 @@
         <object>Case</object>
     </recordUpdates>
     <start>
-        <locationX>2036</locationX>
+        <locationX>2102</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Email_Direction</targetReference>

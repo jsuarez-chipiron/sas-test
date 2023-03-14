@@ -8,6 +8,7 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
       Case.Handling_Instructions__c,
       Case.FCS_EBLevel__c,
       Case.FCS_EBNumber__c,
+      Case.FCS_FirstClosingDate__c,
       Case.FCS_Case_Reason__c,
       Case.FCS_CaseType__c,
       Case.ParentId,
@@ -175,9 +176,14 @@ public inherited sharing class CasesSelector extends fflib_SObjectSelector {
 
   public List<Case> selectInactiveByDepartment(String department) {
     String statusToFetch = Cases.STATUS_CLOSED;
-    Integer queryLimit = SF_QUERY_MAX_CASES/(Cases.allReadOnlyConfigs.keySet().size());
+    Integer queryLimit =
+      SF_QUERY_MAX_CASES / (Cases.allReadOnlyConfigs.keySet().size());
     Datetime lastUpdatedCutoff = System.now()
-          .addDays(Integer.valueOf(Cases.allReadOnlyConfigs.get(department).Retention_Days__c) * -1);
+      .addDays(
+        Integer.valueOf(
+          Cases.allReadOnlyConfigs.get(department).Retention_Days__c
+        ) * -1
+      );
 
     fflib_QueryFactory casesQF = newQueryFactory()
       .setCondition(
