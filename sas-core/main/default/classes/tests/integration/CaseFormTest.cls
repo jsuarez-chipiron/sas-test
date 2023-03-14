@@ -903,21 +903,21 @@ private class CaseFormTest {
     Test.StopTest();
 
     List<String> groupNames = new List<String>{
-      'SAS Automation Queue',
+      'Claims - Flight Disruptions',
       'Claims - Baggage',
       'Claims - Other',
-      'SAS Automation Queue'
+      'Claims - Flight Disruptions'
     };
     List<Group> groups = [SELECT Id, Name FROM Group WHERE Name IN :groupNames];
 
-    Group automationGroup;
+    Group disruptionGroup;
     Group baggageGroup;
     Group otherGroup;
 
     for (Group g : groups) {
       switch on groupNames.indexOf(g.Name) {
         when 0 {
-          automationGroup = g;
+          disruptionGroup = g;
         }
         when 1 {
           baggageGroup = g;
@@ -926,7 +926,7 @@ private class CaseFormTest {
           otherGroup = g;
         }
         when 3 {
-          automationGroup = g;
+          disruptionGroup = g;
         }
         when else {
           System.debug(
@@ -937,10 +937,10 @@ private class CaseFormTest {
     }
 
     Map<Id, String> accountToGroupName = new Map<Id, String>{
-      newAccounts[0].Id => automationGroup.Name,
+      newAccounts[0].Id => disruptionGroup.Name,
       newAccounts[1].Id => baggageGroup.Name,
       newAccounts[2].Id => otherGroup.Name,
-      newAccounts[3].Id => automationGroup.Name
+      newAccounts[3].Id => disruptionGroup.Name
     };
 
     // Then
@@ -1095,7 +1095,7 @@ private class CaseFormTest {
     Group correctGroup = [
       SELECT Id, Name
       FROM Group
-      WHERE Name = 'SAS Automation Queue'
+      WHERE Name = 'Claims - Flight Disruptions Expenses'
     ][0];
 
     // Then
