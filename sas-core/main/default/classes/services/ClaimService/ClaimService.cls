@@ -544,14 +544,6 @@ public without sharing class ClaimService {
       Type_of_Customer__c = jsonToPicklist.get(form.formData.contactType)
     );
 
-    if (claimToCreate.Customer_Claim_Category__c == FLIGHT_DISRUPTION) {
-      claimToCreate.External_Data_Status__c = EXTERNAL_DATA_STATUS_NOT_STARTED;
-      claimToCreate.EU261_Handling_Status__c = EU261_HANDLING_STATUS_UNHANDLED;
-    } else {
-      claimToCreate.External_Data_Status__c = null;
-      claimToCreate.EU261_Handling_Status__c = null;
-    }
-
     if (!String.isBlank(form.formData.country)) {
       claimToCreate.Country__c = CountryUtils.getCountryNameByShortCode(
         form.formData.country
@@ -1040,6 +1032,14 @@ public without sharing class ClaimService {
     newClaim.delayToDestination = r.delayLength;
     newClaim.contactType = r.contact.type;
     newClaim.travelAgentBookingReference = r.travelAgentBookingReference;
+
+    if (newClaim.category == Claim.Category.FlightDisruptions) {
+      newClaim.externalDataStatus = Claim.ExternalDataStatus.NotStarted;
+      newClaim.eu261HandlingStatus = Claim.EU261HandlingStatus.Unhandled;
+    } else {
+      newClaim.externalDataStatus = null;
+      newClaim.eu261HandlingStatus = null;
+    }
 
     newClaim.updateSObjectFields();
 
