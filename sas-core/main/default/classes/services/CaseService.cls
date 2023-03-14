@@ -296,7 +296,8 @@ public without sharing class CaseService {
       'Claims - Flight Disruptions Expenses',
       'Claims - Compensation Card',
       'Claims - Baggage',
-      'Claims - Other'
+      'Claims - Other',
+      'SAS Automation Queue'
     };
 
     List<Group> queues = GroupsSelector.newInstance()
