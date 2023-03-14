@@ -63,7 +63,6 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   public static final Map<String, Boolean> codeToSASIsResponsible = new Map<String, Boolean>{
     'WEAT' => false,
     'TECH' => true,
-    'INDU' => true,
     'FA' => true,
     'CA' => true,
     'AF' => false
@@ -88,18 +87,18 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     'COMM' => 'commercial reasons',
     'CREW' => 'crew shortage',
     'DAMA' => 'damage to the aircraft',
-    'EQUI' => 'missing equipment (including aircraft)',
+    'EQUI' => 'equipment short-falls',
     'FUEL' => 'fuel related reasons',
-    'HDLG' => 'the handling agent',
-    'HOLI' => 'holiday season',
+    'HDLG' => 'a ground staff and/or handling agent shortage',
+    'HOLI' => 'the holiday season',
     'INDU' => 'industrial action',
     'NODE' => 'reduced or no commercial demand',
-    'OPCO' => 'reroutings, diversions, consolidations, cancellations and/or revisions to timetable as decided by a third party', // as decided by MOVEMENT CONTROL CENTRE or by a local operational control centre or by a local operational control
-    'OPER' => 'reroutings, diversions, consolidations, cancellations and/or revisions to timetable as decided by a third party',
-    'PERF' => 'planned aircraft type not being able to lift planned payload or fuelstop necessary due to payload',
-    'POLI' => 'political unrest, war or war-like situations etc.',
+    'OPCO' => 'operational conditions causing timetable changes', // as decided by MOVEMENT CONTROL CENTRE or by a local operational control centre or by a local operational control
+    'OPER' => 'operational conditions causing timetable changes',
+    'PERF' => 'the aircraft being unable to perform the specific flight',
+    'POLI' => 'political unrest, war, or war-like situations, etc.',
     'REPO' => 'aircraft repositioning',
-    'RTNS' => 'an ad-hoc schedule change being withdrawn and the original schedule for the flight being reinstated',
+    'RTNS' => 'a flight scheduling anomaly',
     'RUNW' => 'technical restrictions of a runway',
     'TECH' => 'technical issues',
     'WEAT' => 'weather conditions'
@@ -145,6 +144,10 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     return this.type.substringBefore(' ') == 'Cancellation';
   }
 
+  public Boolean isDelay() {
+    return this.type.substringBefore(' ') == 'Delay';
+  }
+
   public Boolean isNA0Delay() {
     Boolean codeIsEmpty =
       this.code == 'N/A' ||
@@ -153,7 +156,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
     Boolean durationIsEmpty =
       this.durationMinutes == 0 ||
       this.durationMinutes == null;
-    return codeIsEmpty && durationIsEmpty;
+    return codeIsEmpty && durationIsEmpty && isDelay();
   }
 
   public Boolean isArrivalCancellation() {

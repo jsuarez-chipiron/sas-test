@@ -134,7 +134,31 @@ public with sharing class TestDataFactories {
     return new CasesClaims(casesToCreate, claimsToCreate);
   }
 
+  public enum TemplateType {
+    BLANK,
+    AUTOMATION_APPROVED,
+    AUTOMATION_REJECTED
+  }
+
+  public static final Map<TestDataFactories.TemplateType, String> EMAIL_TEMPLATE_TYPE_TO_HTML_VALUE = new Map<TestDataFactories.TemplateType, String>{
+    TemplateType.BLANK => '<html>test</html>',
+    TemplateType.AUTOMATION_APPROVED => '<html>|||compensationTextPlaceholder|||, |||flightNumber|||, |||departureAirport|||, |||arrivalAirport|||, |||cancellationDate|||, |||flightPlan|||, |||flightDistanceKm|||, |||minutesDelayed|||</html>',
+    TemplateType.AUTOMATION_REJECTED => '<html>|||flightPlan|||, |||flightNumber|||, |||flightDistanceKm|||, |||flightDate|||, |||departureAirport|||, |||departureTime|||, |||arrivalAirport|||, |||cancellationDate|||, |||cancellationTime|||, |||cancellationType|||, |||cancellationReason|||, |||daysBetweenInformedAndDeparture|||, |||timeFrame|||, |||monthLimit|||, |||tripDestinationArrivalType|||, |||minutesDelayed|||, |||minutesEarly|||</html>'
+  };
+
   public static void insertEmailTemplates(Set<String> templateNamesToCreate) {
+    Map<String, TemplateType> templateNamesToType = new Map<String, Templatetype>();
+
+    for (String name : templateNamesToCreate) {
+      templateNamesToType.put(name, TemplateType.BLANK);
+    }
+
+    insertEmailTemplates(templateNamesToType);
+  }
+
+  public static void insertEmailTemplates(
+    Map<String, TemplateType> templateNamesToType
+  ) {
     User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
     System.runAs(thisUser) {
       BrandTemplate bt = [
@@ -146,14 +170,17 @@ public with sharing class TestDataFactories {
       List<EmailTemplate> toInsert = new List<EmailTemplate>();
 
       List<EmailTemplate> existingTemplates = EmailTemplatesSelector.newInstance()
-        .selectByName(templateNamesToCreate);
+        .selectByName(templateNamesToType.keySet());
       List<String> existingTemplateNames = new List<String>();
       for (EmailTemplate t : existingTemplates) {
         existingTemplateNames.add(t.Name);
       }
 
-      for (String templateName : templateNamesToCreate) {
+      for (String templateName : templateNamesToType.keySet()) {
         if (!existingTemplateNames.contains(templateName)) {
+          String htmlValue = EMAIL_TEMPLATE_TYPE_TO_HTML_VALUE.get(
+            templateNamesToType.get(templateName)
+          );
           // Insert only templates which don't exist yet.
           EmailTemplate template = new EmailTemplate(
             Subject = 'Test',

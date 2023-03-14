@@ -97,6 +97,7 @@ public class AccountingFileBuilder {
       dayOfYear +
       '0' +
       todaysDate +
+      String.valueOf(verificationNumber) +
       '.sf' +
       fileCurrency.name().toLowerCase();
 

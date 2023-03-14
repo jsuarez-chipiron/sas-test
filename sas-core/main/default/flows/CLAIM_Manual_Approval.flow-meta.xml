@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Unlock_Settlement</name>
         <label>Unlock Settlement</label>
-        <locationX>1018</locationX>
+        <locationX>1282</locationX>
         <locationY>1934</locationY>
         <actionName>UnlockRecords</actionName>
         <actionType>apex</actionType>
@@ -22,7 +22,7 @@
     <assignments>
         <name>Assign_Approvers_Emergency_Group_to_validate</name>
         <label>Assign Approvers Emergency Group to validate</label>
-        <locationX>1249</locationX>
+        <locationX>886</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>approversGroupToValidate</assignToReference>
@@ -38,7 +38,7 @@
     <assignments>
         <name>Assign_Approvers_group_to_validate</name>
         <label>Assign Approvers group to validate</label>
-        <locationX>1513</locationX>
+        <locationX>1150</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>approversGroupToValidate</assignToReference>
@@ -70,7 +70,7 @@
     <decisions>
         <name>Is_it_a_emergency_case_claim</name>
         <label>Is it a emergency case/claim?</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Assign_Approvers_group_to_validate</targetReference>
@@ -102,7 +102,7 @@
     <decisions>
         <name>Is_it_approved</name>
         <label>Is it approved?</label>
-        <locationX>622</locationX>
+        <locationX>886</locationX>
         <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>Reject_request_0</targetReference>
@@ -127,7 +127,7 @@
     <decisions>
         <name>Settlement_has_the_correct_status</name>
         <label>Settlement has the correct status</label>
-        <locationX>1040</locationX>
+        <locationX>1304</locationX>
         <locationY>1334</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -164,7 +164,7 @@
     <decisions>
         <name>Should_Case_go_to_Control</name>
         <label>Should Case go to Control</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1934</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -198,12 +198,48 @@
     <decisions>
         <name>Who_is_reviewing_settlement</name>
         <label>Who is reviewing settlement?</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Message</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Approval_submitter_is_Inactive</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$User.Username</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Case_related_to_Settlement.Owner:User.Username</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Group_Member_record_for_user_and_approvers_group</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_related_to_Settlement.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting for Approval</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_related_to_Settlement.Approval_Submitter__r.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Screen</targetReference>
+            </connector>
+            <label>Approval submitter is Inactive</label>
+        </rules>
         <rules>
             <name>Approver_User</name>
             <conditionLogic>and</conditionLogic>
@@ -251,12 +287,17 @@
         <picklistObject>Approval_Request__c</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <name>siteTeamLead</name>
+        <dataType>String</dataType>
+        <expression>if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &apos;Sutherland&apos;, &apos;Danish Qureshi&apos; , if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;Student Consulting&quot;, &quot;Josephine Forsberg&quot;, if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;SAS&quot;, &quot;Markus Jonsson&quot;, if(TEXT({!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c}) == &quot;Sykes&quot;, &quot;Markus Jonsson&quot;, null))))</expression>
+    </formulas>
     <interviewLabel>CLAIM Manual Approval {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Manual Approval</label>
     <loops>
         <name>Unlock_related_Settlements</name>
         <label>Unlock related Settlements</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>1814</locationY>
         <collectionReference>Get_related_Settlements</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -289,7 +330,7 @@
     <recordCreates>
         <name>Approve_Approval_Request</name>
         <label>Approve Approval Request</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1574</locationY>
         <connector>
             <targetReference>Update_Settlement_to_Control_and_save_approver_s_name</targetReference>
@@ -324,7 +365,7 @@
     <recordCreates>
         <name>Reject_request_0</name>
         <label>Reject request</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>1574</locationY>
         <connector>
             <targetReference>Get_related_Settlements</targetReference>
@@ -371,7 +412,7 @@
     <recordLookups>
         <name>Get_Approvers_public_group_Id</name>
         <label>Get Approvers public group Id</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -399,7 +440,7 @@
     <recordLookups>
         <name>Get_Case_related_to_Settlement</name>
         <label>Get Case related to Settlement</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -420,7 +461,7 @@
     <recordLookups>
         <name>Get_Group_Member_record_for_user_and_approvers_group</name>
         <label>Get Group Member record for user and approvers group</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -448,7 +489,7 @@
     <recordLookups>
         <name>Get_related_Settlements</name>
         <label>Get related Settlements</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>1694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -483,7 +524,7 @@
     <recordLookups>
         <name>Get_Settlement_Information</name>
         <label>Get Settlement Information</label>
-        <locationX>1381</locationX>
+        <locationX>1018</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -504,7 +545,7 @@
     <recordLookups>
         <name>Get_updated_Settlement_Information</name>
         <label>Get updated Settlement Information</label>
-        <locationX>1040</locationX>
+        <locationX>1304</locationX>
         <locationY>1214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -525,7 +566,7 @@
     <recordUpdates>
         <name>Update_Case_Status</name>
         <label>Update Case Status</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>2054</locationY>
         <connector>
             <targetReference>Send_Case_to_Control</targetReference>
@@ -549,7 +590,7 @@
     <recordUpdates>
         <name>Update_other_Settlements</name>
         <label>Update other Settlements</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>2270</locationY>
         <connector>
             <targetReference>Send_Case_Rejection_Notification</targetReference>
@@ -594,7 +635,7 @@
     <recordUpdates>
         <name>Update_Settlement_Status_Denied</name>
         <label>Update Settlement Status - Denied</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>2150</locationY>
         <connector>
             <targetReference>Update_other_Settlements</targetReference>
@@ -618,7 +659,7 @@
     <recordUpdates>
         <name>Update_Settlement_to_Control_and_save_approver_s_name</name>
         <label>Update Settlement to Control and save approver&apos;s name</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1694</locationY>
         <connector>
             <targetReference>Have_all_Settlements_for_this_Claim_been_approved</targetReference>
@@ -649,7 +690,7 @@
     <screens>
         <name>Approval_Request</name>
         <label>Approval Request</label>
-        <locationX>1040</locationX>
+        <locationX>1304</locationX>
         <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -749,9 +790,25 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>50</locationX>
+        <locationY>1094</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>messageScreen</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;*﻿&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Case can not be approved because approval submitter &lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FirstName} {!Get_Case_related_to_Settlement.Approval_Submitter__r.LastName} &lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;from &apos;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Vendor__c} Vendor&apos; and &apos;{!Get_Case_related_to_Settlement.Approval_Submitter__r.FCS_Site__c} Site&apos; is inactive.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;em style=&quot;font-size: 14px;&quot;&gt;Please assign case to &lt;/em&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;&lt;em&gt;{!siteTeamLead}&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;font-size: 14px;&quot;&gt; and write chatter post. &quot;Inactive user please recall the case and assign it to an active agent that should submit the case for approval again.&quot;&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>invalidStatusScreen</name>
         <label>Invalid Status</label>
-        <locationX>1194</locationX>
+        <locationX>1458</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -767,7 +824,7 @@
     <screens>
         <name>Message</name>
         <label>Message</label>
-        <locationX>1722</locationX>
+        <locationX>1986</locationX>
         <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -781,7 +838,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1255</locationX>
+        <locationX>892</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Settlement_Information</targetReference>
@@ -791,7 +848,7 @@
     <subflows>
         <name>Have_all_Settlements_for_this_Claim_been_approved</name>
         <label>Have all Settlements for this Claim been approved</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1814</locationY>
         <connector>
             <targetReference>Should_Case_go_to_Control</targetReference>
@@ -817,7 +874,7 @@
     <subflows>
         <name>Send_Case_Rejection_Notification</name>
         <label>Send Case Rejection Notification</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>2390</locationY>
         <flowName>CLAIM_Case_Rejected</flowName>
         <inputAssignments>
@@ -830,7 +887,7 @@
     <subflows>
         <name>Send_Case_to_Control</name>
         <label>Send Case to Control</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>2174</locationY>
         <flowName>CLAIM_Case_Control_Handler</flowName>
         <inputAssignments>

@@ -867,7 +867,7 @@
                     <defaultSelectedChoiceReference>None</defaultSelectedChoiceReference>
                     <fieldText>Reason For Delay/Cancellation</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <isRequired>true</isRequired>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>

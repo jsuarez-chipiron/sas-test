@@ -35,7 +35,7 @@
                         <valueListItems>
                             <value>Settlement__c.Mark_as_Failed</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                                <booleanFilter>1 AND ((2 OR 3) OR (4 AND 5))</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Settlement_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -50,6 +50,16 @@
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>System Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Mark_As_Failed_Button_Permission}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.FCS_Vendor__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Student Consulting</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

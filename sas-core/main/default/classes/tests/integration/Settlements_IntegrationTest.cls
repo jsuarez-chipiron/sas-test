@@ -203,6 +203,7 @@ public with sharing class Settlements_IntegrationTest {
       String.valueOf(Date.today().dayOfYear()).leftPad(3, '0') +
       '0' +
       Datetime.now().format('yyyyMMdd') +
+      counter.Accounting_Verification_Number__c +
       '.sfsek';
 
     System.assertEquals(

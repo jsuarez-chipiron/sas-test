@@ -2,6 +2,33 @@
  * Utility class which handles dates
  */
 public without sharing class DateUtils {
+  private static final Map<String, Integer> COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS = new Map<String, Integer>{
+    'BE' => 12,
+    'DK' => 3 * 12,
+    'FI' => 3 * 12,
+    'FR' => 5 * 12,
+    'DE' => 3 * 12, // TODO: Change to 2 years + time until end of year 3 (e.g. 25 months 2022-12 -> 2024-12-31)
+    'IT' => 2 * 12,
+    'NL' => 5 * 12,
+    'NO' => 3 * 12,
+    'PL' => 12,
+    'ES' => 5 * 12,
+    'SE' => 2,
+    'UK' => 6 * 12,
+    'IE' => 6 * 12,
+    'LV' => 6,
+    'default' => 6 * 12
+  };
+
+  // TODO: maybe set default here if the country does not have a specified code.
+  public static Integer getClaimTimeLimitInMonths(String countryCode) {
+    Integer monthTimeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
+      countryCode
+    );
+
+    return monthTimeLimit;
+  }
+
   public class DurationTooLongException extends Exception {
   }
 
@@ -181,5 +208,43 @@ public without sharing class DateUtils {
    */
   public static Datetime isoDatetimeToApexDateTime(String isoDateTime) {
     return (Datetime) json.deserialize('"' + isoDateTime + '"', Datetime.class);
+  }
+
+  public static Datetime verifyDatetime(Datetime toVerify) {
+    //1970-01-01
+    Datetime toCompare = Datetime.newInstance(0);
+    return verifyDatetime(toVerify, toCompare);
+  }
+
+  /**
+   * Verifies if a specific Datetime falls after a certain comparison Datetime
+   * @param toVerify The Datetime to verify
+   * @param toCompare The Datetime that should be used as a reference
+   */
+  public static Datetime verifyDatetime(Datetime toVerify, Datetime toCompare) {
+    U.verifyNotNull(toVerify);
+    U.verifyNotNull(toCompare);
+    Boolean isReasonable = toVerify.getTime() > toCompare.getTime();
+    return isReasonable ? toVerify : null;
+  }
+
+  public static Datetime convertTimestampToDatetime(Long toVerify) {
+    //1970-01-01
+    Long toCompare = 0L;
+    return convertTimestampToDatetime(toVerify, toCompare);
+  }
+  /**
+   * Verifies if a specific Unix timestamp falls after a certain comparison timestamp
+   * @param toVerify The Unix timestamp to verify
+   * @param toCompare The Unix timestamp that should be used as a reference
+   */
+  public static Datetime convertTimestampToDatetime(
+    Long toVerify,
+    Long toCompare
+  ) {
+    U.verifyNotNull(toVerify);
+    U.verifyNotNull(toCompare);
+    Boolean isReasonable = toVerify > toCompare;
+    return isReasonable ? Datetime.newInstance(toVerify) : null;
   }
 }

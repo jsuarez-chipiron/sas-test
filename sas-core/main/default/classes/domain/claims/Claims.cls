@@ -279,4 +279,16 @@ public without sharing class Claims extends ApplicationDomain {
       );
     }
   }
+
+  public Claims updateExternalDataStatus(
+    Claim.ExternalDataStatus newStatus,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    for (Claim cl : objects) {
+      cl.externalDataStatus = newStatus;
+      cl.updateSObjectFields();
+      uow.registerDirty(cl.underlyingSObject);
+    }
+    return this;
+  }
 }

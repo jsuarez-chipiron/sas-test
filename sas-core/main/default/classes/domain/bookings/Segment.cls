@@ -230,13 +230,20 @@ public without sharing class Segment extends AbstractSObjectWrapper implements C
     for (SegmentEvent se : events) {
       switch on se.newStatus {
         when C_HK, C_TK {
-          if (currentStatus == Status.Unconfirmed) {
+          if (
+            currentStatus == Status.Unconfirmed ||
+            currentStatus == Status.Cancelled
+          ) {
             return true;
           }
         }
         when C_UN {
           // Unable - no flight
           currentStatus = Status.Unconfirmed;
+        }
+        when C_XX {
+          // Cancel segment
+          currentStatus = Status.Cancelled;
         }
       }
     }

@@ -22,7 +22,7 @@
     <decisions>
         <name>Can_case_be_recalled</name>
         <label>Can case be recalled?</label>
-        <locationX>380</locationX>
+        <locationX>578</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Error</targetReference>
@@ -30,7 +30,7 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case_Information.Status</leftValueReference>
                 <operator>EqualTo</operator>
@@ -52,6 +52,13 @@
                     <stringValue>00G</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Information.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>UserId</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>RecallCase</targetReference>
             </connector>
@@ -61,7 +68,7 @@
     <decisions>
         <name>Does_user_want_to_recall_case</name>
         <label>Does user want to recall case?</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>NoRecall</targetReference>
@@ -83,6 +90,12 @@
             <label>Yes recall</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>UserId</name>
+        <dataType>String</dataType>
+        <expression>CASESAFEID({!$User.Id})</expression>
+    </formulas>
     <interviewLabel>CLAIM Recall Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>CLAIM Recall Case</label>
     <loops>
@@ -121,7 +134,7 @@
     <recordLookups>
         <name>Get_Case_Information</name>
         <label>Get Case Information</label>
-        <locationX>380</locationX>
+        <locationX>578</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -231,6 +244,9 @@
         <connector>
             <targetReference>RecalledCase</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>FaultPath</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -263,7 +279,7 @@
     <screens>
         <name>Error</name>
         <label>Error</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -277,9 +293,25 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>FaultPath</name>
+        <label>FaultPath</label>
+        <locationX>314</locationX>
+        <locationY>1334</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>faultMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-family: &amp;quot;Segoe UI VSS (Regular)&amp;quot;, &amp;quot;Segoe UI&amp;quot;, -apple-system, &amp;quot;system-ui&amp;quot;, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Ubuntu, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Case&amp;nbsp;cannot be Updated. There has been the below error:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Please click on &quot;previous&quot; to correct the error and try again.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;If you cannot correct the error, please report the error using the Functional Product Support button.​&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>NoRecall</name>
         <label>NoRecall</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -295,7 +327,7 @@
     <screens>
         <name>RecallCase</name>
         <label>RecallCase</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -355,7 +387,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>254</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Information</targetReference>

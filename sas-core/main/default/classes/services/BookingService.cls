@@ -146,8 +146,7 @@ public without sharing class BookingService {
     Reservation newBooking = new EDWReservation(
       data.reservationList.reservation[0]
     );
-    newBooking.resolveRelationships(uowUpsert)
-      .registerUpsert(uowUpsert, uowDelete);
+    newBooking.registerUpsert(uowUpsert, uowDelete);
     return newBooking.createBookingsDomainInstance();
   }
 

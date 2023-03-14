@@ -117,13 +117,13 @@ public with sharing class EDWReservation extends Reservation {
             s.baggageQuantity = ticketForSegment.bagCnt;
             s.fareBasis = ticketForSegment.fareBasis;
             s.isBoarded = ticketForSegment.boardingInd == 'Y';
-            s.checkInStatus = ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.get(
+            s.checkInStatus = ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.containsKey(
                 ticketForSegment.acceptanceSts
-              ) == null
-              ? null
-              : ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.get(
+              )
+              ? ACCEPTANCE_STATUS_TO_PICKLIST_VALUE.get(
                   ticketForSegment.acceptanceSts
-                );
+                )
+              : null;
           }
           toReturn.add(s);
         }
@@ -151,7 +151,7 @@ public with sharing class EDWReservation extends Reservation {
         }
       );
       for (Passenger passenger : this.booking.passengers) {
-        if (segmentIdToEventsPerPassenger.get(passenger.identifier) == null) {
+        if (!segmentIdToEventsPerPassenger.containsKey(passenger.identifier)) {
           segmentIdToEventsPerPassenger.put(
             passenger.identifier,
             new Map<String, List<SegmentEvent>>()
@@ -168,14 +168,15 @@ public with sharing class EDWReservation extends Reservation {
           segment.prevActionCd?.trim()
         );
         se.officeCode = segment.officeUpdating;
-        se.updateDate = segment.resUpdTms == null
-          ? null
-          : Datetime.newInstance(segment.resUpdTms);
+        se.updateDate = DateUtils.convertTimestampToDatetime(
+          U.getOr(EDW_NULL_TIMESTAMP, segment.resUpdTms),
+          EDW_NULL_TIMESTAMP
+        );
         se.updateNumber = segment.resUpdateNo;
         processedEvents.add(se);
         if (
-          segmentIdToEventsPerPassenger.get(passenger.identifier)
-            .get(segmentFlightId) == null
+          !segmentIdToEventsPerPassenger.get(passenger.identifier)
+            .containsKey(segmentFlightId)
         ) {
           segmentIdToEventsPerPassenger.get(passenger.identifier)
             .put(segmentFlightId, new List<SegmentEvent>());
@@ -199,7 +200,7 @@ public with sharing class EDWReservation extends Reservation {
         'ST{0}PT{1}',
         new List<Object>{ ticket.segTattoo, ticket.passengerTattoo }
       );
-      if (segmentIdentifierToTicketInfo.get(ticketIdentifier) == null) {
+      if (!segmentIdentifierToTicketInfo.containsKey(ticketIdentifier)) {
         segmentIdentifierToTicketInfo.put(ticketIdentifier, ticket);
       }
     }
@@ -273,30 +274,30 @@ public with sharing class EDWReservation extends Reservation {
       f.departureAirport = irr.stnFrCd;
       f.departureDelayedMinutes = irr.depDelayMins;
       f.departureStatus = Flight.getStatusFromPicklistValue(departureStatus);
-      f.actualArrivalTime = irr.ataTms == null ||
-        irr.ataTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.ataTms);
-      f.actualDepartureTime = irr.atdTms == null ||
-        irr.atdTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.atdTms);
-      f.estimatedArrivalTime = irr.etaTms == null ||
-        irr.etaTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.etaTms);
-      f.estimatedDepartureTime = irr.etdTms == null ||
-        irr.etdTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.etdTms);
-      f.scheduledArrivalTime = irr.staTms == null ||
-        irr.staTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.staTms);
-      f.scheduledDepartureTime = irr.stdTms == null ||
-        irr.stdTms == EDW_NULL_TIMESTAMP
-        ? null
-        : Datetime.newInstance(irr.stdTms);
+      f.actualArrivalTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.ataTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.actualDepartureTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.atdTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.estimatedArrivalTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.etaTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.estimatedDepartureTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.etdTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.scheduledArrivalTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.staTms),
+        EDW_NULL_TIMESTAMP
+      );
+      f.scheduledDepartureTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.stdTms),
+        EDW_NULL_TIMESTAMP
+      );
       f.irregularities = flightIdToIrregularities.get(irrFlightId);
       flightIdToRecord.put(irrFlightId, f);
     }
@@ -328,12 +329,13 @@ public with sharing class EDWReservation extends Reservation {
       FlightIrregularity fi = new FlightIrregularity(
         new FlightIrregularities__c()
       );
-      fi.cancellationTime = irr.cnlEventDts == null
-        ? null
-        : Datetime.newInstance(irr.cnlEventDts);
+      fi.cancellationTime = DateUtils.convertTimestampToDatetime(
+        U.getOr(EDW_NULL_TIMESTAMP, irr.cnlEventDts),
+        EDW_NULL_TIMESTAMP
+      );
       fi.code = irr.fltStatus == 'X' ? irr.cnlRsnCd : irr.delayRsnCd;
       FlightIrregularity.EU261Eligibility eligibleForEU261;
-      if (FlightIrregularity.codeToSASIsResponsible.get(fi.code) == null) {
+      if (!FlightIrregularity.codeToSASIsResponsible.containsKey(fi.code)) {
         eligibleForEU261 = FlightIrregularity.EU261Eligibility.Tentative;
       } else if (FlightIrregularity.codeToSASIsResponsible.get(fi.code)) {
         eligibleForEU261 = FlightIrregularity.EU261Eligibility.Yes;
@@ -352,7 +354,7 @@ public with sharing class EDWReservation extends Reservation {
       }
       fi.reason = reasonText;
       fi.type = irr.status;
-      if (flightIdToIrregularities.get(irrFlightId) == null) {
+      if (!flightIdToIrregularities.containsKey(irrFlightId)) {
         flightIdToIrregularities.put(
           irrFlightId,
           new List<FlightIrregularity>()

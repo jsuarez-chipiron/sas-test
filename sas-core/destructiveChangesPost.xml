@@ -17,16 +17,5 @@
     the block can be removed from
     this document.
 -->
-    <types>
-
-        <members>IRR_Icoupon_Station_Manager__mdt.ARN</members>
-
-        <name>CustomMetadata</name>
-
-    </types>
-
-    <types>
-        <members>IRR_Icoupon_Station_Manger__mdt</members>
-        <name>CustomObject</name>
-    </types>
+   
 </Package>

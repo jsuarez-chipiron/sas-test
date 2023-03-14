@@ -4,7 +4,7 @@
         <description>Validates that all settlements are correct. If not, an error is thrown and an error message is shown.</description>
         <name>Validate_Settlements_Apex</name>
         <label>Validate Settlements Apex</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>1550</locationY>
         <actionName>ValidateSettlements</actionName>
         <actionType>apex</actionType>
@@ -25,7 +25,7 @@
         <description>Determines wether all settlements are valid. If not, shows and error screen</description>
         <name>Are_all_settlements_valid_decision</name>
         <label>Are all settlements valid decision</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Settlement_Validation_Error_Screen_0</targetReference>
@@ -50,7 +50,7 @@
     <decisions>
         <name>Case_can_be_submitted_for_Approval</name>
         <label>Case can be submitted for Approval</label>
-        <locationX>710</locationX>
+        <locationX>842</locationX>
         <locationY>1310</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -138,7 +138,7 @@
     <decisions>
         <name>Customer_Claim_Or_Liability_Claim</name>
         <label>Customer Claim Or Liability Claim?</label>
-        <locationX>710</locationX>
+        <locationX>842</locationX>
         <locationY>398</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -190,7 +190,7 @@
     <decisions>
         <name>Is_the_claim_result_valid</name>
         <label>Is the claim result valid?</label>
-        <locationX>622</locationX>
+        <locationX>754</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>InvalidResult</targetReference>
@@ -227,6 +227,13 @@
                     <stringValue>Default judgement</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Claim_Information.Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Settled in Customer Claim</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Case_has_Settlements_to_approve</targetReference>
             </connector>
@@ -236,7 +243,7 @@
     <decisions>
         <name>What_is_case_status</name>
         <label>What is case status?</label>
-        <locationX>1436</locationX>
+        <locationX>1634</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -365,7 +372,7 @@
     <recordLookups>
         <name>Get_Case_Information</name>
         <label>Get Case Information</label>
-        <locationX>1436</locationX>
+        <locationX>1634</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -386,7 +393,7 @@
     <recordLookups>
         <name>Get_Claim_Information</name>
         <label>Get Claim Information</label>
-        <locationX>622</locationX>
+        <locationX>754</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -407,7 +414,7 @@
     <recordLookups>
         <name>Get_Email_Draft_for_this_Case</name>
         <label>Get Email Draft for this Case</label>
-        <locationX>270</locationX>
+        <locationX>402</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -442,7 +449,7 @@
     <recordLookups>
         <name>Get_Settlements_for_this_Case</name>
         <label>Get Settlements for this Case</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -511,6 +518,9 @@
         <connector>
             <targetReference>Send_Case_to_Approval</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Settlement_Update_Error</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Claim__c</field>
@@ -544,7 +554,7 @@
     <screens>
         <name>Error_Case_in_Approval_Process</name>
         <label>Error Case in Approval Process</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -608,7 +618,7 @@
     <screens>
         <name>Invalid_Status_Error</name>
         <label>Invalid Status Error</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -624,7 +634,7 @@
     <screens>
         <name>InvalidResult</name>
         <label>InvalidResult</label>
-        <locationX>710</locationX>
+        <locationX>842</locationX>
         <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -638,9 +648,25 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Settlement_Update_Error</name>
+        <label>Settlement Update Error</label>
+        <locationX>1106</locationX>
+        <locationY>2150</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>faultMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: &amp;quot;Segoe UI VSS (Regular)&amp;quot;, &amp;quot;Segoe UI&amp;quot;, -apple-system, &amp;quot;system-ui&amp;quot;, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Ubuntu, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(0, 0, 0);&quot;&gt;Case cannot be Updated. There has been the below error:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Please click on &quot;previous&quot; to correct the error and try again.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;If you cannot correct the error, please report the error using the Functional Product Support button.​&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Settlement_Validation_Error_Screen_0</name>
         <label>Settlement Validation Error Screen</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -673,7 +699,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1310</locationX>
+        <locationX>1508</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Information</targetReference>
@@ -683,7 +709,7 @@
     <subflows>
         <name>Case_has_Settlements_to_approve</name>
         <label>Case has Settlements to approve</label>
-        <locationX>710</locationX>
+        <locationX>842</locationX>
         <locationY>1190</locationY>
         <connector>
             <targetReference>Case_can_be_submitted_for_Approval</targetReference>

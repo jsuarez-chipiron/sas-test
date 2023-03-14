@@ -1632,6 +1632,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.InactiveCaseOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.IsEscalated__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2278,6 +2283,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LIA_Claim__c.EU261_Handling_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.External_Data_Retrieve_Count__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LIA_Claim__c.External_Data_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

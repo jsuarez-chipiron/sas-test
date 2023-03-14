@@ -257,7 +257,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
                 while (it.hasNext())
                 {
                 IRR_EventLog__c eventLog = (IRR_EventLog__c)it.next();
-                eventLog.IRR_ScheduleTime__c = delayInfo.estimatedTimeOfDepartureUTC;
+                eventLog.IRR_ScheduleTime__c = delayInfo.scheduledTimeOfDepartureUTC;
                 eventLog.IRR_FlightId__c =delayInfo.flightId ;
                 eventLog.IRR_Event_Type__c = 'ICOUPON';
                 eventLog.IRR_Delayed_Minutes__c = delayInfo.delayedMinutes;
@@ -273,7 +273,7 @@ public class IRR_EVT_DelayProcessor extends IRR_EVT_EventProcessor {
                 for(IRR_Icoupon_Voucher__mdt icouponVocuher :icouponVocuherMtd){
                 if(icouponVocuher.AirportCode__c == delayInfo.stationDeparture){
                 IRR_EventLog__c eventLog = new IRR_EventLog__c();
-                eventLog.IRR_ScheduleTime__c = delayInfo.estimatedTimeOfDepartureUTC;
+                eventLog.IRR_ScheduleTime__c = delayInfo.scheduledTimeOfDepartureUTC;
                 eventLog.IRR_FlightId__c =delayInfo.flightId ;
                 eventLog.IRR_Event_Type__c = 'ICOUPON';
                 eventLog.IRR_Delayed_Minutes__c = delayInfo.delayedMinutes;
