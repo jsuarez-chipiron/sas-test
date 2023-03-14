@@ -111,6 +111,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Status_as_New_Response</name>
+        <label>Set Status as New Response</label>
+        <locationX>2162</locationX>
+        <locationY>815</locationY>
+        <assignmentItems>
+            <assignToReference>newStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New Response</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Group_Id</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Status_to_New_Response</name>
         <label>Set Status to New Response</label>
         <locationX>842</locationX>
@@ -485,8 +502,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>Get_Group_Id</targetReference>
+                <targetReference>Set_Status_as_New_Response</targetReference>
             </connector>
             <label>Owner - Queue</label>
         </rules>
