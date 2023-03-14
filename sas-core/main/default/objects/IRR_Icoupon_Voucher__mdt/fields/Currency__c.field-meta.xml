@@ -21,6 +21,11 @@
                 <label>EUR</label>
             </value>
             <value>
+                <fullName>ISK</fullName>
+                <default>false</default>
+                <label>ISK</label>
+            </value>
+            <value>
                 <fullName>NOK</fullName>
                 <default>false</default>
                 <label>NOK</label>

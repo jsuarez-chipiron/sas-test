@@ -8,6 +8,7 @@
 public class IRR_CON_ManualCommunication {
 
     private static final String EVENT_TYPE = 'manualCommunication';
+    private static final String AIRLINE = 'SK';
 
     @AuraEnabled
     public static List<IRR_MOD_PassengerInfo> getBookingPassengerInfos(String bookings) {
