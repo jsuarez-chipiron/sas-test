@@ -36,6 +36,7 @@ public without sharing class EU261Service {
   private static final String COMPENSATION_WITH_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a flat rate compensation of {0} {1} and with a reimbursement of {2} {3} for the expenses you experienced during the delay.';
 
   private static final String SEMI_AUTOMATION_QUEUE = 'Claims_EU261_Semi_Automation';
+  private static final String MANUAL_HANDLING_QUEUE = ''; // TODO: fix!
 
   @TestVisible
   private static final Map<EU261Claim.SemiAutomationReason, String> SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS = new Map<EU261Claim.SemiAutomationReason, String>{
@@ -593,6 +594,8 @@ public without sharing class EU261Service {
     List<Case> parentCasesForSemiAutomation = new List<Case>();
     List<Case> parentCasesForRejection = new List<Case>();
 
+    List<Case> parentCasesForManualHandling = new List<Case>();
+
     for (EU261Claim c : claimsToAutomate) {
       switch on c.decision.verdict {
         when EligibleForCompensation {
@@ -614,8 +617,11 @@ public without sharing class EU261Service {
             parentCasesById.get(c.claimObj.parentCaseId)
           );
         }
-        when ReimbursementOnly {
-          // TODO. Currently we do nothing.
+        when else {
+          // TODO: handle ReimbursementOnly separately
+          parentCasesForManualHandling.add(
+            parentCasesById.get(c.claimObj.parentCaseId)
+          );
         }
       }
     }
@@ -628,6 +634,8 @@ public without sharing class EU261Service {
 
       if (this.config.enabledSemiAutomation) {
         claimsWhichNeedSettlements.addAll(claimsToSemiAutomate);
+      } else {
+        parentCasesForManualHandling.addAll(parentCasesForSemiAutomation);
       }
 
       Map<Id, List<Settlement__c>> settlementsByClaimId = createSettlementsForClaims(
@@ -769,12 +777,30 @@ public without sharing class EU261Service {
           .setHandlingInstructions(uow, handlingInstructionsByCaseId)
           .routeToQueue(SEMI_AUTOMATION_QUEUE, uow);
       }
+    } else {
+      for (EU261Claim c : claimsToApproveAutomatically) {
+        parentCasesForManualHandling.add(
+          parentCasesById.get(c.claimObj.parentCaseId)
+        );
+      }
+      for (EU261Claim c : claimsToManualApproval) {
+        parentCasesForManualHandling.add(
+          parentCasesById.get(c.claimObj.parentCaseId)
+        );
+      }
     }
 
     if (this.config.enabledRejections && claimsToReject.size() > 0) {
       Cases.newInstance(parentCasesForRejection)
         .emailContactPeople(createRejectionEmails(claimsToReject), uow)
         .close(uow);
+    } else {
+      parentCasesForManualHandling.addAll(parentCasesForRejection);
+    }
+
+    if (parentCasesForManualHandling.size() > 0) {
+      Cases.newInstance(parentCasesForManualHandling)
+        .routeToQueue(MANUAL_HANDLING_QUEUE, uow);
     }
 
     uow.commitWork();
