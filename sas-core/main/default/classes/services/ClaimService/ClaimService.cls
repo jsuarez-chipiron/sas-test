@@ -59,9 +59,6 @@ public without sharing class ClaimService {
   public static final String COMPENSATION_CARD_REPLY_TO_ADDRESS = 'customercare@sas.se';
   public static final String COMPENSATION_CARD_OMNI_QUEUE_NAME = 'Claims_Compensation_Card'; //TODO: Switch to compensation card
   public static final String APPROVAL_QUEUE_NAME = 'Approvers';
-  public static final String FLIGHT_DISRUPTION = 'Flight disruptions';
-  public static final String EXTERNAL_DATA_STATUS_NOT_STARTED = 'Not Started';
-  public static final String EU261_HANDLING_STATUS_UNHANDLED = 'Unhandled';
 
   public static ClaimService newInstance() {
     return (ClaimService) SAS_Service_Application.Service.newInstance(
