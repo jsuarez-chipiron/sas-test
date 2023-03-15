@@ -817,7 +817,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Notify_Owner_of_New_Response</name>
         <label>Notify Owner of New Response</label>
