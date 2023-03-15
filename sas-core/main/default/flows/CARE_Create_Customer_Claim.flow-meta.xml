@@ -4,7 +4,7 @@
         <name>Route_Case</name>
         <label>Route Case</label>
         <locationX>314</locationX>
-        <locationY>2126</locationY>
+        <locationY>2462</locationY>
         <actionName>RouteCaseAndSetPriority</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>Automatic</flowTransactionModel>
@@ -124,10 +124,33 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Values</name>
+        <label>Assign Values</label>
+        <locationX>182</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>EU261_Data_Handling_Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Unable to handle</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>External_Data_Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Unavailable</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Customer_Claim</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Change_team_customer_feedback_to_claims_0</name>
         <label>Change team customer feedback to claims</label>
         <locationX>182</locationX>
-        <locationY>1790</locationY>
+        <locationY>2126</locationY>
         <assignmentItems>
             <assignToReference>teamToAssign</assignToReference>
             <operator>Assign</operator>
@@ -143,7 +166,7 @@
         <name>Leave_current_team</name>
         <label>Leave current team</label>
         <locationX>446</locationX>
-        <locationY>1790</locationY>
+        <locationY>2126</locationY>
         <assignmentItems>
             <assignToReference>teamToAssign</assignToReference>
             <operator>Assign</operator>
@@ -156,10 +179,35 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Claim_Category</name>
+        <label>Check Claim Category</label>
+        <locationX>314</locationX>
+        <locationY>1214</locationY>
+        <defaultConnector>
+            <targetReference>Create_Customer_Claim</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Flight_Disruptions</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CustomerClaimCategoryType.topValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Flight Disruptions</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Values</targetReference>
+            </connector>
+            <label>Flight Disruptions</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_claim_created_from_a_customer_feedback_case</name>
         <label>Is claim created from a customer feedback case?</label>
         <locationX>314</locationX>
-        <locationY>1670</locationY>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Leave_current_team</targetReference>
         </defaultConnector>
@@ -258,7 +306,7 @@
         <name>What_is_the_type_of_customer</name>
         <label>What is the type of customer?</label>
         <locationX>314</locationX>
-        <locationY>1334</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Is_claim_created_from_a_customer_feedback_case</targetReference>
         </defaultConnector>
@@ -363,7 +411,7 @@
         <name>Create_Customer</name>
         <label>Create Customer</label>
         <locationX>182</locationX>
-        <locationY>1454</locationY>
+        <locationY>1790</locationY>
         <connector>
             <targetReference>Is_claim_created_from_a_customer_feedback_case</targetReference>
         </connector>
@@ -392,7 +440,7 @@
         <name>Create_Customer_Claim</name>
         <label>Create Customer Claim</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>What_is_the_type_of_customer</targetReference>
         </connector>
@@ -532,9 +580,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>EU261_Handling_Status__c</field>
+            <value>
+                <elementReference>EU261_Data_Handling_Status</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>EuroBonus_Number__c</field>
             <value>
                 <elementReference>EuroBonus_Number</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>External_Data_Status__c</field>
+            <value>
+                <elementReference>External_Data_Status</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -619,7 +679,7 @@
         <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Customer_Claim</targetReference>
+            <targetReference>Check_Claim_Category</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -658,7 +718,7 @@
         <name>Update_Case_with_Customer_Claim_Information</name>
         <label>Update Case with Customer Claim Information</label>
         <locationX>314</locationX>
-        <locationY>2006</locationY>
+        <locationY>2342</locationY>
         <connector>
             <targetReference>Route_Case</targetReference>
         </connector>
@@ -1500,7 +1560,7 @@
         <name>Fault_Path</name>
         <label>Fault Path</label>
         <locationX>1106</locationX>
-        <locationY>1334</locationY>
+        <locationY>1670</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1516,7 +1576,7 @@
         <name>FaultPath</name>
         <label>Fault Path</label>
         <locationX>842</locationX>
-        <locationY>2126</locationY>
+        <locationY>2462</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1593,6 +1653,20 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>EU261_Data_Handling_Status</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>External_Data_Status</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>flightDateToAssign</name>
         <dataType>Date</dataType>

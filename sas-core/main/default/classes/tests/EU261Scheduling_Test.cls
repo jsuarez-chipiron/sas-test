@@ -12,6 +12,8 @@ public with sharing class EU261Scheduling_Test {
         LIA_Claim__c.Flight_Date__c => Date.today(),
         LIA_Claim__c.Customer_Claim_Category__c => 'Flight disruptions',
         LIA_Claim__c.Customer_Claim_Type__c => 'Flight cancellation - compensation',
+        LIA_Claim__c.EU261_Handling_Status__c => 'Unhandled',
+        LIA_Claim__c.External_Data_Status__c => 'Not Started',
         LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
           Claim.RecordType.CustomerClaim
         )
@@ -60,7 +62,8 @@ public with sharing class EU261Scheduling_Test {
         LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
           Claim.RecordType.CustomerClaim
         ),
-        LIA_Claim__c.External_Data_Status__c => 'In Progress'
+        LIA_Claim__c.External_Data_Status__c => 'In Progress',
+        LIA_Claim__c.EU261_Handling_Status__c => 'Unhandled'
       }
     );
     Test.setMock(HttpCalloutMock.class, new APIMMock());
@@ -95,7 +98,8 @@ public with sharing class EU261Scheduling_Test {
         LIA_Claim__c.RecordTypeId => Claim.getRecordTypeIdByEnum(
           Claim.RecordType.CustomerClaim
         ),
-        LIA_Claim__c.External_Data_Status__c => 'In Progress'
+        LIA_Claim__c.External_Data_Status__c => 'In Progress',
+        LIA_Claim__c.EU261_Handling_Status__c => 'Unhandled'
       }
     );
     casesWithClaims.claims[1].External_Data_Retrieve_Count__c = 3;

@@ -208,7 +208,7 @@ public without sharing class ClaimService {
 
     return insertedCase.CaseNumber;
   }
-  
+
   public static String createCompensationCardClaim(
     RedeemCompensationCardRequest request
   ) {
@@ -1029,6 +1029,16 @@ public without sharing class ClaimService {
     newClaim.delayToDestination = r.delayLength;
     newClaim.contactType = r.contact.type;
     newClaim.travelAgentBookingReference = r.travelAgentBookingReference;
+
+    if (r.bookingReference != null) {
+      if (newClaim.category == Claim.Category.FlightDisruptions) {
+        newClaim.externalDataStatus = Claim.ExternalDataStatus.NotStarted;
+        newClaim.eu261HandlingStatus = Claim.EU261HandlingStatus.Unhandled;
+      } else {
+        newClaim.externalDataStatus = null;
+        newClaim.eu261HandlingStatus = null;
+      }
+    }
 
     newClaim.updateSObjectFields();
 
