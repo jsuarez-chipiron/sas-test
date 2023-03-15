@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_Case_To_Update_List</name>
         <label>Add Case To Update List</label>
-        <locationX>1056</locationX>
+        <locationX>1188</locationX>
         <locationY>1502</locationY>
         <assignmentItems>
             <assignToReference>CasesToUpdate</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Route_To_Baggage</name>
         <label>Route To Baggage</label>
-        <locationX>1056</locationX>
+        <locationX>1320</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -36,7 +36,7 @@
     <assignments>
         <name>Route_To_Care_Expenses</name>
         <label>Route To Care Expenses</label>
-        <locationX>1584</locationX>
+        <locationX>1848</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -52,7 +52,7 @@
     <assignments>
         <name>Route_To_Compensation_Card</name>
         <label>Route To Compensation Card</label>
-        <locationX>264</locationX>
+        <locationX>528</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -68,7 +68,7 @@
     <assignments>
         <name>Route_To_EU261</name>
         <label>Route To EU261</label>
-        <locationX>792</locationX>
+        <locationX>1056</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -84,7 +84,7 @@
     <assignments>
         <name>Route_To_Flight_Disruptions</name>
         <label>Route To Flight Disruptions</label>
-        <locationX>528</locationX>
+        <locationX>792</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -100,7 +100,7 @@
     <assignments>
         <name>Route_To_Flight_Disruptions_Expenses</name>
         <label>Route To Flight Disruptions Expenses</label>
-        <locationX>1320</locationX>
+        <locationX>1584</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -116,7 +116,7 @@
     <assignments>
         <name>Route_To_Other</name>
         <label>Route To Other</label>
-        <locationX>1848</locationX>
+        <locationX>2112</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.OwnerId</assignToReference>
@@ -130,9 +130,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Route_To_SAS_Automation_Queue</name>
+        <label>Route To SAS Automation Queue</label>
+        <locationX>264</locationX>
+        <locationY>950</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_Cases.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SAS_Automation_Queue_1.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Should_The_Case_Have_A_Special_Priority</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Baggage_Queue</name>
         <label>Set Baggage Queue</label>
-        <locationX>1584</locationX>
+        <locationX>1848</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>Baggage_Queue</assignToReference>
@@ -148,7 +164,7 @@
     <assignments>
         <name>Set_Care_Expenses_Queue</name>
         <label>Set Care Expenses Queue</label>
-        <locationX>1056</locationX>
+        <locationX>1320</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>Care_Expenses_Queue</assignToReference>
@@ -164,7 +180,7 @@
     <assignments>
         <name>Set_Compensation_Card_Queue</name>
         <label>Set Compensation Card Queue</label>
-        <locationX>1848</locationX>
+        <locationX>2112</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>Compensation_Card_Queue</assignToReference>
@@ -180,7 +196,7 @@
     <assignments>
         <name>Set_EU261_Queue</name>
         <label>Set EU261 Queue</label>
-        <locationX>792</locationX>
+        <locationX>1056</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>EU261_Queue</assignToReference>
@@ -196,7 +212,7 @@
     <assignments>
         <name>Set_Flight_Disruption_Expenses_Queue</name>
         <label>Set Flight Disruption Expenses Queue</label>
-        <locationX>1320</locationX>
+        <locationX>1584</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>Flight_Disruptions_Expenses_Queue</assignToReference>
@@ -212,7 +228,7 @@
     <assignments>
         <name>Set_Flight_Disruptions_Queue</name>
         <label>Set Flight Disruptions Queue</label>
-        <locationX>528</locationX>
+        <locationX>792</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>Flight_Disruptions_Queue</assignToReference>
@@ -228,7 +244,7 @@
     <assignments>
         <name>Set_High_Care_Cost_Queue</name>
         <label>Set High Care Cost Queue</label>
-        <locationX>264</locationX>
+        <locationX>528</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>High_Care_Costs_Queue</assignToReference>
@@ -244,7 +260,7 @@
     <assignments>
         <name>Set_high_priority</name>
         <label>Set priority to high</label>
-        <locationX>792</locationX>
+        <locationX>924</locationX>
         <locationY>1286</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.Priority</assignToReference>
@@ -260,7 +276,7 @@
     <assignments>
         <name>Set_Other_Queue</name>
         <label>Set Other Queue</label>
-        <locationX>2112</locationX>
+        <locationX>2376</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>Other_Queue</assignToReference>
@@ -276,7 +292,7 @@
     <assignments>
         <name>Set_Priority_To_High</name>
         <label>Set Priority To Medium</label>
-        <locationX>1056</locationX>
+        <locationX>1188</locationX>
         <locationY>1286</locationY>
         <assignmentItems>
             <assignToReference>Loop_Cases.Priority</assignToReference>
@@ -289,10 +305,26 @@
             <targetReference>Add_Case_To_Update_List</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_SAS_Automation_Queue</name>
+        <label>Set SAS Automation Queue</label>
+        <locationX>264</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>SAS_Automation_Queue_1</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Set_Group_Variables</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Group_Variables</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Should_The_Case_Have_A_Special_Priority</name>
         <label>Should The Case Have A Special Priority?</label>
-        <locationX>1056</locationX>
+        <locationX>1188</locationX>
         <locationY>1166</locationY>
         <defaultConnector>
             <targetReference>Add_Case_To_Update_List</targetReference>
@@ -346,12 +378,27 @@
     <decisions>
         <name>What_Queue_Is_It</name>
         <label>What Queue Is It?</label>
-        <locationX>1188</locationX>
+        <locationX>1320</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Set_Other_Queue</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>SAS_Automation_Queue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Set_Group_Variables.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SAS Automation Queue</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_SAS_Automation_Queue</targetReference>
+            </connector>
+            <label>SAS Automation Queue</label>
+        </rules>
         <rules>
             <name>High_Care_Costs</name>
             <conditionLogic>and</conditionLogic>
@@ -461,12 +508,34 @@
     <decisions>
         <name>What_Queue_Is_It_0</name>
         <label>What Queue Is It?</label>
-        <locationX>1056</locationX>
+        <locationX>1188</locationX>
         <locationY>830</locationY>
         <defaultConnector>
             <targetReference>Route_To_Other</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>SAS_Automation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_Cases.LIA_Claim__r.Customer_Claim_Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Flight disruptions</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Cases.LIA_Claim__r.External_Data_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not Started</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Route_To_SAS_Automation_Queue</targetReference>
+            </connector>
+            <label>SAS Automation</label>
+        </rules>
         <rules>
             <name>Compensation_Card_0</name>
             <conditionLogic>and</conditionLogic>
@@ -785,6 +854,14 @@
     </variables>
     <variables>
         <name>Other_Queue</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Group</objectType>
+    </variables>
+    <variables>
+        <name>SAS_Automation_Queue_1</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
