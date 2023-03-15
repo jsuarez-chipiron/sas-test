@@ -50,7 +50,7 @@ public class IRR_SEL_EventLogsSelector extends fflib_SObjectSelector
     public Database.QueryLocator getQueuedIcouponBatchQueryLocator() {
         String eventType ='ICOUPON';
         fflib_QueryFactory queryFactory = newQueryFactory()
-            .setCondition('MinuteDiff__c <= 120 AND MinuteDiff__c > 0 AND IRR_Event_Type__c=:eventType AND Is_Communication_Send__c = false');
+            .setCondition('MinuteDiff__c <= 40 AND MinuteDiff__c > 0 AND IRR_Event_Type__c=:eventType AND Is_Communication_Send__c = false');
         return Database.getQueryLocator(queryFactory.toSOQL());
 
     }
