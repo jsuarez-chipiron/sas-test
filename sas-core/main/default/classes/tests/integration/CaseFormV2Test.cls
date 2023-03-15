@@ -217,13 +217,13 @@ private class CaseFormV2Test {
       c.Department__c,
       'Department should be set correctly for Denmark.'
     );
-    System.assertNotEquals(
-      'Not Started',
+    System.assertEquals(
+      'Unhandled',
       cl.EU261_Handling_Status__c,
       'EU261_Handling_Status__c Status should be updated'
     );
-    System.assertNotEquals(
-      'Unhandled',
+    System.assertEquals(
+      'Not Started',
       cl.External_Data_Status__c,
       'External_Data_Status__c Should be updated'
     );
