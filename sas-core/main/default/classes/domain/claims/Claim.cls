@@ -79,6 +79,12 @@ public without sharing class Claim extends AbstractSObjectWrapper {
     }
   }
 
+  public static final Set<Type> EU261_TYPES = new Set<Type>{
+    Type.FlightCancellationCompensation,
+    Type.FlightDelayCompensation,
+    Type.MissedConnectionCompensation
+  };
+
   public List<ClaimCustomer> customers;
   public List<ClaimExpense> expenses;
 

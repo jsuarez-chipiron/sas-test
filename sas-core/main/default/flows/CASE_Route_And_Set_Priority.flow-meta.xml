@@ -516,12 +516,26 @@
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>SAS_Automation</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
             <conditions>
-                <leftValueReference>Loop_Cases.LIA_Claim__r.Customer_Claim_Category__c</leftValueReference>
+                <leftValueReference>Loop_Cases.LIA_Claim__r.Customer_Claim_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Flight disruptions</stringValue>
+                    <stringValue>Flight cancellation - compensation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Cases.LIA_Claim__r.Customer_Claim_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Flight delay - compensation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Cases.LIA_Claim__r.Customer_Claim_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Missed connection - compensation</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
