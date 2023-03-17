@@ -36,7 +36,6 @@ public without sharing class EU261Service {
   private static final String COMPENSATION_WITH_REIMBURSEMENT_TEXT_TEMPLATE = 'We will therefore reimburse you with a flat rate compensation of {0} {1} and with a reimbursement of {2} {3} for the expenses you experienced during the delay.';
 
   private static final String SEMI_AUTOMATION_QUEUE = 'Claims_EU261_Semi_Automation';
-  private static final String MANUAL_HANDLING_QUEUE = ''; // TODO: fix!
 
   @TestVisible
   private static final Map<EU261Claim.SemiAutomationReason, String> SEMI_AUTOMATION_REASON_TO_INSTRUCTIONS = new Map<EU261Claim.SemiAutomationReason, String>{
@@ -218,7 +217,7 @@ public without sharing class EU261Service {
 
     List<EU261Claim> claimsToAutomate = gatherAllNecessaryInformation(claimIds);
 
-    claimsToAutomate = filterClaimTypes(claimsToAutomate);
+    claimsToAutomate = filterAndRerouteUnsupportedClaimTypes(claimsToAutomate);
 
     for (EU261Claim c : claimsToAutomate) {
       c.evaluate();
@@ -234,8 +233,9 @@ public without sharing class EU261Service {
   /**
    * Filters claims which are not enabled in the config.
    */
-  private List<EU261Claim> filterClaimTypes(List<EU261Claim> claimsToAutomate) {
+  private List<EU261Claim> filterAndRerouteUnsupportedClaimTypes(List<EU261Claim> claimsToAutomate) {
     List<EU261Claim> filteredClaims = new List<EU261Claim>();
+    List<Case> casesToRouteToManualHandling = new List<Case>();
     for (EU261Claim c : claimsToAutomate) {
       if (
         !EU261Claim.DELAY_CLAIM_TYPES.contains(c.claimObj.type) &&
@@ -252,8 +252,17 @@ public without sharing class EU261Service {
         this.config.enabledDelayAutomation
       ) {
         filteredClaims.add(c);
+      } else {
+        casesToRouteToManualHandling.add(
+          parentCasesById.get(c.claimObj.parentCaseId)
+        );
       }
     }
+
+    if (casesToRouteToManualHandling.size() > 0) {
+      CaseService.assignPriorityAndRouteToQueue(casesToRouteToManualHandling);
+    }
+
     return filteredClaims;
   }
 
@@ -799,8 +808,8 @@ public without sharing class EU261Service {
     }
 
     if (parentCasesForManualHandling.size() > 0) {
-      Cases.newInstance(parentCasesForManualHandling)
-        .routeToQueue(MANUAL_HANDLING_QUEUE, uow);
+      // TODO: see if we somehow can do this async (a queueable queuing error might stop this)
+      CaseService.assignPriorityAndRouteToQueue(parentCasesForManualHandling);
     }
 
     uow.commitWork();
