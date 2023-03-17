@@ -246,13 +246,13 @@ public with sharing class FlightIrregularity_Test {
       new FlightIrregularity(unknownCodeIrregularity) => null
     };
 
-    List<FlightIrregularities__c> potentialCommercialIrregularities = new List<FlightIrregularities__c>{
+    List<FlightIrregularities__c> unknownIrregularities = new List<FlightIrregularities__c>{
       invalidTimeCancellationNoCode,
-      arrivalCancellationDifferentType
+      arrivalCancellationDifferentType,
+      unknownCodeIrregularity
     };
 
-    Integer noCommercialCancellationIdentified = 0;
-    Boolean unknownCodeIdentified = false;
+    Integer noUnknownIrregularitiesIdentified = 0;
     for (FlightIrregularity irregularity : irregularityToCorrectType.keySet()) {
       FlightIrregularity.IrregularityType correctType = irregularityToCorrectType.get(
         irregularity
@@ -261,31 +261,17 @@ public with sharing class FlightIrregularity_Test {
 
       try {
         irregularityType = irregularity.getType();
-      } catch (FlightIrregularity.CommercialCancellationException e) {
-        if (
-          potentialCommercialIrregularities.contains(
-            irregularity.underlyingSObject
-          )
-        ) {
-          noCommercialCancellationIdentified += 1;
+      } catch (FlightIrregularity.UnknownIrregularityException e) {
+        if (unknownIrregularities.contains(irregularity.underlyingSObject)) {
+          noUnknownIrregularitiesIdentified += 1;
         } else {
           System.assert(
             false,
-            'Non commercial irregularity should not be misidentified (' +
+            'Known irregularity should not be unknown (' +
             irregularity.nameC +
             ')'
           );
         }
-      } catch (FlightIrregularity.IrregularityTypeException e) {
-        System.assertEquals(
-          unknownCodeIrregularity,
-          irregularity.underlyingSObject,
-          'Irregularity should only be identified as unknown for a single irregularity (' +
-          irregularity.nameC +
-          ')'
-        );
-
-        unknownCodeIdentified = true;
       }
 
       System.assertEquals(
@@ -302,13 +288,9 @@ public with sharing class FlightIrregularity_Test {
     }
 
     System.assertEquals(
-      2,
-      noCommercialCancellationIdentified,
+      3,
+      noUnknownIrregularitiesIdentified,
       'Commercial cancellations should have been identified'
-    ); // TODO: Maybe change
-    System.assert(
-      unknownCodeIdentified,
-      'Unknown code should have been identified'
     );
   }
 }

@@ -17,7 +17,7 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
   public class IrregularityTypeException extends Exception {
   }
 
-  public class CommercialCancellationException extends Exception {
+  public class UnknownIrregularityException extends Exception {
   }
 
   public override void updateSObjectFields() {
@@ -379,8 +379,10 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
         !this.type.toLowerCase().contains('arrival')
       ) {
         // Special case, cancellation departure with no code or cancellation time
-        throw new CommercialCancellationException(
-          'Potential irregularity due to commercial reasons'
+        throw new UnknownIrregularityException(
+          'Unable to identify irregularity (' +
+          this.id +
+          ')'
         );
       } else {
         // Cancellation N/A "arrival" with no cancellation time and delays without
@@ -389,8 +391,8 @@ public without sharing class FlightIrregularity extends AbstractSObjectWrapper {
       }
     }
 
-    throw new IrregularityTypeException(
-      'Unknown irregularity: ' +
+    throw new UnknownIrregularityException(
+      'Unknown irregularity code: ' +
       this.code +
       '(' +
       this.id +

@@ -422,7 +422,8 @@ public without sharing class EU261Service {
         if (!newFi.isInvalid()) {
           flightIdToIrregularities.get(newFi.flightId).add(newFi);
         }
-      } catch (FlightIrregularity.CommercialCancellationException e) {
+      } catch (FlightIrregularity.UnknownIrregularityException e) {
+        // If there is an invalid type, add it and let the automation handle it.
         flightIdToIrregularities.get(newFi.flightId).add(newFi);
       }
     }
