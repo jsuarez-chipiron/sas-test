@@ -332,8 +332,8 @@ public class EU261Claim {
    */
   private Decision canWeEvaluate() {
     Claim c = this.claimObj;
-    Boolean isCancellationClaim = c.type == Claim.Type.FlightCancellation;
-    Boolean isDelayClaim = c.type == Claim.Type.FlightDelay;
+    Boolean isCancellationClaim = CANCELLATION_CLAIM_TYPES.contains(c.type);
+    Boolean isDelayClaim = DELAY_CLAIM_TYPES.contains(c.type);
 
     if (c.personWithReducedMobility) {
       return new Decision(

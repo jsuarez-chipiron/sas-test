@@ -217,7 +217,7 @@ public without sharing class EU261Service {
 
     List<EU261Claim> claimsToAutomate = gatherAllNecessaryInformation(claimIds);
 
-    claimsToAutomate = filterClaimTypes(claimsToAutomate);
+    claimsToAutomate = filterAndRerouteUnsupportedClaimTypes(claimsToAutomate);
 
     for (EU261Claim c : claimsToAutomate) {
       c.evaluate();
@@ -233,8 +233,9 @@ public without sharing class EU261Service {
   /**
    * Filters claims which are not enabled in the config.
    */
-  private List<EU261Claim> filterClaimTypes(List<EU261Claim> claimsToAutomate) {
+  private List<EU261Claim> filterAndRerouteUnsupportedClaimTypes(List<EU261Claim> claimsToAutomate) {
     List<EU261Claim> filteredClaims = new List<EU261Claim>();
+    List<Case> casesToRouteToManualHandling = new List<Case>();
     for (EU261Claim c : claimsToAutomate) {
       if (
         !EU261Claim.DELAY_CLAIM_TYPES.contains(c.claimObj.type) &&
@@ -251,8 +252,17 @@ public without sharing class EU261Service {
         this.config.enabledDelayAutomation
       ) {
         filteredClaims.add(c);
+      } else {
+        casesToRouteToManualHandling.add(
+          parentCasesById.get(c.claimObj.parentCaseId)
+        );
       }
     }
+
+    if (casesToRouteToManualHandling.size() > 0) {
+      CaseService.assignPriorityAndRouteToQueue(casesToRouteToManualHandling);
+    }
+
     return filteredClaims;
   }
 
@@ -593,6 +603,8 @@ public without sharing class EU261Service {
     List<Case> parentCasesForSemiAutomation = new List<Case>();
     List<Case> parentCasesForRejection = new List<Case>();
 
+    List<Case> parentCasesForManualHandling = new List<Case>();
+
     for (EU261Claim c : claimsToAutomate) {
       switch on c.decision.verdict {
         when EligibleForCompensation {
@@ -614,8 +626,11 @@ public without sharing class EU261Service {
             parentCasesById.get(c.claimObj.parentCaseId)
           );
         }
-        when ReimbursementOnly {
-          // TODO. Currently we do nothing.
+        when else {
+          // TODO: handle ReimbursementOnly separately
+          parentCasesForManualHandling.add(
+            parentCasesById.get(c.claimObj.parentCaseId)
+          );
         }
       }
     }
@@ -628,6 +643,8 @@ public without sharing class EU261Service {
 
       if (this.config.enabledSemiAutomation) {
         claimsWhichNeedSettlements.addAll(claimsToSemiAutomate);
+      } else {
+        parentCasesForManualHandling.addAll(parentCasesForSemiAutomation);
       }
 
       Map<Id, List<Settlement__c>> settlementsByClaimId = createSettlementsForClaims(
@@ -769,12 +786,30 @@ public without sharing class EU261Service {
           .setHandlingInstructions(uow, handlingInstructionsByCaseId)
           .routeToQueue(SEMI_AUTOMATION_QUEUE, uow);
       }
+    } else {
+      for (EU261Claim c : claimsToApproveAutomatically) {
+        parentCasesForManualHandling.add(
+          parentCasesById.get(c.claimObj.parentCaseId)
+        );
+      }
+      for (EU261Claim c : claimsToManualApproval) {
+        parentCasesForManualHandling.add(
+          parentCasesById.get(c.claimObj.parentCaseId)
+        );
+      }
     }
 
     if (this.config.enabledRejections && claimsToReject.size() > 0) {
       Cases.newInstance(parentCasesForRejection)
         .emailContactPeople(createRejectionEmails(claimsToReject), uow)
         .close(uow);
+    } else {
+      parentCasesForManualHandling.addAll(parentCasesForRejection);
+    }
+
+    if (parentCasesForManualHandling.size() > 0) {
+      // TODO: see if we somehow can do this async (a queueable queuing error might stop this)
+      CaseService.assignPriorityAndRouteToQueue(parentCasesForManualHandling);
     }
 
     uow.commitWork();

@@ -129,7 +129,7 @@ private class CaseFormV2Test {
     String claimJson =
       '{' +
       '  "category": "flight-disruptions",' +
-      '  "type": "flight-delay",' +
+      '  "type": "flight-delay-compensation",' +
       '  "delayLength": "2-3",' +
       '  "unaccompaniedMinor": true,' +
       '  "personWithReducedMobility": true,' +
@@ -217,13 +217,13 @@ private class CaseFormV2Test {
       c.Department__c,
       'Department should be set correctly for Denmark.'
     );
-    System.assertNotEquals(
-      'Not Started',
+    System.assertEquals(
+      'Unhandled',
       cl.EU261_Handling_Status__c,
       'EU261_Handling_Status__c Status should be updated'
     );
-    System.assertNotEquals(
-      'Unhandled',
+    System.assertEquals(
+      'Not Started',
       cl.External_Data_Status__c,
       'External_Data_Status__c Should be updated'
     );
@@ -551,7 +551,9 @@ private class CaseFormV2Test {
         Customer_Claim_Type__c,
         Delay_Length__c,
         Purchase_Price__c,
-        Purchase_Year__c
+        Purchase_Year__c,
+        EU261_Handling_Status__c,
+        External_Data_Status__c
       FROM LIA_Claim__c
       WHERE Case__c = :c.Id
     ];
@@ -589,6 +591,16 @@ private class CaseFormV2Test {
       2021,
       cl.Purchase_Year__c,
       'Should have set purchase year correctly.'
+    );
+    System.assertEquals(
+      null,
+      cl.External_Data_Status__c,
+      'External Data Status should be null'
+    );
+    System.assertEquals(
+      null,
+      cl.EU261_Handling_Status__c,
+      'EU261 Handling Status should be null'
     );
   }
 
