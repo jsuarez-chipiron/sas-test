@@ -237,10 +237,8 @@ public without sharing class EU261Service {
     List<EU261Claim> claimsToAutomate
   ) {
     List<EU261Claim> filteredClaims = new List<EU261Claim>();
-    List<Case> casesToRouteToManualHandling = new List<Case>();
-    Map<Id, Claim> caseIdToClaim = new Map<Id, Claim>();
+    List<EU261Claim> claimsUnableToHandle = new List<EU261Claim>();
     for (EU261Claim c : claimsToAutomate) {
-      caseIdToClaim.put(c.claimObj.parentCaseId, c.claimObj);
       if (
         !EU261Claim.DELAY_CLAIM_TYPES.contains(c.claimObj.type) &&
         !EU261Claim.CANCELLATION_CLAIM_TYPES.contains(c.claimObj.type) &&
@@ -258,33 +256,34 @@ public without sharing class EU261Service {
       ) {
         filteredClaims.add(c);
       } else {
-        casesToRouteToManualHandling.add(
-          parentCasesById.get(c.claimObj.parentCaseId)
-        );
+        claimsUnableToHandle.add(c);
       }
     }
 
-    if (casesToRouteToManualHandling.size() > 0) {
-      rerouteAndSetUnableToHandle(casesToRouteToManualHandling, caseIdToClaim);
+    if (claimsUnableToHandle.size() > 0) {
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+      rerouteAndSetUnableToHandle(claimsUnableToHandle, uow);
+      uow.commitWork();
     }
 
     return filteredClaims;
   }
 
   private void rerouteAndSetUnableToHandle(
-    List<Case> casesToRouteToManualHandling,
-    Map<Id, Claim> caseIdToClaim
+    List<EU261Claim> claimsUnableToHandle,
+    fflib_ISObjectUnitOfWork uow
   ) {
+    List<Case> toRoute = new List<Case>();
     List<Claim> toUpsert = new List<Claim>();
-    for (Case c : casesToRouteToManualHandling) {
-      Claim cl = caseIdToClaim.get(c.Id);
-      cl.eu261HandlingStatus = Claim.EU261HandlingStatus.UnableToHandle;
-      toUpsert.add(cl);
+    for (EU261Claim c : claimsUnableToHandle) {
+      c.claimObj.eu261HandlingStatus = Claim.EU261HandlingStatus.UnableToHandle;
+      toUpsert.add(c.claimObj);
+      toRoute.add(parentCasesById.get(c.claimObj.parentCaseId));
     }
 
-    Claims.newInstance(toUpsert).upsertToDB(); // uow ?
+    Claims.newInstance(toUpsert).upsertToDB(uow); // uow ?
 
-    CaseService.assignPriorityAndRouteToQueue(casesToRouteToManualHandling);
+    CaseService.assignPriorityAndRouteToQueue(toRoute);
 
     // uow.commitWork(); // TOOD: add?
   }
@@ -631,7 +630,7 @@ public without sharing class EU261Service {
     List<Case> parentCasesForSemiAutomation = new List<Case>();
     List<Case> parentCasesForRejection = new List<Case>();
 
-    List<Case> parentCasesForManualHandling = new List<Case>();
+    List<EU261Claim> claimsToManualHandling = new List<EU261Claim>();
 
     Map<Id, Claim> claimByCaseId = new Map<Id, Claim>(); // TODO: refactor whole concept of this function
 
@@ -659,9 +658,7 @@ public without sharing class EU261Service {
         }
         when else {
           // TODO: handle ReimbursementOnly separately
-          parentCasesForManualHandling.add(
-            parentCasesById.get(c.claimObj.parentCaseId)
-          );
+          claimsToManualHandling.add(c);
         }
       }
     }
@@ -675,7 +672,7 @@ public without sharing class EU261Service {
       if (this.config.enabledSemiAutomation) {
         claimsWhichNeedSettlements.addAll(claimsToSemiAutomate);
       } else {
-        parentCasesForManualHandling.addAll(parentCasesForSemiAutomation);
+        claimsToManualHandling.addAll(claimsToSemiAutomate);
       }
 
       Map<Id, List<Settlement__c>> settlementsByClaimId = createSettlementsForClaims(
@@ -818,16 +815,8 @@ public without sharing class EU261Service {
           .routeToQueue(SEMI_AUTOMATION_QUEUE, uow);
       }
     } else {
-      for (EU261Claim c : claimsToApproveAutomatically) {
-        parentCasesForManualHandling.add(
-          parentCasesById.get(c.claimObj.parentCaseId)
-        );
-      }
-      for (EU261Claim c : claimsToManualApproval) {
-        parentCasesForManualHandling.add(
-          parentCasesById.get(c.claimObj.parentCaseId)
-        );
-      }
+      claimsToManualHandling.addAll(claimsToApproveAutomatically);
+      claimsToManualHandling.addAll(claimsToManualApproval);
     }
 
     if (this.config.enabledRejections && claimsToReject.size() > 0) {
@@ -835,12 +824,12 @@ public without sharing class EU261Service {
         .emailContactPeople(createRejectionEmails(claimsToReject), uow)
         .close(uow);
     } else {
-      parentCasesForManualHandling.addAll(parentCasesForRejection);
+      claimsToManualHandling.addAll(claimsToReject);
     }
 
-    if (parentCasesForManualHandling.size() > 0) {
+    if (claimsToManualHandling.size() > 0) {
       // TODO: see if we somehow can do this async (a queueable queuing error might stop this)
-      rerouteAndSetUnableToHandle(parentCasesForManualHandling, claimByCaseId);
+      rerouteAndSetUnableToHandle(claimsToManualHandling, uow);
     }
 
     uow.commitWork();
