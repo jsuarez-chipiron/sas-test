@@ -233,13 +233,18 @@ public without sharing class EU261Service {
   /**
    * Filters claims which are not enabled in the config.
    */
-  private List<EU261Claim> filterAndRerouteUnsupportedClaimTypes(List<EU261Claim> claimsToAutomate) {
+  private List<EU261Claim> filterAndRerouteUnsupportedClaimTypes(
+    List<EU261Claim> claimsToAutomate
+  ) {
     List<EU261Claim> filteredClaims = new List<EU261Claim>();
     List<Case> casesToRouteToManualHandling = new List<Case>();
+    Map<Id, Claim> caseIdToClaim = new Map<Id, Claim>();
     for (EU261Claim c : claimsToAutomate) {
+      caseIdToClaim.put(c.claimObj.parentCaseId, c.claimObj);
       if (
         !EU261Claim.DELAY_CLAIM_TYPES.contains(c.claimObj.type) &&
-        !EU261Claim.CANCELLATION_CLAIM_TYPES.contains(c.claimObj.type)
+        !EU261Claim.CANCELLATION_CLAIM_TYPES.contains(c.claimObj.type) &&
+        !EU261Claim.MISSED_CONNECTION_CLAIM_TYPES.contains(c.claimObj.type)
       ) {
         throw new AutomationException('Unsupported claim type');
       } else if (
@@ -260,10 +265,28 @@ public without sharing class EU261Service {
     }
 
     if (casesToRouteToManualHandling.size() > 0) {
-      CaseService.assignPriorityAndRouteToQueue(casesToRouteToManualHandling);
+      rerouteAndSetUnableToHandle(casesToRouteToManualHandling, caseIdToClaim);
     }
 
     return filteredClaims;
+  }
+
+  private void rerouteAndSetUnableToHandle(
+    List<Case> casesToRouteToManualHandling,
+    Map<Id, Claim> caseIdToClaim
+  ) {
+    List<Claim> toUpsert = new List<Claim>();
+    for (Case c : casesToRouteToManualHandling) {
+      Claim cl = caseIdToClaim.get(c.Id);
+      cl.eu261HandlingStatus = Claim.EU261HandlingStatus.UnableToHandle;
+      toUpsert.add(cl);
+    }
+
+    Claims.newInstance(toUpsert).upsertToDB(); // uow ?
+
+    CaseService.assignPriorityAndRouteToQueue(casesToRouteToManualHandling);
+
+    // uow.commitWork(); // TOOD: add?
   }
 
   /**
@@ -610,7 +633,10 @@ public without sharing class EU261Service {
 
     List<Case> parentCasesForManualHandling = new List<Case>();
 
+    Map<Id, Claim> claimByCaseId = new Map<Id, Claim>(); // TODO: refactor whole concept of this function
+
     for (EU261Claim c : claimsToAutomate) {
+      claimByCaseId.put(c.claimObj.parentCaseId, c.claimObj);
       switch on c.decision.verdict {
         when EligibleForCompensation {
           if (shouldApproveAutomatically(c)) {
@@ -814,7 +840,7 @@ public without sharing class EU261Service {
 
     if (parentCasesForManualHandling.size() > 0) {
       // TODO: see if we somehow can do this async (a queueable queuing error might stop this)
-      CaseService.assignPriorityAndRouteToQueue(parentCasesForManualHandling);
+      rerouteAndSetUnableToHandle(parentCasesForManualHandling, claimByCaseId);
     }
 
     uow.commitWork();
