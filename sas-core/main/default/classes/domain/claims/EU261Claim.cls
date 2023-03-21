@@ -664,16 +664,21 @@ public class EU261Claim {
       this.tripWithClaimFlight.destinationAirport.countryCode
     );
 
-    Integer timeLimit;
-    Integer defaultTimeLimit = DateUtils.getClaimTimeLimitInMonths('default');
-    if (limitInDepartureCountry != null && limitInArrivalCountry != null) {
-      timeLimit = Math.max(limitInDepartureCountry, limitInArrivalCountry);
-    } else if (limitInDepartureCountry != null) {
-      timeLimit = Math.max(limitInDepartureCountry, defaultTimeLimit);
-    } else if (limitInArrivalCountry != null) {
-      timeLimit = Math.max(limitInArrivalCountry, defaultTimeLimit);
-    } else {
-      timeLimit = defaultTimeLimit;
+    if (limitInDepartureCountry == null || limitInArrivalCountry == null) {
+      throw new AutomationException(
+        'Claim filing time limit not defined for either departure or arrival country'
+      );
+    }
+
+    Integer timeLimit = Math.max(
+      limitInDepartureCountry,
+      limitInArrivalCountry
+    );
+
+    if (timeLimit < 2) {
+      throw new AutomationException(
+        'Claim filing time limit is less than 2 months, which should not be possible (Swedish time limit)'
+      );
     }
 
     return timeLimit;

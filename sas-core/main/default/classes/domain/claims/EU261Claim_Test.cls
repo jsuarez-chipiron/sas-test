@@ -2,14 +2,8 @@
 @TestVisible
 @IsTest
 private class EU261Claim_Test {
-  private static Datetime departure = DateTime.newInstance(
-    2020,
-    10,
-    10,
-    1,
-    1,
-    1
-  );
+  // Needs to be dynamically set as the time limit checks claim created date (which moves)
+  private static Datetime departure = Datetime.now().addDays(-50);
 
   private static EU261Service.Config config = new EU261Service.Config(
     new EU261_Automation_Configuration__mdt(
@@ -364,12 +358,7 @@ private class EU261Claim_Test {
     f2.arrivalAirport = 'LAX';
     f2.tedsIdentifier = f2.tedsIdentifier.substringBefore('HEL') + 'LAX';
 
-    return new EU261Claim(
-      bc.c,
-      new List<Booking>{ bc.b },
-      false,
-      config
-    );
+    return new EU261Claim(bc.c, new List<Booking>{ bc.b }, false, config);
   }
 
   @TestVisible
