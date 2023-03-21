@@ -2,15 +2,20 @@
 public with sharing class FlightDelayCertificates_IntegrationTest {
   @IsTest
   public static void incomingRequestShouldCreateCaseAndQueueableJob() {
-    FlightDelayCertificateFormJSON2Apex requestBody = FlightDelayCertificateFormJSON2Apex.parse(
+    CaseFormJSONV2 requestBody = CaseFormJSONV2.parse(
       '{ ' +
       '  "formData\": {' +
-      '    "email": "test@example.com",' +
-      '    "firstName": "Test",' +
-      '    "lastName": "Testsson",' +
-      '    "departureDate": "2022-03-02",' +
-      '    "flightNumber": "SK0903",' +
-      '    "bookingReference": "DELAY1"' +
+      '    "type": "delay-certificate",' +
+      '    "contact": {' +
+      '      "firstName": "Test",' +
+      '      "lastName": "Testsson",' +
+      '      "email": "test@example.com"' +
+      '    },' +
+      '    "claim": {' +
+      '      "bookingReference": "DELAY1",' +
+      '      "departureDate": "2022-03-02",' +
+      '      "flightNumber": "SK0903"' +
+      '    }' +
       '  },' +
       '  "metaData": {' +
       '    "market": "en-us"' +
@@ -56,7 +61,7 @@ public with sharing class FlightDelayCertificates_IntegrationTest {
     }
     Test.setMock(HttpCalloutMock.class, new APIMMock());
     Test.startTest();
-    RequestFlightDelayCertificate.sendFlightDelayCertificate(requestBody);
+    CaseFormV2.createCase(requestBody);
     Test.stopTest();
     String insertedEmailAddress = 'test@example.com';
     Case c = [

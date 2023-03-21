@@ -93,7 +93,6 @@ public class FCS_CaseTag_Controller_Test {
     Test.stopTest();
   }
   static testMethod void testCreateCaseUsingSocialPost() {
-    system.debug('hi');
     List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(1);
     insert socialPosts;
     Case newRecord = new Case();

@@ -628,6 +628,12 @@ private class CaseFormV2Test {
       '  "country": "SE"' +
       '}';
 
+    String claimData =
+    '{' +
+    '  "bookingReference": "TEST12",' +
+    '  "compensationCardNumber": "0012345678"' +
+    '}';
+
     String compensationDetailsJson =
       '{' +
       '  "preferredCompensationMethod": "voucher"' +
@@ -636,8 +642,10 @@ private class CaseFormV2Test {
     String input =
       '{' +
       '  "formData": {' +
-      '    "bookingReference": "TEST12",' +
-      '    "compensationCardNumber": "0012345678",' +
+      '    "type": "denied-boarding", ' +
+      '    "claim": ' +
+      claimData +
+      ',' +
       '    "contact": ' +
       contactJson +
       ',' +
@@ -652,10 +660,8 @@ private class CaseFormV2Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     Test.startTest();
-    RedeemCompensationCardJSON requestBody = RedeemCompensationCardJSON.parse(
-      input
-    );
-    CaseFormResponse response = RedeemCompensationCard.redeem(requestBody);
+    CaseFormJSONV2 requestBody = CaseFormJSONV2.parse(input);
+    CaseFormResponse response = CaseFormV2.createCase(requestBody);
     Test.StopTest();
 
     Case c = [
