@@ -281,11 +281,8 @@ public without sharing class EU261Service {
       toRoute.add(parentCasesById.get(c.claimObj.parentCaseId));
     }
 
-    Claims.newInstance(toUpsert).upsertToDB(uow); // uow ?
-
+    Claims.newInstance(toUpsert).upsertToDB(uow);
     CaseService.assignPriorityAndRouteToQueue(toRoute);
-
-    // uow.commitWork(); // TOOD: add?
   }
 
   /**
@@ -632,10 +629,7 @@ public without sharing class EU261Service {
 
     List<EU261Claim> claimsToManualHandling = new List<EU261Claim>();
 
-    Map<Id, Claim> claimByCaseId = new Map<Id, Claim>(); // TODO: refactor whole concept of this function
-
     for (EU261Claim c : claimsToAutomate) {
-      claimByCaseId.put(c.claimObj.parentCaseId, c.claimObj);
       switch on c.decision.verdict {
         when EligibleForCompensation {
           if (shouldApproveAutomatically(c)) {
