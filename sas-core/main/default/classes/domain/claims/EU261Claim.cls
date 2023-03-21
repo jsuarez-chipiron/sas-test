@@ -23,6 +23,11 @@ public class EU261Claim {
     Claim.Type.FlightCancellationCompensation
   };
 
+  public static final Set<Claim.Type> MISSED_CONNECTION_CLAIM_TYPES = new Set<Claim.Type>{
+    Claim.Type.MissedConnection,
+    Claim.Type.MissedConnectionCompensation
+  };
+
   /**
    * Evaluates the claim according to the EU261 rules and returns the decision
    * made on whether the claim should be paid out.
