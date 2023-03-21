@@ -17,14 +17,21 @@ public without sharing class DateUtils {
     'UK' => 6 * 12,
     'IE' => 6 * 12,
     'LV' => 6,
-    'default' => 6 * 12
+    'default' => 3 * 12
   };
 
-  // TODO: maybe set default here if the country does not have a specified code.
   public static Integer getClaimTimeLimitInMonths(String countryCode) {
     Integer monthTimeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get(
       countryCode
     );
+
+    if (monthTimeLimit == null) {
+      if (CountryUtils.isInEUOrNorwaySwitzerlandIceland(countryCode)) {
+        monthTimeLimit = COUNTRY_TO_CLAIM_TIME_LIMIT_IN_MONTHS.get('default');
+      } else {
+        monthTimeLimit = 2;
+      }
+    }
 
     return monthTimeLimit;
   }

@@ -23,6 +23,11 @@ public class EU261Claim {
     Claim.Type.FlightCancellationCompensation
   };
 
+  public static final Set<Claim.Type> MISSED_CONNECTION_CLAIM_TYPES = new Set<Claim.Type>{
+    Claim.Type.MissedConnection,
+    Claim.Type.MissedConnectionCompensation
+  };
+
   /**
    * Evaluates the claim according to the EU261 rules and returns the decision
    * made on whether the claim should be paid out.
@@ -244,7 +249,7 @@ public class EU261Claim {
   private Boolean claimFlightHasMoreThanOneCancellation() {
     Integer count = 0;
     for (FlightIrregularity fi : claimFlight.irregularities) {
-      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+      if (fi.isCancellation()) {
         // We can ignore arrival cancellation in here because there's always
         // one if the departure is cancelled.
         count += 1;
@@ -332,8 +337,8 @@ public class EU261Claim {
    */
   private Decision canWeEvaluate() {
     Claim c = this.claimObj;
-    Boolean isCancellationClaim = c.type == Claim.Type.FlightCancellation;
-    Boolean isDelayClaim = c.type == Claim.Type.FlightDelay;
+    Boolean isCancellationClaim = CANCELLATION_CLAIM_TYPES.contains(c.type);
+    Boolean isDelayClaim = DELAY_CLAIM_TYPES.contains(c.type);
 
     if (c.personWithReducedMobility) {
       return new Decision(
@@ -659,16 +664,21 @@ public class EU261Claim {
       this.tripWithClaimFlight.destinationAirport.countryCode
     );
 
-    Integer timeLimit;
-    Integer defaultTimeLimit = DateUtils.getClaimTimeLimitInMonths('default');
-    if (limitInDepartureCountry != null && limitInArrivalCountry != null) {
-      timeLimit = Math.max(limitInDepartureCountry, limitInArrivalCountry);
-    } else if (limitInDepartureCountry != null) {
-      timeLimit = Math.max(limitInDepartureCountry, defaultTimeLimit);
-    } else if (limitInArrivalCountry != null) {
-      timeLimit = Math.max(limitInArrivalCountry, defaultTimeLimit);
-    } else {
-      timeLimit = defaultTimeLimit;
+    if (limitInDepartureCountry == null || limitInArrivalCountry == null) {
+      throw new AutomationException(
+        'Claim filing time limit not defined for either departure or arrival country'
+      );
+    }
+
+    Integer timeLimit = Math.max(
+      limitInDepartureCountry,
+      limitInArrivalCountry
+    );
+
+    if (timeLimit < 2) {
+      throw new AutomationException(
+        'Claim filing time limit is less than 2 months, which should not be possible (Swedish time limit)'
+      );
     }
 
     return timeLimit;
@@ -1015,7 +1025,7 @@ public class EU261Claim {
     List<FlightIrregularity> claimIrregularities = new List<FlightIrregularity>();
 
     for (FlightIrregularity fi : this.claimFlight.irregularities) {
-      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+      if (fi.isCancellation()) {
         claimIrregularities.add(fi);
       }
     }

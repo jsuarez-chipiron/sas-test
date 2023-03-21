@@ -244,6 +244,12 @@ public without sharing class CaseService {
     }
   }
 
+  public static void assignPriorityAndRouteToQueue(Set<Id> caseIds){
+    List<Case> casesToSortThrough = CasesSelector.newInstance()
+      .selectById(caseIds);
+      assignPriorityAndRouteToQueue(casesToSortThrough);
+  }
+
   /**
    * Cases with Customers with Diamond and Gold EB-level should have "high" priority.
    * Cases get routeAndPrioritized to a queue depending on their claim type.
@@ -253,10 +259,8 @@ public without sharing class CaseService {
    * 2. Claims with high care costs have a special queue as we quickly want to
    *    compensate customers who might have been put in a difficult economical situation.
    */
-  public static void assignPriorityAndRouteToQueue(Set<Id> caseIds) {
-    List<Case> casesToSortThrough = CasesSelector.newInstance()
-      .selectById(caseIds);
-
+  public static void assignPriorityAndRouteToQueue(List<Case> casesToSortThrough) {
+    
     Map<Id, Case> claimIdToCase = new Map<Id, Case>{};
     for (Case c : casesToSortThrough) {
       if (c.LIA_Claim__c != null) {

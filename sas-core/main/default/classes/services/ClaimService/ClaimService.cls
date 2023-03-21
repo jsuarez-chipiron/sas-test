@@ -1031,7 +1031,7 @@ public without sharing class ClaimService {
     newClaim.travelAgentBookingReference = r.travelAgentBookingReference;
 
     if (r.bookingReference != null) {
-      if (newClaim.category == Claim.Category.FlightDisruptions) {
+      if (Claim.EU261_TYPES.contains(newClaim.type)) {
         newClaim.externalDataStatus = Claim.ExternalDataStatus.NotStarted;
         newClaim.eu261HandlingStatus = Claim.EU261HandlingStatus.Unhandled;
       } else {
