@@ -55,7 +55,7 @@ public with sharing class EU261Scheduling_Test {
       new Set<String>{ 'SAS Automation Queue' }
     )[0];
     TestDataFactories.CasesClaims casesWithClaims = TestDataFactories.createCasesWithClaims(
-      1,
+      2,
       new Map<Schema.SObjectField, Object>{
         Case.OwnerId => automationGroup.Id
       },
