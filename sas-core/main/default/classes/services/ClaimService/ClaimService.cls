@@ -1227,6 +1227,7 @@ public without sharing class ClaimService {
       if (Claim.EU261_TYPES.contains(newClaim.type)) {
         newClaim.externalDataStatus = Claim.ExternalDataStatus.NotStarted;
         newClaim.eu261HandlingStatus = Claim.EU261HandlingStatus.Unhandled;
+        newClaim.externalDataRetrieveCount = 0;
       } else {
         newClaim.externalDataStatus = null;
         newClaim.eu261HandlingStatus = null;
