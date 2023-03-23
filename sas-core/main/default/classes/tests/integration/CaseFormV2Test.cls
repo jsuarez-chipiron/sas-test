@@ -197,7 +197,8 @@ private class CaseFormV2Test {
         Flight_Date__c,
         Flight_Number__c,
         EU261_Handling_Status__c,
-        External_Data_Status__c
+        External_Data_Status__c,
+        External_Data_Retrieve_Count__c
       FROM LIA_Claim__c
       WHERE Case__c = :c.Id
     ];
@@ -226,6 +227,11 @@ private class CaseFormV2Test {
       'Not Started',
       cl.External_Data_Status__c,
       'External_Data_Status__c Should be updated'
+    );
+    System.assertEquals(
+      0,
+      cl.External_Data_Retrieve_Count__c,
+      'External_Data_Retrieve_Count__c Should be updated to 0'
     );
     System.assertNotEquals(
       null,
