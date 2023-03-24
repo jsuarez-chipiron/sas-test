@@ -85,8 +85,7 @@ public without sharing abstract class Reservation {
 
     for (Passenger p : this.booking.passengers) {
       p.updateSObjectFields();
-      uowUpsert.registerNew(p.underlyingSObject);
-      uowUpsert.registerRelationship(
+      uowUpsert.registerNew(
         p.underlyingSObject,
         Passenger__c.Booking__c,
         this.booking.underlyingSObject
@@ -106,8 +105,7 @@ public without sharing abstract class Reservation {
       }
       for (FlightIrregularity fi : f.irregularities) {
         fi.updateSObjectFields();
-        uowUpsert.registerNew(fi.underlyingSObject);
-        uowUpsert.registerRelationship(
+        uowUpsert.registerNew(
           fi.underlyingSObject,
           FlightIrregularities__c.Flight__c,
           f.underlyingSObject
@@ -116,8 +114,7 @@ public without sharing abstract class Reservation {
     }
     for (Segment s : this.booking.segments) {
       s.updateSObjectFields();
-      uowUpsert.registerNew(s.underlyingSObject);
-      uowUpsert.registerRelationship(
+      uowUpsert.registerNew(
         s.underlyingSObject,
         Segment__c.Booking__c,
         this.booking.underlyingSObject
@@ -134,8 +131,7 @@ public without sharing abstract class Reservation {
       }
       for (SegmentEvent se : s.getEvents()) {
         se.updateSObjectFields();
-        uowUpsert.registerNew(se.underlyingSObject);
-        uowUpsert.registerRelationship(
+        uowUpsert.registerNew(
           se.underlyingSObject,
           Segment_Event__c.Segment__c,
           s.underlyingSObject
