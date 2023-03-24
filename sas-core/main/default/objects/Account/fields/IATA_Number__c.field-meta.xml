@@ -3,6 +3,7 @@
     <fullName>IATA_Number__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>IATA Number for the travel agency</description>
+    <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>IATA Number for the travel agency</inlineHelpText>
     <label>IATA Number</label>

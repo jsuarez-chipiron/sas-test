@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CallCenterRoutingMap xmlns="http://soap.sforce.com/2006/04/metadata">
+    <callCenter>SAS Dev Call Center</callCenter>
+    <developerName>Voice_Group_EB_ENG_04v3N0000008R2AQAU</developerName>
+    <externalId>arn:aws:connect:eu-central-1:880743464362:instance/45610fb0-5fed-483a-a183-e37f8800ba93/routing-profile/be8f9466-dfb9-4573-b7c1-d97c07d85a23</externalId>
+    <masterLabel>00G3N000009vtXRUAY</masterLabel>
+    <referenceRecord>Voice_Group_EB_ENG</referenceRecord>
+</CallCenterRoutingMap>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConversationVendorInfo xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentSSOSupported>false</agentSSOSupported>
+    <awsAccountKey>880743464362</awsAccountKey>
+    <awsRootEmail>salesforce_aws_sit@sas.se</awsRootEmail>
+    <awsTenantVersion>1.8</awsTenantVersion>
+    <developerName>SERVICE_CLOUD_VOICE</developerName>
+    <einsteinConversationInsightsSupported>false</einsteinConversationInsightsSupported>
+    <isTaxCompliant>true</isTaxCompliant>
+    <keyProvisioningSupported>false</keyProvisioningSupported>
+    <masterLabel>Service Cloud Voice</masterLabel>
+    <namedCredentialSupported>false</namedCredentialSupported>
+    <partnerContactCenterListSupported>false</partnerContactCenterListSupported>
+    <partnerPhoneNumbersSupported>false</partnerPhoneNumbersSupported>
+    <partnerTransferDestinationsSupported>false</partnerTransferDestinationsSupported>
+    <queueManagementSupported>false</queueManagementSupported>
+    <universalCallRecordingAccessSupported>false</universalCallRecordingAccessSupported>
+    <userSyncingSupported>false</userSyncingSupported>
+    <vendorType>Amazon_Connect</vendorType>
+</ConversationVendorInfo>

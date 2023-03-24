@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>sriram.madaboosi@sas.se</contactEmail>
+    <description>The connected app used for REST API OAuth for a Service Cloud Voice contact center</description>
+    <label>SASDevCallCenter Connected App for RestAPI OAuth</label>
+    <oauthConfig>
+        <callbackUrl>http://localhost:1717/OauthRedirect</callbackUrl>
+        <certificate>MIICsjCCAZoCCQDiXzQKp9xC5jANBgkqhkiG9w0BAQsFADAbMQswCQYDVQQGEwJTRTEMMAoGA1UECgwDU0FTMB4XDTIzMDIyMTEzNTI1MFoXDTI0MDIyMTEzNTI1MFowGzELMAkGA1UEBhMCU0UxDDAKBgNVBAoMA1NBUzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANzLLo7i4JKACxZR9PnQdftQrblmS8//8Gq+/c2hpv1cXAS6j9TA8urimS1xqmc6cfwEuvVhaLDl4FOEDlfJp0dc0nh+w5IDaon6F/bvIt153izEY+aoaridjAlQmdbg9d86JuPiPvJ3mE3ZUzPwEx2Q31oleolpjN98oFAznSUkc2OlFfelDOHaHrrbVT6yoENaZAKxk24qHHt4dH2Dgey36Z2S2rUDwGKw+nzFR2sjijFL1LALjRXiAqwcXQEQKjusyNBewsfoJqx+8IS9ArcQubt0i5m39k5eb40MLUQu5au3h+5Nn5uq1uPZlETocO+qF45mVV+SHyTuI66moL0CAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAZsvKfXHchXX8VxJS8M2KYklyUO58EyDM8K27Yh5G2UgDxhmj5x53k9VJB1qMS//t+0MXhyOzvd/D4hJJoZnjM9K0Dpiz0qp/2LnUDhM2o0DsMwvWgNpzKMXeJaDwbWtpxMrdtg7KwGrR4oARwIt9gmanCp3WPLlXgJ7E6YqMKh4ZI7KIPADrfkYaLzRXa9QibzawR0MBfYJuFPtI1Yy5mpX76zDMw3/X2c9J7IAW+RANARY9qXrdZ/eehqFD7cAWzI9fw2SRwk8EL21jjWO+1qphxsmPHWqbzuPM6byePfIjVJXG54nLg/z+QYK1ZNyAWAtAgmjLzg1GR4C579FdFA==</certificate>
+        <consumerKey>3MVG9Lu3LaaTCEgKy38DMO.CiRLk19Jw_3XvqBOSDDCdT3opWN__C4vmMuoOMZ.TeojaKTbbfnR8tYN7Q99e2</consumerKey>
+        <isAdminApproved>true</isAdminApproved>
+        <isClientCredentialEnabled>false</isClientCredentialEnabled>
+        <isCodeCredentialEnabled>false</isCodeCredentialEnabled>
+        <isCodeCredentialPostOnly>false</isCodeCredentialPostOnly>
+        <isConsumerSecretOptional>false</isConsumerSecretOptional>
+        <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
+        <scopes>Api</scopes>
+        <scopes>RefreshToken</scopes>
+    </oauthConfig>
+    <oauthPolicy>
+        <ipRelaxation>BYPASS</ipRelaxation>
+        <refreshTokenPolicy>infinite</refreshTokenPolicy>
+    </oauthPolicy>
+    <profileName>System Administrator</profileName>
+</ConnectedApp>
