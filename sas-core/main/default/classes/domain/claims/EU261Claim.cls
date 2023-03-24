@@ -177,6 +177,7 @@ public class EU261Claim {
   private Boolean hasPotentiallyDuplicateClaims = false;
   private Boolean foundMultipleMatchingBookings = false;
   private Boolean hasCancellation;
+  private Boolean hasInvalidIrregularity;
   private Boolean couldInitializeTrips;
   private Flight claimFlight;
   public EU261Protocol protocol = new EU261Protocol();
@@ -213,7 +214,12 @@ public class EU261Claim {
         String flightId = Flight.TEDSIdToSimpleFlightIds(f.tedsIdentifier)[0];
         if (flightId == flightNumberDate) {
           this.claimFlight = f;
-          this.hasCancellation = f.getCancellations().size() > 0;
+          try {
+            this.hasCancellation = f.getCancellations().size() > 0;
+            this.hasInvalidIrregularity = false;
+          } catch (FlightIrregularity.UnknownIrregularityException e) {
+            this.hasInvalidIrregularity = true;
+          }
           break;
         }
       }
@@ -389,6 +395,11 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot find claimed flight from booking'
+      );
+    } else if (hasInvalidIrregularity) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'the claim flight has an invalid irregularity'
       );
     } else if (isCancellationClaim && !this.hasCancellation) {
       return new Decision(
