@@ -34,17 +34,25 @@ public with sharing class EU261Scheduling_Test {
     );
     uow.commitWork();
     Test.stopTest();
-    Set<Id> claimIds = new Map<Id, LIA_Claim__c>(casesWithClaims.claims)
-      .keySet();
-    List<LIA_Claim__c> claimsAfterUpdate = claimsSel.selectById(claimIds);
+
+    LIA_Claim__c claim1AfterUpdate = [
+      SELECT Id, External_Data_Status__c
+      FROM LIA_Claim__c
+      WHERE Id = :casesWithClaims.claims[0].Id
+    ];
+    LIA_Claim__c claim2AfterUpdate = [
+      SELECT Id, External_Data_Status__c
+      FROM LIA_Claim__c
+      WHERE Id = :casesWithClaims.claims[1].Id
+    ];
     System.assertEquals(
       'In Progress',
-      claimsAfterUpdate[0].External_Data_Status__c,
+      claim1AfterUpdate.External_Data_Status__c,
       'External Data Status should have been updated'
     );
     System.assertEquals(
       'Not Started',
-      claimsAfterUpdate[1].External_Data_Status__c,
+      claim2AfterUpdate.External_Data_Status__c,
       'External Data Status should not have been updated'
     );
   }
