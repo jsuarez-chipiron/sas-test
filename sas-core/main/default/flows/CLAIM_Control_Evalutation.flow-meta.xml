@@ -345,6 +345,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>incomingRecord.Settlement_amount_in_SEK__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>200000.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
                 <targetReference>NoControl</targetReference>
