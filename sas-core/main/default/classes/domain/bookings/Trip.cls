@@ -242,7 +242,10 @@ public without sharing class Trip {
 
   public Datetime getFinalDestinationArrivalTime() {
     Flight lastFlight = getFlightToFinalDestination();
-    if (lastFlight.actualArrivalTime != null) {
+    if (
+      lastFlight.actualArrivalTime != null &&
+      lastFlight.actualArrivalTime > Datetime.newInstance(1950, 1, 1)
+    ) {
       return lastFlight.actualArrivalTime;
     }
     return lastFlight.scheduledArrivalTime;
@@ -250,7 +253,10 @@ public without sharing class Trip {
 
   public Datetime getDeparture() {
     Flight firstFlight = getFirstFlight();
-    if (firstFlight.actualDepartureTime != null) {
+    if (
+      firstFlight.actualDepartureTime != null &&
+      firstFlight.actualDepartureTime > Datetime.newInstance(1950, 1, 1)
+    ) {
       return firstFlight.actualDepartureTime;
     }
     return firstFlight.scheduledDepartureTime;
@@ -584,8 +590,23 @@ public without sharing class Trip {
     return getDeparture() > getFinalDestinationArrivalTime();
   }
 
+  private Boolean hasInvalidTime() {
+    Datetime departure = getDeparture();
+    Datetime arrival = getFinalDestinationArrivalTime();
+    Datetime ninteenFifty = Datetime.newInstance(1950, 1, 1);
+    if (departure == null || arrival == null) {
+      return true;
+    } else if (departure < ninteenFifty || arrival < ninteenFifty) {
+      return true;
+    }
+
+    return false;
+  }
+
   public Boolean isValid() {
-    return !arrivesBeforeDeparture() && hasRouteFromOriginToDestination();
+    return !hasInvalidTime() &&
+      !arrivesBeforeDeparture() &&
+      hasRouteFromOriginToDestination();
   }
 
   public static void checkIfValidReplacement(Trip t, Trip replacement) {
