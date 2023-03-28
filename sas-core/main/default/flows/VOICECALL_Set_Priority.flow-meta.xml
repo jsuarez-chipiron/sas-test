@@ -1,33 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Get_EB_Level</name>
-        <label>Get EB Level</label>
-        <locationX>446</locationX>
-        <locationY>278</locationY>
-        <actionName>SasAccount</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Check_Eurobonus_Tier_Level</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>eurobonusNumbers</name>
-            <value>
-                <elementReference>euroBonusNumber</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>eurobonusAccount</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
     <apiVersion>57.0</apiVersion>
     <decisions>
         <name>Check_Eurobonus_Tier_Level</name>
         <label>Check Eurobonus Tier Level</label>
         <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Set_Low_Priority2</targetReference>
         </defaultConnector>
@@ -36,21 +14,21 @@
             <name>Pandion_Diamond_Or_Gold</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>eurobonusAccount.FCS_EBLevel__c</leftValueReference>
+                <leftValueReference>euroBonusLevel</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>G</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>eurobonusAccount.FCS_EBLevel__c</leftValueReference>
+                <leftValueReference>euroBonusLevel</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>D</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>eurobonusAccount.FCS_EBLevel__c</leftValueReference>
+                <leftValueReference>euroBonusLevel</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>P</stringValue>
@@ -65,7 +43,7 @@
             <name>Silver</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>eurobonusAccount.FCS_EBLevel__c</leftValueReference>
+                <leftValueReference>euroBonusLevel</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>S</stringValue>
@@ -80,7 +58,7 @@
             <name>Basic</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>eurobonusAccount.FCS_EBLevel__c</leftValueReference>
+                <leftValueReference>euroBonusLevel</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>B</stringValue>
@@ -96,7 +74,7 @@
         <name>Check_IATA_Tier_Level</name>
         <label>Check IATA Tier Level</label>
         <locationX>1502</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Set_Low_Priority3</targetReference>
         </defaultConnector>
@@ -160,34 +138,44 @@
             <name>B2C_Customer</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>euroBonusNumber</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>validEurobonusLevel</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_EB_Level</targetReference>
+                <targetReference>Check_Eurobonus_Tier_Level</targetReference>
             </connector>
             <label>B2C Customer</label>
         </rules>
         <rules>
-            <name>B2C_Customer2</name>
+            <name>B2B_Customer</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>iataNumber</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>validIATALevel</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Account</targetReference>
+                <targetReference>Check_IATA_Tier_Level</targetReference>
             </connector>
-            <label>B2C Customer</label>
+            <label>B2B Customer</label>
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>validEurobonusLevel</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!euroBonusLevel}))</expression>
+    </formulas>
+    <formulas>
+        <name>validIATALevel</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!iataLevel}))</expression>
+    </formulas>
     <interviewLabel>VOICECALL Set Priority {!$Flow.CurrentDateTime}</interviewLabel>
     <label>VOICECALL Set Priority</label>
     <processMetadataValues>
@@ -209,34 +197,11 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Account</name>
-        <label>Get Account</label>
-        <locationX>1502</locationX>
-        <locationY>278</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_IATA_Tier_Level</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>IATA_Number__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>iataNumber</elementReference>
-            </value>
-        </filters>
-        <object>Account</object>
-        <outputAssignments>
-            <assignToReference>iataLevel</assignToReference>
-            <field>IATA_Level__c</field>
-        </outputAssignments>
-    </recordLookups>
     <recordUpdates>
         <name>Set_High_Priority</name>
         <label>Set High Priority</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -257,7 +222,7 @@
         <name>Set_High_Priority2</name>
         <label>Set High Priority</label>
         <locationX>1106</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -299,7 +264,7 @@
         <name>Set_Low_Priority2</name>
         <label>Set Low Priority</label>
         <locationX>842</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -320,7 +285,7 @@
         <name>Set_Low_Priority3</name>
         <label>Set Low Priority</label>
         <locationX>1898</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -341,7 +306,7 @@
         <name>Set_Low_Priority4</name>
         <label>Set Low Priority</label>
         <locationX>1634</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -362,7 +327,7 @@
         <name>Set_Medium_Priority</name>
         <label>Set Medium Priority</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -383,7 +348,7 @@
         <name>Set_Medium_Priority2</name>
         <label>Set Medium Priority</label>
         <locationX>1370</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -404,7 +369,7 @@
         <name>Set_Urgent_Priority</name>
         <label>Set Urgent Priority</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -430,15 +395,7 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>eurobonusAccount</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account</objectType>
-    </variables>
-    <variables>
-        <name>euroBonusNumber</name>
+        <name>euroBonusLevel</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
@@ -446,13 +403,6 @@
     </variables>
     <variables>
         <name>iataLevel</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>iataNumber</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

@@ -8,17 +8,18 @@ public without sharing class SasAccount {
         
         List<Account> toReturn = new List<Account>();
         
-        Set<String> ebNumberSet = new Set<String>(eurobonusNumbers);
-                
-        List<Account> existingAccounts = AccountsSelector.newInstance().selectByEuroBonusNumber(ebNumberSet);
-        
-        if (existingAccounts.size() > 0) {
-            toReturn.addAll(existingAccounts);
-        }  else {
-            Account externalAccount = FCS_IdentifyCustomerController.findCustomer('EBNumber__c', eurobonusNumbers[0]);
-           if (externalAccount != null) {
-           toReturn.add(externalAccount);
-           } 
+        for (String ebNumber : eurobonusNumbers) {
+            List<Account> existingAccounts = AccountsSelector.newInstance().selectByEuroBonusNumber(new Set<String>{ebNumber});
+            if (existingAccounts.size() == 1) {
+                toReturn.addAll(existingAccounts);
+            } else if (existingAccounts.size() == 0) {
+                Account externalAccount = FCS_IdentifyCustomerController.findCustomer('EBNumber__c', ebNumber);
+               if (externalAccount != null) {
+               toReturn.add(externalAccount);
+               } 
+            } else {
+                continue;
+            }
         }
         return toReturn;
     }
