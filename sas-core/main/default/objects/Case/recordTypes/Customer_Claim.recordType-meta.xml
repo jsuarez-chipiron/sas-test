@@ -3154,6 +3154,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>FCS_SubOrigin_c__c</picklist>
+        <values>
+            <fullName>Obsolete</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Feedback_Category__c</picklist>
         <values>
             <fullName>Airport experience</fullName>
@@ -3444,6 +3451,21 @@
         </values>
         <values>
             <fullName>W22%2F23</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IATA_Level__c</picklist>
+        <values>
+            <fullName>A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C</fullName>
             <default>false</default>
         </values>
     </picklistValues>

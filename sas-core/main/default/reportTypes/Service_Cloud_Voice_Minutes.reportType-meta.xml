@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>SCVConnectMetrics</baseObject>
+    <category>cases</category>
+    <deployed>true</deployed>
+    <description>Service Cloud Voice Minutes</description>
+    <label>Service Cloud Voice Minutes</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ParentEnumOrId</field>
+            <table>SCVConnectMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AWSAccountID</field>
+            <table>SCVConnectMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UsageDate</field>
+            <table>SCVConnectMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ConnectMinutes</field>
+            <table>SCVConnectMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UsageMonth</field>
+            <table>SCVConnectMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UsageYear</field>
+            <table>SCVConnectMetrics</table>
+        </columns>
+        <masterLabel>Service Cloud Voice Minutes</masterLabel>
+    </sections>
+</ReportType>

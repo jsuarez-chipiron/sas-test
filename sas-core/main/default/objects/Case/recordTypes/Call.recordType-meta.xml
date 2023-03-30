@@ -1,55 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>FunctionalProductSupport</fullName>
+    <fullName>Call</fullName>
     <active>true</active>
-    <businessProcess>Internal%2FBackoffice</businessProcess>
-    <description>Use mainly for internal cases regarding salesforce functionality</description>
-    <label>Functional Product Support</label>
+    <businessProcess>Default</businessProcess>
+    <compactLayoutAssignment>SAS_Voice_Call</compactLayoutAssignment>
+    <description>For all the cases related to a voice call</description>
+    <label>Call</label>
     <picklistValues>
         <picklist>Department__c</picklist>
         <values>
-            <fullName>Agent Helpdesk</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Corporate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Digital Channel Support</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Direct Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EuroBonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Functional Product Support</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Group Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Info Hub</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Liability</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Refunds</fullName>
+            <fullName>Telephony</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>FCS_CaseReason__c</picklist>
+        <values>
+            <fullName>7 day refund guarantee</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>ADM</fullName>
             <default>false</default>
@@ -64,6 +33,14 @@
         </values>
         <values>
             <fullName>ATC%2FATC Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATO Account Takeover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent Helpdesk</fullName>
             <default>false</default>
         </values>
         <values>
@@ -107,7 +84,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Baggage Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Baggage service R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Boozt Attack</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAR</fullName>
             <default>false</default>
         </values>
         <values>
@@ -131,7 +128,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chargeback</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Check in</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Claim</fullName>
             <default>false</default>
         </values>
         <values>
@@ -163,6 +168,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Coop</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corp Account managers %28SAS for busiess%29</fullName>
             <default>false</default>
         </values>
@@ -175,6 +184,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corporate product</fullName>
             <default>false</default>
         </values>
@@ -183,11 +196,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Crime Prevention</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer Care R</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Delayed%2Fdamaged luggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deletion</fullName>
             <default>false</default>
         </values>
         <values>
@@ -203,11 +228,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Digital Channel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Digital channels R</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Digital support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Sales</fullName>
             <default>false</default>
         </values>
         <values>
@@ -223,6 +256,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EMD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Environment</fullName>
             <default>false</default>
         </values>
@@ -231,7 +268,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Error Handling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus CN</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EuroBonus Shop</fullName>
             <default>false</default>
         </values>
         <values>
@@ -244,6 +293,10 @@
         </values>
         <values>
             <fullName>Eurobonus procedures R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extract</fullName>
             <default>false</default>
         </values>
         <values>
@@ -279,6 +332,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>GAC Give Away Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gift Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Group booking</fullName>
             <default>false</default>
         </values>
@@ -295,7 +360,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Hotel Fraud</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inflight %2F Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interline</fullName>
             <default>false</default>
         </values>
         <values>
@@ -304,6 +381,10 @@
         </values>
         <values>
             <fullName>Irregularity %2F Schedule change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Klarna</fullName>
             <default>false</default>
         </values>
         <values>
@@ -355,11 +436,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Open coupon</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Overbooked flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Point Sharing</fullName>
             <default>false</default>
         </values>
         <values>
@@ -407,6 +496,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Reminder</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Requesting documentation</fullName>
             <default>false</default>
         </values>
@@ -416,6 +509,10 @@
         </values>
         <values>
             <fullName>Reservation issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reserved Amount</fullName>
             <default>false</default>
         </values>
         <values>
@@ -435,6 +532,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SAS Flights</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SAS Medical</fullName>
             <default>false</default>
         </values>
@@ -444,6 +545,10 @@
         </values>
         <values>
             <fullName>SAS%2EXX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC Under 180 Minutes</fullName>
             <default>false</default>
         </values>
         <values>
@@ -471,6 +576,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Star Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>System</fullName>
             <default>false</default>
         </values>
@@ -483,6 +596,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ticket wrongly rewritten</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ticketing</fullName>
             <default>false</default>
         </values>
@@ -491,11 +608,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>US ARC</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Voucher</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Waivers</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WiFi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrongly refunded</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -510,11 +639,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acquirer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Activate Profile</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Add travel pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent did not contact AH first</fullName>
             <default>false</default>
         </values>
         <values>
@@ -535,6 +672,14 @@
         </values>
         <values>
             <fullName>Already refunded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amadeus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Answer from AH not accepted</fullName>
             <default>false</default>
         </values>
         <values>
@@ -590,6 +735,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>COVID19</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Campaigns</fullName>
             <default>false</default>
         </values>
@@ -630,7 +779,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Claim created</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Claim status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Codeshare</fullName>
             <default>false</default>
         </values>
         <values>
@@ -694,6 +851,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Deviation to be found on SSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Domestic</fullName>
             <default>false</default>
         </values>
@@ -711,6 +872,10 @@
         </values>
         <values>
             <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation was correct</fullName>
             <default>false</default>
         </values>
         <values>
@@ -842,6 +1007,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Issue New</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Issue new for expired</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Jira created</fullName>
             <default>false</default>
         </values>
@@ -874,6 +1047,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MMB Refund process</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Make name change</fullName>
             <default>false</default>
         </values>
@@ -891,6 +1068,10 @@
         </values>
         <values>
             <fullName>Minor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New</fullName>
             <default>false</default>
         </values>
         <values>
@@ -946,6 +1127,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Positive Covid Test</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Price inquiry</fullName>
             <default>false</default>
         </values>
@@ -979,6 +1164,10 @@
         </values>
         <values>
             <fullName>Questions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RTCREDIT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1062,6 +1251,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refund to alternative FOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund travel agent</fullName>
             <default>false</default>
         </values>
@@ -1098,6 +1291,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Resend</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Reset password</fullName>
             <default>false</default>
         </values>
@@ -1122,11 +1319,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SRS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SSI author</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>SSI login issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SSI not checked by KAM</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1158,6 +1363,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Solve agent error</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Solve log in issue</fullName>
             <default>false</default>
         </values>
@@ -1167,6 +1376,10 @@
         </values>
         <values>
             <fullName>Solve payment problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solve technical error</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1211,6 +1424,10 @@
         </values>
         <values>
             <fullName>Taxes and surcharges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technical error</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1297,6 +1514,10 @@
     <picklistValues>
         <picklist>FCS_CaseSubReason__c</picklist>
         <values>
+            <fullName>14 Day Money Back</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>AMEX</fullName>
             <default>false</default>
         </values>
@@ -1310,6 +1531,10 @@
         </values>
         <values>
             <fullName>AVIH%2FPETC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accept</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1573,6 +1798,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Changed Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Charter</fullName>
             <default>false</default>
         </values>
@@ -1666,6 +1895,10 @@
         </values>
         <values>
             <fullName>Dangerous goods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Death Certificate</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1769,6 +2002,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Extension</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Extra seat for comfort</fullName>
             <default>false</default>
         </values>
@@ -1850,6 +2087,10 @@
         </values>
         <values>
             <fullName>General service questions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2001,6 +2242,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MMB Refund Process</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Make cancellation</fullName>
             <default>false</default>
         </values>
@@ -2089,11 +2334,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Not Received - Resend</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>On corporate account</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Onboard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Email</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2113,6 +2366,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Own Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Oxygen</fullName>
             <default>false</default>
         </values>
@@ -2122,6 +2379,10 @@
         </values>
         <values>
             <fullName>Partial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Past Date PNR</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2138,6 +2399,10 @@
         </values>
         <values>
             <fullName>Payment cards</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment correction</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2233,6 +2498,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Refund COVID19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund RTCREDIT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund error</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Refund escalation</fullName>
             <default>false</default>
         </values>
@@ -2249,6 +2526,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Reject</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Releases</fullName>
             <default>false</default>
         </values>
@@ -2262,6 +2543,10 @@
         </values>
         <values>
             <fullName>Reprotection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reserved Amount</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2469,6 +2754,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ticket Refund - Expired Voucher - Issue New</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ticket status</fullName>
             <default>false</default>
         </values>
@@ -2494,6 +2783,10 @@
         </values>
         <values>
             <fullName>Transfer %2F Arrival services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel Agent</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2598,6 +2891,10 @@
         </values>
         <values>
             <fullName>User story created</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Visa Rejection</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3087,6 +3384,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Error Handling</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>EuroBonus</fullName>
             <default>false</default>
         </values>
@@ -3104,6 +3405,10 @@
         </values>
         <values>
             <fullName>GDPR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gift Card</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3132,6 +3437,10 @@
         </values>
         <values>
             <fullName>Receive Customer Documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund Handling</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3164,6 +3473,10 @@
         </values>
         <values>
             <fullName>Voucher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voucher Handling</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3246,6 +3559,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>AliPay</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allowance</fullName>
             <default>false</default>
         </values>
@@ -3322,6 +3639,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Card errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Change</fullName>
             <default>false</default>
         </values>
@@ -3335,6 +3656,10 @@
         </values>
         <values>
             <fullName>Change commitment dates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chargeback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3434,7 +3759,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email related</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error - Gift Card</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3463,6 +3796,10 @@
         </values>
         <values>
             <fullName>EuroBonus account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extend</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3538,7 +3875,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Insufficient Balance Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insufficient Balance Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Involuntary</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Irregularity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KAM DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KAM INT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KAM NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KAM SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Klarna</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3578,6 +3951,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Multiple FOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Name Change</fullName>
             <default>false</default>
         </values>
@@ -3602,6 +3979,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No money collected</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Offer sent</fullName>
             <default>false</default>
         </values>
@@ -3619,6 +4000,10 @@
         </values>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PayPal</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3650,6 +4035,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prolonged expired points due to IRR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Provide Delay Certificate</fullName>
             <default>false</default>
         </values>
@@ -3671,6 +4060,14 @@
         </values>
         <values>
             <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund - Gift Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund - Voucher</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3766,6 +4163,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Special award</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Split booking</fullName>
             <default>false</default>
         </values>
@@ -3778,7 +4179,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Support in Document Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Swish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Swish Bot Output</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3806,6 +4219,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>UnionPay</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Update Profile</fullName>
             <default>false</default>
         </values>
@@ -3814,7 +4231,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Voluntary</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Waiver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WeChat</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3867,14 +4292,126 @@
     <picklistValues>
         <picklist>Feedback_Category__c</picklist>
         <values>
+            <fullName>Airport experience</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight disruptions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight experience</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel extras</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Feedback_Type__c</picklist>
         <values>
+            <fullName>Baggage damaged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggage delayed%2Flost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booking error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cabin environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied boarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrading</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extra baggage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight cancellation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flight delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gate issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight meal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-flight service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meals%2FDrinks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed connection</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prepaid seat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regression</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travel document control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WiFi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3909,6 +4446,10 @@
         </values>
         <values>
             <fullName>DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3948,11 +4489,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>PL</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3967,7 +4520,43 @@
     <picklistValues>
         <picklist>GSB_Sales_Contract_Status__c</picklist>
         <values>
+            <fullName>ADM disputed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ADM logged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ADM sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Booked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confirmed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract Signed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Invited</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ongoing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4024,6 +4613,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Agent Helpdesk Scandinavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Businesstravel STO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - CS Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - CS Norway</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Corporate Support Backoffice</fullName>
             <default>false</default>
         </values>
@@ -4036,11 +4641,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Customer Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim DBC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim Firms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim Regression</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Customer Claim Scanning</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Digital Channel Support Internal</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Email - Direct Sales Reservations DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EB Missing Points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EB Pai Manual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - EB Vendor Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4076,7 +4713,123 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - EuroBonus Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Forsvaret NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Fraud EMEA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Fraud Investigation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Functional Product Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - GDPR Secure Data</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales ACE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales ADM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales Benelux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales Bulk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales CH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales FR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales IE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales IS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales Interline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales LT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales LV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales PL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales RU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales UK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Group Sales US</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4085,6 +4838,58 @@
         </values>
         <values>
             <fullName>Email - Liability Claim BOM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA Bank Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA Groups</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA HQ Expert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA STOPY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA TAWEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - OC KANA US</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Olympic DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Olympic NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Olympic SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Pandion DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Pandion NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Pandion SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Premium Corporate Support</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4116,6 +4921,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Refund OC Error Handling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Refund OC External</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Refund Operating Center</fullName>
             <default>false</default>
         </values>
@@ -4132,6 +4945,38 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - SAS Poland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SASSI Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SGH Bag DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SGH Bag NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SGH Bag SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SME International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - SME Scandinavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sales Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Sales Control OC DK</fullName>
             <default>false</default>
         </values>
@@ -4144,11 +4989,75 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Email - Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email - Scanned Compensation Cards</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Facebook</fullName>
+            <fullName>Email - SoMe Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Special Sales NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Star Alliance Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Star Alliance Upgrades</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Sykes Customer Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - System %26 Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Ticketless Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email - Vendor Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Claims DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Claims International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Claims NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Claims SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Compensation Card DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Compensation Card International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Compensation Card NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Compensation Card SE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4165,6 +5074,38 @@
         </values>
         <values>
             <fullName>Form - Death Certificate SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Feedback DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Feedback International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Feedback NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Feedback SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate DK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form - Flight Delay Certificate SE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4248,6 +5189,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Form - Refund SC Under 180 Minutes</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Form - Refund Travel Agent</fullName>
             <default>false</default>
         </values>
@@ -4316,10 +5261,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Internal - Functional Product Support</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Internal - New Refund Request Form</fullName>
             <default>false</default>
         </values>
@@ -4328,11 +5269,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Phone</fullName>
+            <fullName>Manual</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Twitter</fullName>
+            <fullName>Manual - NO Refunds Migration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4396,298 +5341,38 @@
     <picklistValues>
         <picklist>Team__c</picklist>
         <values>
-            <fullName>ACE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Admin</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM ARC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM BSP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Forms Customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Forms Travel Agent</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Forsvaret</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM General</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Groups</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM IOM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Reminders</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BOM Tenured</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Backoffice</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Backoffice Sitel</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Benelux</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CH</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Defense</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Diamond DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Diamond NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Diamond SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ES</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>External Lawyers</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Forsvaret NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>General</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gold DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gold NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gold SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Identify Customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inhouse</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Interline</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Internal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>International</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LV</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Name Change</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Bank Transfer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Error Handling</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC General</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Groups Europe</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Klarna Disputes</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Reserved Amount</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Travel Agent</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Voucher</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OC Waivers</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pandion DK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pandion NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pandion SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner Support</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Payment Escalation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RU</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SAS Poland</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SASSI Internal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sales Information</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Scandinavia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Settlement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Star Alliance Upgrades</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>System %26 Tariff</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>UK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>US</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Vendor Management</fullName>
+            <fullName>Sitel Phone Agents</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Functional Product Support</fullName>
+            <fullName>Booking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Businesstravel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CS Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Channel</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>EB Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fraud</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GDPR</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4695,7 +5380,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SASSI Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sales Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tariff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticketless</fullName>
             <default>false</default>
         </values>
     </picklistValues>

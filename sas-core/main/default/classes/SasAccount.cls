@@ -8,17 +8,16 @@ public without sharing class SasAccount {
         
         List<Account> toReturn = new List<Account>();
         
+        // Loop over all EB numbers provided by the OMNI flow 
         for (String ebNumber : eurobonusNumbers) {
-            List<Account> existingAccounts = AccountsSelector.newInstance().selectByEuroBonusNumber(new Set<String>{ebNumber});
-            if (existingAccounts.size() == 1) {
-                toReturn.addAll(existingAccounts);
-            } else if (existingAccounts.size() == 0) {
-                Account externalAccount = FCS_IdentifyCustomerController.findCustomer('EBNumber__c', ebNumber);
-               if (externalAccount != null) {
-               toReturn.add(externalAccount);
-               } 
-            } else {
-                continue;
+            // If the EB Number is provided (it could be that the customer does not type in an EB Number)
+            if (String.isNotBlank(ebNumber)){
+                // Search for the EB Number in SF
+                List<Account> existingAccounts = AccountsSelector.newInstance().selectByEuroBonusNumber(new Set<String>{ebNumber});
+                // If EB number found in Salesforce Then return the Account
+                if (existingAccounts.size() > 0) {
+                    toReturn.add(existingAccounts[0]);
+                }
             }
         }
         return toReturn;

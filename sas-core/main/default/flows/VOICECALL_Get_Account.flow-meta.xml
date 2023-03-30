@@ -4,7 +4,7 @@
         <name>Get_AccountId</name>
         <label>Get AccountId</label>
         <locationX>50</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <actionName>SasAccount</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -23,12 +23,12 @@
     <decisions>
         <name>Is_BC2_Customer</name>
         <label>Is BC2 Customer</label>
-        <locationX>314</locationX>
+        <locationX>512</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>No EB Number or IATA Number</defaultConnectorLabel>
         <rules>
             <name>B2C_Customer</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>validEurobonusNumber</leftValueReference>
                 <operator>EqualTo</operator>
@@ -36,8 +36,22 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>menuSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>menuSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Get_AccountId</targetReference>
+                <targetReference>Wait_To_Create_New_Transaction</targetReference>
             </connector>
             <label>B2C Customer</label>
         </rules>
@@ -49,6 +63,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>menuSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -93,7 +114,7 @@
         <name>Get_EB_Account</name>
         <label>Get EB Account</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <filterLogic>and</filterLogic>
         <filters>
@@ -112,7 +133,7 @@
     <recordLookups>
         <name>Get_IATA_Account</name>
         <label>Get IATA Account</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <filterLogic>and</filterLogic>
@@ -129,15 +150,15 @@
         <queriedFields>IATA_Level__c</queriedFields>
         <queriedFields>FCS_EBLevel__c</queriedFields>
     </recordLookups>
-    <runInMode>SystemModeWithoutSharing</runInMode>
+    <runInMode>DefaultMode</runInMode>
     <start>
-        <locationX>188</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_BC2_Customer</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>euroBonusNumber</name>
         <dataType>String</dataType>
@@ -153,6 +174,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>menuSelection</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>sasAccount</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -160,4 +188,38 @@
         <isOutput>true</isOutput>
         <objectType>Account</objectType>
     </variables>
+    <waits>
+        <name>Wait_To_Create_New_Transaction</name>
+        <label>Wait To Create New Transaction</label>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>Wait_0s</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Get_AccountId</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>$Flow.CurrentDateTime</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
+            </inputParameters>
+            <label>Wait 0s</label>
+        </waitEvents>
+    </waits>
 </Flow>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>SCVLEXMetrics</baseObject>
+    <category>cases</category>
+    <deployed>true</deployed>
+    <description>Service Cloud IVR</description>
+    <label>Service Cloud IVR</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ParentEnumOrId</field>
+            <table>SCVLEXMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AWSAccountID</field>
+            <table>SCVLEXMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UsageDate</field>
+            <table>SCVLEXMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LEXUtterances</field>
+            <table>SCVLEXMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UsageMonth</field>
+            <table>SCVLEXMetrics</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UsageYear</field>
+            <table>SCVLEXMetrics</table>
+        </columns>
+        <masterLabel>Service Cloud IVR</masterLabel>
+    </sections>
+</ReportType>

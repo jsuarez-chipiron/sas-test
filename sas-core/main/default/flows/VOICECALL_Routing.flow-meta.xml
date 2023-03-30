@@ -253,13 +253,25 @@
         <inputAssignments>
             <field>AccountId</field>
             <value>
-                <elementReference>sasAccount.Id</elementReference>
+                <elementReference>Get_Account.sasAccount.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Department__c</field>
             <value>
                 <stringValue>Telephony</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FCS_EBLevel__c</field>
+            <value>
+                <elementReference>Get_Account.sasAccount.FCS_EBLevel__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FCS_EBNumber__c</field>
+            <value>
+                <elementReference>euroBonusNumber</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -346,7 +358,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Channel</stringValue>
+                <stringValue>Call</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -483,7 +495,7 @@
         <inputAssignments>
             <field>Account__c</field>
             <value>
-                <elementReference>sasAccount.Id</elementReference>
+                <elementReference>Get_Account.sasAccount.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -519,14 +531,14 @@
             <targetReference>Get_Account</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>446</locationX>
         <locationY>158</locationY>
         <connector>
-            <targetReference>Set_the_VoiceCall_priority</targetReference>
+            <targetReference>Set_VoiceCall_Priority</targetReference>
         </connector>
         <flowName>VOICECALL_Get_Account</flowName>
         <inputAssignments>
@@ -541,14 +553,17 @@
                 <elementReference>iataNumber</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>sasAccount2</assignToReference>
-            <name>sasAccount</name>
-        </outputAssignments>
+        <inputAssignments>
+            <name>menuSelection</name>
+            <value>
+                <elementReference>menuSelection</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
-        <name>Set_the_VoiceCall_priority</name>
-        <label>Set the VoiceCall priority</label>
+        <name>Set_VoiceCall_Priority</name>
+        <label>Set VoiceCall Priority</label>
         <locationX>446</locationX>
         <locationY>278</locationY>
         <connector>
@@ -558,13 +573,13 @@
         <inputAssignments>
             <name>euroBonusLevel</name>
             <value>
-                <elementReference>sasAccount2.FCS_EBLevel__c</elementReference>
+                <elementReference>Get_Account.sasAccount.FCS_EBLevel__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>iataLevel</name>
             <value>
-                <elementReference>sasAccount2.IATA_Level__c</elementReference>
+                <elementReference>Get_Account.sasAccount.IATA_Level__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -622,22 +637,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>sasAccount</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account</objectType>
-    </variables>
-    <variables>
-        <name>sasAccount2</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account</objectType>
     </variables>
     <variables>
         <name>screenPopups</name>
