@@ -527,6 +527,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EU261_Automation_Configuration__mdt.Semi_Automation_Enabled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EU261_Automation_Configuration__mdt.Automatic_Settlement__c</field>
         <readable>true</readable>
     </fieldPermissions>
