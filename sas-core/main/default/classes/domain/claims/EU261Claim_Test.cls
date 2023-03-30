@@ -2160,7 +2160,7 @@ private class EU261Claim_Test {
   @IsTest
   static void delayWhereNotCertainIfSASInControlShouldNotBeHandled() {
     BookingClaim bc = getDefaultDelayBookingClaim();
-    bc.b.segments[0].flight.irregularities[0].code = 'ED';
+    bc.b.segments[0].flight.irregularities[0].code = 'DG';
     bc.b.segments[0].flight.irregularities[0].eligibleForEU261 = null;
 
     EU261Claim claimToEvaluate = new EU261Claim(
@@ -2226,7 +2226,7 @@ private class EU261Claim_Test {
   @IsTest
   static void tentativeDelaysShouldNotBeHandled() {
     BookingClaim bc = getDefaultDelayBookingClaim();
-    bc.b.segments[0].flight.irregularities[0].code = 'AX';
+    bc.b.segments[0].flight.irregularities[0].code = 'AS';
     bc.b.segments[0]
       .flight.irregularities[0]
       .eligibleForEU261 = FlightIrregularity.EU261Eligibility.Tentative;
@@ -2469,5 +2469,66 @@ private class EU261Claim_Test {
     } catch (Exception e) {
       System.assert(false, 'Could not make automation report.');
     }
+  }
+
+  @IsTest
+  static void claimsWithInvalidIrregularitiesShouldNotBeHandled() {
+    BookingClaim bc1 = getDefaultCancellationBookingClaim();
+    Flight f1 = bc1.b.segments[0].flight;
+    FlightIrregularity newIrreg1 = TestIrregularityFactory.createCancellation(
+      f1
+    );
+    newIrreg1.type = 'CANCELLED';
+    newIrreg1.code = 'N/A';
+    newIrreg1.description = null;
+    newIrreg1.durationMinutes = 0;
+    newIrreg1.cancellationTime = null;
+    newIrreg1.eligibleForEU261 = FlightIrregularity.EU261Eligibility.Tentative;
+    f1.irregularities = new List<FlightIrregularity>{ newIrreg1 };
+
+    BookingClaim bc2 = getDefaultCancellationBookingClaim();
+    Flight f2 = bc2.b.segments[0].flight;
+    FlightIrregularity newIrreg2 = TestIrregularityFactory.createCancellation(
+      f2
+    );
+    newIrreg2.type = 'CANCELLED';
+    newIrreg2.code = null;
+    newIrreg2.description = null;
+    newIrreg2.durationMinutes = 0;
+    newIrreg2.cancellationTime = departure.addDays(-7);
+    newIrreg2.eligibleForEU261 = FlightIrregularity.EU261Eligibility.Tentative;
+    f2.irregularities = new List<FlightIrregularity>{ newIrreg2 };
+
+    List<EU261Claim> claimsToEvaluate = new List<EU261Claim>{
+      new EU261Claim(bc1.c, new List<Booking>{ bc1.b }, false, config),
+      new EU261Claim(bc2.c, new List<Booking>{ bc2.b }, false, config)
+    };
+
+    List<EU261Claim.Decision> results = new List<EU261Claim.Decision>();
+
+    for (EU261Claim claimToEvaluate : claimsToEvaluate) {
+      results.add(claimToEvaluate.evaluate());
+    }
+
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      results[0].verdict,
+      'Claim with invalid irregularities should not be handled.'
+    );
+    System.assertEquals(
+      'the claim flight has an invalid irregularity',
+      results[0].reasoning,
+      'Unable reason should be "the claim flight has an invalid irregularity"'
+    );
+    System.assertEquals(
+      Claim.EU261HandlingStatus.UnableToHandle,
+      results[1].verdict,
+      'Claim with invalid irregularities should not be handled.'
+    );
+    System.assertEquals(
+      'cannot determine wether SAS is responsible or not for the cancellation | Cannot determine whether SAS is within control or not.',
+      results[1].reasoning,
+      'Unable reason should be "cannot determine wether SAS is responsible or not for the cancellation | Cannot determine whether SAS is within control or not."'
+    );
   }
 }
