@@ -13,6 +13,7 @@
     "Macros",
     "PersonAccounts",
     "ServiceCloud",
+    "ServiceCloudVoicePartnerTelephony:1",
     "ServiceUser",
     "SocialCustomerService"
   ],
