@@ -118,6 +118,7 @@
     </actionOverrides>
     <brand>
         <headerColor>#000099</headerColor>
+        <logo>SASLogo_B3_RGB</logo>
         <logoVersion>1</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
