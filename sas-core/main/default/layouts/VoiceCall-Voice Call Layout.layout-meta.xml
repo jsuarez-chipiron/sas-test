@@ -150,13 +150,6 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <relatedLists>
-        <fields>CollectionId</fields>
-        <fields>CreatedBy</fields>
-        <fields>CreatedDate</fields>
-        <fields>Description</fields>
-        <relatedList>SharingRecordCollectionItemList</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
