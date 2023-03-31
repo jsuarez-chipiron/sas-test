@@ -37,7 +37,6 @@ steps:
       sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile $(ci_cert.secureFilePath) --username $HUB_USER_NAME --setdefaultdevhubusername --setalias HubOrg
       sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1
       sfdx force:org:display --targetusername ciorg
-      sfdx force:user:permset:assign --permsetname ContactCenterAdmin --targetusername ciorg
     displayName: "Setup Org"
 
   - script: |
@@ -57,6 +56,7 @@ steps:
     displayName: "Sleep for 2 minutes to allow sharing rule changes to complete"
 
   - script: |
+      sfdx force:user:permset:assign --permsetname ContactCenterAdmin --targetusername ciorg
       sfdx force:source:push --targetusername ciorg --forceoverwrite
     displayName: "Push Source"
 
