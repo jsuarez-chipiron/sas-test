@@ -27,3 +27,4 @@ package.xml
 **/callCenters/**
 **/connectedApps/**
 **/ConversationVendorInformation/**
+**/reportTypes/Service_Cloud_**
