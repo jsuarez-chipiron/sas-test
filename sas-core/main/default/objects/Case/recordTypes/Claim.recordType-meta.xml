@@ -3174,13 +3174,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FCS_SubOrigin_c__c</picklist>
-        <values>
-            <fullName>Obsolete</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Feedback_Category__c</picklist>
         <values>
             <fullName>Other</fullName>
