@@ -110,6 +110,9 @@
     "securitySettings": {
       "enableAuditFieldsInactiveOwner": true
     },
+    "serviceCloudVoiceSettings": {
+      "enableServiceCloudVoice": true
+    },
     "socialCustomerServiceSettings": {
       "caseSubjectOption": "SocialPostContent",
       "enableSocialApprovals": false,
