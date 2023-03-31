@@ -71,10 +71,10 @@ steps:
       echo $testResFiles
     displayName: "Run Tests"
 
-  - script: |
-      sfdx force:org:delete --targetusername ciorg --noprompt
-    displayName: "Delete Org"
-    condition: always()
+  #- script: |
+   #   sfdx force:org:delete --targetusername ciorg --noprompt
+   # displayName: "Delete Org"
+   # condition: always()
 
   - task: PythonScript@0
     inputs:
