@@ -29,6 +29,7 @@ echo
 
 echo "[1 / 7] Creating Scratch org..."
 sfdx force:org:create -f $scratchDef -a $orgAlias -d $orgDuration --setdefaultusername || exit 1
+sfdx force:user:permset:assign --permsetname ContactCenterAdminExternalTelephony --targetusername $userName || exit 1
 
 echo "[2 / 7] Creating auth providers and named credentials..."
 # Auth provider requires the admin user's username so it cannot be pushed normally.
