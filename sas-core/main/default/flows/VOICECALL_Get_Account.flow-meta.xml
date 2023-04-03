@@ -158,7 +158,7 @@
             <targetReference>Is_BC2_Customer</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>euroBonusNumber</name>
         <dataType>String</dataType>
