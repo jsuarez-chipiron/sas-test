@@ -24,7 +24,11 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     lstCases[0].FCS_Case_Reason__c = null;
     insert lstCases;
 
-    MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
+    MessagingChannel[] messagingChannel = [
+      SELECT Id
+      FROM MessagingChannel
+      WHERE DeveloperName = 'FacebookChannel28'
+    ];
     MessagingEndUser messagingEndUser1 = new MessagingEndUser(
       MessagingChannelId = messagingChannel[0].Id,
       Name = 'User1',
@@ -72,7 +76,11 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     lstCases[0].FCS_CaseResolution__c = 'Referred to phone';
     insert lstCases;
 
-    MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
+    MessagingChannel[] messagingChannel = [
+      SELECT Id
+      FROM MessagingChannel
+      WHERE DeveloperName = 'FacebookChannel28'
+    ];
     MessagingEndUser messagingEndUser1 = new MessagingEndUser(
       MessagingChannelId = messagingChannel[0].Id,
       Name = 'User1',
@@ -118,7 +126,11 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     lstCases[0].FCS_Case_Reason__c = 'Other';
     update lstCases;
 
-    MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
+    MessagingChannel[] messagingChannel = [
+      SELECT Id
+      FROM MessagingChannel
+      WHERE DeveloperName = 'FacebookChannel28'
+    ];
     MessagingEndUser messagingEndUser1 = new MessagingEndUser(
       MessagingChannelId = messagingChannel[0].Id,
       Name = 'User1',
@@ -163,7 +175,11 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
     insert lstCases;
 
-    MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
+    MessagingChannel[] messagingChannel = [
+      SELECT Id
+      FROM MessagingChannel
+      WHERE DeveloperName = 'FacebookChannel28'
+    ];
     MessagingEndUser messagingEndUser1 = new MessagingEndUser(
       MessagingChannelId = messagingChannel[0].Id,
       Name = 'User1',
@@ -209,7 +225,11 @@ public class FCS_CloseFBMessgerCaseAfter24hr_Test {
     lstCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
     insert lstCases;
 
-    MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
+    MessagingChannel[] messagingChannel = [
+      SELECT Id
+      FROM MessagingChannel
+      WHERE DeveloperName = 'FacebookChannel28'
+    ];
     MessagingEndUser messagingEndUser1 = new MessagingEndUser(
       MessagingChannelId = messagingChannel[0].Id,
       Name = 'User1',

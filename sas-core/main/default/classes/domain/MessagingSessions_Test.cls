@@ -23,7 +23,11 @@ private class MessagingSessions_Test {
    */
   @IsTest
   static void shouldCreateNewCasesBasesOnUpdatedMessagingSessions() {
-    MessagingChannel[] messagingChannel = [SELECT Id FROM MessagingChannel];
+    MessagingChannel[] messagingChannel = [
+      SELECT Id
+      FROM MessagingChannel
+      WHERE DeveloperName = 'FacebookChannel167'
+    ];
 
     MessagingEndUser messagingEndUser = new MessagingEndUser(
       MessagingChannelId = messagingChannel[0].Id,
@@ -64,13 +68,13 @@ private class MessagingSessions_Test {
 
   @IsTest
   static void shouldNotCreateCaseForOutboundChat() {
-    MessagingChannel messagingChannel = [
+    MessagingChannel[] messagingChannel = [
       SELECT Id
       FROM MessagingChannel
-      LIMIT 1
+      WHERE DeveloperName = 'FacebookChannel167'
     ];
     MessagingEndUser messagingEndUser = new MessagingEndUser(
-      MessagingChannelId = messagingChannel.Id,
+      MessagingChannelId = messagingChannel[0].Id,
       Name = 'User1',
       MessageType = 'Facebook',
       MessagingPlatformKey = '123'
@@ -81,7 +85,7 @@ private class MessagingSessions_Test {
       Origin = 'AgentInitiated',
       MessagingEndUserId = messagingEndUser.Id,
       Status = 'Active',
-      MessagingChannelId = messagingChannel.Id
+      MessagingChannelId = messagingChannel[0].Id
     );
 
     Case[] cases = [SELECT Id FROM Case];

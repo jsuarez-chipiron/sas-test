@@ -117,13 +117,13 @@ private class FCS_IdentifyCustomerController_Test {
       FCS_TPAccountNumber__c = '321'
     );
     insert originalCase;
-    MessagingChannel messagingChannel = [
+    List<MessagingChannel> messagingChannel = [
       SELECT Id
       FROM MessagingChannel
-      LIMIT 1
+      WHERE DeveloperName = 'FacebookChannel4'
     ];
     MessagingEndUser messagingEndUser1 = new MessagingEndUser(
-      MessagingChannelId = messagingChannel.Id,
+      MessagingChannelId = messagingChannel[0].Id,
       Name = 'User1',
       MessageType = 'Facebook',
       MessagingPlatformKey = '123',
@@ -135,7 +135,7 @@ private class FCS_IdentifyCustomerController_Test {
       Origin = 'InboundInitiated',
       MessagingEndUserId = messagingEndUser1.Id,
       Status = 'New',
-      MessagingChannelId = messagingChannel.Id,
+      MessagingChannelId = messagingChannel[0].Id,
       CaseId = originalCase.Id
     );
     insert session;
@@ -268,13 +268,13 @@ private class FCS_IdentifyCustomerController_Test {
   static void shouldUpdateMessagingSessionAndRelatedRecordsBasedOnSuppliedJSONData() {
     Case originalCase = new Case();
     insert originalCase;
-    MessagingChannel messagingChannel = [
+    List<MessagingChannel> messagingChannel = [
       SELECT Id
       FROM MessagingChannel
-      LIMIT 1
+      WHERE DeveloperName = 'FacebookChannel4'
     ];
     MessagingEndUser messagingEndUser1 = new MessagingEndUser(
-      MessagingChannelId = messagingChannel.Id,
+      MessagingChannelId = messagingChannel[0].Id,
       Name = 'User1',
       MessageType = 'Facebook',
       MessagingPlatformKey = '123'
@@ -284,7 +284,7 @@ private class FCS_IdentifyCustomerController_Test {
       Origin = 'InboundInitiated',
       MessagingEndUserId = messagingEndUser1.Id,
       Status = 'New',
-      MessagingChannelId = messagingChannel.Id,
+      MessagingChannelId = messagingChannel[0].Id,
       CaseId = originalCase.Id
     );
     insert session;
