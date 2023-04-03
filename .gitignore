@@ -46,3 +46,10 @@ sas-core/main/default/customMetadata/C_GeneralSetting.APIM_TEDS_Subscription_Key
 sas-core/main/default/customMetadata/C_GeneralSetting.APIM_Voucher_Subscription_Key.md-meta.xml
 sas-core/main/default/customMetadata/C_GeneralSetting.CLM_APIM_Subscription_Key.md-meta.xml
 sas-core/main/default/customMetadata/LocalAuthProvider.APIM_Auth.md-meta.xml
+
+#Disable because this contains a lot a references to an Amazon Connect Instance
+**/callCenterRoutingMaps/**
+**/callCenters/**
+**/connectedApps/**
+**/ConversationVendorInformation/**
+**/reportTypes/Service_Cloud_**

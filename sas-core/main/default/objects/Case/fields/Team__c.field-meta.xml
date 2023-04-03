@@ -565,6 +565,11 @@
                 <label>Sitel General</label>
             </value>
             <value>
+                <fullName>Sitel Phone Agents</fullName>
+                <default>false</default>
+                <label>Sitel Phone Agents</label>
+            </value>
+            <value>
                 <fullName>Sitel Waivers</fullName>
                 <default>false</default>
                 <label>Sitel Waivers</label>
@@ -1133,6 +1138,10 @@
         <valueSettings>
             <controllingFieldValue>Vendor Management</controllingFieldValue>
             <valueName>Vendor Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Telephony</controllingFieldValue>
+            <valueName>Sitel Phone Agents</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

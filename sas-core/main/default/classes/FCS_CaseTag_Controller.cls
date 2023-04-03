@@ -28,6 +28,13 @@ public class FCS_CaseTag_Controller {
         );
         lstCases.add(cse);
       }
+    } else if (recordId.startsWith('0LQ')) {
+      VoiceCall callRecord = [
+        SELECT Id, Case__c
+        FROM VoiceCall
+        WHERE Id = :recordId
+      ];
+      lstCases = cases.selectById(new Set<Id>{ callRecord.Case__c });
     }
     return lstCases[0];
   }

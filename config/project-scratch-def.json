@@ -13,6 +13,7 @@
     "Macros",
     "PersonAccounts",
     "ServiceCloud",
+    "ServiceCloudVoicePartnerTelephony:1",
     "ServiceUser",
     "SocialCustomerService"
   ],
@@ -108,6 +109,9 @@
     },
     "securitySettings": {
       "enableAuditFieldsInactiveOwner": true
+    },
+    "serviceCloudVoiceSettings": {
+      "enableServiceCloudVoice": true
     },
     "socialCustomerServiceSettings": {
       "caseSubjectOption": "SocialPostContent",

@@ -112,6 +112,11 @@
                 <label>SoMe Support</label>
             </value>
             <value>
+                <fullName>Telephony</fullName>
+                <default>false</default>
+                <label>Telephony</label>
+            </value>
+            <value>
                 <fullName>Vendor Management</fullName>
                 <default>false</default>
                 <label>Vendor Management</label>

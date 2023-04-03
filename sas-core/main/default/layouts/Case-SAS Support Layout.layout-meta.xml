@@ -352,9 +352,6 @@
             <quickActionName>FeedItem.TextPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
-            <quickActionName>Case.Email</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
             <quickActionName>Case.ChangeStatus</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
@@ -378,6 +375,19 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>CallStartDateTime</fields>
+        <fields>CallDisposition</fields>
+        <fields>CallType</fields>
+        <fields>Recipient_Country__c</fields>
+        <fields>ToPhoneNumber</fields>
+        <fields>CallAcceptDateTime</fields>
+        <fields>CallDurationInSeconds</fields>
+        <fields>Caller_IVR_Langauge__c</fields>
+        <fields>Caller_IVR_Selection__c</fields>
+        <relatedList>VoiceCalls</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>Name</fields>
         <fields>Owner</fields>
@@ -437,6 +447,17 @@
         <fields>NAME</fields>
         <relatedList>CaseToBooking__c.Case__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>CallType</fields>
+        <fields>FromPhoneNumber</fields>
+        <fields>CallResolution</fields>
+        <fields>CallStartDateTime</fields>
+        <fields>EndUser</fields>
+        <fields>Owner</fields>
+        <fields>QualityScore</fields>
+        <relatedList>VoiceCall.Case__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -446,7 +467,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000005u89S</masterLabel>
+        <masterLabel>00h2p00000l2Jmf</masterLabel>
         <sizeX>3</sizeX>
         <sizeY>4</sizeY>
         <summaryLayoutItems>

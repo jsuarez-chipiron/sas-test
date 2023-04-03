@@ -22,3 +22,9 @@ package.xml
 **/EmailTemplate.json
 **/email/unfiled$public/**
 
+#Disable because this contains a lot a references to an Amazon Connect Instance
+**/callCenterRoutingMaps/**
+**/callCenters/**
+**/connectedApps/**
+**/ConversationVendorInformation/**
+**/reportTypes/Service_Cloud_**
