@@ -23,6 +23,11 @@ public class EU261Claim {
     Claim.Type.FlightCancellationCompensation
   };
 
+  public static final Set<Claim.Type> MISSED_CONNECTION_CLAIM_TYPES = new Set<Claim.Type>{
+    Claim.Type.MissedConnection,
+    Claim.Type.MissedConnectionCompensation
+  };
+
   /**
    * Evaluates the claim according to the EU261 rules and returns the decision
    * made on whether the claim should be paid out.
@@ -172,6 +177,7 @@ public class EU261Claim {
   private Boolean hasPotentiallyDuplicateClaims = false;
   private Boolean foundMultipleMatchingBookings = false;
   private Boolean hasCancellation;
+  private Boolean hasInvalidIrregularity;
   private Boolean couldInitializeTrips;
   private Flight claimFlight;
   public EU261Protocol protocol = new EU261Protocol();
@@ -208,7 +214,12 @@ public class EU261Claim {
         String flightId = Flight.TEDSIdToSimpleFlightIds(f.tedsIdentifier)[0];
         if (flightId == flightNumberDate) {
           this.claimFlight = f;
-          this.hasCancellation = f.getCancellations().size() > 0;
+          try {
+            this.hasCancellation = f.getCancellations().size() > 0;
+            this.hasInvalidIrregularity = false;
+          } catch (FlightIrregularity.UnknownIrregularityException e) {
+            this.hasInvalidIrregularity = true;
+          }
           break;
         }
       }
@@ -244,7 +255,7 @@ public class EU261Claim {
   private Boolean claimFlightHasMoreThanOneCancellation() {
     Integer count = 0;
     for (FlightIrregularity fi : claimFlight.irregularities) {
-      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+      if (fi.isCancellation()) {
         // We can ignore arrival cancellation in here because there's always
         // one if the departure is cancelled.
         count += 1;
@@ -332,8 +343,8 @@ public class EU261Claim {
    */
   private Decision canWeEvaluate() {
     Claim c = this.claimObj;
-    Boolean isCancellationClaim = c.type == Claim.Type.FlightCancellation;
-    Boolean isDelayClaim = c.type == Claim.Type.FlightDelay;
+    Boolean isCancellationClaim = CANCELLATION_CLAIM_TYPES.contains(c.type);
+    Boolean isDelayClaim = DELAY_CLAIM_TYPES.contains(c.type);
 
     if (c.personWithReducedMobility) {
       return new Decision(
@@ -384,6 +395,11 @@ public class EU261Claim {
       return new Decision(
         Claim.EU261HandlingStatus.UnableToHandle,
         'cannot find claimed flight from booking'
+      );
+    } else if (hasInvalidIrregularity) {
+      return new Decision(
+        Claim.EU261HandlingStatus.UnableToHandle,
+        'the claim flight has an invalid irregularity'
       );
     } else if (isCancellationClaim && !this.hasCancellation) {
       return new Decision(
@@ -659,16 +675,21 @@ public class EU261Claim {
       this.tripWithClaimFlight.destinationAirport.countryCode
     );
 
-    Integer timeLimit;
-    Integer defaultTimeLimit = DateUtils.getClaimTimeLimitInMonths('default');
-    if (limitInDepartureCountry != null && limitInArrivalCountry != null) {
-      timeLimit = Math.max(limitInDepartureCountry, limitInArrivalCountry);
-    } else if (limitInDepartureCountry != null) {
-      timeLimit = Math.max(limitInDepartureCountry, defaultTimeLimit);
-    } else if (limitInArrivalCountry != null) {
-      timeLimit = Math.max(limitInArrivalCountry, defaultTimeLimit);
-    } else {
-      timeLimit = defaultTimeLimit;
+    if (limitInDepartureCountry == null || limitInArrivalCountry == null) {
+      throw new AutomationException(
+        'Claim filing time limit not defined for either departure or arrival country'
+      );
+    }
+
+    Integer timeLimit = Math.max(
+      limitInDepartureCountry,
+      limitInArrivalCountry
+    );
+
+    if (timeLimit < 2) {
+      throw new AutomationException(
+        'Claim filing time limit is less than 2 months, which should not be possible (Swedish time limit)'
+      );
     }
 
     return timeLimit;
@@ -856,6 +877,9 @@ public class EU261Claim {
    * If not, the delay is simple.
    * @throws InsufficientDataException If there is no info about the boarding status
    * @return If we currently consider the delay automatically handleable.
+   *
+   * NOTE: If this logic is altered there are several things about the rest of the
+   * implementation which need to be changed, most notably "calculateCompensationForDelay"
    */
   private Boolean isSimpleDelay() {
     Datetime beforeTime = tripWithClaimFlight.getScheduledDeparture();
@@ -1015,7 +1039,7 @@ public class EU261Claim {
     List<FlightIrregularity> claimIrregularities = new List<FlightIrregularity>();
 
     for (FlightIrregularity fi : this.claimFlight.irregularities) {
-      if (fi.isCancellation() && !fi.isArrivalCancellation()) {
+      if (fi.isCancellation()) {
         claimIrregularities.add(fi);
       }
     }
@@ -1087,6 +1111,7 @@ public class EU261Claim {
    * Source: EU261 Article 6 and 7. (https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1476179175834&uri=CELEX:32004R0261)
    * TODO: go through this, something is off. Article 6 never refers to article 7, however, it details this in: https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm#compensation-delay-1
    * TODO: Check "Present themselves for check-in 45 minutes before the published departure time"
+   * TODO: Rewrite, check net delay between start and finish. It is currently assumed that all trips are "simple" (a check further up)
    */
   private Decision calculateCompensationForDelay() {
     final Integer MINIMUM_DELAY_FOR_COMPENSATION = 180;

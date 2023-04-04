@@ -1,6 +1,6 @@
 @IsTest
 private class CasesSelector_Test {
-  private static CasesSelector cases = CasesSelector.newInstance();
+  private static CasesSelector casesSel = CasesSelector.newInstance();
 
   @testSetup
   static void setup() {
@@ -86,7 +86,7 @@ private class CasesSelector_Test {
     ][0];
 
     // When
-    List<Case> oneCaseNormalMatcher = cases.selectByProactivityId(
+    List<Case> oneCaseNormalMatcher = casesSel.selectByProactivityId(
       normalProactivity.ID
     );
 
@@ -118,7 +118,7 @@ private class CasesSelector_Test {
     ][0];
 
     // When
-    List<Case> oneCaseDirectMatchNoClaim = cases.selectByProactivityId(
+    List<Case> oneCaseDirectMatchNoClaim = casesSel.selectByProactivityId(
       directMatchProactivity.ID
     );
 
@@ -150,7 +150,7 @@ private class CasesSelector_Test {
     ];
 
     // When
-    List<Case> threeCasesMixMatch = cases.selectByProactivityId(
+    List<Case> threeCasesMixMatch = casesSel.selectByProactivityId(
       mixedMatchProactivity.ID
     );
 
@@ -298,6 +298,64 @@ private class CasesSelector_Test {
       2,
       similarCases.size(),
       'Should have found more than one case'
+    );
+  }
+
+  @IsTest
+  public static void shouldSelectReadOnlyCase() {
+    //Select cases that are not read only and closed date greater than 90 days
+    Case shouldNotMatch1 = new Case(
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+      Status = 'Closed',
+      Department__c = 'Customer Claim',
+      IsReadOnly__c = true,
+      CreatedDate = System.now() - 92,
+      ClosedDate = System.now() - 91
+    );
+    Case shouldNotMatch2 = new Case(
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+      Status = 'Closed',
+      Department__c = 'Customer Claim',
+      IsReadOnly__c = false,
+      CreatedDate = System.now() - 92,
+      ClosedDate = System.now() - 50
+    );
+    Case shouldNotMatch3 = new Case(
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+      Status = 'Closed',
+      Department__c = 'Customer Claim',
+      IsReadOnly__c = true,
+      CreatedDate = System.now() - 92,
+      ClosedDate = System.now() - 50
+    );
+    Case shouldMatch = new Case(
+      RecordTypeId = Cases.getRecordTypeId(Cases.RecordType.CustomerClaim),
+      Status = 'Closed',
+      Department__c = 'Customer Claim',
+      IsReadOnly__c = false,
+      CreatedDate = System.now() - 92,
+      ClosedDate = System.now() - 91
+    );
+
+    insert new List<Case>{
+      shouldNotMatch1,
+      shouldNotMatch2,
+      shouldNotMatch3,
+      shouldMatch
+    };
+
+    List<Case> readOnlyCases = CasesSelector.newInstance()
+      .selectInactiveByDepartment('Customer Claim');
+    
+    System.assertEquals(
+      1,
+      readOnlyCases.size(),
+      'Should not have found more than one case'
+    );
+    System.assertEquals(
+      shouldMatch.Id,
+      readOnlyCases[0].Id,
+      'Should not have found more than one case (wrong case)'
     );
   }
 }

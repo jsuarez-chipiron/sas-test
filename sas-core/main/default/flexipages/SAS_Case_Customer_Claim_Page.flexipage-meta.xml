@@ -710,6 +710,42 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>titleFieldName</name>
+                    <value>EU261 Automatic Evaluation Results</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>LIA_Claim__c.EU261_Automatic_Evaluation</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord4</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.LIA_Claim__r.EU261_Handling_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Ineligible for compensation</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.LIA_Claim__r.EU261_Handling_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Eligible for compensation</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.LIA_Claim__r.EU261_Handling_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Possibly eligible for compensation</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>Case.LIA_Claim__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
                     <value>Customer Claim Details</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

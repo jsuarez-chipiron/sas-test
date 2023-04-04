@@ -60,32 +60,4 @@ public with sharing class TestFlightFactory {
 
     return f;
   }
-
-  public static Flight createWithIrregularities(
-    String flightNumber,
-    DateTime flightDateTime,
-    String departure,
-    String arrival,
-    List<FlightIrregularity> irregularities
-  ) {
-    Flight f = create(flightNumber, flightDateTime, departure, arrival);
-    for (FlightIrregularity fi : irregularities) {
-      if (fi.type.substringBefore(' ') == 'Cancellation') {
-        f.arrivalStatus = Flight.Status.Cancelled;
-        f.departureStatus = Flight.Status.Cancelled;
-      } else if (fi.type.substringBefore(' ') == 'Delay') {
-        f.departureDelayedMinutes += fi.durationMinutes;
-        f.actualArrivalTime = f.actualArrivalTime.addMinutes(
-          Integer.valueOf(fi.durationMinutes)
-        );
-        f.actualArrivalTimeLocal = String.valueOf(
-          DateTime.valueOf(f.actualArrivalTimeLocal)
-            .addMinutes(Integer.valueOf(fi.durationMinutes))
-        );
-        f.arrivalStatus = Flight.Status.Delayed;
-      }
-    }
-    f.irregularities = irregularities;
-    return f;
-  }
 }

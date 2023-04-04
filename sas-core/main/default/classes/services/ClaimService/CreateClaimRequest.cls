@@ -101,6 +101,7 @@ public without sharing class CreateClaimRequest {
     'missed-connection-expenses' => Claim.Type.MissedConnectionExpenses,
     'items-missing' => Claim.Type.MissingItemsFromBaggage,
     'more-than-21-days' => Claim.Type.MoreThan21Days,
+    'other' => Claim.Type.Other,
     'personal-injury' => Claim.Type.PersonalInjury,
     'prepaid-seat' => Claim.Type.PrepaidSeat,
     'special-assistance' => Claim.Type.SpecialAssistance,

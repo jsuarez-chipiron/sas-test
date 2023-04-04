@@ -129,7 +129,7 @@ private class CaseFormV2Test {
     String claimJson =
       '{' +
       '  "category": "flight-disruptions",' +
-      '  "type": "flight-delay",' +
+      '  "type": "flight-delay-compensation",' +
       '  "delayLength": "2-3",' +
       '  "unaccompaniedMinor": true,' +
       '  "personWithReducedMobility": true,' +
@@ -195,7 +195,10 @@ private class CaseFormV2Test {
         Preferred_Compensation_Method__c,
         Preferred_Reimbursement_Method__c,
         Flight_Date__c,
-        Flight_Number__c
+        Flight_Number__c,
+        EU261_Handling_Status__c,
+        External_Data_Status__c,
+        External_Data_Retrieve_Count__c
       FROM LIA_Claim__c
       WHERE Case__c = :c.Id
     ];
@@ -214,6 +217,21 @@ private class CaseFormV2Test {
       'Customer Claim',
       c.Department__c,
       'Department should be set correctly for Denmark.'
+    );
+    System.assertEquals(
+      'Unhandled',
+      cl.EU261_Handling_Status__c,
+      'EU261_Handling_Status__c Status should be updated'
+    );
+    System.assertEquals(
+      'Not Started',
+      cl.External_Data_Status__c,
+      'External_Data_Status__c Should be updated'
+    );
+    System.assertEquals(
+      0,
+      cl.External_Data_Retrieve_Count__c,
+      'External_Data_Retrieve_Count__c Should be updated to 0'
     );
     System.assertNotEquals(
       null,
@@ -539,7 +557,9 @@ private class CaseFormV2Test {
         Customer_Claim_Type__c,
         Delay_Length__c,
         Purchase_Price__c,
-        Purchase_Year__c
+        Purchase_Year__c,
+        EU261_Handling_Status__c,
+        External_Data_Status__c
       FROM LIA_Claim__c
       WHERE Case__c = :c.Id
     ];
@@ -578,6 +598,16 @@ private class CaseFormV2Test {
       cl.Purchase_Year__c,
       'Should have set purchase year correctly.'
     );
+    System.assertEquals(
+      null,
+      cl.External_Data_Status__c,
+      'External Data Status should be null'
+    );
+    System.assertEquals(
+      null,
+      cl.EU261_Handling_Status__c,
+      'EU261 Handling Status should be null'
+    );
   }
 
   @IsTest
@@ -604,6 +634,12 @@ private class CaseFormV2Test {
       '  "country": "SE"' +
       '}';
 
+    String claimData =
+    '{' +
+    '  "bookingReference": "TEST12",' +
+    '  "compensationCardNumber": "0012345678"' +
+    '}';
+
     String compensationDetailsJson =
       '{' +
       '  "preferredCompensationMethod": "voucher"' +
@@ -612,8 +648,10 @@ private class CaseFormV2Test {
     String input =
       '{' +
       '  "formData": {' +
-      '    "bookingReference": "TEST12",' +
-      '    "compensationCardNumber": "0012345678",' +
+      '    "type": "denied-boarding", ' +
+      '    "claim": ' +
+      claimData +
+      ',' +
       '    "contact": ' +
       contactJson +
       ',' +
@@ -628,10 +666,8 @@ private class CaseFormV2Test {
     Test.setMock(HttpCalloutMock.class, new APIMMock());
 
     Test.startTest();
-    RedeemCompensationCardJSON requestBody = RedeemCompensationCardJSON.parse(
-      input
-    );
-    CaseFormResponse response = RedeemCompensationCard.redeem(requestBody);
+    CaseFormJSONV2 requestBody = CaseFormJSONV2.parse(input);
+    CaseFormResponse response = CaseFormV2.createCase(requestBody);
     Test.StopTest();
 
     Case c = [
@@ -640,11 +676,7 @@ private class CaseFormV2Test {
       WHERE CaseNumber = :response.caseNumber
     ];
     LIA_Claim__c cl = [
-      SELECT
-        Id,
-        RecordTypeId,
-        Compensation_Card_Number__c,
-        Liability_PNR__c
+      SELECT Id, RecordTypeId, Compensation_Card_Number__c, Liability_PNR__c
       FROM LIA_Claim__c
       WHERE Case__c = :c.Id
     ];

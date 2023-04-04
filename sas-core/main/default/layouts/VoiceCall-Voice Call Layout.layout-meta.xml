@@ -83,7 +83,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Caller_IVR_Langauge__c</field>
+                <field>Caller_IVR_Language__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

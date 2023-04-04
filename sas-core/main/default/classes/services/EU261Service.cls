@@ -217,7 +217,7 @@ public without sharing class EU261Service {
 
     List<EU261Claim> claimsToAutomate = gatherAllNecessaryInformation(claimIds);
 
-    claimsToAutomate = filterClaimTypes(claimsToAutomate);
+    claimsToAutomate = filterAndRerouteUnsupportedClaimTypes(claimsToAutomate);
 
     for (EU261Claim c : claimsToAutomate) {
       c.evaluate();
@@ -233,12 +233,16 @@ public without sharing class EU261Service {
   /**
    * Filters claims which are not enabled in the config.
    */
-  private List<EU261Claim> filterClaimTypes(List<EU261Claim> claimsToAutomate) {
+  private List<EU261Claim> filterAndRerouteUnsupportedClaimTypes(
+    List<EU261Claim> claimsToAutomate
+  ) {
     List<EU261Claim> filteredClaims = new List<EU261Claim>();
+    List<EU261Claim> claimsUnableToHandle = new List<EU261Claim>();
     for (EU261Claim c : claimsToAutomate) {
       if (
         !EU261Claim.DELAY_CLAIM_TYPES.contains(c.claimObj.type) &&
-        !EU261Claim.CANCELLATION_CLAIM_TYPES.contains(c.claimObj.type)
+        !EU261Claim.CANCELLATION_CLAIM_TYPES.contains(c.claimObj.type) &&
+        !EU261Claim.MISSED_CONNECTION_CLAIM_TYPES.contains(c.claimObj.type)
       ) {
         throw new AutomationException('Unsupported claim type');
       } else if (
@@ -251,9 +255,34 @@ public without sharing class EU261Service {
         this.config.enabledDelayAutomation
       ) {
         filteredClaims.add(c);
+      } else {
+        claimsUnableToHandle.add(c);
       }
     }
+
+    if (claimsUnableToHandle.size() > 0) {
+      fflib_ISObjectUnitOfWork uow = SAS_Service_Application.UnitOfWork.newInstance();
+      rerouteAndSetUnableToHandle(claimsUnableToHandle, uow);
+      uow.commitWork();
+    }
+
     return filteredClaims;
+  }
+
+  private void rerouteAndSetUnableToHandle(
+    List<EU261Claim> claimsUnableToHandle,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    List<Case> toRoute = new List<Case>();
+    List<Claim> toUpsert = new List<Claim>();
+    for (EU261Claim c : claimsUnableToHandle) {
+      c.claimObj.eu261HandlingStatus = Claim.EU261HandlingStatus.UnableToHandle;
+      toUpsert.add(c.claimObj);
+      toRoute.add(parentCasesById.get(c.claimObj.parentCaseId));
+    }
+
+    Claims.newInstance(toUpsert).upsertToDB(uow);
+    CaseService.assignPriorityAndRouteToQueue(toRoute);
   }
 
   /**
@@ -418,7 +447,12 @@ public without sharing class EU261Service {
         );
       }
 
-      if (!newFi.isNA0Delay()) {
+      try {
+        if (!newFi.isInvalid()) {
+          flightIdToIrregularities.get(newFi.flightId).add(newFi);
+        }
+      } catch (FlightIrregularity.UnknownIrregularityException e) {
+        // If there is an invalid type, add it and let the automation handle it.
         flightIdToIrregularities.get(newFi.flightId).add(newFi);
       }
     }
@@ -593,6 +627,8 @@ public without sharing class EU261Service {
     List<Case> parentCasesForSemiAutomation = new List<Case>();
     List<Case> parentCasesForRejection = new List<Case>();
 
+    List<EU261Claim> claimsToManualHandling = new List<EU261Claim>();
+
     for (EU261Claim c : claimsToAutomate) {
       switch on c.decision.verdict {
         when EligibleForCompensation {
@@ -614,8 +650,9 @@ public without sharing class EU261Service {
             parentCasesById.get(c.claimObj.parentCaseId)
           );
         }
-        when ReimbursementOnly {
-          // TODO. Currently we do nothing.
+        when else {
+          // TODO: handle ReimbursementOnly separately
+          claimsToManualHandling.add(c);
         }
       }
     }
@@ -628,6 +665,8 @@ public without sharing class EU261Service {
 
       if (this.config.enabledSemiAutomation) {
         claimsWhichNeedSettlements.addAll(claimsToSemiAutomate);
+      } else {
+        claimsToManualHandling.addAll(claimsToSemiAutomate);
       }
 
       Map<Id, List<Settlement__c>> settlementsByClaimId = createSettlementsForClaims(
@@ -769,12 +808,22 @@ public without sharing class EU261Service {
           .setHandlingInstructions(uow, handlingInstructionsByCaseId)
           .routeToQueue(SEMI_AUTOMATION_QUEUE, uow);
       }
+    } else {
+      claimsToManualHandling.addAll(claimsToApproveAutomatically);
+      claimsToManualHandling.addAll(claimsToManualApproval);
     }
 
     if (this.config.enabledRejections && claimsToReject.size() > 0) {
       Cases.newInstance(parentCasesForRejection)
         .emailContactPeople(createRejectionEmails(claimsToReject), uow)
         .close(uow);
+    } else {
+      claimsToManualHandling.addAll(claimsToReject);
+    }
+
+    if (claimsToManualHandling.size() > 0) {
+      // TODO: see if we somehow can do this async (a queueable queuing error might stop this)
+      rerouteAndSetUnableToHandle(claimsToManualHandling, uow);
     }
 
     uow.commitWork();

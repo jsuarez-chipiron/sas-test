@@ -2450,6 +2450,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.IATA_Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.PoS_Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Handling_Instructions__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2571,6 +2581,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Deposit_Payment_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.IATA_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.IATA_Level__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3693,6 +3713,10 @@
         <recordType>Case.Emergency</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-SAS Voice Call Layout</layout>
+        <recordType>Case.Call</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Chat</recordType>
     </layoutAssignments>
@@ -3791,6 +3815,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Threat_Incident__c-Threat Incident Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>VoiceCall-Voice Call Layout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -4099,6 +4126,11 @@
         <default>false</default>
         <recordType>Case.Customer_Claim</recordType>
         <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.Call</recordType>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

@@ -31,6 +31,9 @@ global with sharing class CaseFormV2 {
             ClaimService.createCompensationCardClaim(validatedRequest)
           );
         }
+        when 'delay-certificate' {
+          return new CaseFormResponse(ClaimService.processFlightDelayCertificateRequest(form));
+        }
         when else {
           return new CaseFormResponse('1');
           /*TODO: Implement

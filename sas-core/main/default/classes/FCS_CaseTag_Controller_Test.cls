@@ -12,12 +12,7 @@ public class FCS_CaseTag_Controller_Test {
   }
 
   static testMethod void testFindCaseUsingChatTransId() {
-    List<Case> newCases = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null
-    );
+    List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null);
     newCases[0].Subject = 'TestCase 2';
     newCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL;
     insert newCases;
@@ -38,12 +33,7 @@ public class FCS_CaseTag_Controller_Test {
     Test.stopTest();
   }
   static testMethod void testFindCaseUsingCaseId() {
-    List<Case> newCases = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null
-    );
+    List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null);
     newCases[0].Subject = 'TestCase 2';
     newCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHANNEL;
     insert newCases;
@@ -56,17 +46,16 @@ public class FCS_CaseTag_Controller_Test {
     Test.stopTest();
   }
   static testMethod void testFindCaseUsingMessagingId() {
-    List<Case> newCases = FCS_TestDataFactory.createCases(
-      1,
-      null,
-      null,
-      null
-    );
+    List<Case> newCases = FCS_TestDataFactory.createCases(1, null, null, null);
     newCases[0].Subject = 'TestCase 2';
     newCases[0].RecordTypeId = C_RecordTypeHelper.CASE_CHAT;
     insert newCases;
 
-    List<MessagingChannel> lstMessagChannel = [SELECT Id FROM MessagingChannel];
+    List<MessagingChannel> lstMessagChannel = [
+      SELECT Id
+      FROM MessagingChannel
+      WHERE DeveloperName = 'FacebookChannel6778'
+    ];
 
     MessagingEndUser messagingEndUser1 = new MessagingEndUser(
       MessagingChannelId = lstMessagChannel[0].Id,
@@ -93,7 +82,6 @@ public class FCS_CaseTag_Controller_Test {
     Test.stopTest();
   }
   static testMethod void testCreateCaseUsingSocialPost() {
-    system.debug('hi');
     List<SocialPost> socialPosts = FCS_TestDataFactory.createSocialPosts(1);
     insert socialPosts;
     Case newRecord = new Case();

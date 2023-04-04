@@ -1,8 +1,8 @@
 /**
-Purpose : Since to enable the delegated admin to Change Workload capacty , it is required 
+Purpose : Since to enable the delegated admin to Change Workload capacty , it is required
 to give Customize application permision , So to notify the Admin when there is change in metadata
-Other than Omnichannel Changes. 
-@author Thippeswamy Aravinda         
+Other than Omnichannel Changes.
+@author Thippeswamy Aravinda
 */
 global with sharing class FCS_SendMetadataChangeNotification_Batch extends SBS_ScheduledBatch {
   /**
@@ -13,7 +13,7 @@ private variable to get the FromDate to fetch Audit trail
 Users having the access to change metadata
 */
   private List<String> lstDelegatedAdminUsers;
-  /** 
+  /**
 admin user email address to send the notification if the metadata changes by delegated admins
 */
   private List<String> lstAdminUserEmail;
@@ -58,7 +58,6 @@ from date used to fetch audit trail, this will be updated after batch run.
           setUpAuditTrail.Section != 'Manage Users' &&
           !setUpAuditTrail.action.Contains('Presence Configuration')
         ) {
-          System.debug('hellow ');
           Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
           msg.Subject = setUpAuditTrail.Action;
           msg.PlainTextBody =

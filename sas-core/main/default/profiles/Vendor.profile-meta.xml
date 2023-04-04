@@ -2576,6 +2576,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.PoS_Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.Amadeus_Office_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2612,6 +2617,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.IATA_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.IATA_Level__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2722,6 +2732,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.LIA_Passenger_s__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.IATA_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.IATA_Level__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3666,6 +3686,10 @@
         <recordType>Case.Channel</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-SAS Voice Call Layout</layout>
+        <recordType>Case.Call</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-SAS Support Layout</layout>
         <recordType>Case.Chat</recordType>
     </layoutAssignments>
@@ -3750,6 +3774,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Threat_Incident__c-Threat Incident Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>VoiceCall-Voice Call Layout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -4052,6 +4079,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Claim</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.Call</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

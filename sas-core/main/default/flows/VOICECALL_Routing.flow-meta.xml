@@ -511,7 +511,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Caller_IVR_Langauge__c</field>
+            <field>Caller_IVR_Language__c</field>
             <value>
                 <elementReference>language</elementReference>
             </value>
