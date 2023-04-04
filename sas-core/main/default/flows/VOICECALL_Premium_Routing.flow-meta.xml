@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Popup_Account_Case_Tabs</name>
         <label>Popup Account Case Tabs</label>
-        <locationX>314</locationX>
-        <locationY>1334</locationY>
+        <locationX>50</locationX>
+        <locationY>1118</locationY>
         <actionName>addScreenPop</actionName>
         <actionType>addScreenPop</actionType>
         <connector>
@@ -25,8 +25,8 @@
     <actionCalls>
         <name>Popup_Case_Tab</name>
         <label>Popup Case Tab</label>
-        <locationX>578</locationX>
-        <locationY>1334</locationY>
+        <locationX>314</locationX>
+        <locationY>1118</locationY>
         <actionName>addScreenPop</actionName>
         <actionType>addScreenPop</actionType>
         <connector>
@@ -47,8 +47,8 @@
     <actionCalls>
         <name>Route_to_Queue</name>
         <label>Route to Queue</label>
-        <locationX>446</locationX>
-        <locationY>1550</locationY>
+        <locationX>182</locationX>
+        <locationY>1334</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -129,8 +129,8 @@
     <decisions>
         <name>Is_Account_Found</name>
         <label>Is Account Found</label>
-        <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationX>182</locationX>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Popup_Case_Tab</targetReference>
         </defaultConnector>
@@ -151,61 +151,6 @@
             <label>Account Found</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>IVR_Selection</name>
-        <label>IVR Selection</label>
-        <locationX>446</locationX>
-        <locationY>398</locationY>
-        <defaultConnector>
-            <targetReference>Get_Low_Prio_Queue_Id</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No IVR selection (use fallback queue)</defaultConnectorLabel>
-        <rules>
-            <name>EuroBonus</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ivrSelectionText</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>EuroBonus</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_EB_Queue_Id</targetReference>
-            </connector>
-            <label>EuroBonus</label>
-        </rules>
-        <rules>
-            <name>Agent_Helpdesk</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ivrSelectionText</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Agent Helpdesk</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Agent_Helpdesk_Queue_Id</targetReference>
-            </connector>
-            <label>Agent Helpdesk</label>
-        </rules>
-        <rules>
-            <name>Direct_Sales</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ivrSelectionText</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Direct Sales</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Direct_Sales_Queue_Id</targetReference>
-            </connector>
-            <label>Direct Sales</label>
-        </rules>
-    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>caseSubject</name>
@@ -221,8 +166,8 @@
 &quot;3&quot;, &quot;Eurobonus&quot;,
 &quot;No Selection&quot;)</expression>
     </formulas>
-    <interviewLabel>VOICECALL Routing {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>VOICECALL Routing</label>
+    <interviewLabel>VOICECALL Premium Routing {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>VOICECALL Premium Routing</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -245,8 +190,8 @@
     <recordCreates>
         <name>Create_Case</name>
         <label>Create Case</label>
-        <locationX>446</locationX>
-        <locationY>854</locationY>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Update_VoiceCall</targetReference>
         </connector>
@@ -320,40 +265,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <name>Get_Agent_Helpdesk_Queue_Id</name>
-        <label>Get Agent Helpdesk Queue Id</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Case_RecordType</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Voice_AGT_ENG</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Type</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Queue</stringValue>
-            </value>
-        </filters>
-        <object>Group</object>
-        <outputAssignments>
-            <assignToReference>queueId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Case_RecordType</name>
         <label>Get Case RecordType</label>
-        <locationX>446</locationX>
-        <locationY>734</locationY>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Case</targetReference>
@@ -378,10 +293,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Direct_Sales_Queue_Id</name>
-        <label>Get Direct Sales Queue Id</label>
-        <locationX>578</locationX>
-        <locationY>518</locationY>
+        <name>Get_EB_Premium_Queue_Id</name>
+        <label>Get EB Premium Queue Id</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Case_RecordType</targetReference>
@@ -391,67 +306,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Voice_DS_ENG</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Type</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Queue</stringValue>
-            </value>
-        </filters>
-        <object>Group</object>
-        <outputAssignments>
-            <assignToReference>queueId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_EB_Queue_Id</name>
-        <label>Get EB Queue Id</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Case_RecordType</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Voice_EB_ENG</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Type</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Queue</stringValue>
-            </value>
-        </filters>
-        <object>Group</object>
-        <outputAssignments>
-            <assignToReference>queueId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Low_Prio_Queue_Id</name>
-        <label>Get Low Prio Queue Id</label>
-        <locationX>842</locationX>
-        <locationY>518</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Case_RecordType</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Voice_DS_ENG</stringValue>
+                <stringValue>Voice_PREMIUM_ENG</stringValue>
             </value>
         </filters>
         <filters>
@@ -470,8 +325,8 @@
     <recordLookups>
         <name>Get_VoiceCall</name>
         <label>Get VoiceCall</label>
-        <locationX>446</locationX>
-        <locationY>1094</locationY>
+        <locationX>182</locationX>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Account_Found</targetReference>
@@ -491,8 +346,8 @@
     <recordUpdates>
         <name>Update_VoiceCall</name>
         <label>Update VoiceCall</label>
-        <locationX>446</locationX>
-        <locationY>974</locationY>
+        <locationX>182</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Get_VoiceCall</targetReference>
         </connector>
@@ -537,7 +392,7 @@
         <object>VoiceCall</object>
     </recordUpdates>
     <start>
-        <locationX>320</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
@@ -547,7 +402,7 @@
     <subflows>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>446</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <connector>
             <targetReference>Set_VoiceCall_Priority</targetReference>
@@ -576,10 +431,10 @@
     <subflows>
         <name>Set_VoiceCall_Priority</name>
         <label>Set VoiceCall Priority</label>
-        <locationX>446</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <connector>
-            <targetReference>IVR_Selection</targetReference>
+            <targetReference>Get_EB_Premium_Queue_Id</targetReference>
         </connector>
         <flowName>VOICECALL_Set_Priority</flowName>
         <inputAssignments>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Voice_AGT_ENG_VoiceCall</fullName>
+    <fullName>Voice_FALLBACK_ENG_VoiceCall</fullName>
     <filterScope>Queue</filterScope>
-    <label>Voice_AGT_ENG</label>
-    <queue>Voice_AGT_ENG</queue>
+    <label>Voice_FALLBACK_ENG</label>
+    <queue>Voice_FALLBACK_ENG</queue>
     <sharedTo>
         <allInternalUsers></allInternalUsers>
     </sharedTo>

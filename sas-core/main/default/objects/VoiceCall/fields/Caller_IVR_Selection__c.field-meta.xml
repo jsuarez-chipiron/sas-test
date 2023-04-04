@@ -24,6 +24,11 @@
                 <default>false</default>
                 <label>Eurobonus</label>
             </value>
+            <value>
+                <fullName>PREMIUM</fullName>
+                <default>false</default>
+                <label>PREMIUM</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

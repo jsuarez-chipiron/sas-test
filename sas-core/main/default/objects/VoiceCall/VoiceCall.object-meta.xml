@@ -74,7 +74,7 @@
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <enableFeeds>true</enableFeeds>
+    <enableFeeds>false</enableFeeds>
     <searchLayouts>
         <lookupDialogsAdditionalFields>CallStartDateTime</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CallType</lookupDialogsAdditionalFields>

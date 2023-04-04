@@ -15,6 +15,21 @@
                 <label>Canada</label>
             </value>
             <value>
+                <fullName>DK</fullName>
+                <default>false</default>
+                <label>Denmark</label>
+            </value>
+            <value>
+                <fullName>NO</fullName>
+                <default>false</default>
+                <label>Norway</label>
+            </value>
+            <value>
+                <fullName>SE</fullName>
+                <default>false</default>
+                <label>Sweden</label>
+            </value>
+            <value>
                 <fullName>US</fullName>
                 <default>false</default>
                 <label>United States</label>

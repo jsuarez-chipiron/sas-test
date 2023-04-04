@@ -4,7 +4,7 @@
         <name>Get_AccountId</name>
         <label>Get AccountId</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <actionName>SasAccount</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -23,12 +23,12 @@
     <decisions>
         <name>Is_BC2_Customer</name>
         <label>Is BC2 Customer</label>
-        <locationX>512</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>No EB Number or IATA Number</defaultConnectorLabel>
         <rules>
             <name>B2C_Customer</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditionLogic>(1 AND (2 OR 3)) OR 4</conditionLogic>
             <conditions>
                 <leftValueReference>validEurobonusNumber</leftValueReference>
                 <operator>EqualTo</operator>
@@ -50,8 +50,15 @@
                     <stringValue>3</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>menuSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PREMIUM</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Wait_To_Create_New_Transaction</targetReference>
+                <targetReference>Get_AccountId</targetReference>
             </connector>
             <label>B2C Customer</label>
         </rules>
@@ -114,7 +121,7 @@
         <name>Get_EB_Account</name>
         <label>Get EB Account</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <filterLogic>and</filterLogic>
         <filters>
@@ -133,7 +140,7 @@
     <recordLookups>
         <name>Get_IATA_Account</name>
         <label>Get IATA Account</label>
-        <locationX>578</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <filterLogic>and</filterLogic>
@@ -152,13 +159,13 @@
     </recordLookups>
     <runInMode>DefaultMode</runInMode>
     <start>
-        <locationX>386</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_BC2_Customer</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>euroBonusNumber</name>
         <dataType>String</dataType>
@@ -188,38 +195,4 @@
         <isOutput>true</isOutput>
         <objectType>Account</objectType>
     </variables>
-    <waits>
-        <name>Wait_To_Create_New_Transaction</name>
-        <label>Wait To Create New Transaction</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
-        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
-        <waitEvents>
-            <name>Wait_0s</name>
-            <conditionLogic>and</conditionLogic>
-            <connector>
-                <targetReference>Get_AccountId</targetReference>
-            </connector>
-            <eventType>AlarmEvent</eventType>
-            <inputParameters>
-                <name>AlarmTime</name>
-                <value>
-                    <elementReference>$Flow.CurrentDateTime</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeOffset</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeOffsetUnit</name>
-                <value>
-                    <stringValue>Hours</stringValue>
-                </value>
-            </inputParameters>
-            <label>Wait 0s</label>
-        </waitEvents>
-    </waits>
 </Flow>
