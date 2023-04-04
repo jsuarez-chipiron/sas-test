@@ -357,7 +357,7 @@
         <fields>CallStartDateTime</fields>
         <fields>CallQueuedDateTime</fields>
         <fields>Caller_IVR_Selection__c</fields>
-        <fields>Caller_IVR_Langauge__c</fields>
+        <fields>Caller_IVR_Language__c</fields>
         <fields>CallOrigin</fields>
         <relatedList>VoiceCall.Account__c</relatedList>
     </relatedLists>
