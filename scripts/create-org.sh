@@ -62,6 +62,7 @@ echo "Zzz..."
 sleep 180
 
 echo "[4 / 7] Pushing source..."
+sfdx force:user:permset:assign --permsetname ContactCenterAdminExternalTelephony --targetusername $userName || exit 1
 sfdx force:source:push -u $orgAlias || exit 1
 echo
 
