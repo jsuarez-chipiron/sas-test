@@ -14,7 +14,8 @@
         <inputParameters>
             <name>screenPop</name>
             <value>
-                <stringValue>[{&quot;id&quot;:&quot;812698e7&quot;,&quot;targetObjectId&quot;:&quot;{!Get_VoiceCall.Account__c}&quot;,&quot;isFocused&quot;:false},{&quot;id&quot;:&quot;99bba4a6&quot;,&quot;targetObjectId&quot;:&quot;{!Get_VoiceCall.Case__c}&quot;,&quot;isFocused&quot;:false}]</stringValue>
+                <stringValue>
+                    [{&quot;id&quot;:&quot;812698e7&quot;,&quot;targetObjectId&quot;:&quot;{!Get_VoiceCall.Account__c}&quot;,&quot;isFocused&quot;:false},{&quot;id&quot;:&quot;99bba4a6&quot;,&quot;targetObjectId&quot;:&quot;{!Get_VoiceCall.Case__c}&quot;,&quot;isFocused&quot;:false}]</stringValue>
             </value>
         </inputParameters>
         <outputParameters>
@@ -36,7 +37,8 @@
         <inputParameters>
             <name>screenPop</name>
             <value>
-                <stringValue>[{&quot;id&quot;:&quot;99bba4a6&quot;,&quot;targetObjectId&quot;:&quot;{!Get_VoiceCall.Case__c}&quot;,&quot;isFocused&quot;:false}]</stringValue>
+                <stringValue>
+                    [{&quot;id&quot;:&quot;99bba4a6&quot;,&quot;targetObjectId&quot;:&quot;{!Get_VoiceCall.Case__c}&quot;,&quot;isFocused&quot;:false}]</stringValue>
             </value>
         </inputParameters>
         <outputParameters>
@@ -160,11 +162,11 @@
     <formulas>
         <name>ivrSelectionText</name>
         <dataType>String</dataType>
-        <expression>CASE({!menuSelection}, 
-&quot;1&quot;, &quot;Agent Helpdesk&quot;, 
-&quot;2&quot;, &quot;Direct Sales&quot;,
-&quot;3&quot;, &quot;Eurobonus&quot;,
-&quot;No Selection&quot;)</expression>
+        <expression>CASE({!menuSelection},
+            &quot;1&quot;, &quot;Agent Helpdesk&quot;,
+            &quot;2&quot;, &quot;Direct Sales&quot;,
+            &quot;3&quot;, &quot;Eurobonus&quot;,
+            &quot;No Selection&quot;)</expression>
     </formulas>
     <interviewLabel>VOICECALL Premium Routing {!$Flow.CurrentDateTime}</interviewLabel>
     <label>VOICECALL Premium Routing</label>
@@ -366,7 +368,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Caller_IVR_Langauge__c</field>
+            <field>Caller_IVR_Language__c</field>
             <value>
                 <elementReference>language</elementReference>
             </value>
