@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Caller_IVR_Langauge__c</fullName>
+    <fullName>Caller_IVR_Language__c</fullName>
     <externalId>false</externalId>
-    <label>Caller IVR Langauge</label>
+    <label>Caller IVR Language</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
             <value>
                 <fullName>da</fullName>
                 <default>false</default>
