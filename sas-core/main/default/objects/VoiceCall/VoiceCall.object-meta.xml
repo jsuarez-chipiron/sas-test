@@ -73,7 +73,7 @@
         <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>Voice_Call</compactLayoutAssignment>
     <enableFeeds>true</enableFeeds>
     <searchLayouts>
         <lookupDialogsAdditionalFields>CallStartDateTime</lookupDialogsAdditionalFields>
