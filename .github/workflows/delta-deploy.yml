@@ -49,8 +49,7 @@ jobs:
           export SPECIFIED_TEST=$(./bin/extract-tests manifest/delta.xml)
           if [ -z "$SPECIFIED_TEST" ]
           then
-            echo "\$SPECIFIED_TEST is empty"
+            sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l NoTestRun
           else
-            echo "\$SPECIFIED_TEST is NOT empty"
+            sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l RunSpecifiedTests -r "$SPECIFIED_TEST"
           fi
-          # sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l RunSpecifiedTests -r "$SPECIFIED_TEST"
