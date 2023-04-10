@@ -8,6 +8,7 @@
 
 # VS Code internals
 .vscode/
+target/
 
 # Logs
 logs
@@ -52,4 +53,4 @@ sas-core/main/default/customMetadata/LocalAuthProvider.APIM_Auth.md-meta.xml
 **/callCenters/**
 **/connectedApps/**
 **/ConversationVendorInformation/**
-**/reportTypes/Service_Cloud_**
+**/reportTypes/Service_Cloud_**target/

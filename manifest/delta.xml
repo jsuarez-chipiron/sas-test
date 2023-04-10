@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>FCS_CaseTag_Controller</members>
+        <members>FCS_CaseTag_Controller_Test</members>
+        <members>SasAccount</members>
+        <members>SasAccount_Test</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Case.SAS_Voice_Call</members>
+        <members>VoiceCall.Voice_Call</members>
+        <name>CompactLayout</name>
+    </types>
+    <types>
+        <members>SASLogo_B3_RGB</members>
+        <name>ContentAsset</name>
+    </types>
+    <types>
+        <members>SASService</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>Account.IATA_Level__c</members>
+        <members>Account.IATA_Number__c</members>
+        <members>Case.Department__c</members>
+        <members>Case.FCS_IATA_Level__c</members>
+        <members>Case.FCS_IATA_Number__c</members>
+        <members>Case.IATA_Level__c</members>
+        <members>Case.IATA_Number__c</members>
+        <members>Case.Team__c</members>
+        <members>VoiceCall.Account__c</members>
+        <members>VoiceCall.Caller_IVR_Language__c</members>
+        <members>VoiceCall.Caller_IVR_Selection__c</members>
+        <members>VoiceCall.Case__c</members>
+        <members>VoiceCall.EB_Level__c</members>
+        <members>VoiceCall.IATA_Level__c</members>
+        <members>VoiceCall.Priority__c</members>
+        <members>VoiceCall.Recipient_Country__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Case</members>
+        <members>VoiceCall</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>SAS_Voice_Call_Page</members>
+        <members>Voice_Call_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>CASE_Update_Status_from_Omni_Channel</members>
+        <members>VOICECALL_Get_Account</members>
+        <members>VOICECALL_Premium_Routing</members>
+        <members>VOICECALL_Routing</members>
+        <members>VOICECALL_Set_Priority</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Account-Account Layout</members>
+        <members>Account-B2B - Customer</members>
+        <members>Account-B2B - Partner</members>
+        <members>Case-SAS Claim Layout</members>
+        <members>Case-SAS Customer Claim Layout</members>
+        <members>Case-SAS FP Support</members>
+        <members>Case-SAS Internal%2FBackoffice Layout</members>
+        <members>Case-SAS Support Layout</members>
+        <members>Case-SAS Voice Call Layout</members>
+        <members>Claim_Expense__c-Claim Expense Layout</members>
+        <members>Del_Sensitive_Data_Based_on_Case_Origin__mdt-Del Sensitive Data Based on Case Origin Layout</members>
+        <members>Delegated_Administrator__mdt-Delegated Administrator Layout</members>
+        <members>EU261_Automation_Configuration__mdt-EU261 Automation Configuration Layout</members>
+        <members>Feature_Switch__mdt-Feature Switch Layout</members>
+        <members>Group_Travel_Request__c-Group Travel Request Layout</members>
+        <members>IRR_RecipientWhitelist__mdt-Recipient Whitelist Layout</members>
+        <members>Knowledge__kav-SAS SSI Layout</members>
+        <members>LIA_Claim__c-Customer Claim Layout</members>
+        <members>LocalAuthProvider__mdt-Local Auth Provider Layout</members>
+        <members>PersonAccount-B2C - Anonymous Customer</members>
+        <members>PersonAccount-B2C - EB Customer</members>
+        <members>Read_Only_Config__mdt-Read-Only Config Layout</members>
+        <members>Refund_Request__c-Refund Request Layout</members>
+        <members>SFMC_SMSDefinition__mdt-SMS Definition Layout</members>
+        <members>Special_Service_Request__c-Special Service Request Layout</members>
+        <members>User-User Layout</members>
+        <members>VoiceCall-Voice Call Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>VoiceCall.My_VoiceCalls</members>
+        <members>VoiceCall.Voice_AGT_ENG_VoiceCall</members>
+        <members>VoiceCall.Voice_DS_ENG_VoiceCall</members>
+        <members>VoiceCall.Voice_EB_ENG_VoiceCall</members>
+        <members>VoiceCall.Voice_FALLBACK_ENG_VoiceCall</members>
+        <members>VoiceCall.Voice_PREMIUM_ENG_VoiceCall</members>
+        <name>ListView</name>
+    </types>
+    <types>
+        <members>SAS_Account_Class</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>Voice_AGT_ENG</members>
+        <members>Voice_DS_ENG</members>
+        <members>Voice_EB_ENG</members>
+        <members>Voice_FALLBACK_ENG</members>
+        <members>Voice_PREMIUM_ENG</members>
+        <name>Queue</name>
+    </types>
+    <types>
+        <members>Voice</members>
+        <name>QueueRoutingConfig</name>
+    </types>
+    <types>
+        <members>Account.Business</members>
+        <members>Account.Partner</members>
+        <members>Case.Call</members>
+        <members>Case.Channel</members>
+        <members>Case.Chat</members>
+        <members>Case.Claim</members>
+        <members>Case.Customer_Claim</members>
+        <members>Case.Emergency</members>
+        <members>Case.FunctionalProductSupport</members>
+        <members>Case.Internal_Backoffice</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>sfdc_phone</members>
+        <name>ServiceChannel</name>
+    </types>
+    <types>
+        <members>Back_Office_Case_Work</members>
+        <name>ServicePresenceStatus</name>
+    </types>
+    <types>
+        <members>ServiceCloudVoice</members>
+        <name>Settings</name>
+    </types>
+    <version>55.0</version>
+</Package>

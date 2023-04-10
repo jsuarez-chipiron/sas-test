@@ -1,0 +1,50 @@
+name: SAS delta deploy
+
+on:
+  push:
+    branches: [ "delta-deploy" ]
+  pull_request:
+    branches: [ "delta-deploy" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  delta-deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # environment: SIT
+
+    if: contains(github.event.head_commit.message, 'deploy')
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install SFDX
+        run: |
+          sudo npm install sfdx-cli --global
+          sfdx --version
+          sfdx plugins --core
+
+      - name: SFDX version
+        run: sfdx --version
+
+      - name: Auth SFDC
+        env:
+          JWT_KEY_B64: ${{ secrets.JWT_KEY_B64 }}
+          JWT_CUSTOMER_ID: ${{ secrets.JWT_CUSTOMER_ID }}
+        run: |
+          echo "$JWT_KEY_B64" | base64 -d > server.key
+          sfdx auth:jwt:grant --client-id $JWT_CUSTOMER_ID --jwt-key-file server.key --username jsuarez@sas.dk2.sit --instance-url https://flysas--sit.sandbox.my.salesforce.com --alias default
+
+      - name: Generate delta
+        run: |
+          sfdx force:source:convert -d target/src -x manifest/delta.xml
+
+      - name: Validate delta
+        run: |
+          # sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -l RunLocalTests -c
+          export SPECIFIED_TEST=$(./bin/extract-tests manifest/delta.xml)
+          sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l RunSpecifiedTests -r "$SPECIFIED_TEST"
