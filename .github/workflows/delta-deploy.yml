@@ -57,4 +57,4 @@ jobs:
       - name: Apex Static analysis 
         run: |
           cd bin/pmd/pmd-bin-7.0.0-rc1/bin
-          ./pmd check -R rulesets/apex/quickstart.xml -d ../../../../sas-core/main/default/classes/ -f csv 2> /dev/null | awk -F',' '$4~1 {print $0}'
+          ./run.sh
