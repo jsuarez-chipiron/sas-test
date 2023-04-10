@@ -47,4 +47,10 @@ jobs:
         run: |
           # sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -l RunLocalTests -c
           export SPECIFIED_TEST=$(./bin/extract-tests manifest/delta.xml)
-          sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l RunSpecifiedTests -r "$SPECIFIED_TEST"
+          if [ -z "$SPECIFIED_TEST" ]
+          then
+            echo "\$SPECIFIED_TEST is empty"
+          else
+            echo "\$SPECIFIED_TEST is NOT empty"
+          fi
+          # sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l RunSpecifiedTests -r "$SPECIFIED_TEST"
