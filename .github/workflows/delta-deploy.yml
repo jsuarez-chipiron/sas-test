@@ -57,3 +57,4 @@ jobs:
       - name: pmd
         run: |
           java --version
+          mvn --version
