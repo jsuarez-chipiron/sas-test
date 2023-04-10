@@ -31,7 +31,7 @@
       </properties>
    </rule>
    <rule ref="category/apex/design.xml/NcssMethodCount" message="The method {0}() has an NCSS line count of {1}">
-      <priority>1</priority>
+      <priority>3</priority>
       <properties>
          <property name="minimum" value="60" />
       </properties>
@@ -73,7 +73,7 @@
       <priority>3</priority>
    </rule>
    <rule ref="category/apex/bestpractices.xml/AvoidLogicInTrigger" message="Avoid logic in triggers">
-      <priority>1</priority>
+      <priority>3</priority>
    </rule>
    <rule ref="category/apex/bestpractices.xml/AvoidGlobalModifier" message="Avoid using global modifier">
       <priority>3</priority>
@@ -125,7 +125,7 @@
 
    <!-- SECURITY -->
    <rule ref="category/apex/security.xml/ApexSharingViolations" message="Apex classes should declare a sharing model if DML or SOQL is used">
-      <priority>3</priority>
+      <priority>1</priority>
    </rule>
    <rule ref="category/apex/security.xml/ApexInsecureEndpoint" message="Apex callouts should use encrypted communication channels">
       <priority>3</priority>
