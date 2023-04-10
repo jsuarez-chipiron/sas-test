@@ -22,34 +22,38 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install SFDX
-        run: |
-          sudo npm install sfdx-cli --global
-          sfdx --version
-          sfdx plugins --core
+      # - name: Install SFDX
+      #   run: |
+      #     sudo npm install sfdx-cli --global
+      #     sfdx --version
+      #     sfdx plugins --core
 
-      - name: SFDX version
-        run: sfdx --version
+      # - name: SFDX version
+      #   run: sfdx --version
 
-      - name: Auth SFDC
-        env:
-          JWT_KEY_B64: ${{ secrets.JWT_KEY_B64 }}
-          JWT_CUSTOMER_ID: ${{ secrets.JWT_CUSTOMER_ID }}
-        run: |
-          echo "$JWT_KEY_B64" | base64 -d > server.key
-          sfdx auth:jwt:grant --client-id $JWT_CUSTOMER_ID --jwt-key-file server.key --username jsuarez@sas.dk2.sit --instance-url https://flysas--sit.sandbox.my.salesforce.com --alias default
+      # - name: Auth SFDC
+      #   env:
+      #     JWT_KEY_B64: ${{ secrets.JWT_KEY_B64 }}
+      #     JWT_CUSTOMER_ID: ${{ secrets.JWT_CUSTOMER_ID }}
+      #   run: |
+      #     echo "$JWT_KEY_B64" | base64 -d > server.key
+      #     sfdx auth:jwt:grant --client-id $JWT_CUSTOMER_ID --jwt-key-file server.key --username jsuarez@sas.dk2.sit --instance-url https://flysas--sit.sandbox.my.salesforce.com --alias default
 
-      - name: Generate delta
-        run: |
-          sfdx force:source:convert -d target/src -x manifest/delta.xml
+      # - name: Generate delta
+      #   run: |
+      #     sfdx force:source:convert -d target/src -x manifest/delta.xml
 
-      - name: Validate delta
+      # - name: Validate delta
+      #   run: |
+      #     # sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -l RunLocalTests -c
+      #     export SPECIFIED_TEST=$(./bin/extract-tests manifest/delta.xml)
+      #     if [ -z "$SPECIFIED_TEST" ]
+      #     then
+      #       sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l NoTestRun
+      #     else
+      #       sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l RunSpecifiedTests -r "$SPECIFIED_TEST"
+      #     fi
+
+      - name: pmd
         run: |
-          # sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -l RunLocalTests -c
-          export SPECIFIED_TEST=$(./bin/extract-tests manifest/delta.xml)
-          if [ -z "$SPECIFIED_TEST" ]
-          then
-            sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l NoTestRun
-          else
-            sfdx force:mdapi:deploy -u default -d target/src/ -w 30 -c -l RunSpecifiedTests -r "$SPECIFIED_TEST"
-          fi
+          java --version
