@@ -56,5 +56,5 @@ jobs:
 
       - name: pmd
         run: |
-          java --version
-          mvn --version
+          cd bin/pmd/pmd-bin-7.0.0-rc1/bin
+          ./pmd check -R rulesets/apex/quickstart.xml -d ../../../../sas-core/main/default/classes/ -f json
